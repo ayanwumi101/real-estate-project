@@ -3,14 +3,14 @@ import { Flex, Box, Heading, Text, Image } from '@chakra-ui/react';
 
 const Hero = () => {
   return (
-    <Box as="section" maxW="1200px" mx="auto">
-      <Flex alignItems="center" justifyContent="space-between">
-        <Box maxW="550px">
+    <Box as="section" maxW="1200px" pt={['70px', 0]} mx="auto" px={['24px', 0]}>
+      <Flex alignItems="center" justifyContent="space-between" flexWrap='wrap'>
+        <Box maxW="550px" mb={['40px', 0]}>
           <Box mb="24px">
-            <Heading as="h1" fontSize={60} fontWeight="700" color="#222222">
+            <Heading as="h1" fontSize={[38,60]} fontWeight="700" color="#222222">
               Discover a New Era
             </Heading>
-            <Heading as="h1" fontSize={60} fontWeight="700" color="#222222">
+            <Heading as="h1" fontSize={[38,60]} fontWeight="700" color="#222222">
               <Box as="span" color="#FFAE42">
                 -
               </Box>{' '}

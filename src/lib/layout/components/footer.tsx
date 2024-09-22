@@ -29,14 +29,15 @@ export const Footer = () => {
         <Box
           borderRadius="10px"
           bgImage="/assets/images/footer-bg.png"
-          py="40px"
-          px="94px"
+          pt="40px"
+          pb={[0,"40px"]}
+          px={[0,"94px"]}
           backgroundSize="cover"
           backgroundPosition="center"
           backgroundRepeat="no-repeat"
         >
-          <Flex alignItems="center" justifyContent="space-between">
-            <Box maxW="530px" color="white">
+          <Flex alignItems="center" justifyContent={['center',"space-between"]} flexWrap='wrap'>
+            <Box w={['100%',"530px"]} color="white" mb={['40px', 0]}>
               <Heading fontSize={40} fontWeight={700} mb="16px">
                 Stay Updated
               </Heading>
@@ -46,7 +47,7 @@ export const Footer = () => {
                 conditions.
               </Text>
             </Box>
-            <Box w="494px" bg="white" p="40px" borderRadius="5px">
+            <Box w={['100%',"494px"]} bg="white" py="40px" px={['16px', '40px']} borderRadius="5px">
               <Stack spacing="16px">
                 <InputGroup w="100%">
                   <InputLeftElement pointerEvents="none" ml="2" mt="1">
@@ -96,9 +97,9 @@ export const Footer = () => {
             </Box>
           </Flex>
         </Box>
-        <Box w="80%" mx="auto" pt="70px">
-          <Flex justifyContent="space-between">
-            <Box>
+        <Box w={['100%',"80%"]} mx="auto" pt="70px">
+          <Flex justifyContent="space-between" flexWrap='wrap'>
+            <Box mb={['32px', 0]}>
               <Stack spacing="24px">
                 <Heading fontSize={25} fontWeight={700}>
                   Company Logo
@@ -109,7 +110,7 @@ export const Footer = () => {
               </Stack>
             </Box>
             <Box>
-              <Flex gap="50px">
+              <Flex gap="50px" flexDir={['column', 'row']}>
                 <Stack spacing="10px">
                   <Text>E-mail: app@company.com</Text>
                   <Text>Phone: 09123456789</Text>
@@ -127,7 +128,7 @@ export const Footer = () => {
           </Flex>
         </Box>
       </Stack>
-      <Text textAlign="center" fontSize={14}>
+      <Text textAlign={['left',"center"]} fontSize={14}>
         Copyright © 2024 Company name
       </Text>
     </Box>

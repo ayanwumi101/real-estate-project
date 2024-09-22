@@ -6,10 +6,10 @@ import { PropertyCard } from '~/lib/components/Cards'
 const Discover = () => {
   return (
     <Box w="100%" bg="#FBFBFB">
-      <Box as="section" py="60px" maxW="1200px" mx="auto">
+      <Box as="section" py="60px" maxW="1200px" mx="auto" px={['24px', 0]}>
         <Stack spacing="40px">
           <Box>
-            <Flex justifyContent="space-between">
+            <Flex justifyContent="space-between" flexWrap='wrap'>
               <Heading fontSize={40} color="#222222" fontWeight={700}>
                 Discover
               </Heading>
@@ -26,7 +26,7 @@ const Discover = () => {
             </Flex>
           </Box>
           <Box>
-            <Flex justifyContent="space-between" flexWrap="wrap" rowGap="35px">
+            <Flex justifyContent={['center',"space-between"]} flexWrap="wrap" rowGap="35px">
               <PropertyCard imageSource="/assets/images/house-1.png" />
               <PropertyCard imageSource="/assets/images/house-4.png" />
               <PropertyCard imageSource="/assets/images/house-3.png" />

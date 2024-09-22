@@ -3,7 +3,7 @@ import { LocationIcon } from '~/lib/components/Icons/Icons';
 
 export const PropertyCard = ({imageSource}: {imageSource: string}) => {
     return (
-      <Box w="270px" h="auto">
+      <Box w={['100%',"270px"]} h="auto">
         <Box
           w="100%"
           h="300px"
