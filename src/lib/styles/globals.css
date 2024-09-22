@@ -1,0 +1,33 @@
+/* Global Styling here */
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+  font-family: 'Urbanist', sans-serif !important;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Urbanist', sans-serif !important;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    border-radius: 50px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #3d3d3d;
+    border-radius: 50px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #C0C0C0;
+    border-radius: 50px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #797777;
+    border-radius: 50px;
+  }
