@@ -9,8 +9,8 @@ const Discover = () => {
       <Box as="section" py="60px" maxW="1200px" mx="auto" px={['24px', 0]}>
         <Stack spacing="40px">
           <Box>
-            <Flex justifyContent="space-between" flexWrap='wrap'>
-              <Heading fontSize={40} color="#222222" fontWeight={700}>
+            <Flex justifyContent="space-between" flexWrap="wrap">
+              <Heading fontSize={40} color="#222222" fontWeight={700} mb={['32px', 0]}>
                 Discover
               </Heading>
               <Text
@@ -26,7 +26,11 @@ const Discover = () => {
             </Flex>
           </Box>
           <Box>
-            <Flex justifyContent={['center',"space-between"]} flexWrap="wrap" rowGap="35px">
+            <Flex
+              justifyContent={['center', 'space-between']}
+              flexWrap="wrap"
+              rowGap="35px"
+            >
               <PropertyCard imageSource="/assets/images/house-1.png" />
               <PropertyCard imageSource="/assets/images/house-4.png" />
               <PropertyCard imageSource="/assets/images/house-3.png" />
@@ -45,6 +49,7 @@ const Discover = () => {
             px="24px"
             borderRadius="50px"
             fontWeight={600}
+            color="#EDEDFF"
           >
             Explore all projects available
           </Button>

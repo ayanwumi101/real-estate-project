@@ -64,3 +64,23 @@ export const LocationIcon = () => {
       </svg>
     );
 }
+
+
+export const ArrowForward = ( ) => {
+  return (
+    <svg
+      width="29"
+      height="29"
+      viewBox="0 0 29 29"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M1.19922 14.5107H27.1992M27.1992 14.5107L20.1992 7.51074M27.1992 14.5107L20.1992 21.5107"
+        stroke="#E4E4E4"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
