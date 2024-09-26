@@ -4,13 +4,14 @@ import { FeatureCard } from '~/lib/components/Cards';
 
 const Features = () => {
   return (
-    <Box maxW="1200px" py="60px" mx="auto">
+    <Box maxW="1200px" py="60px" mx="auto" px={['25px', 0]}>
       <Flex
         w="100%"
         gap="60px"
         justifyContent="center"
         // alignItems="center"
         // h="496px"
+        flexWrap={['wrap', 'nowrap']}
       >
         {/* <Box w="400px" h="100%"> */}
         <Image

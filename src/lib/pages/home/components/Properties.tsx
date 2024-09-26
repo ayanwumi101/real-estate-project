@@ -8,7 +8,7 @@ const Properties = () => {
       <Box maxW="1200px" mx="auto" mb="32px">
         <Heading
           textAlign="center"
-          fontSize={40}
+          fontSize={[32,40]}
           color="#222222"
           letterSpacing={0.04}
           mb="40px"
@@ -16,8 +16,8 @@ const Properties = () => {
           Find properties in your city
         </Heading>
         <Box>
-          <HStack w="100%" alignItems="flex-start" gap="32px">
-            <Box w="35%" h="632px">
+          <HStack w="100%" alignItems="flex-start" gap="32px" flexWrap={['wrap', 'nowrap']}>
+            <Box w={['100%',"35%"]} h={['300px',"632px"]}>
               <Box
                 w="100%"
                 h="100%"
@@ -42,32 +42,32 @@ const Properties = () => {
                 </Box>
               </Box>
             </Box>
-            <Box w="65%">
+            <Box w={['100%',"65%"]}>
               <Flex
                 flexWrap={['wrap']}
                 rowGap="32px"
                 justifyContent="space-between"
                 w="100%"
               >
-                <Box w="48%">
+                <Box w={['100%',"48%"]}>
                   <ImageCard
                     location="Ibadan"
                     imageSource="/assets/images/house-4.png"
                   />
                 </Box>
-                <Box w="48%">
+                <Box w={['100%',"48%"]}>
                   <ImageCard
                     location="Abuja"
                     imageSource="/assets/images/house-2.png"
                   />
                 </Box>
-                <Box w="48%">
+                <Box w={['100%',"48%"]}>
                   <ImageCard
                     location="Ogun"
                     imageSource="/assets/images/house-5.png"
                   />
                 </Box>
-                <Box w="48%">
+                <Box w={['100%',"48%"]}>
                   <ImageCard
                     location="Port-harcourt"
                     imageSource="/assets/images/house-3.png"
