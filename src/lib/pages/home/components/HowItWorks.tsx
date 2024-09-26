@@ -83,9 +83,9 @@ const HowItWorks = () => {
         <Box>
           <HStack
             flexWrap="wrap"
-            justifyContent={['center',"space-between"]}
+            justifyContent={['center', 'space-between']}
             alignItems="flex-end"
-            spacing={[5, 0]}
+            spacing={[3, 0]}
           >
             <SingleCard
               image="/assets/icons/google.png"
@@ -140,16 +140,16 @@ const HowItWorks = () => {
             alignItems="flex-start"
             justifyContent="space-between"
             // gap="80px"
-            flexWrap='wrap'
+            flexWrap="wrap"
           >
             <Box maxW="550px" mb={['32px', 0]}>
-              <Heading fontSize={[34,48]} fontWeight={700} color="#ffffff">
+              <Heading fontSize={[34, 48]} fontWeight={700} color="#ffffff">
                 Start Your Investment <br /> Journey Today
               </Heading>
             </Box>
             <Box maxW="550px">
               <Stack spacing="24px">
-                <Text fontSize={18} fontWeight={500}>
+                <Text fontSize={18} fontWeight={500} color="#FBFBFB">
                   Ready to explore the world of fractional real estate
                   ownership? <br />
                   Become part of a thriving community of investors by selecting
@@ -173,7 +173,12 @@ const HowItWorks = () => {
         </Box>
       </Box>
       <Box py="70px" maxW="1200px" mx="auto" px={['24px', 0]}>
-        <Flex alignItems="flex-start" justifyContent="space-between" flexWrap='wrap' gap={[7,0]}>
+        <Flex
+          alignItems="flex-start"
+          justifyContent="space-between"
+          flexWrap="wrap"
+          gap={[7, 0]}
+        >
           <Box w="570px">
             <Stack spacing="20px">
               <FeatureCard
@@ -191,7 +196,11 @@ const HowItWorks = () => {
             </Stack>
           </Box>
           <Box w="570px" color="#2E353F">
-            <Text fontSize={[20,32]} lineHeight={['30px',"45px"]} fontWeight={500}>
+            <Text
+              fontSize={[20, 32]}
+              lineHeight={['30px', '45px']}
+              fontWeight={500}
+            >
               Our innovative platform allows you to invest in specific units
               across various projects with fractional ownership, making property
               investment accessible to everyone.

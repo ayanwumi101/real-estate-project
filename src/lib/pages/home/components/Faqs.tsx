@@ -49,10 +49,10 @@ const Faqs = () => {
           </Stack>
         </Box>
         <Box w="560px">
-          <Accordion allowToggle={true} allowMultiple={true} mb="16px">
+          <Accordion allowToggle={true} allowMultiple={true} display='flex' flexDir='column' gap='20px'>
             {[1, 2, 3, 4].map(() => {
               return (
-                <AccordionItem mb="24px">
+                <AccordionItem>
                   <h2>
                     <AccordionButton
                       border="1px solid #3232470F"
