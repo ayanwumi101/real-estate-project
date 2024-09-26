@@ -30,7 +30,7 @@ export const Footer = () => {
     >
       <Stack mb="60px">
         <Fragment>
-          {pathname === '/signin' || pathname === '/signup' ? null : (
+          {pathname === '/signin' || pathname.includes('/signup') ? null : (
             <Box
               borderRadius="10px"
               bgImage="/assets/images/footer-bg.png"

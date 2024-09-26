@@ -8,7 +8,7 @@ export const Header = () => {
   const pathname = usePathname();
   return (
     <Fragment>
-      {pathname === '/signin' || pathname === '/signup' ? null : (
+      {pathname === '/signin' || pathname.includes('/signup') ? null : (
         <Box
           as="header"
           maxW={['95%', '1300px']}

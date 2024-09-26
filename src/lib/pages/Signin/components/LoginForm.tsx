@@ -28,7 +28,7 @@ const LoginForm = () => {
   return (
     <Box px={['24px', '44px']} py="60px">
       <Box mb="40px">
-        <Link href='/'>
+        <Link href="/">
           <Image src="" alt="Company Logo" mb="16px" />
         </Link>
         <Heading fontSize={32} fontWeight={500} color="#222222">
@@ -36,7 +36,12 @@ const LoginForm = () => {
         </Heading>
       </Box>
       <Box mb="32px">
-        <HStack alignItems="center" gap={['17px', 0]} flexWrap='wrap' justifyContent="space-between">
+        <HStack
+          alignItems="center"
+          gap={['17px', 0]}
+          flexWrap={["wrap", 'nowrap']}
+          justifyContent="space-between"
+        >
           <SocialLoginButton label="Google" Icon={GoogleIcon} />
           <SocialLoginButton label="Apple" Icon={AppleIcon} />
           <SocialLoginButton label="Microsoft Account" Icon={MicrosoftIcon} />
@@ -121,7 +126,7 @@ const LoginForm = () => {
             <Text color="#131339" fontWeight={500}>
               Dont Have and Account?{' '}
               <Box as="span" color="#FFAE42" fontWeight={700}>
-                Sign up
+                <Link href='/signup'>Sign up</Link>
               </Box>
             </Text>
           </Box>
