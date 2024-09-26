@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import NextTopLoader from 'nextjs-toploader';
 
 import { Layout } from '~/lib/layout';
 import { RootProviders } from '~/lib/providers/root';
@@ -46,6 +47,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
   return (
     <html lang="en">
       <body>
+        <NextTopLoader showSpinner={false} color="rgba(34, 34, 34, 0.5)" />
         <RootProviders>
           <Layout>{children}</Layout>
         </RootProviders>

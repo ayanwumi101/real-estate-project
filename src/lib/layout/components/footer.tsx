@@ -6,19 +6,22 @@ import {
   Image,
   Stack,
   Input,
-  Heading, InputGroup, InputLeftElement, Button
+  Heading,
+  InputGroup,
+  InputLeftElement,
+  Button,
 } from '@chakra-ui/react';
+import { usePathname } from 'next/navigation';
+import { Fragment } from 'react';
 import { UserIcon, EmailIcon } from '~/lib/components/Icons/Icons';
 
-
-
-
 export const Footer = () => {
+  const pathname = usePathname();
   return (
     <Box
       as="footer"
-      w='100%'
-      mx='auto'
+      w="100%"
+      mx="auto"
       bg="#222222"
       color="#C0C0C0"
       pt="24px"
@@ -26,79 +29,98 @@ export const Footer = () => {
       pb="70px"
     >
       <Stack mb="60px">
-        <Box
-          borderRadius="10px"
-          bgImage="/assets/images/footer-bg.png"
-          pt="40px"
-          pb={[0,"40px"]}
-          px={[0,"94px"]}
-          backgroundSize="cover"
-          backgroundPosition="center"
-          backgroundRepeat="no-repeat"
-        >
-          <Flex alignItems="center" justifyContent={['center',"space-between"]} flexWrap='wrap'>
-            <Box w={['100%',"530px"]} color="white" mb={['40px', 0]}>
-              <Heading fontSize={40} fontWeight={700} mb="16px">
-                Stay Updated
-              </Heading>
-              <Text color="white" mt="20px" fontWeight={500} lineHeight="24px">
-                Regularly review analytics and updates to ensure your
-                investments align with your financial goals and market
-                conditions.
-              </Text>
-            </Box>
-            <Box w={['100%',"494px"]} bg="white" py="40px" px={['16px', '40px']} borderRadius="5px">
-              <Stack spacing="16px">
-                <InputGroup w="100%">
-                  <InputLeftElement pointerEvents="none" ml="2" mt="1">
-                    <UserIcon />
-                  </InputLeftElement>
-                  <Input
-                    pl="12"
-                    py="12px"
-                    border="1px solid #C0C0C0"
-                    type="tel"
-                    placeholder="Enter your phone number here"
-                    borderRadius="50px"
-                    bg="#FBFBFB"
-                    color="#8295AA"
-                    _placeholder={{ color: '#8295AA' }}
-                    h="50px"
-                  />
-                </InputGroup>
-                <InputGroup w="100%">
-                  <InputLeftElement pointerEvents="none" ml="2" mt="1">
-                    <EmailIcon />
-                  </InputLeftElement>
-                  <Input
-                    pl="12"
-                    py="12px"
-                    border="1px solid #C0C0C0"
-                    type="tel"
-                    placeholder="Enter your email here"
-                    borderRadius="50px"
-                    bg="#FBFBFB"
-                    color="#8295AA"
-                    _placeholder={{ color: '#8295AA' }}
-                    h="50px"
-                  />
-                </InputGroup>
-                <Button
-                  borderRadius="50px"
-                  bg="#222222"
-                  color="#EDEDFF"
-                  fontWeight={600}
-                  fontSize={14}
-                  py="6"
+        <Fragment>
+          {pathname === '/signin' || pathname === '/signup' ? null : (
+            <Box
+              borderRadius="10px"
+              bgImage="/assets/images/footer-bg.png"
+              pt="40px"
+              pb={[0, '40px']}
+              px={[0, '94px']}
+              backgroundSize="cover"
+              backgroundPosition="center"
+              backgroundRepeat="no-repeat"
+            >
+              <Flex
+                alignItems="center"
+                justifyContent={['center', 'space-between']}
+                flexWrap="wrap"
+              >
+                <Box w={['100%', '530px']} color="white" mb={['40px', 0]}>
+                  <Heading fontSize={40} fontWeight={700} mb="16px">
+                    Stay Updated
+                  </Heading>
+                  <Text
+                    color="white"
+                    mt="20px"
+                    fontWeight={500}
+                    lineHeight="24px"
+                  >
+                    Regularly review analytics and updates to ensure your
+                    investments align with your financial goals and market
+                    conditions.
+                  </Text>
+                </Box>
+                <Box
+                  w={['100%', '494px']}
+                  bg="white"
+                  py="40px"
+                  px={['16px', '40px']}
+                  borderRadius="5px"
                 >
-                  Subscribe
-                </Button>
-              </Stack>
+                  <Stack spacing="16px">
+                    <InputGroup w="100%">
+                      <InputLeftElement pointerEvents="none" ml="2" mt="1">
+                        <UserIcon />
+                      </InputLeftElement>
+                      <Input
+                        pl="12"
+                        py="12px"
+                        border="1px solid #C0C0C0"
+                        type="tel"
+                        placeholder="Enter your phone number here"
+                        borderRadius="50px"
+                        bg="#FBFBFB"
+                        color="#8295AA"
+                        _placeholder={{ color: '#8295AA' }}
+                        h="50px"
+                      />
+                    </InputGroup>
+                    <InputGroup w="100%">
+                      <InputLeftElement pointerEvents="none" ml="2" mt="1">
+                        <EmailIcon />
+                      </InputLeftElement>
+                      <Input
+                        pl="12"
+                        py="12px"
+                        border="1px solid #C0C0C0"
+                        type="tel"
+                        placeholder="Enter your email here"
+                        borderRadius="50px"
+                        bg="#FBFBFB"
+                        color="#8295AA"
+                        _placeholder={{ color: '#8295AA' }}
+                        h="50px"
+                      />
+                    </InputGroup>
+                    <Button
+                      borderRadius="50px"
+                      bg="#222222"
+                      color="#EDEDFF"
+                      fontWeight={600}
+                      fontSize={14}
+                      py="6"
+                    >
+                      Subscribe
+                    </Button>
+                  </Stack>
+                </Box>
+              </Flex>
             </Box>
-          </Flex>
-        </Box>
-        <Box w={['100%',"80%"]} mx="auto" pt="70px">
-          <Flex justifyContent="space-between" flexWrap='wrap'>
+          )}
+        </Fragment>
+        <Box w={['100%', '80%']} mx="auto" pt="70px">
+          <Flex justifyContent="space-between" flexWrap="wrap">
             <Box mb={['32px', 0]}>
               <Stack spacing="24px">
                 <Heading fontSize={25} fontWeight={700}>
@@ -128,7 +150,7 @@ export const Footer = () => {
           </Flex>
         </Box>
       </Stack>
-      <Text textAlign={['left',"center"]} fontSize={14}>
+      <Text textAlign={['left', 'center']} fontSize={14}>
         Copyright © 2024 Company name
       </Text>
     </Box>

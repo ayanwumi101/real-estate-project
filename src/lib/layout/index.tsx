@@ -7,6 +7,7 @@ import { Footer } from './components/footer';
 import { Header } from './components/header';
 import '../styles/globals.css';
 
+
 type LayoutProps = {
   children: ReactNode;
 };
@@ -18,6 +19,7 @@ export const Layout = ({ children }: LayoutProps) => {
       const locomotiveScroll = new LocomotiveScroll();
     })();
   }, []);
+  
   return (
     <Box maxWidth="1440px" mx='auto'>
       <Box>
