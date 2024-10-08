@@ -10,6 +10,7 @@ export const Header = () => {
     '/signin',
     '/signup',
     '/forgot-password',
+    '/reset-password'
   ];
 
   if (

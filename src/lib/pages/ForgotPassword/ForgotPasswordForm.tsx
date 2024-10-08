@@ -6,7 +6,7 @@ import React, { useState } from 'react'
 
 const ForgotPasswordForm = () => {
     return (
-      <Box px={['24px', '44px']} py="60px" h="100vh">
+      <Box px={['24px', '44px']} py="60px" h={['auto',"100vh"]}>
         <Box mb="40px">
           <Link href="/">
             <Image src="" alt="Company Logo" mb="16px" />

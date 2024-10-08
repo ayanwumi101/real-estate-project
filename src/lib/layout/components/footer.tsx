@@ -21,6 +21,7 @@ export const Footer = () => {
     '/signin',
     '/signup',
     '/forgot-password',
+    '/reset-password',
   ];
   return (
     <Box

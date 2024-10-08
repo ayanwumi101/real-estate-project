@@ -6,7 +6,7 @@ import ForgotPasswordForm from './ForgotPasswordForm';
 
 const index = () => {
   return (
-    <Box as="section" w='100%' h='100vh'>
+    <Box as="section" w='100%' h={['auto','100vh']}>
       <Flex>
         <Box w={['100%', '50%']}>
           <ForgotPasswordForm />
