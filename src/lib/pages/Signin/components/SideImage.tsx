@@ -11,7 +11,7 @@ const SideImage = () => {
       alignItems="center"
       justifyContent="center"
       bg="#F5F5F5"
-      h='100%'
+      h='100vh'
     >
       <Box>
         <Stack spacing="24px" textAlign="center">

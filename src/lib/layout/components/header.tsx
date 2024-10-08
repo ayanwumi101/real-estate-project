@@ -6,9 +6,20 @@ import { HiBars3BottomRight } from 'react-icons/hi2';
 
 export const Header = () => {
   const pathname = usePathname();
+  const hiddenRoutes = [
+    '/signin',
+    '/signup',
+    '/forgot-password',
+  ];
+
+  if (
+    hiddenRoutes.some((route) => pathname === route || pathname.includes(route))
+  ) {
+    return null;
+  }
+
   return (
     <Fragment>
-      {pathname === '/signin' || pathname.includes('/signup') ? null : (
         <Box
           as="header"
           maxW={['95%', '1300px']}
@@ -70,7 +81,6 @@ export const Header = () => {
             </Box>
           </Flex>
         </Box>
-      )}
     </Fragment>
   );
 };

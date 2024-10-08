@@ -17,6 +17,11 @@ import { UserIcon, EmailIcon } from '~/lib/components/Icons/Icons';
 
 export const Footer = () => {
   const pathname = usePathname();
+  const hiddenRoutes = [
+    '/signin',
+    '/signup',
+    '/forgot-password',
+  ];
   return (
     <Box
       as="footer"
@@ -30,7 +35,9 @@ export const Footer = () => {
     >
       <Stack mb="60px">
         <Fragment>
-          {pathname === '/signin' || pathname.includes('/signup') ? null : (
+          {!hiddenRoutes.some(
+            (route) => pathname === route || pathname.includes(route)
+          ) && (
             <Box
               borderRadius="10px"
               bgImage="/assets/images/footer-bg.png"

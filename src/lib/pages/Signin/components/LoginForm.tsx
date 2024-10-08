@@ -39,7 +39,7 @@ const LoginForm = () => {
         <HStack
           alignItems="center"
           gap={['17px', 0]}
-          flexWrap={["wrap", 'nowrap']}
+          flexWrap={['wrap', 'nowrap']}
           justifyContent="space-between"
         >
           <SocialLoginButton label="Google" Icon={GoogleIcon} />
@@ -109,9 +109,11 @@ const LoginForm = () => {
               </InputRightElement>
             </InputGroup>
           </FormControl>
-          <Text fontWeight={600} color="#FFAE42">
-            Forgot Password?
-          </Text>
+          <Link href='/forgot-password'>
+            <Text fontWeight={600} color="#FFAE42">
+              Forgot Password?
+            </Text>
+          </Link>
           <Box w="100%">
             <Button
               w="100%"
@@ -126,7 +128,7 @@ const LoginForm = () => {
             <Text color="#131339" fontWeight={500}>
               Dont Have and Account?{' '}
               <Box as="span" color="#FFAE42" fontWeight={700}>
-                <Link href='/signup'>Sign up</Link>
+                <Link href="/signup">Sign up</Link>
               </Box>
             </Text>
           </Box>
