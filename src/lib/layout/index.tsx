@@ -7,8 +7,8 @@ import { Footer } from './components/footer';
 import { Header } from './components/header';
 import '../styles/globals.css';
 import DashboardSidebar from './components/DashboardSidebar';
-import GlobalSearch from './components/GlobalSearch';
 import { usePathname } from 'next/navigation';
+import DashboardHeader from './components/DashboardHeader';
 
 
 type LayoutProps = {
@@ -18,14 +18,14 @@ type LayoutProps = {
 
 export const DashboardLayout = ({ children }: LayoutProps) => {
   return (
-    <Box position="relative" bg="rgba(100, 100, 100, 0.1)">
-      <Stack direction="row">
+    <Box w='100%' mx='auto' position="relative" bg="rgba(100, 100, 100, 0.1)">
+      <Stack direction="row" w='100%' mx='auto' justifyContent='center'>
         <Box w='20%' position='fixed' left='0' top='0' h='100vh' overflow='hidden'>
           <DashboardSidebar />
         </Box>
         <Box position="absolute" left="20%" w="80%">
           <Stack direction="column" spacing="22px">
-            <GlobalSearch />
+            <DashboardHeader />
             <Box as="main" w="100%">
               {children}
             </Box>
@@ -54,7 +54,7 @@ export const Layout = ({ children }: LayoutProps) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
-    setIsLoggedIn(pathname.includes('/dashboard'));
+    setIsLoggedIn(pathname.includes('/user'));
   }, [pathname]);
 
   useLayoutEffect(() => {
