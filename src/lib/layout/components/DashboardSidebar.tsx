@@ -81,7 +81,7 @@ const DashboardSidebar = () => {
             />
             <SideBarItem
               label="Settings"
-              Icon={SettingsIcon}
+              Icon={SettingsIcon} 
               isActive={pathname === '/user/settings'}
               href="/user/settings"
             />
