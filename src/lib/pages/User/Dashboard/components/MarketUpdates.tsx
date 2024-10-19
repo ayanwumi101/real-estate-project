@@ -79,7 +79,11 @@ const MarketUpdates = () => {
             <Tbody color="#222222">
               {[1, 2, 3, 4, 5, 6, 7].map(() => {
                 return (
-                  <Tr border="none" borderBottom="1px solid #E4E4E4">
+                  <Tr
+                    border="none"
+                    borderBottom="1px solid #E4E4E4"
+                    _hover={{ bg: 'black' }}
+                  >
                     <Td fontSize={18} fontWeight={700}>
                       Skyline Residences
                     </Td>

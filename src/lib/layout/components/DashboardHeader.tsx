@@ -6,9 +6,14 @@ import { DashboardNotificationIcon, InputSearchIcon } from '~/lib/components/Ico
 
 const DashboardHeader = ({setShowSearchBar}:{setShowSearchBar: (value: boolean) => void;}) => {
   return (
-    <Box w="100%" px="40px" borderBottom="1px solid #E4E4E4" py="22px">
+    <Box 
+      w="100%" 
+      px="40px" 
+      // borderBottom="1px solid #E4E4E4" 
+      py="22px"
+    >
       <Box display="flex" alignItems="center">
-        <Flex alignItems="center" gap="32px" w="100%" mb="30px">
+        <Flex alignItems="center" gap="32px" w="100%">
           <InputGroup w="80%">
             <InputLeftElement pointerEvents="none" ml="2" mt="1">
               <InputSearchIcon />
@@ -37,38 +42,6 @@ const DashboardHeader = ({setShowSearchBar}:{setShowSearchBar: (value: boolean) 
             bg="#E4E4E4"
             color="#ffffff"
           />
-        </Flex>
-      </Box>
-      <Box
-        w="100%"
-        borderRadius="5px"
-        py="16px"
-        px="48px"
-        bgGradient="linear(to-r, #D8D8FF4D, #EDEDFF4D, #FFE6C44D)"
-      >
-        <Flex alignItems="center" justifyContent="space-between">
-          <Box>
-            <Stack spacing="6px" color="#000000">
-              <Heading fontWeight={700} fontSize={15}>
-                Complete Profile Setup
-              </Heading>
-              <Text fontSize={13} fontWeight={500}>
-                To get the most out of your experience here, please take a
-                moment to complete your profile.
-              </Text>
-            </Stack>
-          </Box>
-          <Button
-            borderRadius="50px"
-            bg="#222222"
-            color="#ffffff"
-            py="6px"
-            px="16px"
-            fontSize={13}
-            fontWeight={600}
-          >
-            Complete Now
-          </Button>
         </Flex>
       </Box>
     </Box>

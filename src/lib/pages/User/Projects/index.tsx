@@ -1,8 +1,13 @@
+import { Box } from '@chakra-ui/react'
 import React from 'react'
+import ProjectsList from './components/ProjectsList'
+
 
 const index = () => {
   return (
-    <div>index</div>
+    <Box>
+      <ProjectsList />
+    </Box>
   )
 }
 
