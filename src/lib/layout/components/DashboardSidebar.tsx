@@ -65,7 +65,7 @@ const DashboardSidebar = () => {
               label="My Portfolio"
               Icon={MyPortfolioIcon}
               isActive={pathname === '/user/portfolio'}
-              href="/user/portfoilo"
+              href="/user/portfolio"
             />
             <SideBarItem
               label="Transactions"

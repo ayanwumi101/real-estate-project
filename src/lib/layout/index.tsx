@@ -112,8 +112,8 @@ const DashboardSearchBar = ({setShowSearchBar}:{setShowSearchBar: (value: boolea
               <Tbody color="#222222">
                 {[1, 2, 3, 4, 5, 6, 7].map(() => {
                   return (
-                    <Tr px='0' border="none">
-                      <Td px='0' fontSize={18} fontWeight={600}>
+                    <Tr px="0" border="none" _hover={{ bg: '#f5f5f5' }}>
+                      <Td px="0" fontSize={18} fontWeight={600}>
                         Skyline Residences
                       </Td>
                       <Td fontWeight={500} fontSize={18}>
@@ -125,7 +125,7 @@ const DashboardSearchBar = ({setShowSearchBar}:{setShowSearchBar: (value: boolea
                       <Td fontWeight={500} fontSize={18}>
                         0.1
                       </Td>
-                      <Td w='120px'>
+                      <Td w="120px">
                         <Sparklines
                           data={[5, 10, 5, 20, 8, 15, 10, 25, 9, 5]}
                           width={120}

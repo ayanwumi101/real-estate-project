@@ -82,7 +82,7 @@ const MarketUpdates = () => {
                   <Tr
                     border="none"
                     borderBottom="1px solid #E4E4E4"
-                    _hover={{ bg: 'black' }}
+                    _hover={{ bg: '#f5f5f5' }}
                   >
                     <Td fontSize={18} fontWeight={700}>
                       Skyline Residences
