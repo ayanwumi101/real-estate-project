@@ -1,11 +1,10 @@
 import { Box, Avatar, Input, InputGroup, AvatarBadge, Flex, InputLeftElement, Heading, Text, Button, Stack} from '@chakra-ui/react'
-import React from 'react'
+import React, { useState } from 'react'
 import { DashboardNotificationIcon, InputSearchIcon } from '~/lib/components/Icons/Icons'
 
 
 
-const DashboardHeader = () => {
-  
+const DashboardHeader = ({setShowSearchBar}:{setShowSearchBar: (value: boolean) => void;}) => {
   return (
     <Box w="100%" px="40px" borderBottom="1px solid #E4E4E4" py="22px">
       <Box display="flex" alignItems="center">
@@ -26,6 +25,7 @@ const DashboardHeader = () => {
               _placeholder={{ color: '#8295AA' }}
               h="50px"
               w="100%"
+              onFocus={() => setShowSearchBar(true)}
             />
           </InputGroup>
           <DashboardNotificationIcon />
@@ -58,7 +58,15 @@ const DashboardHeader = () => {
               </Text>
             </Stack>
           </Box>
-          <Button borderRadius="50px" bg="#222222" color='#ffffff' py='6px' px='16px' fontSize={13} fontWeight={600}>
+          <Button
+            borderRadius="50px"
+            bg="#222222"
+            color="#ffffff"
+            py="6px"
+            px="16px"
+            fontSize={13}
+            fontWeight={600}
+          >
             Complete Now
           </Button>
         </Flex>
