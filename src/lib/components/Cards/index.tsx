@@ -1,4 +1,4 @@
-import { Box, Image, Text, Stack, Heading, Flex } from "@chakra-ui/react"
+import { Box, Image, Text, Stack, Heading, Flex, Button } from "@chakra-ui/react"
 import { LocationIcon } from '~/lib/components/Icons/Icons';
 
 export const PropertyCard = ({imageSource}: {imageSource: string}) => {
@@ -142,6 +142,35 @@ export const ImageCard = ({imageSource, location}: {imageSource: string, locatio
           {location}
         </Text>
       </Box>
+    </Box>
+  );
+}
+
+
+export const SingleApartmentCard = ({title, description}:{title: string, description: string}) => {
+  return (
+    <Box py="16px" borderTop="1px solid #E4E4E4">
+      <Stack spacing="10px">
+        <Heading fontWeight={700} color="#222222" fontSize={16}>
+          {title}
+        </Heading>
+        <Text color="#222222" fontWeight={500}>
+          {description}
+        </Text>
+        <Flex alignItems="center" gap="8px">
+          <Button bg="#EDEDFF" color="#000080" fontWeight={600}>
+            More information
+          </Button>
+          <Button
+            bg="none"
+            textDecoration="underline"
+            color="#000080"
+            fontWeight={600}
+          >
+            Buy now
+          </Button>
+        </Flex>
+      </Stack>
     </Box>
   );
 }

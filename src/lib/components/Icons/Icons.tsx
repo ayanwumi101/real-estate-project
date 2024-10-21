@@ -474,3 +474,108 @@ export const InvestIcon = () => {
     </svg>
   );
 }
+
+
+export const CautionIcon = () => {
+  return (
+    <svg
+      width="68"
+      height="68"
+      viewBox="0 0 68 68"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g filter="url(#filter0_d_188_2378)">
+        <g filter="url(#filter1_d_188_2378)">
+          <mask id="path-1-inside-1_188_2378" fill="white">
+            <path d="M34 38C39.5228 38 44 33.5228 44 28C44 22.4772 39.5228 18 34 18C28.4772 18 24 22.4772 24 28C24 33.5228 28.4772 38 34 38Z" />
+            <path d="M35 24C35 24.5523 34.5523 25 34 25C33.4477 25 33 24.5523 33 24C33 23.4477 33.4477 23 34 23C34.5523 23 35 23.4477 35 24Z" />
+          </mask>
+          <path
+            d="M34 38C39.5228 38 44 33.5228 44 28C44 22.4772 39.5228 18 34 18C28.4772 18 24 22.4772 24 28C24 33.5228 28.4772 38 34 38Z"
+            fill="#000080"
+          />
+          <path
+            d="M35 24C35 24.5523 34.5523 25 34 25C33.4477 25 33 24.5523 33 24C33 23.4477 33.4477 23 34 23C34.5523 23 35 23.4477 35 24Z"
+            fill="#000080"
+          />
+          <path
+            d="M33.5 32C33.5 32.2761 33.7239 32.5 34 32.5C34.2761 32.5 34.5 32.2761 34.5 32H33.5ZM34.5 28C34.5 27.7239 34.2761 27.5 34 27.5C33.7239 27.5 33.5 27.7239 33.5 28H34.5ZM34.5 32V28H33.5V32H34.5ZM43 28C43 32.9706 38.9706 37 34 37V39C40.0751 39 45 34.0751 45 28H43ZM34 37C29.0294 37 25 32.9706 25 28H23C23 34.0751 27.9249 39 34 39V37ZM25 28C25 23.0294 29.0294 19 34 19V17C27.9249 17 23 21.9249 23 28H25ZM34 19C38.9706 19 43 23.0294 43 28H45C45 21.9249 40.0751 17 34 17V19ZM34 24V26C35.1046 26 36 25.1046 36 24H34ZM34 24H32C32 25.1046 32.8954 26 34 26V24ZM34 24V22C32.8954 22 32 22.8954 32 24H34ZM34 24H36C36 22.8954 35.1046 22 34 22V24Z"
+            fill="#EDEDFF"
+            mask="url(#path-1-inside-1_188_2378)"
+          />
+        </g>
+      </g>
+      <defs>
+        <filter
+          id="filter0_d_188_2378"
+          x="-4"
+          y="-4"
+          width="76"
+          height="76"
+          filterUnits="userSpaceOnUse"
+          color-interpolation-filters="sRGB"
+        >
+          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dy="6" />
+          <feGaussianBlur stdDeviation="12" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_188_2378"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect1_dropShadow_188_2378"
+            result="shape"
+          />
+        </filter>
+        <filter
+          id="filter1_d_188_2378"
+          x="0"
+          y="0"
+          width="68"
+          height="68"
+          filterUnits="userSpaceOnUse"
+          color-interpolation-filters="sRGB"
+        >
+          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dy="6" />
+          <feGaussianBlur stdDeviation="12" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_188_2378"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect1_dropShadow_188_2378"
+            result="shape"
+          />
+        </filter>
+      </defs>
+    </svg>
+  );
+}
