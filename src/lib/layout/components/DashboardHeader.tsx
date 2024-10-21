@@ -9,7 +9,6 @@ const DashboardHeader = ({setShowSearchBar}:{setShowSearchBar: (value: boolean) 
     <Box 
       w="100%" 
       px="40px" 
-      // borderBottom="1px solid #E4E4E4" 
       py="22px"
     >
       <Box display="flex" alignItems="center">

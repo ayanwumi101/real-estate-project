@@ -5,7 +5,7 @@ const Hero = () => {
   return (
     <Box as="section" maxW="1200px" pt={['70px', 0]} mx="auto" px={['24px', 0]}>
       <Flex alignItems="center" justifyContent="space-between" flexWrap='wrap'>
-        <Box maxW="550px" mb={['40px', 0]}>
+        <Box maxW="570px" mb={['40px', 0]}>
           <Box mb="24px">
             <Heading as="h1" fontSize={[38,60]} fontWeight="700" color="#222222">
               Discover a New Era
@@ -31,7 +31,7 @@ const Hero = () => {
             projects. Get Started
           </Text>
         </Box>
-        <Box maxW="580px">
+        <Box maxW="560px">
           <Image src="/assets/svgs/hero-image.svg" alt="Chakra UI Logo" />
         </Box>
       </Flex>

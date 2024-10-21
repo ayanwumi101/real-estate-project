@@ -1,8 +1,15 @@
 import React from 'react'
+import PropertyDetails from './components/PropertyDetails'
+import Header from './components/Header'
+import { Box } from '@chakra-ui/react'
+
 
 const index = () => {
   return (
-    <div>index</div>
+    <Box>
+      <Header />
+      <PropertyDetails />
+    </Box>
   )
 }
 

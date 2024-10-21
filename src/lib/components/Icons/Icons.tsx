@@ -454,3 +454,23 @@ export const MyAssetsIcon = ({isActive}:{isActive: boolean}) => {
     </svg>
   );
 }
+
+
+export const InvestIcon = () => {
+  return (
+    <svg
+      width="28"
+      height="28"
+      viewBox="0 0 28 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M25 8L15.5 17.5L10.5 12.5L3 20M25 8H19M25 8V14"
+        stroke="#EDEDFF"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
