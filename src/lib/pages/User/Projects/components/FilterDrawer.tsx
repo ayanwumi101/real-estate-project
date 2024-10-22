@@ -11,50 +11,55 @@ import {
   FormLabel,
   CheckboxGroup,
   Checkbox,
+  useMediaQuery,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import React from 'react';
 import { IoChevronDown, IoCloseOutline } from 'react-icons/io5';
 import { FilterIcon } from '~/lib/components/Icons/Icons';
 
-const MotionBox = motion(Box);
 
 const FilterDrawer = ({
   setOpenFilterDrawer,
 }: {
   setOpenFilterDrawer: (value: boolean) => void;
 }) => {
+  const [isMobile] = useMediaQuery('(max-width: 768px)');
   return (
-    <MotionBox
+    <motion.div
       initial={{ x: '100%' }}
       animate={{ x: 0 }}
       exit={{ x: '100%' }}
       transition={{ duration: 0.3 }}
-      bg="rgba(0,0,0,0.3)"
-      w="100%"
-      h="100%"
-      position="fixed"
-      top="0"
-      right="0"
-      zIndex="10"
-      overflow="auto"
-      backdropFilter="blur(8px)"
+      style={{
+        backgroundColor: "rgba(0,0,0,0.3)",
+        width: "100%",
+        height: "100%",
+        position: "fixed",
+        top: "0",
+        right:"0",
+        zIndex:"10",
+        overflow: "auto",
+        backdropFilter:"blur(8px)"
+      }}
     >
-      <MotionBox
+      <motion.div
         initial={{ x: '100%' }}
         animate={{ x: 0 }}
         exit={{ x: '100%' }}
         transition={{ duration: 0.5 }}
-        bg="#FFFFFF"
-        w={['85%', '28%']}
-        h="100%"
-        position="absolute"
-        top="0"
-        right="0"
-        zIndex="15"
-        px="24px"
-        overflow="auto"
-        py="30px"
+        style={{
+          backgroundColor: "#FFFFFF",
+          width: isMobile ? "85%" : "28%",
+          height: "100%",
+          position: "absolute",
+          top: "0",
+          right: "0",
+          zIndex: "15",
+          padding: "24px",
+          overflow: "auto",
+          paddingTop: "30px"
+        }}
       >
         <Stack spacing="20px">
           <Box pb="20px" borderBottom="1px solid #E4E4E4">
@@ -239,8 +244,8 @@ const FilterDrawer = ({
             Apply
           </Button>
         </Stack>
-      </MotionBox>
-    </MotionBox>
+      </motion.div>
+    </motion.div>
   );
 };
 
