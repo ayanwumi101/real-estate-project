@@ -17,6 +17,7 @@ import {
 import React from 'react';
 import { Sparklines, SparklinesLine } from 'react-sparklines';
 
+
 const MarketUpdates = () => {
   return (
     <Box py="30px" px="40px" borderBottom="1px solid #E4E4E4">

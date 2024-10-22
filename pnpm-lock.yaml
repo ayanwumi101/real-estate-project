@@ -66,6 +66,9 @@ importers:
       '@types/react':
         specifier: ^18.3.5
         version: 18.3.5
+      '@types/react-sparklines':
+        specifier: ^1.7.5
+        version: 1.7.5
       commitizen:
         specifier: ^4.3.0
         version: 4.3.0(@types/node@22.5.4)(typescript@5.6.2)
@@ -1636,6 +1639,9 @@ packages:
 
   '@types/prop-types@15.7.12':
     resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
+
+  '@types/react-sparklines@1.7.5':
+    resolution: {integrity: sha512-rIAmNyRKUqWWnaQMjNrxMNkgEFi5f9PrdczSNxj5DscAa48y4i9P0fRKZ72FmNcFsdg6Jx4o6CXWZtIaC0OJOg==}
 
   '@types/react@18.3.5':
     resolution: {integrity: sha512-WeqMfGJLGuLCqHGYRGHxnKrXcTitc6L/nBUWfWPcTarG3t9PsquqUMuVeXZeca+mglY4Vo5GZjCi0A3Or2lnxA==}
@@ -7026,6 +7032,10 @@ snapshots:
   '@types/parse-json@4.0.2': {}
 
   '@types/prop-types@15.7.12': {}
+
+  '@types/react-sparklines@1.7.5':
+    dependencies:
+      '@types/react': 18.3.5
 
   '@types/react@18.3.5':
     dependencies:
