@@ -147,7 +147,7 @@ export const ImageCard = ({imageSource, location}: {imageSource: string, locatio
 }
 
 
-export const SingleApartmentCard = ({title, description}:{title: string, description: string}) => {
+export const SingleApartmentCard = ({title, description, buyProperty}:{title: string, description: string, buyProperty: () => void}) => {
   return (
     <Box py="16px" borderTop="1px solid #E4E4E4">
       <Stack spacing="10px">
@@ -166,6 +166,7 @@ export const SingleApartmentCard = ({title, description}:{title: string, descrip
             textDecoration="underline"
             color="#000080"
             fontWeight={600}
+            onClick={buyProperty}
           >
             Buy now
           </Button>

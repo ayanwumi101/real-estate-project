@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Box,
   Heading,
@@ -12,6 +14,7 @@ import {
 import React from 'react';
 import { SingleApartmentCard } from '~/lib/components/Cards';
 import { CautionIcon, InvestIcon } from '~/lib/components/Icons/Icons';
+import PurchasePropertyFlow from './PurchasePropertyFlow';
 
 
 
@@ -118,7 +121,7 @@ const OtherDetails = () => {
 
 
 
-const MainDetails = () => {
+const MainDetails = ({openPurchaseModal, setOpenPurchaseModal}: { openPurchaseModal: boolean, setOpenPurchaseModal: (value: boolean) => void; }) => {
   return (
     <Box w="62%">
       <Stack spacing="30px">
@@ -128,7 +131,7 @@ const MainDetails = () => {
           professionals.
         </Text>
         <Box>
-          <Flex alignItems="center" justifyContent='space-between'>
+          <Flex alignItems="center" justifyContent="space-between">
             <Image
               src="/assets/images/house-1.png"
               w="190px"
@@ -151,7 +154,7 @@ const MainDetails = () => {
         </Box>
         <Box>
           <Stack>
-            <Box mb='16px'>
+            <Box mb="16px">
               <Text fontWeight={600} color="#ABABFF" mb="10px">
                 Units
               </Text>
@@ -162,22 +165,27 @@ const MainDetails = () => {
             <SingleApartmentCard
               title="Mini Flat – ₦15M (150,000M/share)"
               description="1 sitting room, 1 bedroom, one toilet and bathroom, kitchen"
+              buyProperty={() => setOpenPurchaseModal(true)}
             />
             <SingleApartmentCard
               title="Mini Flat – ₦15M (150,000M/share)"
               description="1 sitting room, 1 bedroom, one toilet and bathroom, kitchen"
+              buyProperty={() => setOpenPurchaseModal(true)}
             />
             <SingleApartmentCard
               title="Mini Flat – ₦15M (150,000M/share)"
               description="1 sitting room, 1 bedroom, one toilet and bathroom, kitchen"
+              buyProperty={() => setOpenPurchaseModal(true)}
             />
             <SingleApartmentCard
               title="Mini Flat – ₦15M (150,000M/share)"
               description="1 sitting room, 1 bedroom, one toilet and bathroom, kitchen"
+              buyProperty={() => setOpenPurchaseModal(true)}
             />
             <SingleApartmentCard
               title="Mini Flat – ₦15M (150,000M/share)"
               description="1 sitting room, 1 bedroom, one toilet and bathroom, kitchen"
+              buyProperty={() => setOpenPurchaseModal(true)}
             />
           </Stack>
         </Box>
@@ -187,12 +195,17 @@ const MainDetails = () => {
 };
 
 const PropertyDetails = () => {
+  const [openPurchaseModal, setOpenPurchaseModal] = React.useState(false);
   return (
     <Box py="30px" px="40px" borderBottom="1px solid #E4E4E4">
       <Flex gap="40px">
-        <MainDetails />
+        <MainDetails openPurchaseModal={openPurchaseModal} setOpenPurchaseModal={setOpenPurchaseModal} />
         <OtherDetails />
       </Flex>
+      <PurchasePropertyFlow
+        isOpen={openPurchaseModal}
+        onClose={() => setOpenPurchaseModal(false)}
+      />
     </Box>
   );
 };

@@ -1,0 +1,21 @@
+import React, { ReactNode } from 'react'
+import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from '@chakra-ui/react'
+
+const CustomModal = ({isOpen, onClose, children,}: {isOpen: boolean, onClose: () => void, children: ReactNode,}) => {
+  return (
+    <Modal size='2xl' isOpen={isOpen} onClose={onClose} isCentered={true}>
+      <ModalOverlay backdropFilter="blur(8px)" />
+      <ModalContent
+        bg="white"
+        py="20px"
+        px="20px"
+        borderRadius="5px"
+        w='100%'
+      >
+        <ModalBody w="100%">{children}</ModalBody>
+      </ModalContent>
+    </Modal>
+  );
+}
+
+export default CustomModal
