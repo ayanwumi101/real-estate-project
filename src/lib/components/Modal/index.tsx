@@ -11,6 +11,9 @@ const CustomModal = ({isOpen, onClose, children,}: {isOpen: boolean, onClose: ()
         px="20px"
         borderRadius="5px"
         w='100%'
+        h='auto'
+        maxH='90vh'
+        overflow='auto'
       >
         <ModalBody w="100%">{children}</ModalBody>
       </ModalContent>
