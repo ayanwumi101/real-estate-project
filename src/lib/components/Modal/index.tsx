@@ -3,7 +3,7 @@ import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, 
 
 const CustomModal = ({isOpen, onClose, children,}: {isOpen: boolean, onClose: () => void, children: ReactNode,}) => {
   return (
-    <Modal size='2xl' isOpen={isOpen} onClose={onClose} isCentered={true}>
+    <Modal blockScrollOnMount={true} size='2xl' isOpen={isOpen} onClose={onClose} isCentered={true}>
       <ModalOverlay backdropFilter="blur(8px)" />
       <ModalContent
         bg="white"
