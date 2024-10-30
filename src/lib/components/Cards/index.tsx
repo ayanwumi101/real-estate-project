@@ -1,5 +1,9 @@
 import { Box, Image, Text, Stack, Heading, Flex, Button } from "@chakra-ui/react"
 import { LocationIcon } from '~/lib/components/Icons/Icons';
+import { IoMdArrowForward } from 'react-icons/io';
+import { FiEye } from 'react-icons/fi';
+
+
 
 export const PropertyCard = ({imageSource}: {imageSource: string}) => {
     return (
@@ -172,6 +176,40 @@ export const SingleApartmentCard = ({title, description, buyProperty}:{title: st
           </Button>
         </Flex>
       </Stack>
+    </Box>
+  );
+}
+
+
+
+export const PortfolioStatCard = () => {
+  return (
+    <Box
+      w="357px"
+      borderRadius="5px"
+      pt="32px"
+      border="1px solid #E4E4E4"
+      boxShadow="md"
+    >
+      <Box px="16px" mb="16px">
+        <Text mb="16px" color="#ABABFF" fontWeight={500}>
+          Wallet Balance
+        </Text>
+        <Flex alignItems="center" gap="16px">
+          <Heading fontSize={24} fontWeight={500} color="#222222">
+            ₦ 150,000
+          </Heading>
+          <FiEye color="#2E353F" fontSize={20} />
+        </Flex>
+      </Box>
+      <Box borderTop="1px solid #D8D8FF" bg="#EDEDFF" p="16px">
+        <Flex alignItems="center" gap="10px">
+          <Text fontWeight={600} color="#2E353F">
+            Show more
+          </Text>
+          <IoMdArrowForward color="#2E353F" />
+        </Flex>
+      </Box>
     </Box>
   );
 }

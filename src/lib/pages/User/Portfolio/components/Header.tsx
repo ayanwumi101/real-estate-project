@@ -1,41 +1,53 @@
 import { Box, Image, Heading, Text, Button, Flex, Stack } from '@chakra-ui/react'
 import React from 'react'
-import { LocationIcon, InvestIcon } from '~/lib/components/Icons/Icons';
+import { LocationIcon, InvestIcon, AddIcon } from '~/lib/components/Icons/Icons';
+import { HiPlus } from 'react-icons/hi2';
+import { PortfolioStatCard } from '~/lib/components/Cards';
 
 
 const Header = () => {
   return (
-    <Box py="30px" px="40px" borderY="1px solid #E4E4E4">
-      <Flex alignItems="flex-start" justifyContent="space-between">
-        <Box>
-          <Flex alignItems="flex-start" gap="10px">
-            <Image src='/assets/images/house-1.png' w='100px' h='90px' objectFit='cover' />
-            <Stack spacing="10px">
-              <Heading fontSize={24} fontWeight={500} color="#222222">
-                Skyline Residences
-              </Heading>
-              <Flex alignItems="center" gap="10px">
-                <LocationIcon />
-                <Text color="#2E353F" fontWeight={500}>
-                  Victoria Island, Lagos
-                </Text>
+    <Box borderY="1px solid #E4E4E4">
+      <Stack>
+        <Box py="30px" px="40px" borderBottom="1px solid #E4E4E4">
+          <Flex alignItems="center" justifyContent="space-between">
+            <Heading fontSize={24} fontWeight={500} color="#222222">
+              3 Properties
+            </Heading>
+            <Box>
+              <Flex alignItems="center" gap="12px">
+                <Button
+                  bg="#EDEDFF"
+                  color="#4040A0"
+                  fontWeight={600}
+                  fontSize={14}
+                  borderRadius="50px"
+                >
+                  Withdraw from wallet
+                </Button>
+                <Button
+                  bg="#000080"
+                  fontSize={14}
+                  color="#ffffff"
+                  fontWeight={500}
+                >
+                  <Flex alignItems="center" gap="10px">
+                    <Text>Fund Wallet</Text>
+                    <HiPlus color="white" fontSize={20} fontWeight={700} />
+                  </Flex>
+                </Button>
               </Flex>
-              <Heading fontSize={18} color="#FFAE42" fontWeight={700}>
-                ₦5,000 - 15,000/{' '}
-                <Box as="span" color="#2E353F" fontSize={16} fontWeight={500}>
-                  share
-                </Box>
-              </Heading>
-            </Stack>
+            </Box>
           </Flex>
         </Box>
-        <Button bg="#000080" color='#ffffff' fontWeight={500} fontSize={15}>
-          <Flex alignItems='center' gap='8px'>
-            <Text>Invest now</Text>
-            <InvestIcon />
+        <Box py="40px" px="40px" overflow='auto'>
+          <Flex alignItems="center" gap="16px">
+            <PortfolioStatCard />
+            <PortfolioStatCard />
+            <PortfolioStatCard />
           </Flex>
-        </Button>
-      </Flex>
+        </Box>
+      </Stack>
     </Box>
   );
 }

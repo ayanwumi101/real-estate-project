@@ -642,3 +642,103 @@ export const CloseIcon = () => {
     </svg>
   );
 }
+
+
+export const AddIcon = () => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12 6V18M6 12H18"
+        stroke="#FBFBFB"
+        stroke-width="0.857143"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+
+export const ProfitIcon = () => {
+  return (
+    <svg
+      width="15"
+      height="13"
+      viewBox="0 0 15 13"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M0.75 11.75L7.5 1.25L14.25 11.75H0.75Z"
+        fill="#1BD155"
+        stroke="#1BD155"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export const LossIcon = () => {
+  return (
+    <svg
+      width="15"
+      height="13"
+      viewBox="0 0 15 13"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M14.25 1.25L7.5 11.75L0.75 1.25L14.25 1.25Z"
+        fill="#EC191C"
+        stroke="#EC191C"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export const OutwardTransactionIcon = () => {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M1 11L11 1M11 1H1M11 1V11"
+        stroke="#EC191C"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export const InwardTransactionIcon = () => {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M1 1L11 11M11 11V1M11 11H1"
+        stroke="#1BD155"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
