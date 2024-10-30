@@ -1,5 +1,5 @@
 import React from 'react'
-import TransactionSuccess from '~/lib/pages/User/Portfolio/components/TransactionSuccess'
+import TransactionSuccess from '~/lib/pages/User/propertyDetails/components/TransactionSuccess'
 
 const page = () => {
   return <TransactionSuccess />
