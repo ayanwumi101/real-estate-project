@@ -27,6 +27,8 @@ import {
   OutwardTransactionIcon, InwardTransactionIcon
 } from '~/lib/components/Icons/Icons';
 import { IoMdArrowForward } from 'react-icons/io';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 
 
@@ -65,6 +67,7 @@ const TransactionListItem = () => {
   );
 };
 
+
 const TransactionsList = () => {
   return (
     <Box>
@@ -99,6 +102,7 @@ const TransactionsList = () => {
 };
 
 const PropertyListTable = () => {
+  const router = useRouter();
   return (
     <Box>
       <TableContainer>
@@ -142,7 +146,17 @@ const PropertyListTable = () => {
           <Tbody color="#222222">
             {[1, 2, 3, 4].map(() => {
               return (
-                <Tr border="none" _hover={{ bg: '#f5f5f5' }} px="0">
+                <Tr
+                  // as="a"
+                  // passHref="/user/portfolio/property-details"
+                  border="none"
+                  _hover={{ bg: '#f5f5f5' }}
+                  px="0"
+                  cursor="pointer"
+                  onClick={() =>
+                    router.push('/user/portfolio/property-details')
+                  }
+                >
                   <Td fontSize={18} fontWeight={700} px="0">
                     <Flex alignItems="center" gap="10px">
                       <Image
