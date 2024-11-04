@@ -1,11 +1,16 @@
+'use client'
+
 import { Box, Image, Heading, Text, Button, Flex, Stack } from '@chakra-ui/react'
 import React from 'react'
 import { LocationIcon, InvestIcon, AddIcon } from '~/lib/components/Icons/Icons';
 import { HiPlus } from 'react-icons/hi2';
 import { PortfolioStatCard } from '~/lib/components/Cards';
+import FundWalletFlow from '~/lib/components/FundWalletFlow'
+
 
 
 const Header = () => {
+  const [showFundWalletModal, setShowFundWalletModal] = React.useState(false);
   return (
     <Box borderY="1px solid #E4E4E4">
       <Stack>
@@ -30,6 +35,7 @@ const Header = () => {
                   fontSize={14}
                   color="#ffffff"
                   fontWeight={500}
+                  onClick={() => setShowFundWalletModal(true)}
                 >
                   <Flex alignItems="center" gap="10px">
                     <Text>Fund Wallet</Text>
@@ -48,6 +54,7 @@ const Header = () => {
           </Flex>
         </Box>
       </Stack>
+      <FundWalletFlow isOpen={showFundWalletModal} onClose={() => setShowFundWalletModal(false)}  />
     </Box>
   );
 }
