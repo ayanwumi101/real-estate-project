@@ -52,8 +52,8 @@ const DashboardSidebar = () => {
             <SideBarItem
               label="My Assets"
               Icon={MyAssetsIcon}
-              isActive={pathname === '/user/assets'}
-              href="/user/assets"
+              isActive={pathname === '/user/my-assets'}
+              href="/user/my-assets"
             />
             <SideBarItem
               label="Browse Project"
