@@ -11,7 +11,7 @@ import { LocationIcon } from '~/lib/components/Icons/Icons';
 import { IoMdArrowForward } from 'react-icons/io';
 import { FiEye } from 'react-icons/fi';
 import Link from 'next/link';
-
+import { ReactHTMLElement, ReactNode, ReactElement } from 'react';
 
 export const PropertyCard = ({ imageSource }: { imageSource: string }) => {
   return (
@@ -61,7 +61,7 @@ export const PropertyCard = ({ imageSource }: { imageSource: string }) => {
 
 export const UserPropertyCard = ({ imageSource }: { imageSource: string }) => {
   return (
-    <Link href='/user/projects/1'>
+    <Link href="/user/projects/1">
       <Box w={['100%', '240px']} h="auto">
         <Box
           w="100%"
@@ -253,8 +253,8 @@ export const StatCard = () => {
       borderRadius="5px"
       py="22px"
       border="1px solid #E4E4E4"
-      boxShadow="md"
-      px='22px'
+      boxShadow="sm"
+      px="22px"
     >
       <Box>
         <Text mb="10px" fontSize={16} color="#ABABFF" fontWeight={500}>
@@ -263,6 +263,26 @@ export const StatCard = () => {
         <Heading fontSize={24} fontWeight={500} color="#222222">
           ₦ 150,000
         </Heading>
+      </Box>
+    </Box>
+  );
+};
+
+export const AssetStatCard = ({label, children}:{label: string, children: ReactElement}) => {
+  return (
+    <Box
+      w="260px"
+      borderRadius="5px"
+      py="22px"
+      border="1px solid #E4E4E4"
+      boxShadow="sm"
+      px="22px"
+    >
+      <Box>
+        <Text mb="10px" fontSize={16} color="#ABABFF" fontWeight={500}>
+          {label}
+        </Text>
+        {children}
       </Box>
     </Box>
   );

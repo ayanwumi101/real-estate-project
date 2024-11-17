@@ -123,6 +123,8 @@ const PropertyListTable = () => {
   );
 };
 
+
+
 const TransactionListItem = () => {
   return (
     <Box>
