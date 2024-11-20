@@ -1,30 +1,66 @@
 'use client'
 
-import { Box, Input, Button, Text, Heading, FormLabel, FormControl, Image, Flex, HStack, Icon, Stack, InputGroup, InputRightElement, Checkbox, InputLeftAddon} from '@chakra-ui/react'
+import { Box, Input, Button, Text, Heading, FormLabel, FormControl, Spinner, useToast, Image, Flex, HStack, Icon, Stack, InputGroup, InputRightElement, Checkbox, InputLeftAddon} from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { GoogleIcon, AppleIcon, MicrosoftIcon } from '~/lib/components/Icons/Icons'
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 import Link from 'next/link';
-
-
-
-
-export const SocialLoginButton = ({label, Icon} : {label: string, Icon: any}) => {
-    return (
-      <Button border="1px solid #8295AA" bg="#FBFBFB" w={['100%','200px']} py='25px'>
-        <Flex alignItems="center" gap="12px">
-          <Icon as={Icon} />
-          <Text fontWeight={700} color="#222222">
-            {label}
-          </Text>
-        </Flex>
-      </Button>
-    );
-}
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useRouter } from 'next/navigation';
+import { AddPassowrd } from '~/lib/api/services/userService';
 
 
 const LoginForm = () => {
     const [showPassword, setShowPassword] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(false);
+    const toast = useToast();
+    const router = useRouter();
+    const user_id = ''
+
+    const formik = useFormik({
+      initialValues: {
+        phone: '',
+        password: '',
+      },
+      validationSchema: Yup.object({
+        phone: Yup.number().required('Phone Number is required'),
+        password: Yup.string().required('Password is required'),
+      }),
+      onSubmit: async (values) => {
+        const formData = {phone: values.phone, password: values.password, user_id: user_id}
+        setLoading(true);
+        try {
+          const response = await AddPassowrd(formData);
+          const data = response.data;
+          console.log(response);
+          if (response.success === true) {
+            toast({
+              title: data.message as string,
+              description: 'Login successful',
+              duration: 3000,
+              position: 'top-right',
+              isClosable: true,
+              status: 'success',
+            });
+            router.push('/signup/verify-otp');
+          }
+        } catch (error: any) {
+          setLoading(false);
+          toast({
+            title: error.response.data.message as string,
+            description: 'Login unsuccessful',
+            duration: 3000,
+            position: 'top-right',
+            isClosable: true,
+            status: 'error',
+          });
+        } finally {
+          setLoading(false);
+        }
+      },
+    });
+
   return (
     <Box px={['24px', '44px']} py="60px">
       <Box mb="40px">
@@ -40,65 +76,89 @@ const LoginForm = () => {
         </Text>
       </Box>
       <Box>
-        <Stack spacing="32px">
-          <FormControl>
-            <FormLabel mb="10px" color="#222222" fontWeight={600}>
-              Phone number*
-            </FormLabel>
-            <InputGroup>
-              <InputLeftAddon
-                bg="#F5F5F5"
-                color="#2E353F"
-                py="25px"
-                borderTopLeftRadius="50px"
-                borderBottomLeftRadius="50px"
-                border="1px solid #C0C0C0"
-              >
-                +234
-              </InputLeftAddon>
-              <Input
-                border="1px solid #C0C0C0"
-                bg="#FBFBFB"
-                borderRadius="50px"
-                _placeholder={{ color: '#8295AA' }}
-                py="25px"
-                px="20px"
-                placeholder="Enter your phone number"
-                color="#222222"
-                type="tel"
-              />
-            </InputGroup>
-          </FormControl>
-          <FormControl>
-            <FormLabel mb="10px" color="#222222" fontWeight={600}>
-              Create your password*
-            </FormLabel>
-            <InputGroup w="100%">
-              <Input
-                pr="12"
-                py="12px"
-                border="1px solid #C0C0C0"
-                type={showPassword ? 'text' : 'password'}
-                placeholder="*********"
-                borderRadius="50px"
-                bg="#FBFBFB"
-                color="#8295AA"
-                _placeholder={{ color: '#8295AA' }}
-                h="50px"
-              />
-              <InputRightElement w="4rem" mt="1.5">
-                <Button onClick={() => setShowPassword(!showPassword)}>
-                  {showPassword ? (
-                    <IoMdEye color="#8295AA" size={22} />
-                  ) : (
-                    <IoMdEyeOff color="#8295AA" size={22} />
-                  )}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
-          </FormControl>
-          <Box w="100%">
-            <Link href="/signup/verify-otp">
+        <form onSubmit={formik.handleSubmit}>
+          <Stack spacing="32px">
+            <FormControl
+              isInvalid={!!formik.errors.phone && formik.touched.phone}
+            >
+              <FormLabel mb="10px" color="#222222" fontWeight={600}>
+                Phone number*
+              </FormLabel>
+              <InputGroup>
+                <InputLeftAddon
+                  bg="#F5F5F5"
+                  color="#2E353F"
+                  py="25px"
+                  borderTopLeftRadius="50px"
+                  borderBottomLeftRadius="50px"
+                  border="1px solid #C0C0C0"
+                >
+                  +234
+                </InputLeftAddon>
+                <Input
+                  border="1px solid #C0C0C0"
+                  bg="#FBFBFB"
+                  borderRadius="50px"
+                  _placeholder={{ color: '#8295AA' }}
+                  py="25px"
+                  px="20px"
+                  placeholder="Enter your phone number"
+                  color="#222222"
+                  type="tel"
+                  name="phone"
+                  maxLength={10}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.phone}
+                />
+              </InputGroup>
+              {formik.errors.phone && formik.touched.phone && (
+                <Text color="red.500" mt="2">
+                  {formik.errors.phone}
+                </Text>
+              )}
+            </FormControl>
+            <FormControl
+              isInvalid={!!formik.errors.password && formik.touched.password}
+            >
+              <FormLabel mb="10px" color="#222222" fontWeight={600}>
+                Create your password*
+              </FormLabel>
+              <InputGroup w="100%">
+                <Input
+                  pr="12"
+                  py="12px"
+                  border="1px solid #C0C0C0"
+                  type={showPassword ? 'text' : 'password'}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.password}
+                  placeholder="*********"
+                  borderRadius="50px"
+                  bg="#FBFBFB"
+                  color="#8295AA"
+                  _placeholder={{ color: '#8295AA' }}
+                  h="50px"
+                  name="password"
+                />
+                <InputRightElement w="4rem" mt="1.5">
+                  <Button onClick={() => setShowPassword(!showPassword)}>
+                    {showPassword ? (
+                      <IoMdEye color="#8295AA" size={22} />
+                    ) : (
+                      <IoMdEyeOff color="#8295AA" size={22} />
+                    )}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+              {formik.errors.password && formik.touched.password && (
+                <Text color="red.500" mt="2">
+                  {formik.errors.password}
+                </Text>
+              )}
+            </FormControl>
+            <Box w="100%">
+              {/* <Link href="/signup/verify-otp"> */}
               <Button
                 w="100%"
                 mb="10px"
@@ -106,18 +166,20 @@ const LoginForm = () => {
                 color="white"
                 h="55px"
                 borderRadius="50px"
+                type="submit"
               >
-                Continue
+                {loading ? <Spinner /> : 'Continue'}
               </Button>
-            </Link>
-            <Text color="#131339" fontWeight={500}>
-              Already Have an Account?{' '}
-              <Box as="span" color="#FFAE42" fontWeight={700}>
-                <Link href="/signin">Sign in</Link>
-              </Box>
-            </Text>
-          </Box>
-        </Stack>
+              {/* </Link> */}
+              <Text color="#131339" fontWeight={500}>
+                Already Have an Account?{' '}
+                <Box as="span" color="#FFAE42" fontWeight={700}>
+                  <Link href="/signin">Sign in</Link>
+                </Box>
+              </Text>
+            </Box>
+          </Stack>
+        </form>
       </Box>
     </Box>
   );

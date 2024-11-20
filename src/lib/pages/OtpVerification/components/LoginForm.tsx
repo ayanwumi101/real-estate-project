@@ -1,30 +1,85 @@
 'use client'
 
-import { Box, Input, Button, Text, Heading, FormLabel, FormControl, Image, Flex, HStack, Icon, Stack, InputGroup, InputRightElement } from '@chakra-ui/react'
+import { Box, Input, Button, Text, Heading, FormLabel, FormControl, useToast, Spinner, Image, Flex, HStack, Icon, Stack, InputGroup, InputRightElement } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { GoogleIcon, AppleIcon, MicrosoftIcon } from '~/lib/components/Icons/Icons'
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 import Link from 'next/link';
-
-
-
-
-export const SocialLoginButton = ({label, Icon} : {label: string, Icon: any}) => {
-    return (
-      <Button border="1px solid #8295AA" bg="#FBFBFB" w={['100%','200px']} py='25px'>
-        <Flex alignItems="center" gap="12px">
-          <Icon as={Icon} />
-          <Text fontWeight={700} color="#222222">
-            {label}
-          </Text>
-        </Flex>
-      </Button>
-    );
-}
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useRouter } from 'next/navigation';
+import { ValidateOtp, ResendOtp } from '~/lib/api/services/userService';
 
 
 const LoginForm = () => {
-    const [showPassword, setShowPassword] = useState<boolean>(false)
+     const [loading, setLoading] = useState<boolean>(false);
+     const toast = useToast();
+     const router = useRouter();
+
+     const formik = useFormik({
+       initialValues: {
+         email: '',
+         otp: '',
+       },
+       validationSchema: Yup.object({
+         email: Yup.string()
+           .email('Invalid email address')
+           .required('Email is required'),
+         otp: Yup.string().required('Otp is required'),
+       }),
+       onSubmit: async (values) => {
+         setLoading(true);
+         try {
+           const response = await ValidateOtp(values);
+           const data = response.data;
+           console.log(response);
+           if (response.success === true) {
+             toast({
+               title: data.message as string,
+               description: 'Otp Verification successful',
+               duration: 3000,
+               position: 'top-right',
+               isClosable: true,
+               status: 'success',
+             });
+             router.push('/signup/signup-success');
+           }
+         } catch (error: any) {
+           setLoading(false);
+           toast({
+             title: error.response.data.message as string,
+             description: 'Otp Verification failed',
+             duration: 3000,
+             position: 'top-right',
+             isClosable: true,
+             status: 'error',
+           });
+         } finally {
+           setLoading(false);
+         }
+       },
+     });
+
+
+
+     const ResendCode = async() => {
+      try {
+        const res = await ResendOtp({});
+        const data = await res.data;
+        if(data){
+          toast({
+
+          })
+        }
+      } catch (error) {
+        toast({
+
+        })
+      }
+     }
+
+     
+
   return (
     <Box px={['24px', '44px']} py="60px">
       <Box mb="40px">
@@ -40,24 +95,29 @@ const LoginForm = () => {
         </Text>
       </Box>
       <Box>
-        <Stack spacing="32px">
-          <FormControl>
-            <FormLabel mb="10px" color="#222222" fontWeight={600}>
-              One time password*
-            </FormLabel>
-            <Input
-              border="1px solid #C0C0C0"
-              bg="#FBFBFB"
-              borderRadius="50px"
-              _placeholder={{ color: '#8295AA' }}
-              py="25px"
-              px="20px"
-              placeholder="Enter code"
-              color="#222222"
-            />
-          </FormControl>
-          <Box w="100%">
-            <Link href='/signup/signup-success'>
+        <form onSubmit={formik.handleSubmit}>
+          <Stack spacing="32px">
+            <FormControl isInvalid={!!formik.errors.otp && formik.touched.otp}>
+              <FormLabel mb="10px" color="#222222" fontWeight={600}>
+                One time password*
+              </FormLabel>
+              <Input
+                border="1px solid #C0C0C0"
+                bg="#FBFBFB"
+                borderRadius="50px"
+                _placeholder={{ color: '#8295AA' }}
+                py="25px"
+                px="20px"
+                placeholder="Enter code"
+                color="#222222"
+                name="otp"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.otp}
+              />
+            </FormControl>
+            <Box w="100%">
+              {/* <Link href='/signup/signup-success'> */}
               <Button
                 w="100%"
                 mb="10px"
@@ -65,18 +125,20 @@ const LoginForm = () => {
                 color="white"
                 h="55px"
                 borderRadius="50px"
+                type="submit"
               >
-                Continue
+                {loading ? <Spinner /> : "Continue"}
               </Button>
-            </Link>
-            <Text color="#131339" fontWeight={500}>
-              Didn't get a mail?{' '}
-              <Box as="span" color="#FFAE42" fontWeight={700}>
-                <Link href="/signup">Resend code</Link>
-              </Box>
-            </Text>
-          </Box>
-        </Stack>
+              {/* </Link> */}
+              <Text color="#131339" fontWeight={500}>
+                Didn't get a mail?{' '}
+                <Box as="span" color="#FFAE42" fontWeight={700} onClick={ResendCode}>
+                  <Link href="/signup">Resend code</Link>
+                </Box>
+              </Text>
+            </Box>
+          </Stack>
+        </form>
       </Box>
     </Box>
   );

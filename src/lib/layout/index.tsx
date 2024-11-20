@@ -7,17 +7,24 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  Avatar, Image, Heading, TableContainer, Table, Tr, Td, Tbody
+  Avatar,
+  Image,
+  Heading,
+  TableContainer,
+  Table,
+  Tr,
+  Td,
+  Tbody,
 } from '@chakra-ui/react';
 import { useEffect, useLayoutEffect, useState, type ReactNode } from 'react';
-import {Sparklines, SparklinesLine} from 'react-sparklines'
-
+import { Sparklines, SparklinesLine } from 'react-sparklines';
+import Cookies from 'js-cookie';
 
 import { Footer } from './components/footer';
 import { Header } from './components/header';
 import '../styles/globals.css';
 import DashboardSidebar from './components/DashboardSidebar';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import DashboardHeader from './components/DashboardHeader';
 import {
   DashboardNotificationIcon,
@@ -28,7 +35,14 @@ type LayoutProps = {
   children: ReactNode;
 };
 
-const DashboardSearchBar = ({setShowSearchBar}:{setShowSearchBar: (value: boolean) => void}) => {
+
+
+
+const DashboardSearchBar = ({
+  setShowSearchBar,
+}: {
+  setShowSearchBar: (value: boolean) => void;
+}) => {
   const handleClick = (e: any) => {
     e.stopPropagation();
     setShowSearchBar(false);
@@ -147,6 +161,8 @@ const DashboardSearchBar = ({setShowSearchBar}:{setShowSearchBar: (value: boolea
   );
 };
 
+
+
 export const DashboardLayout = ({ children }: LayoutProps) => {
   const [showSearBar, setShowSearchBar] = useState<boolean>(false);
   const handleChange = () => {
@@ -174,10 +190,14 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
           </Stack>
         </Box>
       </Stack>
-      {showSearBar && <DashboardSearchBar setShowSearchBar={setShowSearchBar} />}
+      {showSearBar && (
+        <DashboardSearchBar setShowSearchBar={setShowSearchBar} />
+      )}
     </Box>
   );
 };
+
+
 
 
 export const HomeLayout = ({ children }: LayoutProps) => {
@@ -190,13 +210,19 @@ export const HomeLayout = ({ children }: LayoutProps) => {
   );
 };
 
-export const Layout = ({ children }: LayoutProps) => {
-  const pathname = usePathname();
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
-  useEffect(() => {
-    setIsLoggedIn(pathname.includes('/user'));
-  }, [pathname]);
+
+export const Layout = ({ children }: LayoutProps) => {
+  const token = Cookies.get('token');
+  const router = useRouter();
+
+  // useEffect(() => {
+  //   if (token) {
+  //     router.push('/user/dashboard');
+  //   }else{
+  //     router.push('/signin');
+  //   }
+  // }, [token]);
 
   useLayoutEffect(() => {
     (async () => {
@@ -207,10 +233,10 @@ export const Layout = ({ children }: LayoutProps) => {
 
   return (
     <Box maxWidth="1440px" mx="auto">
-      {isLoggedIn ? (
-        <DashboardLayout>{children}</DashboardLayout>
-      ) : (
+      {token === undefined || token === null ? (
         <HomeLayout>{children}</HomeLayout>
+      ) : (
+        <DashboardLayout>{children}</DashboardLayout>
       )}
     </Box>
   );
