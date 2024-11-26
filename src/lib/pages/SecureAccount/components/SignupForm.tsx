@@ -9,6 +9,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { AddPassowrd } from '~/lib/api/services/userService';
+import Cookie from 'js-cookie'
 
 
 const LoginForm = () => {
@@ -16,7 +17,9 @@ const LoginForm = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const toast = useToast();
     const router = useRouter();
-    const user_id = ''
+    const rawUser = Cookie.get('user');
+    const user = rawUser ? JSON.parse(rawUser) : null;
+
 
     const formik = useFormik({
       initialValues: {
@@ -25,11 +28,32 @@ const LoginForm = () => {
       },
       validationSchema: Yup.object({
         phone: Yup.number().required('Phone Number is required'),
-        password: Yup.string().required('Password is required'),
+        password: Yup.string()
+          .required('Password is required')
+          .min(8, 'Password must be at least 8 characters')
+          .matches(
+            /[a-z]/,
+            'Password must contain at least one lowercase letter'
+          )
+          .matches(
+            /[A-Z]/,
+            'Password must contain at least one uppercase letter'
+          )
+          .matches(/[0-9]/, 'Password must contain at least one number')
+          .matches(
+            /[!@#$%^&*(),.?":{}|<>]/,
+            'Password must contain at least one special character'
+          ),
       }),
       onSubmit: async (values) => {
-        const formData = {phone: values.phone, password: values.password, user_id: user_id}
+        const formData = {
+          user_id: user?.id,
+          password: values.password,
+          confirm_password: values.password,
+          phone: values.phone,
+        };
         setLoading(true);
+        console.log(formData);
         try {
           const response = await AddPassowrd(formData);
           const data = response.data;

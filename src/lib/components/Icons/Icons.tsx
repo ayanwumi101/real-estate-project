@@ -855,3 +855,83 @@ export const BankIcon = () => {
     </svg>
   );
 }
+
+
+export const PropertyDetailsIcon = () => {
+  return (
+    <svg
+      width="22"
+      height="20"
+      viewBox="0 0 22 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M15 19V3C15 2.46957 14.7893 1.96086 14.4142 1.58579C14.0391 1.21071 13.5304 1 13 1H9C8.46957 1 7.96086 1.21071 7.58579 1.58579C7.21071 1.96086 7 2.46957 7 3V19M3 5H19C20.1046 5 21 5.89543 21 7V17C21 18.1046 20.1046 19 19 19H3C1.89543 19 1 18.1046 1 17V7C1 5.89543 1.89543 5 3 5Z"
+        stroke="white"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+
+export const DeliveryStatusIcon = ({isActive}:{isActive: boolean}) => {
+  return (
+    <svg
+      width="18"
+      height="22"
+      viewBox="0 0 18 22"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M11 1H3C2.46957 1 1.96086 1.21071 1.58579 1.58579C1.21071 1.96086 1 2.46957 1 3V19C1 19.5304 1.21071 20.0391 1.58579 20.4142C1.96086 20.7893 2.46957 21 3 21H15C15.5304 21 16.0391 20.7893 16.4142 20.4142C16.7893 20.0391 17 19.5304 17 19V7M11 1L17 7M11 1V7H17M13 12H5M13 16H5M7 8H5"
+        stroke={isActive ? '#ffffff' : "#ABABFF"}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+
+export const PaymentPlanIcon = ({ isActive }: { isActive: boolean }) => {
+  return (
+    <svg
+      width="28"
+      height="28"
+      viewBox="0 0 28 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M23.2104 17.89C22.5742 19.3945 21.5792 20.7202 20.3123 21.7513C19.0454 22.7824 17.5452 23.4874 15.9428 23.8048C14.3405 24.1221 12.6848 24.0421 11.1205 23.5718C9.55627 23.1014 8.13103 22.2551 6.96942 21.1067C5.80782 19.9582 4.94522 18.5428 4.45704 16.9839C3.96886 15.4251 3.86996 13.7705 4.169 12.1646C4.46804 10.5588 5.1559 9.05063 6.17245 7.77203C7.189 6.49343 8.50329 5.48332 10.0004 4.83M24.0004 14C24.0004 12.6868 23.7417 11.3864 23.2392 10.1732C22.7367 8.95991 22.0001 7.85752 21.0715 6.92893C20.1429 6.00035 19.0405 5.26375 17.8272 4.7612C16.614 4.25866 15.3136 4 14.0004 4V14H24.0004Z"
+        stroke={isActive ? '#ffffff' : '#ABABFF'}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+};
+
+
+export const CashflowDetailsIcon = ({ isActive }: { isActive: boolean }) => {
+  return (
+    <svg
+      width="28"
+      height="28"
+      viewBox="0 0 28 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M3 12H25M5 6H23C24.1046 6 25 6.89543 25 8V20C25 21.1046 24.1046 22 23 22H5C3.89543 22 3 21.1046 3 20V8C3 6.89543 3.89543 6 5 6Z"
+        stroke={isActive ? '#ffffff' : '#ABABFF'}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+};

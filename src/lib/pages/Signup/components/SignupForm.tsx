@@ -9,7 +9,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { SignupUser } from '~/lib/api/services/userService';
-
+import Cookie from 'js-cookie'
 
 
 
@@ -44,29 +44,30 @@ const SignupForm = () => {
            .required('Email is required'),
          fullname: Yup.string().required('Full Name is required'),
        }),
-       onSubmit: async (values) => {
+       onSubmit: async (values, {resetForm}) => {
          setLoading(true);
          try {
            const response = await SignupUser(values);
-           const data = response.data;
            console.log(response);
-           if (response.success === true) {
+           if (response.status === true) {
              toast({
-               title: data.message as string,
-               description: 'Login successful',
+               title: response.message as string,
+               description: response.message as string,
                duration: 3000,
                position: 'top-right',
                isClosable: true,
                status: 'success',
              });
+             Cookie.set('user', JSON.stringify(response.data));
              router.push('/signup/secure-account');
+             resetForm();
            }
          } catch (error: any) {
           console.log(error);
            setLoading(false);
            toast({
              title: error.response.data.message as string,
-             description: 'SIgnup unsuccessful',
+             description: error.response.data.message,
              duration: 3000,
              position: 'top-right',
              isClosable: true,
