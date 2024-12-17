@@ -18,12 +18,12 @@ export const AddPassowrd = async (data) => {
 
 export const ValidateOtp = async (data) => {
   const response = await axiosInstance.post(API_ROUTES.VALIDATE_USER_OTP, data)
-  return response.data;
+  return response;
 }
 
 export const ResendOtp = async (data) => {
   const response = await axiosInstance.post(API_ROUTES.RESEND_OTP, data);
-  return response.data;
+  return response;
 }
 
 export const ForgotPassword = async (data) => {
@@ -33,10 +33,5 @@ export const ForgotPassword = async (data) => {
 
 export const VerifyResetPasswordToken = async(data) => {
   const response = await axiosInstance.post(API_ROUTES.VERIFY_RESET_PASSWORD_TOKEN, data);
-  return response.data;
-}
-
-export const SaveUserDetails = async (data) => {
-  const response = await axiosInstance.post(API_ROUTES.SAVE_USER_DETAIL, data);
   return response.data;
 }

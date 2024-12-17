@@ -20,7 +20,6 @@ const LoginForm = () => {
     const rawUser = Cookie.get('user');
     const user = rawUser ? JSON.parse(rawUser) : null;
 
-
     const formik = useFormik({
       initialValues: {
         phone: '',
@@ -53,15 +52,12 @@ const LoginForm = () => {
           phone: values.phone,
         };
         setLoading(true);
-        console.log(formData);
         try {
           const response = await AddPassowrd(formData);
-          const data = response.data;
-          console.log(response);
-          if (response.success === true) {
+          if (response?.token) {
             toast({
-              title: data.message as string,
-              description: 'Login successful',
+              title: response.message as string,
+              description: response.message,
               duration: 3000,
               position: 'top-right',
               isClosable: true,
@@ -73,7 +69,7 @@ const LoginForm = () => {
           setLoading(false);
           toast({
             title: error.response.data.message as string,
-            description: 'Login unsuccessful',
+            description: error.response.data.message,
             duration: 3000,
             position: 'top-right',
             isClosable: true,

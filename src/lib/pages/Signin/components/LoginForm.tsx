@@ -9,6 +9,7 @@ import { loginUser } from '~/lib/api/services/userService';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 
 
 
@@ -43,22 +44,22 @@ const LoginForm = () => {
           .required('Email is required'),
         password: Yup.string().required('Password is required'),
       }),
-      onSubmit: async (values) => {
+      onSubmit: async (values, { resetForm }) => {
         setLoading(true);
         try {
-          const response = await loginUser(values);
-          const data = response.data;
-          console.log(response);
-          if(response.success === true){
+          const response = await loginUser({email: values.email, password: values.password});
+          if(response.status === true){
             toast({
-              title: data.message as string,
+              title: response.message as string,
               description: 'Login successful',
               duration: 3000,
               position: 'top-right',
               isClosable: true,
               status: 'success',
             });
-            router.push('/user/dashboard')
+            Cookies.set('token', response.data);
+            router.push('/user/dashboard');
+            resetForm();
           }
         } catch (error: any) {
           setLoading(false);

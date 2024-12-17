@@ -9,31 +9,33 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { ValidateOtp, ResendOtp } from '~/lib/api/services/userService';
-
+import Cookie from 'js-cookie'
 
 const LoginForm = () => {
      const [loading, setLoading] = useState<boolean>(false);
      const toast = useToast();
      const router = useRouter();
+     const rawUser = Cookie.get('user');
+     const user = rawUser ? JSON.parse(rawUser) : null;
+     
 
      const formik = useFormik({
        initialValues: {
-         email: '',
          otp: '',
        },
        validationSchema: Yup.object({
-         email: Yup.string()
-           .email('Invalid email address')
-           .required('Email is required'),
          otp: Yup.string().required('Otp is required'),
        }),
        onSubmit: async (values) => {
          setLoading(true);
+         const formData = {
+           email: user?.email,
+           otp: Number(values.otp),
+         };
          try {
-           const response = await ValidateOtp(values);
+           const response = await ValidateOtp(formData);
            const data = response.data;
-           console.log(response);
-           if (response.success === true) {
+           if (response.data.email_verified_at === true) {
              toast({
                title: data.message as string,
                description: 'Otp Verification successful',
@@ -43,12 +45,22 @@ const LoginForm = () => {
                status: 'success',
              });
              router.push('/signup/signup-success');
+           }else{
+              toast({
+                title: 'Otp Verification failed',
+                description: 'Otp is not valid',
+                duration: 3000,
+                position: 'top-right',
+                isClosable: true,
+                status: 'error',
+              });
            }
          } catch (error: any) {
            setLoading(false);
+           console.log('error',error);
            toast({
-             title: error.response.data.message as string,
-             description: 'Otp Verification failed',
+             title: 'Otp Verification failed',
+             description: 'Otp is not valid',
              duration: 3000,
              position: 'top-right',
              isClosable: true,
@@ -64,17 +76,27 @@ const LoginForm = () => {
 
      const ResendCode = async() => {
       try {
-        const res = await ResendOtp({});
+        const res = await ResendOtp({email: user?.email});
         const data = await res.data;
-        if(data){
+        if(data.message === 'success'){
           toast({
-
-          })
+            title: 'Otp resent successfully',
+            description: data.data,
+            duration: 3000,
+            position: 'top-right',
+            isClosable: true,
+            status: 'success',
+          });
         }
       } catch (error) {
         toast({
-
-        })
+          title: 'Error!',
+          description: 'Error resending otp',
+          duration: 3000,
+          position: 'top-right',
+          isClosable: true,
+          status: 'error',
+        });
       }
      }
 
@@ -132,8 +154,8 @@ const LoginForm = () => {
               {/* </Link> */}
               <Text color="#131339" fontWeight={500}>
                 Didn't get a mail?{' '}
-                <Box as="span" color="#FFAE42" fontWeight={700} onClick={ResendCode}>
-                  <Link href="/signup">Resend code</Link>
+                <Box as="span" color="#FFAE42" cursor='pointer' fontWeight={700} onClick={ResendCode}>
+                  Resend code
                 </Box>
               </Text>
             </Box>
