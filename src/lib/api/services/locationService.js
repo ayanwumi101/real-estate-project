@@ -8,7 +8,7 @@ export const GetAllCountries = async () => {
 
 export const GetCountryStates = async (id) => {
   const response = await axiosInstance.get(
-    `${API_ROUTES.UPDATE_ASSET_DELIVERY_STATUS}/${id}`
+    `${API_ROUTES.GET_COUNTRY_STATES}/${id}`
   );
   return response.data;
 };
@@ -20,7 +20,7 @@ export const GetStateDetails = async (id) => {
   return response.data;
 };
 
-export const GET_STATE_CITIES = async (id) => {
+export const GetStateCities = async (id) => {
   const response = await axiosInstance.get(
     `${API_ROUTES.GET_STATE_CITIES}/${id}`
   );

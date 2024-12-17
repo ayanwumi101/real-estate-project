@@ -199,7 +199,6 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
 
 
 
-
 export const HomeLayout = ({ children }: LayoutProps) => {
   return (
     <Box>
@@ -215,14 +214,30 @@ export const HomeLayout = ({ children }: LayoutProps) => {
 export const Layout = ({ children }: LayoutProps) => {
   const token = Cookies.get('token');
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true); // Track loading state
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const pathname = usePathname();
 
-  // useEffect(() => {
-  //   if (token) {
-  //     router.push('/user/dashboard');
-  //   }else{
-  //     router.push('/signin');
-  //   }
-  // }, [token]);
+ useEffect(() => {
+   const token = Cookies.get('token');
+
+   if (!token) {
+     // Redirect to signin if no token
+     if (pathname !== '/signin') {
+       router.replace('/signin');
+     }
+     setIsAuthenticated(false);
+   } else {
+     // Redirect only if not on a valid protected route
+     const isProtectedRoute = pathname.startsWith('/user');
+     if (!isProtectedRoute) {
+       router.replace('/user/dashboard');
+     }
+     setIsAuthenticated(true);
+   }
+
+   setIsLoading(false); // Mark loading complete
+ }, [pathname, router]);
 
   useLayoutEffect(() => {
     (async () => {
@@ -230,6 +245,10 @@ export const Layout = ({ children }: LayoutProps) => {
       const locomotiveScroll = new LocomotiveScroll();
     })();
   }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Render a loader while determining auth state
+  }
 
   return (
     <Box maxWidth="1440px" mx="auto">

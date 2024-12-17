@@ -24,3 +24,9 @@ export const SaveUserDetails = async (data) => {
   );
   return response.data;
 };
+
+
+export const GetNigerianBanks = async () => {
+  const response = await axiosInstance.get('https://nigerianbanks.xyz/');
+  return response;
+}

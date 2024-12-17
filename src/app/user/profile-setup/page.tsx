@@ -1,5 +1,5 @@
 import React from 'react'
-import ProfileSetup from '~/lib/pages/Dashboard/ProfileSetup'
+import ProfileSetup from '~/lib/pages/User/ProfileSetup'
 
 const page = () => {
   return <ProfileSetup />
