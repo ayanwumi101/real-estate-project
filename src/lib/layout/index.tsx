@@ -15,6 +15,7 @@ import {
   Tr,
   Td,
   Tbody,
+  keyframes,
 } from '@chakra-ui/react';
 import { useEffect, useLayoutEffect, useState, type ReactNode } from 'react';
 import { Sparklines, SparklinesLine } from 'react-sparklines';
@@ -34,9 +35,6 @@ import {
 type LayoutProps = {
   children: ReactNode;
 };
-
-
-
 
 const DashboardSearchBar = ({
   setShowSearchBar,
@@ -161,8 +159,6 @@ const DashboardSearchBar = ({
   );
 };
 
-
-
 export const DashboardLayout = ({ children }: LayoutProps) => {
   const [showSearBar, setShowSearchBar] = useState<boolean>(false);
   const handleChange = () => {
@@ -197,8 +193,6 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
   );
 };
 
-
-
 export const HomeLayout = ({ children }: LayoutProps) => {
   return (
     <Box>
@@ -209,35 +203,12 @@ export const HomeLayout = ({ children }: LayoutProps) => {
   );
 };
 
-
-
 export const Layout = ({ children }: LayoutProps) => {
   const token = Cookies.get('token');
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true); // Track loading state
+  const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const pathname = usePathname();
-
- useEffect(() => {
-   const token = Cookies.get('token');
-
-   if (!token) {
-     // Redirect to signin if no token
-     if (pathname !== '/signin') {
-       router.replace('/signin');
-     }
-     setIsAuthenticated(false);
-   } else {
-     // Redirect only if not on a valid protected route
-     const isProtectedRoute = pathname.startsWith('/user');
-     if (!isProtectedRoute) {
-       router.replace('/user/dashboard');
-     }
-     setIsAuthenticated(true);
-   }
-
-   setIsLoading(false); // Mark loading complete
- }, [pathname, router]);
 
   useLayoutEffect(() => {
     (async () => {
@@ -246,8 +217,45 @@ export const Layout = ({ children }: LayoutProps) => {
     })();
   }, []);
 
+  useEffect(() => {
+    const isProtectedRoute = pathname.startsWith('/user');
+    if (isProtectedRoute && !token) {
+      router.replace('/signin');
+    } else if (!isProtectedRoute && token) {
+      router.replace('/user/dashboard');
+    }
+    setIsLoading(false);
+  }, [pathname, router, token]);
+
   if (isLoading) {
-    return <div>Loading...</div>; // Render a loader while determining auth state
+    const zoomInOut = keyframes`
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  `;
+    return (
+      <Box
+        w="100%"
+        h="100vh"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Image
+          src="/assets/gif/loader.gif"
+          w="150px"
+          h="150px"
+          objectFit="cover"
+          animation={`${zoomInOut} 1s infinite`}
+        />
+      </Box>
+    );
   }
 
   return (

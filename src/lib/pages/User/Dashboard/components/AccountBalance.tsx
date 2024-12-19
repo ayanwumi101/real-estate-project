@@ -1,6 +1,8 @@
 import { Box, Heading, Text, Stack, Flex, Button } from '@chakra-ui/react';
+import Link from 'next/link';
 import React from 'react';
 import { HiOutlineEye } from 'react-icons/hi2';
+
 
 const AccountBalance = () => {
   return (
@@ -25,17 +27,19 @@ const AccountBalance = () => {
                 </Text>
               </Stack>
             </Box>
-            <Button
-              borderRadius="50px"
-              bg="#222222"
-              color="#ffffff"
-              py="6px"
-              px="16px"
-              fontSize={13}
-              fontWeight={600}
-            >
-              Complete Now
-            </Button>
+            <Link href='/user/profile-setup'>
+              <Button
+                borderRadius="50px"
+                bg="#222222"
+                color="#ffffff"
+                py="6px"
+                px="16px"
+                fontSize={13}
+                fontWeight={600}
+              >
+                Complete Now
+              </Button>
+            </Link>
           </Flex>
         </Box>
       </Box>

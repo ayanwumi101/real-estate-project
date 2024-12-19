@@ -1,27 +1,62 @@
-import { Box, Flex, Text, Stack } from '@chakra-ui/react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import React from 'react'
-import { BrowseProjectIcon, DashboardIcon, MyAssetsIcon, MyPortfolioIcon, TransactionsIcon, HelpAndSupportIcon, SettingsIcon, LogoutIcon } from '~/lib/components/Icons/Icons'
+import { Box, Flex, Text, Stack, useToast } from '@chakra-ui/react';
+import Cookies from 'js-cookie';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import React from 'react';
+import {
+  BrowseProjectIcon,
+  DashboardIcon,
+  MyAssetsIcon,
+  MyPortfolioIcon,
+  TransactionsIcon,
+  HelpAndSupportIcon,
+  SettingsIcon,
+  LogoutIcon,
+} from '~/lib/components/Icons/Icons';
 
-
-
-const SideBarItem = ({label, href, isActive, Icon}:{label: string, href: string, isActive: boolean, Icon: any}) => {
+const SideBarItem = ({
+  label,
+  href,
+  isActive,
+  Icon,
+}: {
+  label: string;
+  href: string;
+  isActive: boolean;
+  Icon: any;
+}) => {
   return (
     <Box py="10px" w="100%" px="34" bg={isActive ? '#EDEDFF' : 'none'}>
       <Link href={href}>
         <Flex alignItems="center" gap="15px">
           <Icon isActive={isActive} />
-          <Text color={isActive ? '#4040A0' : '#2E353F'} fontWeight={500}>{label}</Text>
+          <Text color={isActive ? '#4040A0' : '#2E353F'} fontWeight={500}>
+            {label}
+          </Text>
         </Flex>
       </Link>
     </Box>
   );
-}
-
+};
 
 const DashboardSidebar = () => {
-  const pathname = usePathname()
+  const pathname = usePathname();
+   const router = useRouter();
+   const toast = useToast();
+
+  const LogoutUser = () => {
+    Cookies.remove('token');
+    router.push('/signin');
+    toast({
+      title: 'Logout Successful',
+      description: 'You have been logged out successfully!',
+      duration: 3000,
+      position: 'top-right',
+      isClosable: true,
+      status: 'success',
+    });
+  };
+
   return (
     <Box as="nav" color="black" bg="#FBFBFB" pl="16px" w="100%" h="100vh">
       <Box
@@ -81,21 +116,23 @@ const DashboardSidebar = () => {
             />
             <SideBarItem
               label="Settings"
-              Icon={SettingsIcon} 
+              Icon={SettingsIcon}
               isActive={pathname === '/user/settings'}
               href="/user/settings"
             />
-            <SideBarItem
-              label="Log Out"
-              Icon={LogoutIcon}
-              isActive={pathname === '/logout'}
-              href="/dashboard"
-            />
+            <Box py="10px" w="100%" px="34" onClick={LogoutUser} cursor='pointer'>
+              <Flex alignItems="center" gap="15px">
+                <LogoutIcon isActive={false} />
+                <Text color="#2E353F" fontWeight={500}>
+                  Log Out
+                </Text>
+              </Flex>
+            </Box>
           </Stack>
         </Box>
       </Box>
     </Box>
   );
-}
+};
 
-export default DashboardSidebar
+export default DashboardSidebar;
