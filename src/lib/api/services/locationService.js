@@ -27,7 +27,7 @@ export const GetStateCities = async (id) => {
   return response.data;
 };
 
-export const GetCityLgas = async (id) => {
+export const GetStateLgas = async (id) => {
   const response = await axiosInstance.get(
     `${API_ROUTES.GET_CITY_LGAS}/${id}`
   );

@@ -1,260 +1,564 @@
-import { Box, FormLabel, FormControl, Input, Stack, RadioGroup, Radio, Select, Button, Textarea, Flex,  } from '@chakra-ui/react'
-import React from 'react'
+import {
+  Box,
+  FormLabel,
+  FormControl,
+  Input,
+  Stack,
+  RadioGroup,
+  Radio,
+  Select,
+  Button,
+  Textarea,
+  Flex,
+  FormErrorMessage,
+} from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import { AddAssetDetails } from '~/lib/api/services/assetsService';
+import {
+  GetCountryStates,
+  GetStateLgas,
+} from '~/lib/api/services/locationService';
+import * as Yup from 'yup';
+import { Formik, Form, Field } from 'formik';
 
+const PropertyDetailsForm = ({
+  step,
+  setStep,
+}: {
+  step: number;
+  setStep: (value: number) => void;
+}) => {
+  const [states, setStates] = useState([]);
+  const [lgas, setLgas] = useState([]);
 
-const PropertyDetailsForm = ({step, setStep}:{step: number, setStep: (value: number) => void,}) => {
+  useEffect(() => {
+    const GetStates = async () => {
+      try {
+        const res = await GetCountryStates(
+          'da4e88a4-4c55-4724-8727-098b50731b96'
+        );
+        setStates(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    GetStates();
+  }, []);
+
+  const initialValues = {
+    propertyName: '',
+    propertyType: '',
+    propertySize: '',
+    propertyAddress: {
+      houseNumber: '',
+      streetName: '',
+      city: '',
+      state: '',
+      lga: '',
+    },
+    realtorDetails: {
+      businessName: '',
+      name: '',
+      officeAddress: {
+        houseNumber: '',
+        streetName: '',
+        city: '',
+        state: '',
+        lga: '',
+      },
+    },
+    phoneNumber: '',
+    additionalComments: '',
+  };
+
+  const validationSchema = Yup.object({
+    propertyName: Yup.string().required('Property name is required'),
+    propertyType: Yup.string().required('Property type is required'),
+    propertySize: Yup.string().required('Property size is required'),
+    propertyAddress: Yup.object({
+      houseNumber: Yup.string().required('House number is required'),
+      streetName: Yup.string().required('Street name is required'),
+      city: Yup.string().required('City is required'),
+      state: Yup.string().required('State is required'),
+      lga: Yup.string().required('LGA is required'),
+    }),
+    realtorDetails: Yup.object({
+      businessName: Yup.string().required('Realtor business name is required'),
+      name: Yup.string().required('Realtor name is required'),
+      officeAddress: Yup.object({
+        houseNumber: Yup.string().required('Office house number is required'),
+        streetName: Yup.string().required('Office street name is required'),
+        city: Yup.string().required('Office city is required'),
+        state: Yup.string().required('Office state is required'),
+        lga: Yup.string().required('Office LGA is required'),
+      }),
+    }),
+    phoneNumber: Yup.string().required('Phone number is required'),
+    additionalComments: Yup.string().optional(),
+  });
+
+  const handleSubmit = async (values: any) => {
+    try {
+    } catch (error) {}
+  };
+
   return (
-    <Box w="600px">
-      <Stack spacing="24px">
-        <FormControl>
-          <FormLabel fontWeight={600} fontSize={16} color="#222222">
-            What would you like to name your property?
-          </FormLabel>
-          <Input
-            border="1px solid #C0C0C0"
-            bg="#FBFBFB"
-            h="50px"
-            borderRadius="40px"
-            placeholder="Name your property"
-            _placeholder={{ color: '#8295AA', fontWeight: 500 }}
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel fontWeight={600} fontSize={16} color="#222222">
-            What kind of property are you listing?
-          </FormLabel>
-          <RadioGroup defaultValue="1">
-            <Stack>
-              <Radio size="lg" name="1" value="1" colorScheme="blue">
-                Land
-              </Radio>
-              <Radio size="lg" name="2" value="2" colorScheme="blue">
-                Building
-              </Radio>
-            </Stack>
-          </RadioGroup>
-        </FormControl>
-        <FormControl>
-          <FormLabel fontWeight={600} fontSize={16} color="#222222">
-            What is the size of this property?
-          </FormLabel>
-          <Input
-            border="1px solid #C0C0C0"
-            bg="#FBFBFB"
-            h="50px"
-            borderRadius="40px"
-            placeholder="Name your property"
-            _placeholder={{ color: '#8295AA', fontWeight: 500 }}
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel fontWeight={600} fontSize={16} color="#222222">
-            Where is the property located?
-          </FormLabel>
-          <Flex alignItems="center" justifyContent="space-between" mb="22px">
-            <Input
-              border="1px solid #C0C0C0"
-              bg="#FBFBFB"
-              h="50px"
-              borderRadius="40px"
-              placeholder="Name your property"
-              _placeholder={{ color: '#8295AA', fontWeight: 500 }}
-              w="32%"
-            />
-            <Input
-              border="1px solid #C0C0C0"
-              bg="#FBFBFB"
-              h="50px"
-              borderRadius="40px"
-              placeholder="Name your property"
-              _placeholder={{ color: '#8295AA', fontWeight: 500 }}
-              w="32%"
-            />
-            <Input
-              border="1px solid #C0C0C0"
-              bg="#FBFBFB"
-              h="50px"
-              borderRadius="40px"
-              placeholder="Name your property"
-              _placeholder={{ color: '#8295AA', fontWeight: 500 }}
-              w="32%"
-            />
-          </Flex>
-          <Flex alignItems="center" justifyContent="space-between" mb="15px">
-            <Select
-              border="1px solid #C0C0C0"
-              bg="#FBFBFB"
-              h="50px"
-              borderRadius="40px"
-              placeholder="Name your property"
-              _placeholder={{ color: '#8295AA', fontWeight: 500 }}
-              w="49%"
-            >
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-              <option value="option3">Option 3</option>
-            </Select>
-            <Select
-              border="1px solid #C0C0C0"
-              bg="#FBFBFB"
-              h="50px"
-              borderRadius="40px"
-              placeholder="Name your property"
-              _placeholder={{ color: '#8295AA', fontWeight: 500 }}
-              w="49%"
-            >
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-              <option value="option3">Option 3</option>
-            </Select>
-          </Flex>
-        </FormControl>
-        <FormControl>
-          <FormLabel fontWeight={600} fontSize={16} color="#222222">
-            Enter your realtor details
-          </FormLabel>
-          <Input
-            border="1px solid #C0C0C0"
-            bg="#FBFBFB"
-            h="50px"
-            borderRadius="40px"
-            placeholder="Name your property"
-            _placeholder={{ color: '#8295AA', fontWeight: 500 }}
-            mb="22px"
-          />
-          <Input
-            border="1px solid #C0C0C0"
-            bg="#FBFBFB"
-            h="50px"
-            borderRadius="40px"
-            placeholder="Name your property"
-            _placeholder={{ color: '#8295AA', fontWeight: 500 }}
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel fontWeight={600} fontSize={16} color="#222222">
-            Office address of realtor
-          </FormLabel>
-          <Flex alignItems="center" justifyContent="space-between" mb="22px">
-            <Input
-              border="1px solid #C0C0C0"
-              bg="#FBFBFB"
-              h="50px"
-              borderRadius="40px"
-              placeholder="Name your property"
-              _placeholder={{ color: '#8295AA', fontWeight: 500 }}
-              w="32%"
-            />
-            <Input
-              border="1px solid #C0C0C0"
-              bg="#FBFBFB"
-              h="50px"
-              borderRadius="40px"
-              placeholder="Name your property"
-              _placeholder={{ color: '#8295AA', fontWeight: 500 }}
-              w="32%"
-            />
-            <Input
-              border="1px solid #C0C0C0"
-              bg="#FBFBFB"
-              h="50px"
-              borderRadius="40px"
-              placeholder="Name your property"
-              _placeholder={{ color: '#8295AA', fontWeight: 500 }}
-              w="32%"
-            />
-          </Flex>
-          <Flex alignItems="center" justifyContent="space-between" mb="15px">
-            <Select
-              border="1px solid #C0C0C0"
-              bg="#FBFBFB"
-              h="50px"
-              borderRadius="40px"
-              placeholder="Name your property"
-              _placeholder={{ color: '#8295AA', fontWeight: 500 }}
-              w="49%"
-            >
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-              <option value="option3">Option 3</option>
-            </Select>
-            <Select
-              border="1px solid #C0C0C0"
-              bg="#FBFBFB"
-              h="50px"
-              borderRadius="40px"
-              placeholder="Name your property"
-              _placeholder={{ color: '#8295AA', fontWeight: 500 }}
-              w="49%"
-            >
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-              <option value="option3">Option 3</option>
-            </Select>
-          </Flex>
-        </FormControl>
-        <FormControl>
-          <FormLabel fontWeight={600} fontSize={16} color="#222222">
-            Enter Realtor’s Phone number
-          </FormLabel>
-          <Flex border="1px solid #C0C0C0" borderRadius="50px">
-            <Select
-              w="115px"
-              bg="#F5F5F5"
-              borderTopLeftRadius="50px"
-              borderBottomLeftRadius="50px"
-              border="none"
-              h="50px"
-            >
-              <option value="">+234</option>
-              <option value="">+235</option>
-              <option value="">+236</option>
-            </Select>
-            <Input
-              borderTopRightRadius="50px"
-              borderBottomRightRadius="50px"
-              border="none"
-              bg="#FBFBFB"
-              h="50px"
-              placeholder="Enter your phone number"
-              _placeholder={{ color: '#8295AA', fontWeight: 500 }}
-              type="tel"
-            />
-          </Flex>
-        </FormControl>
-        <FormControl>
-          <FormLabel fontWeight={600} fontSize={16} color="#222222">
-            Add any additional comment
-          </FormLabel>
-          <Textarea
-            border="1px solid #C0C0C0"
-            bg="#FBFBFB"
-            h="85px"
-            borderRadius="20px"
-            placeholder="Enter any additional comments you want to remember"
-            _placeholder={{ color: '#8295AA', fontWeight: 500 }}
-            resize="none"
-            px="25px"
-            py="15px"
-          />
-        </FormControl>
-        <Flex justifyContent='flex-end'>
-          <Button
-            bg="#000080"
-            color="white"
-            h="48px"
-            borderRadius="30px"
-            fontWeight={600}
-            fontSize={16}
-            _hover={{ bg: '#000080' }}
-            onClick={() => setStep(step + 1)}
-          >
-            Continue
-          </Button>
-        </Flex>
-      </Stack>
-    </Box>
-  );
-}
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
+      {({ errors, touched, setFieldValue, values }) => (
+        <Form>
+          <Box w="600px">
+            <Stack spacing="24px">
+              <FormControl
+                isInvalid={!!errors.propertyName && touched.propertyName}
+              >
+                <FormLabel fontWeight={600} fontSize={16} color="#222222">
+                  What would you like to name your property?
+                </FormLabel>
+                <Field
+                  as={Input}
+                  name="propertyName"
+                  border="1px solid #C0C0C0"
+                  bg="#FBFBFB"
+                  h="50px"
+                  borderRadius="40px"
+                  placeholder="Name your property"
+                  _placeholder={{ color: '#8295AA', fontWeight: 500 }}
+                />
+                <FormErrorMessage>{errors.propertyName}</FormErrorMessage>
+              </FormControl>
 
-export default PropertyDetailsForm
+              <FormControl
+                isInvalid={!!errors.propertyType && touched.propertyType}
+              >
+                <FormLabel>What kind of property are you listing?</FormLabel>
+                <RadioGroup
+                  onChange={(value) => setFieldValue('propertyType', value)}
+                  value={values.propertyType}
+                >
+                  <Stack>
+                    <Radio name="Land" value="Land">
+                      Land
+                    </Radio>
+                    <Radio name="Building" value="Building">
+                      Building
+                    </Radio>
+                  </Stack>
+                </RadioGroup>
+                <FormErrorMessage>{errors.propertyType}</FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                isInvalid={!!errors.propertySize && touched.propertySize}
+              >
+                <FormLabel fontWeight={600} fontSize={16} color="#222222">
+                  What is the size of this property?
+                </FormLabel>
+                <Field
+                  as={Input}
+                  name="propertySize"
+                  border="1px solid #C0C0C0"
+                  bg="#FBFBFB"
+                  h="50px"
+                  borderRadius="40px"
+                  placeholder="Name your property"
+                  _placeholder={{ color: '#8295AA', fontWeight: 500 }}
+                />
+                <FormErrorMessage>{errors.propertySize}</FormErrorMessage>
+              </FormControl>
+              <FormControl>
+                <FormLabel fontWeight={600} fontSize={16} color="#222222">
+                  Where is the property located?
+                </FormLabel>
+                <Flex
+                  alignItems="center"
+                  justifyContent="space-between"
+                  mb="22px"
+                  gap="10px"
+                >
+                  <FormControl
+                    isInvalid={
+                      !!errors.propertyAddress?.houseNumber &&
+                      touched.propertyAddress?.houseNumber
+                    }
+                  >
+                    <Field
+                      as={Input}
+                      border="1px solid #C0C0C0"
+                      bg="#FBFBFB"
+                      h="50px"
+                      name="propertyAddress.houseNumber"
+                      borderRadius="40px"
+                      placeholder="Plot/block/house number"
+                      _placeholder={{ color: '#8295AA', fontWeight: 500 }}
+                      w="100%"
+                    />
+                    <FormErrorMessage>
+                      {errors.propertyAddress?.houseNumber}
+                    </FormErrorMessage>
+                  </FormControl>
+
+                  <FormControl
+                    isInvalid={
+                      !!errors.propertyAddress?.streetName &&
+                      touched.propertyAddress?.streetName
+                    }
+                  >
+                    <Field
+                      as={Input}
+                      border="1px solid #C0C0C0"
+                      bg="#FBFBFB"
+                      h="50px"
+                      name="propertyAddress.streetName"
+                      borderRadius="40px"
+                      placeholder="Street/Estate Name"
+                      _placeholder={{ color: '#8295AA', fontWeight: 500 }}
+                      w="100%"
+                    />
+                    <FormErrorMessage>
+                      {errors.propertyAddress?.streetName}
+                    </FormErrorMessage>
+                  </FormControl>
+                  <FormControl
+                    isInvalid={
+                      !!errors.propertyAddress?.city &&
+                      touched.propertyAddress?.city
+                    }
+                  >
+                    <Field
+                      as={Input}
+                      border="1px solid #C0C0C0"
+                      bg="#FBFBFB"
+                      h="50px"
+                      name="propertyAddress.city"
+                      borderRadius="40px"
+                      placeholder="City/town"
+                      _placeholder={{ color: '#8295AA', fontWeight: 500 }}
+                      w="100%"
+                    />
+                    <FormErrorMessage>
+                      {errors.propertyAddress?.city}
+                    </FormErrorMessage>
+                  </FormControl>
+                </Flex>
+                <Flex
+                  alignItems="center"
+                  justifyContent="space-between"
+                  mb="15px"
+                  gap="10px"
+                >
+                  <FormControl
+                    isInvalid={
+                      !!errors.propertyAddress?.state &&
+                      touched.propertyAddress?.state
+                    }
+                  >
+                    <Field
+                      as={Select}
+                      name="propertyAddress.state"
+                      border="1px solid #C0C0C0"
+                      bg="#FBFBFB"
+                      h="50px"
+                      borderRadius="40px"
+                      placeholder="State"
+                      _placeholder={{ color: '#8295AA', fontWeight: 500 }}
+                      w="100%"
+                    >
+                      <option value="option1">Option 1</option>
+                      <option value="option2">Option 2</option>
+                      <option value="option3">Option 3</option>
+                    </Field>
+                    <FormErrorMessage>
+                      {errors.propertyAddress?.state}
+                    </FormErrorMessage>
+                  </FormControl>
+                  <FormControl
+                    isInvalid={
+                      !!errors.propertyAddress?.lga &&
+                      touched.propertyAddress?.lga
+                    }
+                  >
+                    <Field
+                      as={Select}
+                      name="propertyAddress.lga"
+                      border="1px solid #C0C0C0"
+                      bg="#FBFBFB"
+                      h="50px"
+                      borderRadius="40px"
+                      placeholder="LGA"
+                      _placeholder={{ color: '#8295AA', fontWeight: 500 }}
+                      w="100%"
+                    >
+                      <option value="option1">Option 1</option>
+                      <option value="option2">Option 2</option>
+                      <option value="option3">Option 3</option>
+                    </Field>
+                    <FormErrorMessage>
+                      {errors.propertyAddress?.lga}
+                    </FormErrorMessage>
+                  </FormControl>
+                </Flex>
+              </FormControl>
+              <FormControl>
+                <FormLabel fontWeight={600} fontSize={16} color="#222222">
+                  Enter your realtor details
+                </FormLabel>
+                <FormControl
+                  isInvalid={
+                    !!errors.realtorDetails?.businessName &&
+                    touched.realtorDetails?.businessName
+                  }
+                  mb="22px"
+                >
+                  <Field
+                    as={Input}
+                    border="1px solid #C0C0C0"
+                    bg="#FBFBFB"
+                    h="50px"
+                    borderRadius="40px"
+                    placeholder="Realtor Business Name"
+                    _placeholder={{ color: '#8295AA', fontWeight: 500 }}
+                    name="realtorDetails.businessName"
+                  />
+                  <FormErrorMessage>
+                    {errors.realtorDetails?.businessName}
+                  </FormErrorMessage>
+                </FormControl>
+                <FormControl
+                  mb="22px"
+                  isInvalid={
+                    !!errors.realtorDetails?.name &&
+                    touched.realtorDetails?.name
+                  }
+                >
+                  <Field
+                    as={Input}
+                    border="1px solid #C0C0C0"
+                    bg="#FBFBFB"
+                    h="50px"
+                    borderRadius="40px"
+                    placeholder="Name of Realtor"
+                    _placeholder={{ color: '#8295AA', fontWeight: 500 }}
+                    name="realtorDetails.name"
+                  />
+                  <FormErrorMessage>
+                    {errors.realtorDetails?.name}
+                  </FormErrorMessage>
+                </FormControl>
+              </FormControl>
+              <FormControl>
+                <FormLabel fontWeight={600} fontSize={16} color="#222222">
+                  Office address of realtor
+                </FormLabel>
+                <Flex
+                  alignItems="flex-start"
+                  justifyContent="space-between"
+                  mb="22px"
+                  gap="10px"
+                >
+                  <FormControl
+                    isInvalid={
+                      !!errors.realtorDetails?.officeAddress?.houseNumber &&
+                      touched.realtorDetails?.officeAddress?.houseNumber
+                    }
+                  >
+                    <Field
+                      as={Input}
+                      border="1px solid #C0C0C0"
+                      bg="#FBFBFB"
+                      h="50px"
+                      borderRadius="40px"
+                      placeholder="Plot/block/house number"
+                      _placeholder={{ color: '#8295AA', fontWeight: 500 }}
+                      w="100%"
+                      name="realtorDetails.officeAddress.houseNumber"
+                    />
+                    <FormErrorMessage>
+                      {errors.realtorDetails?.officeAddress?.houseNumber}
+                    </FormErrorMessage>
+                  </FormControl>
+                  <FormControl
+                    isInvalid={
+                      !!errors.realtorDetails?.officeAddress?.streetName &&
+                      touched.realtorDetails?.officeAddress?.streetName
+                    }
+                  >
+                    <Field
+                      as={Input}
+                      border="1px solid #C0C0C0"
+                      bg="#FBFBFB"
+                      h="50px"
+                      borderRadius="40px"
+                      placeholder="Street/Estate Name"
+                      _placeholder={{ color: '#8295AA', fontWeight: 500 }}
+                      w="100%"
+                      name="realtorDetails.officeAddress.streetName"
+                    />
+                    <FormErrorMessage>
+                      {errors.realtorDetails?.officeAddress?.streetName}
+                    </FormErrorMessage>
+                  </FormControl>
+                  <FormControl
+                    isInvalid={
+                      !!errors.realtorDetails?.officeAddress?.city &&
+                      touched.realtorDetails?.officeAddress?.city
+                    }
+                  >
+                    <Field
+                      as={Input}
+                      border="1px solid #C0C0C0"
+                      bg="#FBFBFB"
+                      h="50px"
+                      borderRadius="40px"
+                      placeholder="City/Town"
+                      _placeholder={{ color: '#8295AA', fontWeight: 500 }}
+                      w="100%"
+                      name="realtorDetails.officeAddress.city"
+                    />
+                    <FormErrorMessage>
+                      {errors.realtorDetails?.officeAddress?.city}
+                    </FormErrorMessage>
+                  </FormControl>
+                </Flex>
+                <Flex
+                  alignItems="flex-start"
+                  justifyContent="space-between"
+                  mb="15px"
+                  gap="10px"
+                >
+                  <FormControl
+                    isInvalid={
+                      !!errors.realtorDetails?.officeAddress?.state &&
+                      touched.realtorDetails?.officeAddress?.state
+                    }
+                  >
+                    <Field
+                      as={Select}
+                      border="1px solid #C0C0C0"
+                      bg="#FBFBFB"
+                      h="50px"
+                      borderRadius="40px"
+                      placeholder="State"
+                      _placeholder={{ color: '#8295AA', fontWeight: 500 }}
+                      w="100%"
+                      name="realtorDetails.officeAddress.state"
+                    >
+                      <option value="option1">Option 1</option>
+                      <option value="option2">Option 2</option>
+                      <option value="option3">Option 3</option>
+                    </Field>
+                    <FormErrorMessage>
+                      {errors.realtorDetails?.officeAddress?.state}
+                    </FormErrorMessage>
+                  </FormControl>
+                  <FormControl
+                    isInvalid={
+                      !!errors.realtorDetails?.officeAddress?.lga &&
+                      touched.realtorDetails?.officeAddress?.lga
+                    }
+                  >
+                    <Field
+                      as={Select}
+                      border="1px solid #C0C0C0"
+                      bg="#FBFBFB"
+                      h="50px"
+                      borderRadius="40px"
+                      placeholder="LGA"
+                      _placeholder={{ color: '#8295AA', fontWeight: 500 }}
+                      w="100%"
+                      name="realtorDetails.officeAddress.lga"
+                    >
+                      <option value="option1">Option 1</option>
+                      <option value="option2">Option 2</option>
+                      <option value="option3">Option 3</option>
+                    </Field>
+                    <FormErrorMessage>
+                      {errors.realtorDetails?.officeAddress?.lga}
+                    </FormErrorMessage>
+                  </FormControl>
+                </Flex>
+              </FormControl>
+              <FormControl
+                isInvalid={!!errors.phoneNumber && touched.phoneNumber}
+              >
+                <FormLabel fontWeight={600} fontSize={16} color="#222222">
+                  Enter Realtor’s Phone number
+                </FormLabel>
+                <Flex border="1px solid #C0C0C0" borderRadius="50px">
+                  <Select
+                    w="115px"
+                    bg="#F5F5F5"
+                    borderTopLeftRadius="50px"
+                    borderBottomLeftRadius="50px"
+                    border="none"
+                    h="50px"
+                  >
+                    <option value="">+234</option>
+                    <option value="">+235</option>
+                    <option value="">+236</option>
+                  </Select>
+
+                  <Field
+                    as={Input}
+                    borderTopRightRadius="50px"
+                    borderBottomRightRadius="50px"
+                    border="none"
+                    bg="#FBFBFB"
+                    h="50px"
+                    placeholder="Enter your phone number"
+                    _placeholder={{ color: '#8295AA', fontWeight: 500 }}
+                    type="tel"
+                    name="phoneNumber"
+                  />
+                </Flex>
+                <FormErrorMessage>{errors.phoneNumber}</FormErrorMessage>
+              </FormControl>
+              <FormControl
+                isInvalid={
+                  !!errors.additionalComments && touched.additionalComments
+                }
+              >
+                <FormLabel fontWeight={600} fontSize={16} color="#222222">
+                  Add any additional comment
+                </FormLabel>
+                <Field
+                  as={Textarea}
+                  border="1px solid #C0C0C0"
+                  bg="#FBFBFB"
+                  h="85px"
+                  borderRadius="20px"
+                  placeholder="Enter any additional comments you want to remember"
+                  _placeholder={{ color: '#8295AA', fontWeight: 500 }}
+                  resize="none"
+                  px="25px"
+                  py="15px"
+                  name="additionalComments"
+                />
+                <FormErrorMessage>{errors.additionalComments}</FormErrorMessage>
+              </FormControl>
+              <Flex justifyContent="flex-end">
+                <Button
+                  bg="#000080"
+                  color="white"
+                  h="48px"
+                  borderRadius="30px"
+                  fontWeight={600}
+                  fontSize={16}
+                  _hover={{ bg: '#000080' }}
+                  type="submit"
+                >
+                  Continue
+                </Button>
+              </Flex>
+            </Stack>
+          </Box>
+        </Form>
+      )}
+    </Formik>
+  );
+};
+
+export default PropertyDetailsForm;
