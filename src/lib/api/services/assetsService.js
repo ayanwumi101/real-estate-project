@@ -6,7 +6,7 @@ export const AddAssetDetails = async (data) => {
   return response.data;
 };
 
-export const UpdateAssetDeliveryStatus = async (data, propertyId) => {
+export const UpdateAssetDeliveryStatus = async (propertyId, data) => {
   const response = await axiosInstance.post(
     `${API_ROUTES.UPDATE_ASSET_DELIVERY_STATUS}/${propertyId}`,
     data
