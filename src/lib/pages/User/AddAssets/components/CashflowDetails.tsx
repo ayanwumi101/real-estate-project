@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Input,
@@ -8,7 +8,7 @@ import {
   Flex,
   Select,
   Button,
-  Checkbox,
+  Checkbox, Spinner
 } from '@chakra-ui/react';
 
 const CashflowDetails = ({
@@ -18,9 +18,10 @@ const CashflowDetails = ({
   step: number;
   setStep: (value: number) => void;
 }) => {
+  const [loading, setLoading] = useState<boolean>(false)
   return (
     <Box w="600px">
-      <Stack spacing='24px'>
+      <Stack spacing="24px">
         <FormControl>
           <FormLabel fontWeight={600} fontSize={16} color="#222222">
             What is the cashflow source?
@@ -86,8 +87,9 @@ const CashflowDetails = ({
             borderRadius="50px"
             h="50px"
           >
-            <option value="">Shortlet</option>
+            <option value="">Monthly</option>
             <option value="">Weekly</option>
+            <option value="">Daily</option>
           </Select>
         </FormControl>
         <FormControl>
@@ -103,6 +105,20 @@ const CashflowDetails = ({
             _placeholder={{ color: '#8295AA', fontWeight: 500 }}
           />
         </FormControl>
+        <Flex justifyContent="flex-end">
+          <Button
+            bg="#000080"
+            color="white"
+            h="48px"
+            borderRadius="30px"
+            fontWeight={600}
+            fontSize={16}
+            _hover={{ bg: '#000080' }}
+            type="submit"
+          >
+            {loading ? <Spinner /> : 'Complete'}
+          </Button>
+        </Flex>
       </Stack>
     </Box>
   );

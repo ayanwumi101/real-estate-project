@@ -221,8 +221,10 @@ export const Layout = ({ children }: LayoutProps) => {
     const isProtectedRoute = pathname.startsWith('/user');
     if (isProtectedRoute && !token) {
       router.replace('/signin');
+      // setIsLoading(false);
     } else if (!isProtectedRoute && token) {
       router.replace('/user/dashboard');
+      // setIsLoading(false);
     }
     setIsLoading(false);
   }, [pathname, router, token]);

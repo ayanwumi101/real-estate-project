@@ -29,7 +29,9 @@ import { formatDate } from '~/lib/utils/dateFormatter';
 // Validation Schema
 const validationSchema = Yup.object().shape({
   profilePicture: Yup.mixed().required('Profile picture is required'),
-  dateOfBirth: Yup.string().required('Date of birth is required'),
+  dateOfBirth: Yup.date()
+    .max(new Date(), 'Date of birth cannot be in the future')
+    .required('Date of birth is required'),
   gender: Yup.string().required('Gender is required'),
 });
 
