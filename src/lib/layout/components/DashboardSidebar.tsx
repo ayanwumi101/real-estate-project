@@ -1,4 +1,4 @@
-import { Box, Flex, Text, Stack, useToast } from '@chakra-ui/react';
+import { Box, Flex, Text, Stack, useToast, Image } from '@chakra-ui/react';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -45,8 +45,8 @@ const DashboardSidebar = () => {
    const toast = useToast();
 
   const LogoutUser = () => {
-    Cookies.remove('token');
     router.push('/signin');
+    Cookies.remove('token');
     toast({
       title: 'Logout Successful',
       description: 'You have been logged out successfully!',
@@ -74,7 +74,7 @@ const DashboardSidebar = () => {
           alignItems="center"
           justifyContent="center"
         >
-          Logo
+          <Image src='/assets/images/logo.png' display='block' mx='auto' w='80%' objectFit='cover' />
         </Box>
         <Box py="24px">
           <Stack spacing="16px">

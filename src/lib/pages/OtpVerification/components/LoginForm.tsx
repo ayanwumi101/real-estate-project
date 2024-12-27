@@ -1,112 +1,134 @@
-'use client'
+'use client';
 
-import { Box, Input, Button, Text, Heading, FormLabel, FormControl, useToast, Spinner, Image, Flex, HStack, Icon, Stack, InputGroup, InputRightElement } from '@chakra-ui/react'
-import React, { useState } from 'react'
-import { GoogleIcon, AppleIcon, MicrosoftIcon } from '~/lib/components/Icons/Icons'
+import {
+  Box,
+  Input,
+  Button,
+  Text,
+  Heading,
+  FormLabel,
+  FormControl,
+  useToast,
+  Spinner,
+  Image,
+  Flex,
+  HStack,
+  Icon,
+  Stack,
+  InputGroup,
+  InputRightElement,
+} from '@chakra-ui/react';
+import React, { useState } from 'react';
+import {
+  GoogleIcon,
+  AppleIcon,
+  MicrosoftIcon,
+} from '~/lib/components/Icons/Icons';
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 import Link from 'next/link';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { ValidateOtp, ResendOtp } from '~/lib/api/services/userService';
-import Cookie from 'js-cookie'
+import Cookie from 'js-cookie';
 
 const LoginForm = () => {
-     const [loading, setLoading] = useState<boolean>(false);
-     const toast = useToast();
-     const router = useRouter();
-     const rawUser = Cookie.get('user');
-     const user = rawUser ? JSON.parse(rawUser) : null;
-     
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const router = useRouter();
+  const rawUser = Cookie.get('user');
+  const user = rawUser ? JSON.parse(rawUser) : null;
 
-     const formik = useFormik({
-       initialValues: {
-         otp: '',
-       },
-       validationSchema: Yup.object({
-         otp: Yup.string().required('Otp is required'),
-       }),
-       onSubmit: async (values) => {
-         setLoading(true);
-         const formData = {
-           email: user?.email,
-           otp: Number(values.otp),
-         };
-         try {
-           const response = await ValidateOtp(formData);
-           const data = response.data;
-           if (response.data.email_verified_at === true) {
-             toast({
-               title: data.message as string,
-               description: 'Otp Verification successful',
-               duration: 3000,
-               position: 'top-right',
-               isClosable: true,
-               status: 'success',
-             });
-             router.push('/signup/signup-success');
-           }else{
-              toast({
-                title: 'Otp Verification failed',
-                description: 'Otp is not valid',
-                duration: 3000,
-                position: 'top-right',
-                isClosable: true,
-                status: 'error',
-              });
-           }
-         } catch (error: any) {
-           setLoading(false);
-           console.log('error',error);
-           toast({
-             title: 'Otp Verification failed',
-             description: 'Otp is not valid',
-             duration: 3000,
-             position: 'top-right',
-             isClosable: true,
-             status: 'error',
-           });
-         } finally {
-           setLoading(false);
-         }
-       },
-     });
-
-
-
-     const ResendCode = async() => {
+  const formik = useFormik({
+    initialValues: {
+      otp: '',
+    },
+    validationSchema: Yup.object({
+      otp: Yup.string().required('Otp is required'),
+    }),
+    onSubmit: async (values) => {
+      setLoading(true);
+      const formData = {
+        email: user?.email,
+        otp: Number(values.otp),
+      };
       try {
-        const res = await ResendOtp({email: user?.email});
-        const data = await res.data;
-        if(data.message === 'success'){
+        const response = await ValidateOtp(formData);
+        const data = response.data;
+        if (response.data.email_verified_at === true) {
           toast({
-            title: 'Otp resent successfully',
-            description: data.data,
+            title: data.message as string,
+            description: 'Otp Verification successful',
             duration: 3000,
             position: 'top-right',
             isClosable: true,
             status: 'success',
           });
+          router.push('/signup/signup-success');
+        } else {
+          toast({
+            title: 'Otp Verification failed',
+            description: 'Otp is not valid',
+            duration: 3000,
+            position: 'top-right',
+            isClosable: true,
+            status: 'error',
+          });
         }
-      } catch (error) {
+      } catch (error: any) {
+        setLoading(false);
+        console.log('error', error);
         toast({
-          title: 'Error!',
-          description: 'Error resending otp',
+          title: 'Otp Verification failed',
+          description: 'Otp is not valid',
           duration: 3000,
           position: 'top-right',
           isClosable: true,
           status: 'error',
         });
+      } finally {
+        setLoading(false);
       }
-     }
+    },
+  });
 
-     
+  const ResendCode = async () => {
+    try {
+      const res = await ResendOtp({ email: user?.email });
+      const data = await res.data;
+      if (data.message === 'success') {
+        toast({
+          title: 'Otp resent successfully',
+          description: data.data,
+          duration: 3000,
+          position: 'top-right',
+          isClosable: true,
+          status: 'success',
+        });
+      }
+    } catch (error) {
+      toast({
+        title: 'Error!',
+        description: 'Error resending otp',
+        duration: 3000,
+        position: 'top-right',
+        isClosable: true,
+        status: 'error',
+      });
+    }
+  };
 
   return (
     <Box px={['24px', '44px']} py="60px">
       <Box mb="40px">
         <Link href="/">
-          <Image src="" alt="Company Logo" mb="16px" />
+          <Image
+            src="/assets/images/logo3.png"
+            w="auto"
+            h="50px"
+            objectFit="contain"
+            mb="30px"
+          />
         </Link>
         <Heading fontSize={32} fontWeight={500} mb="16px" color="#222222">
           OTP verification
@@ -149,12 +171,18 @@ const LoginForm = () => {
                 borderRadius="50px"
                 type="submit"
               >
-                {loading ? <Spinner /> : "Continue"}
+                {loading ? <Spinner /> : 'Continue'}
               </Button>
               {/* </Link> */}
               <Text color="#131339" fontWeight={500}>
                 Didn't get a mail?{' '}
-                <Box as="span" color="#FFAE42" cursor='pointer' fontWeight={700} onClick={ResendCode}>
+                <Box
+                  as="span"
+                  color="#FFAE42"
+                  cursor="pointer"
+                  fontWeight={700}
+                  onClick={ResendCode}
+                >
                   Resend code
                 </Box>
               </Text>
@@ -164,6 +192,6 @@ const LoginForm = () => {
       </Box>
     </Box>
   );
-}
+};
 
-export default LoginForm
+export default LoginForm;

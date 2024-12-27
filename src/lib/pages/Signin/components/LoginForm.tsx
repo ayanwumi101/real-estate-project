@@ -82,7 +82,13 @@ const LoginForm = () => {
     <Box px={['24px', '44px']} py="60px">
       <Box mb="40px">
         <Link href="/">
-          <Image src="" alt="Company Logo" mb="16px" />
+          <Image
+            src="/assets/images/logo3.png"
+            w="auto"
+            h="50px"
+            objectFit="contain"
+            mb='30px'
+          />
         </Link>
         <Heading fontSize={32} fontWeight={500} color="#222222">
           Welcome Back
@@ -138,7 +144,7 @@ const LoginForm = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.email}
-                name='email'
+                name="email"
               />
               {formik.errors.email && formik.touched.email && (
                 <Text color="red.500" mt="2">
@@ -167,7 +173,7 @@ const LoginForm = () => {
                   color="#8295AA"
                   _placeholder={{ color: '#8295AA' }}
                   h="50px"
-                  name='password'
+                  name="password"
                 />
                 <InputRightElement w="4rem" mt="1.5">
                   <Button onClick={() => setShowPassword(!showPassword)}>
@@ -198,7 +204,7 @@ const LoginForm = () => {
                 color="white"
                 h="55px"
                 borderRadius="50px"
-                type='submit'
+                type="submit"
               >
                 {loading ? <Spinner /> : 'Continue'}
               </Button>

@@ -22,7 +22,7 @@ export const UpdateAssetPaymentPlan = async (data, propertyId) => {
   return response.data;
 };
 
-export const UPDATE_ASSET_CASHFLOW_DETAILS = async (data, propertyId) => {
+export const UpdateAssetCashflowDetails = async (data, propertyId) => {
   const response = await axiosInstance.post(
     `${API_ROUTES.UPDATE_ASSET_CASHFLOW_DETAILS}/${propertyId}`,
     data

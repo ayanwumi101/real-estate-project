@@ -43,26 +43,32 @@ const Discover = () => {
                 </Text>
               </Flex>
             </Box>
-            <Box overflow="auto">
+            <Box 
+              overflow="auto" 
+              w='100%'
+            >
               <Flex
                 alignItems="center"
-                justifyContent="space-between"
+                justifyContent={['flex-start',"space-between"]}
                 gap={['10px', 0]}
-                overflow="auto"
+                // overflow="auto"
+                w='100%'
+                flexWrap='wrap'
+                pb={[5, 0]}
               >
-                <Box display="flex" alignItems="center" gap="16px">
+                <Box display="flex" alignItems="center" gap={['10px',"16px"]}>
                   <Box
                     borderRadius="50px"
                     border="1px solid #C0C0C0"
                     px="15px"
                     py="5px"
-                    w={['180px', 'auto']}
+                    w={['50%', 'auto']}
                   >
                     <Flex alignItems="center" gap="0px">
                       <LocationIcon />
                       <Select
                         color="#2E353F"
-                        fontWeight={700}
+                        fontWeight={[500,600]}
                         py="0"
                         border="none"
                         outline="none"
@@ -78,15 +84,15 @@ const Discover = () => {
                     border="1px solid #C0C0C0"
                     px="15px"
                     py="5px"
-                    w={['200px', 'auto']}
+                    w={['50%', 'auto']}
                   >
                     <Flex alignItems="center" gap="0px">
-                      <Box w="100px" as="span" color="#2E353F" fontWeight={700}>
+                      <Box w="100px" as="span" color="#2E353F" fontWeight={[500,600]}>
                         Sort by:
                       </Box>
                       <Select
                         color="#2E353F"
-                        fontWeight={700}
+                        fontWeight={[500,600]}
                         py="0"
                         bg="white"
                         border="none"
@@ -105,10 +111,12 @@ const Discover = () => {
                   border="1px solid #C0C0C0"
                   px="15px"
                   py="10px"
-                  w={['150px', 'auto']}
+                  w={['100px', 'auto']}
                   onClick={() => setOpenFilterDrawer(true)}
+                  bg='none'
+                  mx='auto'
                 >
-                  <Flex alignItems="center" gap="8px">
+                  <Flex alignItems="center" justifyContent={['space-between']} w='100%'>
                     <FilterIcon />
                     <Text fontWeight={700} color="#2E353F">
                       Filter

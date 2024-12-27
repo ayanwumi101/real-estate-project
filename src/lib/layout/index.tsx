@@ -250,9 +250,10 @@ export const Layout = ({ children }: LayoutProps) => {
         justifyContent="center"
       >
         <Image
-          src="/assets/gif/loader.gif"
-          w="150px"
-          h="150px"
+          // src="/assets/gif/loader.gif"
+          src='/assets/images/logo.png'
+          w="250px"
+          h="250px"
           objectFit="cover"
           animation={`${zoomInOut} 1s infinite`}
         />

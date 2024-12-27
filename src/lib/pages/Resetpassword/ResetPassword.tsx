@@ -1,18 +1,36 @@
-'use client'
+'use client';
 
-import { Box, Stack, FormControl, FormLabel, Image, Text, Heading, InputGroup, InputLeftAddon, Button, Input, InputRightElement } from '@chakra-ui/react';
+import {
+  Box,
+  Stack,
+  FormControl,
+  FormLabel,
+  Image,
+  Text,
+  Heading,
+  InputGroup,
+  InputLeftAddon,
+  Button,
+  Input,
+  InputRightElement,
+} from '@chakra-ui/react';
 import Link from 'next/link';
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 
-
 const ResetPassword = () => {
-  const [showPassword, setShowPassword] = useState<boolean>(false)
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   return (
     <Box px={['24px', '44px']} py="60px" h={['auto', '100vh']}>
       <Box mb="40px">
         <Link href="/">
-          <Image src="" alt="Company Logo" mb="16px" />
+          <Image
+            src="/assets/images/logo3.png"
+            w="auto"
+            h="50px"
+            objectFit="contain"
+            mb="30px"
+          />
         </Link>
         <Heading fontSize={32} fontWeight={500} mb="16px" color="#222222">
           Create New Password
@@ -104,6 +122,6 @@ const ResetPassword = () => {
       </Box>
     </Box>
   );
-}
+};
 
-export default ResetPassword
+export default ResetPassword;

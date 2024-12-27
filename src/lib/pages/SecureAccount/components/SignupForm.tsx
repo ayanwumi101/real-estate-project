@@ -1,91 +1,113 @@
-'use client'
+'use client';
 
-import { Box, Input, Button, Text, Heading, FormLabel, FormControl, Spinner, useToast, Image, Flex, HStack, Icon, Stack, InputGroup, InputRightElement, Checkbox, InputLeftAddon} from '@chakra-ui/react'
-import React, { useState } from 'react'
-import { GoogleIcon, AppleIcon, MicrosoftIcon } from '~/lib/components/Icons/Icons'
+import {
+  Box,
+  Input,
+  Button,
+  Text,
+  Heading,
+  FormLabel,
+  FormControl,
+  Spinner,
+  useToast,
+  Image,
+  Flex,
+  HStack,
+  Icon,
+  Stack,
+  InputGroup,
+  InputRightElement,
+  Checkbox,
+  InputLeftAddon,
+} from '@chakra-ui/react';
+import React, { useState } from 'react';
+import {
+  GoogleIcon,
+  AppleIcon,
+  MicrosoftIcon,
+} from '~/lib/components/Icons/Icons';
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 import Link from 'next/link';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { AddPassowrd } from '~/lib/api/services/userService';
-import Cookie from 'js-cookie'
-
+import Cookie from 'js-cookie';
 
 const LoginForm = () => {
-    const [showPassword, setShowPassword] = useState<boolean>(false)
-    const [loading, setLoading] = useState<boolean>(false);
-    const toast = useToast();
-    const router = useRouter();
-    const rawUser = Cookie.get('user');
-    const user = rawUser ? JSON.parse(rawUser) : null;
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const router = useRouter();
+  const rawUser = Cookie.get('user');
+  const user = rawUser ? JSON.parse(rawUser) : null;
 
-    const formik = useFormik({
-      initialValues: {
-        phone: '',
-        password: '',
-      },
-      validationSchema: Yup.object({
-        phone: Yup.number().required('Phone Number is required'),
-        password: Yup.string()
-          .required('Password is required')
-          .min(8, 'Password must be at least 8 characters')
-          .matches(
-            /[a-z]/,
-            'Password must contain at least one lowercase letter'
-          )
-          .matches(
-            /[A-Z]/,
-            'Password must contain at least one uppercase letter'
-          )
-          .matches(/[0-9]/, 'Password must contain at least one number')
-          .matches(
-            /[!@#$%^&*(),.?":{}|<>]/,
-            'Password must contain at least one special character'
-          ),
-      }),
-      onSubmit: async (values) => {
-        const formData = {
-          user_id: user?.id,
-          password: values.password,
-          confirm_password: values.password,
-          phone: values.phone,
-        };
-        setLoading(true);
-        try {
-          const response = await AddPassowrd(formData);
-          if (response?.token) {
-            toast({
-              title: response.message as string,
-              description: response.message,
-              duration: 3000,
-              position: 'top-right',
-              isClosable: true,
-              status: 'success',
-            });
-            router.push('/signup/verify-otp');
-          }
-        } catch (error: any) {
-          setLoading(false);
+  const formik = useFormik({
+    initialValues: {
+      phone: '',
+      password: '',
+    },
+    validationSchema: Yup.object({
+      phone: Yup.number().required('Phone Number is required'),
+      password: Yup.string()
+        .required('Password is required')
+        .min(8, 'Password must be at least 8 characters')
+        .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
+        .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+        .matches(/[0-9]/, 'Password must contain at least one number')
+        .matches(
+          /[!@#$%^&*(),.?":{}|<>]/,
+          'Password must contain at least one special character'
+        ),
+    }),
+    onSubmit: async (values) => {
+      const formData = {
+        user_id: user?.id,
+        password: values.password,
+        confirm_password: values.password,
+        phone: values.phone,
+      };
+      setLoading(true);
+      try {
+        const response = await AddPassowrd(formData);
+        if (response?.token) {
           toast({
-            title: error.response.data.message as string,
-            description: error.response.data.message,
+            title: response.message as string,
+            description: response.message,
             duration: 3000,
             position: 'top-right',
             isClosable: true,
-            status: 'error',
+            status: 'success',
           });
-        } finally {
-          setLoading(false);
+          router.push('/signup/verify-otp');
         }
-      },
-    });
+      } catch (error: any) {
+        setLoading(false);
+        toast({
+          title: error.response.data.message as string,
+          description: error.response.data.message,
+          duration: 3000,
+          position: 'top-right',
+          isClosable: true,
+          status: 'error',
+        });
+      } finally {
+        setLoading(false);
+      }
+    },
+  });
 
   return (
     <Box px={['24px', '44px']} py="60px">
       <Box mb="40px">
         <Link href="/">
-          <Image src="" alt="Company Logo" mb="16px" />
+          <Image
+            src="/assets/images/logo3.png"
+            w="auto"
+            h="50px"
+            objectFit="contain"
+            mb="30px"
+          />
         </Link>
         <Heading fontSize={32} fontWeight={500} mb="16px" color="#222222">
           Secure your account
@@ -203,6 +225,6 @@ const LoginForm = () => {
       </Box>
     </Box>
   );
-}
+};
 
-export default LoginForm
+export default LoginForm;

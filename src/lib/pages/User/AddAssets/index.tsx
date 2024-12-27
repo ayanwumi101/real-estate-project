@@ -12,7 +12,7 @@ import CashflowDetails from './components/CashflowDetails'
 
 
 const index = () => {
-  const [step, setStep] = React.useState(3);
+  const [step, setStep] = React.useState(1);
   return (
     <Box borderTop="1px solid #E4E4E4" py="40px" px="55px">
       <Flex alignItems="flex-start" gap="55px">
