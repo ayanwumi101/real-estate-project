@@ -37,7 +37,7 @@ const DashboardHeader = ({
           <Stack spacing="20px" position='relative'>
             <Box
               py="12px"
-              h="65px"
+              h="70px"
               px="20px"
               borderBottom="1px solid #e4e4e4"
               bg="#ffffff"
