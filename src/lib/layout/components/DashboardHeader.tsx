@@ -47,7 +47,7 @@ const DashboardHeader = ({
               w='100%'
             >
               <Flex alignItems="center" justifyContent="space-between">
-                <Box w="125px" h="36px">
+                <Box w="130px" h="40px">
                   <Image
                     src="/assets/images/logo3.png"
                     display="block"
