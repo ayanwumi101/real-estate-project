@@ -33,7 +33,7 @@ export const Header = () => {
         backgroundColor="#F5F5F5"
         borderRadius="50px"
         px={['14px', '24px']}
-        mt="36px"
+        mt={['20px',"36px"]}
         py="10px"
         color="#222222"
         boxShadow="sm"

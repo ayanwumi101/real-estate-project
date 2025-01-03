@@ -7,16 +7,16 @@ import { HiOutlineEye } from 'react-icons/hi2';
 const AccountBalance = () => {
   return (
     <Box>
-      <Box w="100%" px="40px" pb="30px" borderBottom="1px solid #E4E4E4">
+      <Box w="100%" px={['20px',"40px"]} pb="30px" borderBottom="1px solid #E4E4E4">
         <Box
           w="100%"
           borderRadius="5px"
           py="16px"
-          px="48px"
+          px={['16px',"48px"]}
           bgGradient="linear(to-r, #D8D8FF4D, #EDEDFF4D, #FFE6C44D)"
         >
-          <Flex alignItems="center" justifyContent="space-between">
-            <Box>
+          <Flex alignItems="center" justifyContent="space-between" flexWrap='wrap'>
+            <Box mb={['16px', '0']}>
               <Stack spacing="6px" color="#000000">
                 <Heading fontWeight={700} fontSize={15}>
                   Complete Profile Setup
@@ -43,12 +43,12 @@ const AccountBalance = () => {
           </Flex>
         </Box>
       </Box>
-      <Box w="100%" px="40px" py="30px" borderBottom="1px solid #E4E4E4">
+      <Box w="100%" px={['20px',"40px"]} py="30px" borderBottom="1px solid #E4E4E4">
         <Box
           borderRadius="5px"
           bgGradient="linear(to-r,#D8D8FF, #D8D8FF4D, #FFEFD9)"
-          py="32px"
-          px="24px"
+          py={['24px',"32px"]}
+          px={['16px',"24px"]}
           w="100%"
         >
           <Stack spacing="16px">

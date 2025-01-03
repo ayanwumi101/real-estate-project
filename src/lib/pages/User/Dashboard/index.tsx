@@ -7,7 +7,7 @@ import { Box } from '@chakra-ui/react'
 
 const index = () => {
   return (
-    <Box>
+    <Box pt={[3,0]}>
         <AccountBalance />
         <Investments />
         <MarketUpdates />

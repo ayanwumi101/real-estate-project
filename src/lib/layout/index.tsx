@@ -15,7 +15,7 @@ import {
   Tr,
   Td,
   Tbody,
-  keyframes,
+  keyframes, useMediaQuery
 } from '@chakra-ui/react';
 import { useEffect, useLayoutEffect, useState, type ReactNode } from 'react';
 import { Sparklines, SparklinesLine } from 'react-sparklines';
@@ -161,23 +161,25 @@ const DashboardSearchBar = ({
 
 export const DashboardLayout = ({ children }: LayoutProps) => {
   const [showSearBar, setShowSearchBar] = useState<boolean>(false);
+  const [isMobile] = useMediaQuery('(max-width: 768px)');
   const handleChange = () => {
     setShowSearchBar(true);
   };
   return (
-    <Box w="100%" mx="auto" position="relative" bg="rgba(100, 100, 100, 0.1)">
+    <Box w="100%" mx="auto" position={isMobile ? 'static' : "relative"} bg={['none',"rgba(100, 100, 100, 0.1)"]}>
       <Stack direction="row" w="100%" mx="auto" justifyContent="center">
         <Box
-          w="20%"
+          w={isMobile ? '0%' : "20%"}
           position="fixed"
           left="0"
           top="0"
           h="100vh"
           overflow="hidden"
+          display={isMobile ? 'none' : 'block'}
         >
           <DashboardSidebar />
         </Box>
-        <Box position="absolute" left="20%" w="80%">
+        <Box position={isMobile ? 'static' : "absolute"} left={isMobile ? '0%' : "20%"} w={isMobile ? '100%' : "80%"}>
           <Stack direction="column" spacing="22px">
             <DashboardHeader setShowSearchBar={setShowSearchBar} />
             <Box as="main" w="100%">
@@ -221,15 +223,14 @@ export const Layout = ({ children }: LayoutProps) => {
     const isProtectedRoute = pathname.startsWith('/user');
     if (isProtectedRoute && !token) {
       router.replace('/signin');
-      // setIsLoading(false);
     } else if (!isProtectedRoute && token) {
       router.replace('/user/dashboard');
-      // setIsLoading(false);
     }
     setIsLoading(false);
   }, [pathname, router, token]);
 
   if (isLoading) {
+
     const zoomInOut = keyframes`
     0% {
       transform: scale(1);
@@ -241,6 +242,7 @@ export const Layout = ({ children }: LayoutProps) => {
       transform: scale(1);
     }
   `;
+
     return (
       <Box
         w="100%"
@@ -250,7 +252,6 @@ export const Layout = ({ children }: LayoutProps) => {
         justifyContent="center"
       >
         <Image
-          // src="/assets/gif/loader.gif"
           src='/assets/images/logo.png'
           w="250px"
           h="250px"

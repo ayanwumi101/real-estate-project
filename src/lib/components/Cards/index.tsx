@@ -61,8 +61,9 @@ export const PropertyCard = ({ imageSource }: { imageSource: string }) => {
 
 export const UserPropertyCard = ({ imageSource }: { imageSource: string }) => {
   return (
-    <Link href="/user/projects/1">
-      <Box w={['100%', '240px']} h="auto">
+    // <Link href="/user/projects/1">
+    <Box w={['100%', '240px']} h="auto">
+      <Link href="/user/projects/1" style={{ width: '100%' }}>
         <Box
           w="100%"
           h="300px"
@@ -105,8 +106,10 @@ export const UserPropertyCard = ({ imageSource }: { imageSource: string }) => {
             </Flex>
           </Stack>
         </Box>
-      </Box>
-    </Link>
+      </Link>
+    </Box>
+
+    // </Link>
   );
 };
 

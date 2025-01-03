@@ -119,8 +119,8 @@ const LoginForm = () => {
   };
 
   return (
-    <Box px={['24px', '44px']} py="60px">
-      <Box mb="40px">
+    <Box px={['24px', '44px']} pb="60px" pt='30px'>
+      <Box mb="45px">
         <Link href="/">
           <Image
             src="/assets/images/logo3.png"
@@ -130,7 +130,7 @@ const LoginForm = () => {
             mb="30px"
           />
         </Link>
-        <Heading fontSize={32} fontWeight={500} mb="16px" color="#222222">
+        <Heading fontSize={[25,30]} fontWeight={500} mb="16px" color="#222222">
           OTP verification
         </Heading>
         <Text fontSize={18} color="#2E353F" fontWeight={500}>

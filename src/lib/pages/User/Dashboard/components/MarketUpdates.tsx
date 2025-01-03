@@ -20,9 +20,9 @@ import { Sparklines, SparklinesLine } from 'react-sparklines';
 
 const MarketUpdates = () => {
   return (
-    <Box py="30px" px="40px" borderBottom="1px solid #E4E4E4">
+    <Box py="30px" px={['20px',"40px"]} borderBottom="1px solid #E4E4E4">
       <Stack spacing="32px">
-        <Heading fontSize={32} fontWeight={500} color="#222222">
+        <Heading fontSize={[20,32]} fontWeight={500} color="#222222">
           Market Updates
         </Heading>
         <TableContainer>
@@ -38,7 +38,7 @@ const MarketUpdates = () => {
                 <Th
                   color="#222222"
                   fontWeight={500}
-                  fontSize={17}
+                  fontSize={[16,17]}
                   textTransform="capitalize"
                 >
                   Asset
@@ -46,7 +46,7 @@ const MarketUpdates = () => {
                 <Th
                   color="#222222"
                   fontWeight={500}
-                  fontSize={17}
+                  fontSize={[16,17]}
                   textTransform="capitalize"
                 >
                   Current Price
@@ -54,7 +54,7 @@ const MarketUpdates = () => {
                 <Th
                   color="#222222"
                   fontWeight={500}
-                  fontSize={17}
+                  fontSize={[16,17]}
                   textTransform="capitalize"
                 >
                   Change
@@ -62,7 +62,7 @@ const MarketUpdates = () => {
                 <Th
                   color="#222222"
                   fontWeight={500}
-                  fontSize={17}
+                  fontSize={[16,17]}
                   textTransform="capitalize"
                 >
                   %Change
@@ -70,7 +70,7 @@ const MarketUpdates = () => {
                 <Th
                   color="#222222"
                   fontWeight={500}
-                  fontSize={17}
+                  fontSize={[16,17]}
                   textTransform="capitalize"
                 >
                   Status
@@ -85,16 +85,16 @@ const MarketUpdates = () => {
                     borderBottom="1px solid #E4E4E4"
                     _hover={{ bg: '#f5f5f5' }}
                   >
-                    <Td fontSize={18} fontWeight={700}>
+                    <Td fontSize={[16,18]} fontWeight={[600,700]}>
                       Skyline Residences
                     </Td>
-                    <Td fontWeight={500} fontSize={18}>
+                    <Td fontWeight={[400,500]} fontSize={[16,18]}>
                       ₦375,000
                     </Td>
-                    <Td fontWeight={500} fontSize={18}>
+                    <Td fontWeight={[400,500]} fontSize={[16,18]}>
                       ₦3
                     </Td>
-                    <Td fontWeight={500} fontSize={18}>
+                    <Td fontWeight={[400,500]} fontSize={[16,18]}>
                       0.1
                     </Td>
                     <Td>

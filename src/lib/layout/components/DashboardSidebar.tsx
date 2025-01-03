@@ -14,19 +14,21 @@ import {
   LogoutIcon,
 } from '~/lib/components/Icons/Icons';
 
-const SideBarItem = ({
+export const SideBarItem = ({
   label,
   href,
   isActive,
   Icon,
+  onClick
 }: {
   label: string;
   href: string;
   isActive: boolean;
   Icon: any;
+  onClick?: () => void;
 }) => {
   return (
-    <Box py="10px" w="100%" px="34" bg={isActive ? '#EDEDFF' : 'none'}>
+    <Box py="10px" w="100%" px="34" bg={isActive ? '#EDEDFF' : 'none'} onClick={onClick}>
       <Link href={href}>
         <Flex alignItems="center" gap="15px">
           <Icon isActive={isActive} />

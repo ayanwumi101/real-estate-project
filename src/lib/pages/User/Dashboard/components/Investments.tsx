@@ -1,4 +1,5 @@
 import { Box, Heading, Flex, Stack, Button, Text  } from '@chakra-ui/react'
+import Link from 'next/link';
 import React from 'react'
 import { GoArrowRight } from 'react-icons/go';
 import { UserPropertyCard } from '~/lib/components/Cards';
@@ -6,22 +7,20 @@ import { UserPropertyCard } from '~/lib/components/Cards';
 
 const Investments = () => {
   return (
-    <Box py="30px" px="40px" borderBottom="1px solid #E4E4E4">
+    <Box py="30px" px={['20px', '40px']} borderBottom="1px solid #E4E4E4">
       <Stack spacing="30px">
         <Flex alignItems="center" justifyContent="space-between">
-          <Heading fontSize={32} fontWeight={500} color="#222222">
+          <Heading fontSize={[20, 32]} fontWeight={500} color="#222222">
             Top Investments
           </Heading>
-          <Button>
-            <Flex
-              alignItems="center"
-              gap="10px"
-              bg="#EDEDFF"
-              borderRadius="50px"
-              py="12px"
-              px="15px"
-              color="#000080"
-            >
+          <Button
+            bg="#EDEDFF"
+            borderRadius="50px"
+            py="12px"
+            px="15px"
+            color="#000080"
+          >
+            <Flex alignItems="center" gap="10px">
               <Text fontWeight={700}>View more</Text>
               <GoArrowRight />
             </Flex>
