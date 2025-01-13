@@ -21,8 +21,6 @@ import { HiMiniBars3 } from 'react-icons/hi2';
 import DashboardMobileSidebar from './DashboardMobileSidebar';
 
 
-
-
 const DashboardHeader = ({
   setShowSearchBar,
 }: {

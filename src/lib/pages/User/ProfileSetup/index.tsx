@@ -15,7 +15,7 @@ export const ProfileSetupContext = createContext<any>(null);
 
 
 const index = () => {
-  const [step, setStep] = React.useState(3);
+  const [step, setStep] = React.useState(1);
   const [banks, setbanks] = useState<[]>([]);
   const [countries, setCountries] = useState<[]>([]);
 

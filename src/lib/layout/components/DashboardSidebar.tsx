@@ -14,6 +14,7 @@ import {
   LogoutIcon,
 } from '~/lib/components/Icons/Icons';
 
+
 export const SideBarItem = ({
   label,
   href,
@@ -40,6 +41,8 @@ export const SideBarItem = ({
     </Box>
   );
 };
+
+
 
 const DashboardSidebar = () => {
   const pathname = usePathname();

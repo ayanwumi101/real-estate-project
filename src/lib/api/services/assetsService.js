@@ -29,3 +29,9 @@ export const UpdateAssetCashflowDetails = async (data, propertyId) => {
   );
   return response.data;
 };
+
+
+export const GetUserAssets = async () => {
+  const response = await axiosInstance.get(API_ROUTES.GET_USER_ASSETS);
+  return response.data;
+}

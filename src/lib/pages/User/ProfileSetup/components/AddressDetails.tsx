@@ -8,12 +8,14 @@ import {
   Flex,
   Select,
   Button,
-  Checkbox, FormErrorMessage
+  Checkbox, FormErrorMessage,
+  useToast, Spinner
 } from '@chakra-ui/react';
 import { ProfileSetupContext } from '..';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { GetCountryStates, GetStateCities } from '~/lib/api/services/locationService';
+import { UpdateUserAddress } from '~/lib/api/services/profileService';
 
 
 
@@ -28,6 +30,7 @@ const AddressDetails = ({
   const [states, setStates] = useState<[]>([]);
   const [cities, setCities] = useState<[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
 
   // Validation schema using Yup
   const validationSchema = Yup.object().shape({
@@ -51,19 +54,35 @@ const AddressDetails = ({
   const handleSubmit = async (values: any) => {
     setLoading(true);
     const formData = {
-      streetNumber: values.streetNumber,
-      streetName: values.streetName,
-      country: values.country,
-      state: values.state,
-      city: values.city,
+      street_no: values.streetNumber,
+      street_name: values.streetName,
+      country_id: values.country,
+      state_id: values.state,
+      city_id: values.city,
     }
     try {
-      
-    } catch (error) {
-      
+      const res = await UpdateUserAddress(formData);
+      if(res.status === true) {
+        toast({
+          title: res.message as string,
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        });
+        setStep(step + 1);
+        console.log('Address updated successfully');
+      }
+    } catch (error: any) {
+      toast({
+        title: error.response.data.message,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      });
     }
-    console.log('Submitted values:', values);
-    setStep(step + 1); // Proceed to next step
+    setLoading(false);
   };
   
 
@@ -265,8 +284,9 @@ const AddressDetails = ({
                     fontWeight={600}
                     fontSize={16}
                     _hover={{ bg: '#000080' }}
+                    minW='150px'
                   >
-                    Continue
+                    {loading ? <Spinner /> : "Continue"}
                   </Button>
                 </Flex>
               </Stack>

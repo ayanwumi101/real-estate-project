@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Input, Button, Text, Heading, FormLabel, FormControl, Image, Flex, HStack, Icon, Stack, InputGroup, InputRightElement, Spinner, useToast } from '@chakra-ui/react'
+import { Box, Input, Button, Text, Heading, FormLabel, FormControl, Image, Flex, HStack, Icon, Stack, InputGroup, InputRightElement, Spinner, useToast, useMediaQuery } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { GoogleIcon, AppleIcon, MicrosoftIcon } from '~/lib/components/Icons/Icons'
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
@@ -14,10 +14,11 @@ import Cookies from 'js-cookie';
 
 
 export const SocialLoginButton = ({label, Icon} : {label: string, Icon: any}) => {
+  const [isMobile] = useMediaQuery('(max-width: 768px)');
     return (
       <Button border="1px solid #8295AA" bg="#FBFBFB" w={['100%','200px']} py='25px'>
         <Flex alignItems="center" gap="12px">
-          <Icon as={Icon} />
+          {isMobile  && <Icon as={Icon} />}
           <Text fontWeight={700} color="#222222">
             {label}
           </Text>
@@ -38,12 +39,14 @@ const LoginForm = () => {
         email: '',
         password: '',
       },
+
       validationSchema: Yup.object({
         email: Yup.string()
           .email('Invalid email address')
           .required('Email is required'),
         password: Yup.string().required('Password is required'),
       }),
+      
       onSubmit: async (values, { resetForm }) => {
         setLoading(true);
         try {

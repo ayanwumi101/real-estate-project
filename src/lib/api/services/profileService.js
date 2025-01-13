@@ -17,10 +17,24 @@ export const UpdateNextOfKinDetails = async (data) => {
   return response.data;
 };
 
+
+export const UpdateUserAddress = async (data) => {
+  const response = await axiosInstance.post(
+    API_ROUTES.UPDATE_USER_ADDRESS,
+    data
+  );
+  return response.data;
+};
+
+
 export const SaveUserDetails = async (data) => {
   const response = await axiosInstance.post(
     API_ROUTES.SAVE_USER_DETAILS,
-    data
+    data, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }
   );
   return response.data;
 };
@@ -29,4 +43,9 @@ export const SaveUserDetails = async (data) => {
 export const GetNigerianBanks = async () => {
   const response = await axiosInstance.get('https://nigerianbanks.xyz/');
   return response;
+}
+
+export const GetUserProfileDetails = async () => {
+  const response = await axiosInstance.get(API_ROUTES.GET_USER_PROFILE_DETAILS);
+  return response.data;
 }

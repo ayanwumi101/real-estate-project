@@ -642,6 +642,7 @@ const PropertyDetailsForm = ({
                     fontSize={16}
                     _hover={{ bg: '#000080' }}
                     type="submit"
+                    minW="150px"
                   >
                     {loading ? <Spinner /> : "Continue"}
                   </Button>

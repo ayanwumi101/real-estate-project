@@ -1,3 +1,5 @@
+import { GET } from "~/app/api/hello/route";
+
 const API_ROUTES = {
   //auth endpoints
   LOGIN: '/login',
@@ -12,12 +14,15 @@ const API_ROUTES = {
   SAVE_USER_DETAILS: '/user/saveDetail',
   UPDATE_NEXT_OF_KIN_DETAILS: '/user/next-of-kin',
   UPDATE_BANK_DETAILS: '/user/bank-details',
+  UPDATE_USER_ADDRESS: '/user/add-address',
+  GET_USER_PROFILE_DETAILS: '/user/profile',
 
   //assets endpoints
   ADD_ASSET_DETAILS: '/user/asset/add',
   UPDATE_ASSET_DELIVERY_STATUS: '/user/asset/delivery-status',
   UPDATE_ASSET_PAYMENT_PLAN: '/user/asset/payment-plan',
   UPDATE_ASSET_CASHFLOW_DETAILS: '/user/asset/cashflow-details',
+  GET_USER_ASSETS: '/user/assets',
 
   //location endpoints
   GET_ALL_COUNTRIES: '/countries',

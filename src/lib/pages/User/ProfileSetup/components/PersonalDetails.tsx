@@ -7,7 +7,6 @@ import {
   Select,
   Spinner,
   Button,
-  Textarea,
   Flex,
   Text,
   Heading,
@@ -23,7 +22,6 @@ import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { GoTrash } from 'react-icons/go';
 import { BsImageFill } from 'react-icons/bs';
-import { formatDate } from '~/lib/utils/dateFormatter';
 
 
 // Validation Schema
@@ -50,13 +48,13 @@ const PersonalDetails = ({ step, setStep }: PersonalDetailsProps) => {
   const toast = useToast();
   const handleSubmit = async (values: any) => {
     const formData = {
-      dateofbirth: formatDate(values.dateOfBirth),
+      profile_image: values.profilePicture,
+      dateofbirth: values.dateOfBirth,
       gender: values.gender,
     };
     setLoading(true);
     try {
       const response = await SaveUserDetails(formData);
-      console.log(response);
       if (response.status === true) {
         toast({
           title: response.message as string,

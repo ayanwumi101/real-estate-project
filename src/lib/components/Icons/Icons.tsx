@@ -208,8 +208,7 @@ export const InputSearchIcon = () => {
       />
     </svg>
   );
-}
-
+};
 
 export const BrowseProjectIcon = ({ isActive }: { isActive: boolean }) => {
   return (
@@ -250,7 +249,6 @@ export const MyPortfolioIcon = ({ isActive }: { isActive: boolean }) => {
     </svg>
   );
 };
-
 
 export const TransactionsIcon = ({ isActive }: { isActive: boolean }) => {
   return (
@@ -319,7 +317,6 @@ export const TransactionsIcon = ({ isActive }: { isActive: boolean }) => {
   );
 };
 
-
 export const HelpAndSupportIcon = ({ isActive }: { isActive: boolean }) => {
   return (
     <svg
@@ -342,7 +339,6 @@ export const HelpAndSupportIcon = ({ isActive }: { isActive: boolean }) => {
     </svg>
   );
 };
-
 
 export const SettingsIcon = ({ isActive }: { isActive: boolean }) => {
   return (
@@ -371,7 +367,6 @@ export const SettingsIcon = ({ isActive }: { isActive: boolean }) => {
   );
 };
 
-
 export const LogoutIcon = ({ isActive }: { isActive: boolean }) => {
   return (
     <svg
@@ -391,7 +386,6 @@ export const LogoutIcon = ({ isActive }: { isActive: boolean }) => {
     </svg>
   );
 };
-
 
 export const DashboardIcon = ({ isActive }: { isActive: boolean }) => {
   return (
@@ -434,8 +428,7 @@ export const DashboardIcon = ({ isActive }: { isActive: boolean }) => {
   );
 };
 
-
-export const MyAssetsIcon = ({isActive}:{isActive: boolean}) => {
+export const MyAssetsIcon = ({ isActive }: { isActive: boolean }) => {
   return (
     <svg
       width="16"
@@ -453,8 +446,7 @@ export const MyAssetsIcon = ({isActive}:{isActive: boolean}) => {
       />
     </svg>
   );
-}
-
+};
 
 export const InvestIcon = () => {
   return (
@@ -473,8 +465,7 @@ export const InvestIcon = () => {
       />
     </svg>
   );
-}
-
+};
 
 export const CautionIcon = () => {
   return (
@@ -578,8 +569,7 @@ export const CautionIcon = () => {
       </defs>
     </svg>
   );
-}
-
+};
 
 export const TagIcon = () => {
   return (
@@ -601,8 +591,7 @@ export const TagIcon = () => {
       />
     </svg>
   );
-}
-
+};
 
 export const CopyIcon = () => {
   return (
@@ -621,8 +610,7 @@ export const CopyIcon = () => {
       />
     </svg>
   );
-}
-
+};
 
 export const CloseIcon = () => {
   return (
@@ -641,8 +629,7 @@ export const CloseIcon = () => {
       />
     </svg>
   );
-}
-
+};
 
 export const AddIcon = () => {
   return (
@@ -662,8 +649,7 @@ export const AddIcon = () => {
       />
     </svg>
   );
-}
-
+};
 
 export const ProfitIcon = () => {
   return (
@@ -683,7 +669,7 @@ export const ProfitIcon = () => {
       />
     </svg>
   );
-}
+};
 
 export const LossIcon = () => {
   return (
@@ -703,7 +689,7 @@ export const LossIcon = () => {
       />
     </svg>
   );
-}
+};
 
 export const OutwardTransactionIcon = () => {
   return (
@@ -722,7 +708,7 @@ export const OutwardTransactionIcon = () => {
       />
     </svg>
   );
-}
+};
 
 export const InwardTransactionIcon = () => {
   return (
@@ -741,8 +727,7 @@ export const InwardTransactionIcon = () => {
       />
     </svg>
   );
-}
-
+};
 
 export const DirectBankTransferIcon = () => {
   return (
@@ -760,8 +745,7 @@ export const DirectBankTransferIcon = () => {
       />
     </svg>
   );
-}
-
+};
 
 export const PayWithCardIcon = () => {
   return (
@@ -781,8 +765,7 @@ export const PayWithCardIcon = () => {
       />
     </svg>
   );
-}
-
+};
 
 export const VerifiedIcon = () => {
   return (
@@ -809,8 +792,7 @@ export const VerifiedIcon = () => {
       />
     </svg>
   );
-}
-
+};
 
 export const BankIcon = () => {
   return (
@@ -854,8 +836,7 @@ export const BankIcon = () => {
       </defs>
     </svg>
   );
-}
-
+};
 
 export const PropertyDetailsIcon = () => {
   return (
@@ -874,10 +855,9 @@ export const PropertyDetailsIcon = () => {
       />
     </svg>
   );
-}
+};
 
-
-export const DeliveryStatusIcon = ({isActive}:{isActive: boolean}) => {
+export const DeliveryStatusIcon = ({ isActive }: { isActive: boolean }) => {
   return (
     <svg
       width="18"
@@ -888,14 +868,13 @@ export const DeliveryStatusIcon = ({isActive}:{isActive: boolean}) => {
     >
       <path
         d="M11 1H3C2.46957 1 1.96086 1.21071 1.58579 1.58579C1.21071 1.96086 1 2.46957 1 3V19C1 19.5304 1.21071 20.0391 1.58579 20.4142C1.96086 20.7893 2.46957 21 3 21H15C15.5304 21 16.0391 20.7893 16.4142 20.4142C16.7893 20.0391 17 19.5304 17 19V7M11 1L17 7M11 1V7H17M13 12H5M13 16H5M7 8H5"
-        stroke={isActive ? '#ffffff' : "#ABABFF"}
+        stroke={isActive ? '#ffffff' : '#ABABFF'}
         stroke-linecap="round"
         stroke-linejoin="round"
       />
     </svg>
   );
-}
-
+};
 
 export const PaymentPlanIcon = ({ isActive }: { isActive: boolean }) => {
   return (
@@ -916,7 +895,6 @@ export const PaymentPlanIcon = ({ isActive }: { isActive: boolean }) => {
   );
 };
 
-
 export const CashflowDetailsIcon = ({ isActive }: { isActive: boolean }) => {
   return (
     <svg
@@ -936,7 +914,6 @@ export const CashflowDetailsIcon = ({ isActive }: { isActive: boolean }) => {
   );
 };
 
-
 export const NextOfKinIcon = ({ isActive }: { isActive: boolean }) => {
   return (
     <svg
@@ -954,8 +931,7 @@ export const NextOfKinIcon = ({ isActive }: { isActive: boolean }) => {
       />
     </svg>
   );
-}
-
+};
 
 export const PersonalDetailsIcon = ({ isActive }: { isActive: boolean }) => {
   return (
@@ -974,8 +950,7 @@ export const PersonalDetailsIcon = ({ isActive }: { isActive: boolean }) => {
       />
     </svg>
   );
-}
-
+};
 
 export const AddressDetailsIcon = ({ isActive }: { isActive: boolean }) => {
   return (
@@ -988,14 +963,13 @@ export const AddressDetailsIcon = ({ isActive }: { isActive: boolean }) => {
     >
       <path
         d="M18 23V7C18 6.46957 17.7893 5.96086 17.4142 5.58579C17.0391 5.21071 16.5304 5 16 5H12C11.4696 5 10.9609 5.21071 10.5858 5.58579C10.2107 5.96086 10 6.46957 10 7V23M6 9H22C23.1046 9 24 9.89543 24 11V21C24 22.1046 23.1046 23 22 23H6C4.89543 23 4 22.1046 4 21V11C4 9.89543 4.89543 9 6 9Z"
-        stroke={isActive ? "#ffffff" : "#ABABFF"}
+        stroke={isActive ? '#ffffff' : '#ABABFF'}
         stroke-linecap="round"
         stroke-linejoin="round"
       />
     </svg>
   );
-}
-
+};
 
 export const FileUploadIcon = () => {
   return (
@@ -1014,10 +988,9 @@ export const FileUploadIcon = () => {
       />
     </svg>
   );
-}
+};
 
-
-export const SelectGenderIcon  = () => {
+export const SelectGenderIcon = () => {
   return (
     <svg
       width="24"
@@ -1034,4 +1007,23 @@ export const SelectGenderIcon  = () => {
       />
     </svg>
   );
-}
+};
+
+export const TrophyIcon = () => {
+  return (
+    <svg
+      width="25"
+      height="25"
+      viewBox="0 0 25 25"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M9.08937 6.15301L9.46242 6.15114L9.607 6.15041L9.67393 6.15008C9.6724 6.14061 9.67088 6.13114 9.66938 6.12167L9.08937 6.15301ZM9.08937 6.15301L9.06776 6.13715M9.08937 6.15301L9.06776 6.13715M9.06776 6.13715L9.08936 6.15301L9.06677 6.15312L9.06776 6.13715Z"
+        fill="black"
+        stroke="#E7BC0F"
+        stroke-width="21.3333"
+      />
+    </svg>
+  );
+};
