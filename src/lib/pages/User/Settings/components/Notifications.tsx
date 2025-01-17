@@ -4,7 +4,7 @@ import React from 'react'
 
 const Notifications = () => {
   return (
-    <Box px="40px" pb="50px">
+    <Box px={['20px',"40px"]} pb="50px">
       <Stack spacing="26px">
         {/* irst section of notification */}
         <Box border="1px solid #E4E4E4" borderRadius="5px" p="15px">

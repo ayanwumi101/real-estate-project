@@ -4,8 +4,8 @@ import React from 'react'
 
 const Security = () => {
   return (
-    <Box px="40px">
-      <FormControl w="630px">
+    <Box px={['20px',"40px"]}>
+      <FormControl w={['100%',"630px"]}>
         <Stack spacing="16px">
           <Box>
             <FormLabel fontWeight={600} fontSize={16} color="#222222" mb="13px">

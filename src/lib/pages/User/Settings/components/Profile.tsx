@@ -83,8 +83,8 @@ const PersonalInformation = () => {
     <Box border="1px solid #E4E4E4" borderRadius="5px" px="24px" py="14px">
       <Stack spacing="12px">
         <Box>
-          <Flex alignItems="center" gap="15px">
-            <Box w="50%">
+          <Flex alignItems="center" gap="15px" flexWrap="wrap">
+            <Box w={['100%', '50%']}>
               <FormLabel
                 mb="13px"
                 color="#222222"
@@ -111,7 +111,7 @@ const PersonalInformation = () => {
                 </InputRightElement>
               </InputGroup>
             </Box>
-            <Box w="50%">
+            <Box w={['100%', '50%']}>
               <FormLabel
                 mb="13px"
                 color="#222222"
@@ -141,8 +141,8 @@ const PersonalInformation = () => {
           </Flex>
         </Box>
         <Box>
-          <Flex alignItems="center" gap="15px">
-            <Box w="50%">
+          <Flex alignItems="center" gap="15px" flexWrap="wrap">
+            <Box w={['100%', '50%']}>
               <FormLabel
                 mb="13px"
                 color="#222222"
@@ -169,7 +169,7 @@ const PersonalInformation = () => {
                 </InputRightElement>
               </InputGroup>
             </Box>
-            <Box w="50%">
+            <Box w={['100%', '50%']}>
               <FormLabel
                 mb="13px"
                 color="#222222"
@@ -210,16 +210,16 @@ const ProfileHeader = () => {
       <Flex gap="25px" alignItems="center">
         <Avatar
           name={userDetails?.fullname}
-          w="86px"
+          w={['56px',"86px"]}
           bg="#E4E4E4"
-          h="86px"
+          h={['56px',"86px"]}
           color="#fff"
           fontWeight={700}
           fontSize={32}
         />
         <Box>
           <Stack justifyContent="space-between">
-            <Heading fontSize={32} color="#2E353F" fontWeight={500}>
+            <Heading fontSize={[20,32]} color="#2E353F" fontWeight={500}>
               {userDetails?.fullname}
             </Heading>
             <Text fontSize={14} color="#2E353F" fontWeight={500}>
@@ -237,7 +237,7 @@ const Profile = () => {
     <Box pb="50px">
       <Stack spacing="40px">
         <ProfileHeader />
-        <Box px="40px">
+        <Box px={['20px',"40px"]}>
           <Stack spacing="26px">
             <PersonalInformation />
             <BankAccountDetails />
