@@ -60,7 +60,9 @@ const index = () => {
             color="white"
             h="55px"
             borderRadius="50px"
-            onClick={handleClick}
+            onClick={() => {
+              router.push('/user/profile-setup');
+            }}
           >
             Complete profile setup
           </Button>
@@ -72,7 +74,9 @@ const index = () => {
             color="#000080"
             h="55px"
             borderRadius="50px"
-            onClick={handleClick}
+            onClick={() => {
+              router.push('/user/dashboard');
+            }}
           >
             Proceed to dashboard
           </Button>

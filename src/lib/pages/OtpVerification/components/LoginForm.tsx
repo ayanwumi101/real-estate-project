@@ -49,13 +49,14 @@ const LoginForm = () => {
     onSubmit: async (values) => {
       setLoading(true);
       const formData = {
-        email: user?.email,
+        email: user?.user?.email,
         otp: Number(values.otp),
       };
       try {
         const response = await ValidateOtp(formData);
         const data = response.data;
         if (response.data.email_verified_at === true) {
+          console.log(data);
           toast({
             title: data.message as string,
             description: 'Otp Verification successful',

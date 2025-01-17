@@ -7,6 +7,7 @@ import PropertyDetailsForm from './components/PropertyDetailsForm'
 import PaymentPlan from './components/PaymentPlan'
 import DeliveryStatusForm from './components/DeliveryStatusForm'
 import CashflowDetails from './components/CashflowDetails'
+import AssetImages from './components/AssetImages'
 
 
 
@@ -22,6 +23,7 @@ const index = () => {
           {step === 2 && <DeliveryStatusForm step={step} setStep={setStep} />}
           {step === 3 && <PaymentPlan step={step} setStep={setStep} />}
           {step === 4 && <CashflowDetails step={step} setStep={setStep} />}
+          {step === 5 && <AssetImages step={step} setStep={setStep} />}
         </Box>
       </Flex>
     </Box>

@@ -13,7 +13,7 @@ import React from 'react';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { UpdateAssetDeliveryStatus } from '~/lib/api/services/assetsService';
-
+import Cookie from 'js-cookie';
 
 
 const DeliveryStatusForm = ({
@@ -25,6 +25,7 @@ const DeliveryStatusForm = ({
 }) => {
   const toast = useToast();
   const [loading, setLoading] = React.useState<boolean>(false);
+  const assetId = Cookie.get('vestier-asset-id');
 
   const validationSchema = Yup.object().shape({
     paymentStatus: Yup.string().required('Payment status is required'),
@@ -44,18 +45,25 @@ const DeliveryStatusForm = ({
 
   const handleSubmit = async (values: any) => {
     setLoading(true);
-    const formData = {}
+    const formData = {
+      payment_status: values.paymentStatus,
+      allocation_status: values.allocationStatus,
+      documentation_status: values.documentationStatus,
+      handover_status: values.handoverStatus,
+    }
     try {
       const res = await UpdateAssetDeliveryStatus(
-        '93b6f340-ec3e-4f5e-ac92-c22e22dc0736',
+        assetId as string,
         formData
       );
       if (res.status === true) {
         toast({
           title: res.message as string,
           status: 'success',
-          duration: 5000,
+          duration: 3000,
           isClosable: true,
+          position: 'top-right',
+
         });
         setLoading(false);
         setStep(step + 1);
@@ -66,8 +74,9 @@ const DeliveryStatusForm = ({
         title: 'An error occurred',
         description: error.response.data.message,
         status: 'error',
-        duration: 5000,
+        duration: 3000,
         isClosable: true,
+        position: 'top-right',
       });
     }
   };

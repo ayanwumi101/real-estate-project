@@ -22,6 +22,7 @@ import {
 } from '~/lib/api/services/locationService';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
+import Cookie from 'js-cookie'
 
 const PropertyDetailsForm = ({
   step,
@@ -135,6 +136,7 @@ const PropertyDetailsForm = ({
           isClosable: true,
           status: 'success',
         });
+        Cookie.set('vestier-asset-id', res.data)
         setStep(step + 1);
       }
     } catch (error: any) {

@@ -39,7 +39,6 @@ const LoginForm = () => {
         email: '',
         password: '',
       },
-
       validationSchema: Yup.object({
         email: Yup.string()
           .email('Invalid email address')
@@ -59,13 +58,15 @@ const LoginForm = () => {
               position: 'top-right',
               isClosable: true,
               status: 'success',
-            });
-            Cookies.set('token', response.data);
+            });       
+            Cookies.set('vestier-token', JSON.stringify(response.data.token));
+            Cookies.set('vestier-user', JSON.stringify(response.data.user));
             router.push('/user/dashboard');
             resetForm();
           }
         } catch (error: any) {
           setLoading(false);
+          console.log(error);
           toast({
             title: error.response.data.message as string,
             description: 'Login unsuccessful',
@@ -79,7 +80,6 @@ const LoginForm = () => {
         }
       },
     });
-
 
   return (
     <Box px={['24px', '44px']} pb="60px" pt='30px'>

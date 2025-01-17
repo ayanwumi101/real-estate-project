@@ -16,6 +16,7 @@ import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { UpdateAssetPaymentPlan } from '~/lib/api/services/assetsService';
+import Cookie from 'js-cookie';
 
 const PaymentPlan = ({
   step,
@@ -25,6 +26,7 @@ const PaymentPlan = ({
   setStep: (value: number) => void;
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
+  const assetId = Cookie.get('vestier-asset-id');
   const toast = useToast();
 
   // Validation schema using Yup
@@ -37,6 +39,7 @@ const PaymentPlan = ({
     paymentPlan: Yup.string().required('Payment plan is required'),
     firstPaymentDate: Yup.string().required('First payment date is required'),
     nextDueDate: Yup.string().required('Next due date is required'),
+    yieldingCashflow: Yup.string().required('Yielding cashflow is required'),
   });
 
   // Initial form values
@@ -49,6 +52,7 @@ const PaymentPlan = ({
     paymentPlan: '',
     firstPaymentDate: '',
     nextDueDate: '',
+    yieldingCashflow: '',
   };
 
   // Handle form submission
@@ -61,26 +65,31 @@ const PaymentPlan = ({
       amount_left: values.amountLeft,
       payment_plan: values.paymentPlan,
       due_date: values.nextDueDate,
+      payment_date: values.firstPaymentDate,
       bought_date: values.firstPaymentDate,
       amount_paid: values.amountPaid,
+      yield_cashflow: values.yieldingCashflow === 'Yes' ? true : false,
     };
     try {
-      // const res = await UpdateAssetPaymentPlan(formData);
-      // if (res.status === true) {
-      //   toast({
-      //     title: res.message as string,
-      //     status: 'success',
-      //     duration: 5000,
-      //     isClosable: true,
-      //   });
-      //   setLoading(false);
-      // }
+      const res = await UpdateAssetPaymentPlan(assetId, formData);
+      if (res.status === true) {
+        toast({
+          title: res.message as string,
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        });
+        setLoading(false);
+        setStep(step + 1);
+      }
     } catch (error) {
       toast({
         title: 'An error occurred',
         status: 'error',
-        duration: 5000,
+        duration: 3000,
         isClosable: true,
+        position: 'top-right',
       });
       setLoading(false);
     }
@@ -249,6 +258,26 @@ const PaymentPlan = ({
                   />
                   <FormErrorMessage>{errors.nextDueDate}</FormErrorMessage>
                 </FormControl>
+                <FormControl
+                  isInvalid={!!errors.nextDueDate && touched.nextDueDate}
+                >
+                  <FormLabel fontWeight={600} fontSize={16} color="#222222">
+                    Is it yielding cashflow?
+                  </FormLabel>
+                  <Field
+                    as={Select}
+                    name="yieldingCashflow"
+                    bg="#FBFBFB"
+                    border="1px solid #C0C0C0"
+                    borderRadius="50px"
+                    h="50px"
+                  >
+                    <option value="">Select-</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                  </Field>
+                  <FormErrorMessage>{errors.yieldingCashflow}</FormErrorMessage>
+                </FormControl>
                 <Flex justifyContent="flex-end" gap="20px">
                   <Button
                     color="#000080"
@@ -257,7 +286,7 @@ const PaymentPlan = ({
                     borderRadius="30px"
                     fontWeight={600}
                     fontSize={16}
-                    _hover={{ bg: '#000080' }}
+                    _hover={{ bg: 'lightgray' }}
                     onClick={() => setStep(step - 1)}
                     minW="100px"
                   >
@@ -272,8 +301,9 @@ const PaymentPlan = ({
                     fontSize={16}
                     _hover={{ bg: '#000080' }}
                     type="submit"
+                    minW='150px'
                   >
-                    Continue
+                    {loading ? <Spinner /> : "Continue"}
                   </Button>
                 </Flex>
               </Stack>

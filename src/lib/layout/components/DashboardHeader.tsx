@@ -12,13 +12,15 @@ import {
   Stack,
   useMediaQuery, Image
 } from '@chakra-ui/react';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import {
   DashboardNotificationIcon,
   InputSearchIcon,
 } from '~/lib/components/Icons/Icons';
 import { HiMiniBars3 } from 'react-icons/hi2';
 import DashboardMobileSidebar from './DashboardMobileSidebar';
+import { AppContext } from '..';
+
 
 
 const DashboardHeader = ({
@@ -28,6 +30,7 @@ const DashboardHeader = ({
 }) => {
   const [isMobile] = useMediaQuery('(max-width: 768px)');
   const [openSideNav, setOpenSideNav] = useState<boolean>(false);
+  const {userDetails} = useContext(AppContext);
   return (
     <Fragment>
       {isMobile ? (
@@ -58,7 +61,7 @@ const DashboardHeader = ({
                 <Box>
                   <Flex alignItems="center" gap="10px">
                     <Avatar
-                      name="Ayanwumi Babatunde"
+                      name={userDetails?.fullname}
                       w="40px"
                       h="40px"
                       bg="#E4E4E4"
@@ -126,7 +129,7 @@ const DashboardHeader = ({
               <DashboardNotificationIcon />
               <Box w="1px" h="40px" bg="#C0C0C0"></Box>
               <Avatar
-                name="Ayanwumi Babatunde"
+                name={userDetails?.fullname}
                 w="50px"
                 h="50px"
                 bg="#E4E4E4"

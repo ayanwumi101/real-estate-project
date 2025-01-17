@@ -23,6 +23,7 @@ const API_ROUTES = {
   UPDATE_ASSET_PAYMENT_PLAN: '/user/asset/payment-plan',
   UPDATE_ASSET_CASHFLOW_DETAILS: '/user/asset/cashflow-details',
   GET_USER_ASSETS: '/user/assets',
+  ADD_ASSET_IMAGES: '/user/asset/add-images',
 
   //location endpoints
   GET_ALL_COUNTRIES: '/countries',

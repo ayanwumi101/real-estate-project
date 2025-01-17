@@ -14,13 +14,12 @@ import {
   LogoutIcon,
 } from '~/lib/components/Icons/Icons';
 
-
 export const SideBarItem = ({
   label,
   href,
   isActive,
   Icon,
-  onClick
+  onClick,
 }: {
   label: string;
   href: string;
@@ -29,7 +28,13 @@ export const SideBarItem = ({
   onClick?: () => void;
 }) => {
   return (
-    <Box py="10px" w="100%" px="34" bg={isActive ? '#EDEDFF' : 'none'} onClick={onClick}>
+    <Box
+      py="10px"
+      w="100%"
+      px="34"
+      bg={isActive ? '#EDEDFF' : 'none'}
+      onClick={onClick}
+    >
       <Link href={href}>
         <Flex alignItems="center" gap="15px">
           <Icon isActive={isActive} />
@@ -42,15 +47,14 @@ export const SideBarItem = ({
   );
 };
 
-
-
 const DashboardSidebar = () => {
   const pathname = usePathname();
-   const router = useRouter();
-   const toast = useToast();
+  const router = useRouter();
+  const toast = useToast();
 
   const LogoutUser = () => {
-    router.push('/signin');
+    Cookies.remove('vestier-token');
+    Cookies.remove('vestier-user');
     Cookies.remove('token');
     toast({
       title: 'Logout Successful',
@@ -79,7 +83,13 @@ const DashboardSidebar = () => {
           alignItems="center"
           justifyContent="center"
         >
-          <Image src='/assets/images/logo.png' display='block' mx='auto' w='80%' objectFit='cover' />
+          <Image
+            src="/assets/images/logo.png"
+            display="block"
+            mx="auto"
+            w="80%"
+            objectFit="cover"
+          />
         </Box>
         <Box py="24px">
           <Stack spacing="16px">
@@ -125,7 +135,13 @@ const DashboardSidebar = () => {
               isActive={pathname === '/user/settings'}
               href="/user/settings"
             />
-            <Box py="10px" w="100%" px="34" onClick={LogoutUser} cursor='pointer'>
+            <Box
+              py="10px"
+              w="100%"
+              px="34"
+              onClick={LogoutUser}
+              cursor="pointer"
+            >
               <Flex alignItems="center" gap="15px">
                 <LogoutIcon isActive={false} />
                 <Text color="#2E353F" fontWeight={500}>

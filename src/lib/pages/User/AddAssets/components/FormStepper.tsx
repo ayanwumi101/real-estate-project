@@ -48,14 +48,36 @@ const SingleStepItem = ({Icon, label, isActive}:{Icon: any, label: string, isAct
 const FormStepper = ({step}:{step: number}) => {
   return (
     <Box as="section" w="180px">
-      <Stack alignItems='flex-end' justifyContent='flex-end'>
-        <SingleStepItem label='Property Details' Icon={PropertyDetailsIcon} isActive={step > 0 ? true : false} />
+      <Stack alignItems="flex-end" justifyContent="flex-end">
+        <SingleStepItem
+          label="Property Details"
+          Icon={PropertyDetailsIcon}
+          isActive={step > 0 ? true : false}
+        />
         <StepDivider />
-        <SingleStepItem label='Delivery Status' Icon={DeliveryStatusIcon} isActive={step > 1 ? true : false} />
+        <SingleStepItem
+          label="Delivery Status"
+          Icon={DeliveryStatusIcon}
+          isActive={step > 1 ? true : false}
+        />
         <StepDivider />
-        <SingleStepItem label='Payment Plan' Icon={PaymentPlanIcon} isActive={step > 2 ? true : false} />
+        <SingleStepItem
+          label="Payment Plan"
+          Icon={PaymentPlanIcon}
+          isActive={step > 2 ? true : false}
+        />
         <StepDivider />
-        <SingleStepItem label='Cashflow Details' Icon={CashflowDetailsIcon} isActive={step > 3 ? true : false} />
+        <SingleStepItem
+          label="Cashflow Details"
+          Icon={CashflowDetailsIcon}
+          isActive={step > 3 ? true : false}
+        />
+        <StepDivider />
+        <SingleStepItem
+          label="Asset Images"
+          Icon={CashflowDetailsIcon}
+          isActive={step > 4 ? true : false}
+        />
       </Stack>
     </Box>
   );

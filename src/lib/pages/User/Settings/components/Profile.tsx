@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Avatar,
   Heading,
@@ -12,9 +14,11 @@ import {
   Stack,
   FormLabel,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useContext } from 'react';
 import { FiEdit } from 'react-icons/fi';
 import { VerifiedIcon, BankIcon } from '~/lib/components/Icons/Icons';
+import { AppContext } from '~/lib/layout';
+
 
 const CustomerInformation = () => {
   return (
@@ -74,6 +78,7 @@ const BankAccountDetails = () => {
 };
 
 const PersonalInformation = () => {
+  const { userDetails } = useContext(AppContext);
   return (
     <Box border="1px solid #E4E4E4" borderRadius="5px" px="24px" py="14px">
       <Stack spacing="12px">
@@ -92,12 +97,14 @@ const PersonalInformation = () => {
                 <Input
                   border="1px solid #C0C0C0"
                   type="email"
-                  placeholder="jayforeal@gmail.com"
+                  // placeholder="jayforeal@gmail.com"
+                  value={userDetails?.email}
                   borderRadius="50px"
                   height="50px"
                   px="20px"
                   color="#2E353F"
                   fontWeight={500}
+                  readOnly={true}
                 />
                 <InputRightElement pointerEvents="none" mt="1" mr="2">
                   <VerifiedIcon />
@@ -117,12 +124,14 @@ const PersonalInformation = () => {
                 <Input
                   border="1px solid #C0C0C0"
                   type="email"
-                  placeholder="+49 17687934521"
+                  // placeholder="+49 17687934521"
+                  value={userDetails?.phone}
                   borderRadius="50px"
                   height="50px"
                   px="20px"
                   color="#2E353F"
                   fontWeight={500}
+                  readOnly={true}
                 />
                 <InputRightElement pointerEvents="none" mt="1" mr="2">
                   <VerifiedIcon />
@@ -146,12 +155,14 @@ const PersonalInformation = () => {
                 <Input
                   border="1px solid #C0C0C0"
                   type="email"
-                  placeholder="Male"
+                  // placeholder="Male"
+                  value={userDetails?.gender}
                   borderRadius="50px"
                   height="50px"
                   px="20px"
                   color="#2E353F"
                   fontWeight={500}
+                  readOnly={true}
                 />
                 <InputRightElement pointerEvents="none" mt="1" mr="2">
                   <VerifiedIcon />
@@ -171,12 +182,14 @@ const PersonalInformation = () => {
                 <Input
                   border="1px solid #C0C0C0"
                   type="email"
-                  placeholder="64 Royal Ln. Mesa, New Jersey 45463"
+                  // placeholder="64 Royal Ln. Mesa, New Jersey 45463"
+                  value={userDetails?.street_name}
                   borderRadius="50px"
                   height="50px"
                   px="20px"
                   color="#2E353F"
                   fontWeight={500}
+                  readOnly={true}
                 />
                 <InputRightElement pointerEvents="none" mt="1" mr="2">
                   <VerifiedIcon />
@@ -191,11 +204,12 @@ const PersonalInformation = () => {
 };
 
 const ProfileHeader = () => {
+  const {userDetails} = useContext(AppContext);
   return (
     <Box p="25px" bgGradient="linear(to-r, #D8D8FF4D, #EDEDFF4D, #FFE6C44D)">
       <Flex gap="25px" alignItems="center">
         <Avatar
-          name="James Brown"
+          name={userDetails?.fullname}
           w="86px"
           bg="#E4E4E4"
           h="86px"
@@ -206,10 +220,10 @@ const ProfileHeader = () => {
         <Box>
           <Stack justifyContent="space-between">
             <Heading fontSize={32} color="#2E353F" fontWeight={500}>
-              James Brown
+              {userDetails?.fullname}
             </Heading>
             <Text fontSize={14} color="#2E353F" fontWeight={500}>
-              Male
+              {userDetails?.gender}
             </Text>
           </Stack>
         </Box>

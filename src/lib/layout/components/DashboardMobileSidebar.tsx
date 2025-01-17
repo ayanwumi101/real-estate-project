@@ -25,7 +25,8 @@ const DashboardMobileSidebar = ({setOpenSideNav}: { setOpenSideNav: (value: bool
 
   const LogoutUser = () => {
     router.push('/signin');
-    Cookies.remove('token');
+    Cookies.remove('vestier-token');
+    Cookies.remove('vestier-user');
     toast({
       title: 'Logout Successful',
       description: 'You have been logged out successfully!',

@@ -18,6 +18,7 @@ import {
   Checkbox,
   useToast,
   Spinner,
+  InputLeftAddon,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import {
@@ -31,7 +32,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { SignupUser } from '~/lib/api/services/userService';
-import Cookie from 'js-cookie';
+import Cookies from 'js-cookie';
 
 export const SocialLoginButton = ({
   label,
@@ -61,23 +62,49 @@ const SignupForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState<boolean>(false);
 
   const formik = useFormik({
     initialValues: {
       fullname: '',
       email: '',
+      phone: '',
+      password: '',
+      confirmPassword: '',
     },
     validationSchema: Yup.object({
       email: Yup.string()
         .email('Invalid email address')
         .required('Email is required'),
       fullname: Yup.string().required('Full Name is required'),
+      phone: Yup.number().required('Phone Number is required'),
+      password: Yup.string()
+        .required('Password is required')
+        .min(8, 'Password must be at least 8 characters')
+        .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
+        .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+        .matches(/[0-9]/, 'Password must contain at least one number')
+        .matches(
+          /[!@#$%^&*(),.?":{}|<>]/,
+          'Password must contain at least one special character'
+        ),
+      confirmPassword: Yup.string()
+        .required('Confirm Password is required')
+        .oneOf([Yup.ref('password'), ''], 'Passwords must match'),
     }),
     onSubmit: async (values, { resetForm }) => {
       setLoading(true);
+      const formData = {
+        email: values.email,
+        fullname: values.fullname,
+        phone: values.phone,
+        password: values.password,
+        confirm_password: values.confirmPassword,
+      };
       try {
-        const response = await SignupUser(values);
-        console.log(response);
+        const response = await SignupUser(formData);
         if (response.status === true) {
           toast({
             title: response.message as string,
@@ -87,15 +114,19 @@ const SignupForm = () => {
             isClosable: true,
             status: 'success',
           });
-          Cookie.set('user', JSON.stringify(response.data));
-          router.push('/signup/secure-account');
+          Cookies.set(
+            'vestier-token',
+            JSON.stringify(response.data.token)
+          );
+          Cookies.set('vestier-user', JSON.stringify(response.data.user));
+          router.push('/signup/verify-otp');
           resetForm();
         }
       } catch (error: any) {
         console.log(error);
         setLoading(false);
         toast({
-          title: error.response.data.message as string,
+          title: error.response.data.error as string,
           description: error.response.data.message,
           duration: 3000,
           position: 'top-right',
@@ -120,7 +151,7 @@ const SignupForm = () => {
             mb="30px"
           />
         </Link>
-        <Heading fontSize={[25,30]} fontWeight={500} mb="16px" color="#222222">
+        <Heading fontSize={[25, 30]} fontWeight={500} mb="16px" color="#222222">
           Create your profile
         </Heading>
         <Text fontSize={18} color="#2E353F">
@@ -211,6 +242,118 @@ const SignupForm = () => {
                   {formik.errors.email}
                 </Text>
               )}
+            </FormControl>
+            <FormControl
+              isInvalid={!!formik.errors.phone && formik.touched.phone}
+            >
+              <FormLabel mb="10px" color="#222222" fontWeight={600}>
+                Phone number*
+              </FormLabel>
+              <Input
+                border="1px solid #C0C0C0"
+                bg="#FBFBFB"
+                borderRadius="50px"
+                _placeholder={{ color: '#8295AA' }}
+                py="25px"
+                px="20px"
+                placeholder="Enter your phone number"
+                color="#222222"
+                type="tel"
+                name="phone"
+                maxLength={11}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.phone}
+              />
+              {formik.errors.phone && formik.touched.phone && (
+                <Text color="red.500" mt="2">
+                  {formik.errors.phone}
+                </Text>
+              )}
+            </FormControl>
+            <FormControl
+              isInvalid={!!formik.errors.password && formik.touched.password}
+            >
+              <FormLabel mb="10px" color="#222222" fontWeight={600}>
+                Create your password*
+              </FormLabel>
+              <InputGroup w="100%">
+                <Input
+                  pr="12"
+                  py="12px"
+                  border="1px solid #C0C0C0"
+                  type={showPassword ? 'text' : 'password'}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.password}
+                  placeholder="*********"
+                  borderRadius="50px"
+                  bg="#FBFBFB"
+                  color="#8295AA"
+                  _placeholder={{ color: '#8295AA' }}
+                  h="50px"
+                  name="password"
+                />
+                <InputRightElement w="4rem" mt="1.5">
+                  <Button onClick={() => setShowPassword(!showPassword)}>
+                    {showPassword ? (
+                      <IoMdEye color="#8295AA" size={22} />
+                    ) : (
+                      <IoMdEyeOff color="#8295AA" size={22} />
+                    )}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+              {formik.errors.password && formik.touched.password && (
+                <Text color="red.500" mt="2">
+                  {formik.errors.password}
+                </Text>
+              )}
+            </FormControl>
+            <FormControl
+              isInvalid={
+                !!formik.errors.confirmPassword &&
+                formik.touched.confirmPassword
+              }
+            >
+              <FormLabel mb="10px" color="#222222" fontWeight={600}>
+                Confirm password*
+              </FormLabel>
+              <InputGroup w="100%">
+                <Input
+                  pr="12"
+                  py="12px"
+                  border="1px solid #C0C0C0"
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.confirmPassword}
+                  placeholder="*********"
+                  borderRadius="50px"
+                  bg="#FBFBFB"
+                  color="#8295AA"
+                  _placeholder={{ color: '#8295AA' }}
+                  h="50px"
+                  name="confirmPassword"
+                />
+                <InputRightElement w="4rem" mt="1.5">
+                  <Button
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  >
+                    {showConfirmPassword ? (
+                      <IoMdEye color="#8295AA" size={22} />
+                    ) : (
+                      <IoMdEyeOff color="#8295AA" size={22} />
+                    )}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+              {formik.errors.confirmPassword &&
+                formik.touched.confirmPassword && (
+                  <Text color="red.500" mt="2">
+                    {formik.errors.confirmPassword}
+                  </Text>
+                )}
             </FormControl>
             <Checkbox
               color="#222222"

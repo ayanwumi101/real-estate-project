@@ -14,7 +14,7 @@ export const UpdateAssetDeliveryStatus = async (propertyId, data) => {
   return response.data;
 };
 
-export const UpdateAssetPaymentPlan = async (data, propertyId) => {
+export const UpdateAssetPaymentPlan = async (propertyId, data) => {
   const response = await axiosInstance.post(
     `${API_ROUTES.UPDATE_ASSET_PAYMENT_PLAN}/${propertyId}`,
     data
@@ -22,7 +22,7 @@ export const UpdateAssetPaymentPlan = async (data, propertyId) => {
   return response.data;
 };
 
-export const UpdateAssetCashflowDetails = async (data, propertyId) => {
+export const UpdateAssetCashflowDetails = async (propertyId, data) => {
   const response = await axiosInstance.post(
     `${API_ROUTES.UPDATE_ASSET_CASHFLOW_DETAILS}/${propertyId}`,
     data
@@ -33,5 +33,15 @@ export const UpdateAssetCashflowDetails = async (data, propertyId) => {
 
 export const GetUserAssets = async () => {
   const response = await axiosInstance.get(API_ROUTES.GET_USER_ASSETS);
+  return response.data;
+}
+
+
+export const AddAssetImages = async (data) => {
+  const response = await axiosInstance.post(API_ROUTES.ADD_ASSET_IMAGES, data, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
   return response.data;
 }
