@@ -18,20 +18,25 @@ const ProjectsList = () => {
   const [openFilterDrawer, setOpenFilterDrawer] = React.useState(false);
   return (
     <Fragment>
-      <Box w="100%" overflow="auto">
+      <Box w="100%" overflow="auto" pt={['25px', '25px', 0]}>
         <Box
           as="section"
           maxW="1200px"
           mx="auto"
-          px={['24px', 0]}
+          px={['20px', 0]}
           overflow="auto"
         >
           <Stack spacing="40px" pb="40px" overflow="auto">
-            <Box overflow="auto" borderBottom="1px solid #E4E4E4" pb="40px" px='40px'>
+            <Box
+              overflow="auto"
+              borderBottom="1px solid #E4E4E4"
+              pb={['20px', '40px']}
+              px={[0, 0, '40px']}
+            >
               <Flex
                 alignItems="center"
-                justifyContent="space-between"
-                gap={['10px', 0]}
+                justifyContent={['flex-start', 'space-between']}
+                gap={['20px', 0]}
                 overflow="auto"
               >
                 <Box display="flex" alignItems="center" gap="16px">
@@ -65,7 +70,13 @@ const ProjectsList = () => {
                     w={['200px', 'auto']}
                   >
                     <Flex alignItems="center" gap="0px">
-                      <Box w="100px" as="span" color="#2E353F" fontWeight={700} fontSize={14}>
+                      <Box
+                        w="100px"
+                        as="span"
+                        color="#2E353F"
+                        fontWeight={700}
+                        fontSize={14}
+                      >
                         Sort by:
                       </Box>
                       <Select
@@ -84,24 +95,24 @@ const ProjectsList = () => {
                     </Flex>
                   </Box>
                 </Box>
-                <Button
-                  borderRadius="50px"
-                  border="1px solid #C0C0C0"
-                  px="15px"
-                  py="10px"
-                  w={['150px', 'auto']}
-                  onClick={() => setOpenFilterDrawer(true)}
-                >
-                  <Flex alignItems="center" gap="8px">
-                    <FilterIcon />
-                    <Text fontWeight={700} color="#2E353F">
-                      Filter
-                    </Text>
-                  </Flex>
-                </Button>
+                <Box w={['250px', 'auto']}>
+                  <Button
+                    borderRadius="50px"
+                    border="1px solid #C0C0C0"
+                    px="15px"
+                    py="10px"
+                    w='100%'
+                    onClick={() => setOpenFilterDrawer(true)}
+                    leftIcon={<FilterIcon />}
+                    color="#2E353F"
+                    fontWeight={500}
+                  >
+                    Filter
+                  </Button>
+                </Box>
               </Flex>
             </Box>
-            <Box px='40px'>
+            <Box px={[0, 0, '40px']}>
               <Flex
                 justifyContent={['center', 'space-between']}
                 flexWrap="wrap"

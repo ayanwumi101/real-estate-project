@@ -87,10 +87,11 @@ const PersonalDetails = ({ step, setStep }: PersonalDetailsProps) => {
     >
       {({ errors, touched, setFieldValue, values }) => (
         <Form>
-          <Box w="600px">
-            <Stack spacing="25px">
+          <Box w={['100%', '100%', "600px"]}>
+            <Stack spacing="25px" w='100%'>
               {/* Profile Picture */}
               <FormControl
+               w='100%'
                 isInvalid={!!errors.profilePicture && touched.profilePicture}
               >
                 <FormLabel
@@ -105,7 +106,7 @@ const PersonalDetails = ({ step, setStep }: PersonalDetailsProps) => {
                 {values.profilePicture ? (
                   <Box
                     w="100%"
-                    py="20px"
+                    py="30px"
                     display="flex"
                     alignItems="center"
                     justifyContent="center"
@@ -144,7 +145,7 @@ const PersonalDetails = ({ step, setStep }: PersonalDetailsProps) => {
                 ) : (
                   <FormLabel
                     w="100%"
-                    py="20px"
+                    py="30px"
                     display="flex"
                     alignItems="center"
                     justifyContent="center"

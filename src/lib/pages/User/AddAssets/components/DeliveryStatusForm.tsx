@@ -90,7 +90,7 @@ const DeliveryStatusForm = ({
       {({ errors, touched, values, setFieldValue }) => {
         return (
           <Form>
-            <Box as="section" w="600px">
+            <Box as="section" w={['100%', '100%',"600px"]}>
               <Stack spacing="24px">
                 <FormControl
                   isInvalid={!!errors.paymentStatus && touched.paymentStatus}
@@ -195,6 +195,7 @@ const DeliveryStatusForm = ({
                     fontSize={16}
                     _hover={{ bg: '#000080' }}
                     type='submit'
+                    minW='150px'
                   >
                     {loading ? <Spinner /> : 'Submit'}
                   </Button>

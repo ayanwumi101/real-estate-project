@@ -44,7 +44,7 @@ const SingleDetail = ({
 
 const OtherDetails = () => {
   return (
-    <Box w="38%">
+    <Box w={['100%', '100%', "38%"]}>
       <Stack spacing="30px">
         <SingleDetail
           label="Security Details:"
@@ -123,31 +123,37 @@ const OtherDetails = () => {
 
 const MainDetails = ({openPurchaseModal, setOpenPurchaseModal}: { openPurchaseModal: boolean, setOpenPurchaseModal: (value: boolean) => void; }) => {
   return (
-    <Box w="62%">
+    <Box w={['100%', '100%', '62%']}>
       <Stack spacing="30px">
-        <Text color="#222222" fontSize={18} fontWeight={500}>
+        <Text color="#222222" fontSize={[16, 18]} fontWeight={500}>
           A modern high-rise located in the heart of Victoria Island, Lagos,
           offering luxurious amenities and stunning city views. Ideal for urban
           professionals.
         </Text>
         <Box>
-          <Flex alignItems="center" justifyContent="space-between">
+          <Flex
+            alignItems="center"
+            justifyContent="space-between"
+            gap={['20px', 0]}
+            // flexWrap={['wrap', 'wrap', 'nowrap']}
+            overflow='auto'
+          >
             <Image
               src="/assets/images/house-1.png"
-              w="190px"
-              h="160px"
+              w={['100%', '190px']}
+              h={['200px', '160px']}
               objectFit="cover"
             />
             <Image
               src="/assets/images/house-1.png"
-              w="190px"
-              h="160px"
+              w={['100%', '190px']}
+              h={['200px', '160px']}
               objectFit="cover"
             />
             <Image
               src="/assets/images/house-1.png"
-              w="190px"
-              h="160px"
+              w={['100%', '190px']}
+              h={['200px', '160px']}
               objectFit="cover"
             />
           </Flex>
@@ -197,8 +203,8 @@ const MainDetails = ({openPurchaseModal, setOpenPurchaseModal}: { openPurchaseMo
 const PropertyDetails = () => {
   const [openPurchaseModal, setOpenPurchaseModal] = React.useState(false);
   return (
-    <Box py="30px" px="40px" borderBottom="1px solid #E4E4E4">
-      <Flex gap="40px">
+    <Box py="30px" px={['20px',"40px"]} borderBottom="1px solid #E4E4E4">
+      <Flex flexWrap={['wrap', 'wrap', 'nowrap']} gap="40px">
         <MainDetails openPurchaseModal={openPurchaseModal} setOpenPurchaseModal={setOpenPurchaseModal} />
         <OtherDetails />
       </Flex>

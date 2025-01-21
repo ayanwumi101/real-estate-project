@@ -92,7 +92,7 @@ const NextOfKinDetails = ({
     >
       {({ errors, touched }) => (
         <Form>
-          <Box as="section" w="600px">
+          <Box as="section" w={['100%', '100%',"600px"]}>
             <Stack spacing="24px">
               {/* Name of Next of Kin */}
               <FormControl isInvalid={!!errors.name && touched.name}>
@@ -201,7 +201,7 @@ const NextOfKinDetails = ({
                   fontWeight={600}
                   fontSize={16}
                   _hover={{ bg: '#000080' }}
-                  minW='200px'
+                  minW='150px'
                 >
                     {loading ? <Spinner /> : 'Complete'}
                 </Button>

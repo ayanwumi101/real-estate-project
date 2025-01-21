@@ -7,8 +7,8 @@ import { StatCard, AssetStatCard } from '~/lib/components/Cards'
 
 const AssetsStatistics = () => {
   return (
-    <Box p="40px" borderY="1px solid #E4E4E4">
-      <Flex alignItems="center" gap="16px">
+    <Box py={['20px',"40px"]} px={['20px', '40px']} borderY="1px solid #E4E4E4" overflow={['auto', 'hidden']}>
+      <Flex alignItems="center" gap="16px" w='100%'>
         <AssetStatCard label="Total Number of Assets">
           <Heading fontWeight={500} fontSize={24} color="#222222">
             0
@@ -31,8 +31,7 @@ const AssetsStatistics = () => {
         </AssetStatCard>
         <AssetStatCard label="Total Remittance">
           <Heading fontWeight={500} fontSize={24} color="#222222">
-            ₦2
-            50,000
+            ₦250,000
           </Heading>
         </AssetStatCard>
       </Flex>

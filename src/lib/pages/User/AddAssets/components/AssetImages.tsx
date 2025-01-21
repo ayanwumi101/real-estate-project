@@ -87,7 +87,7 @@ const AssetImages = ({
     >
       {({ errors, touched, setFieldValue, values }: any) => (
         <Form>
-          <Box w="600px">
+          <Box w={['100%', '100%', "600px"]}>
             <FormControl
               isInvalid={!!errors.assetImages && !!touched.assetImages}
               mb="24px"

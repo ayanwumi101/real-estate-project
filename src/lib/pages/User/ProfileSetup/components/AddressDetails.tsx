@@ -135,7 +135,7 @@ const AddressDetails = ({
 
         return (
           <Form>
-            <Box w="600px">
+            <Box w={['100%', '100%', '600px']}>
               <Stack spacing="24px">
                 <FormControl>
                   <FormLabel
@@ -148,10 +148,15 @@ const AddressDetails = ({
                   </FormLabel>
 
                   {/* Street Number and Street Name */}
-                  <Flex alignItems="center" gap="15px" mb="22px">
+                  <Flex
+                    alignItems="center"
+                    gap="15px"
+                    flexWrap={['wrap', 'wrap', 'nowrap']}
+                    mb="22px"
+                  >
                     <FormControl
                       isInvalid={!!errors.streetNumber && touched.streetNumber}
-                      w="50%"
+                      w={['100%', '100%', '50%']}
                     >
                       <Field
                         as={Input}
@@ -168,7 +173,7 @@ const AddressDetails = ({
 
                     <FormControl
                       isInvalid={!!errors.streetName && touched.streetName}
-                      w="50%"
+                      w={['100%', '100%', '50%']}
                     >
                       <Field
                         as={Input}
@@ -185,11 +190,15 @@ const AddressDetails = ({
                   </Flex>
 
                   {/* Country, State, and City */}
-                  <Flex alignItems="center" gap="15px">
+                  <Flex
+                    alignItems="center"
+                    gap="15px"
+                    flexWrap={['wrap', 'wrap', 'nowrap']}
+                  >
                     {/* Country */}
                     <FormControl
                       isInvalid={!!errors.country && touched.country}
-                      w="50%"
+                      w={['100%', '100%', '50%']}
                     >
                       <Field
                         as={Select}
@@ -213,7 +222,7 @@ const AddressDetails = ({
                     {/* State */}
                     <FormControl
                       isInvalid={!!errors.state && touched.state}
-                      w="50%"
+                      w={['100%', '100%', '50%']}
                     >
                       <Field
                         as={Select}
@@ -237,7 +246,7 @@ const AddressDetails = ({
                     {/* City */}
                     <FormControl
                       isInvalid={!!errors.city && touched.city}
-                      w="50%"
+                      w={['100%', '100%', '50%']}
                     >
                       <Field
                         as={Select}
@@ -284,9 +293,9 @@ const AddressDetails = ({
                     fontWeight={600}
                     fontSize={16}
                     _hover={{ bg: '#000080' }}
-                    minW='150px'
+                    minW="150px"
                   >
-                    {loading ? <Spinner /> : "Continue"}
+                    {loading ? <Spinner /> : 'Continue'}
                   </Button>
                 </Flex>
               </Stack>

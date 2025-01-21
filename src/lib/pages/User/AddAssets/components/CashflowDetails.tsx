@@ -93,7 +93,7 @@ const CashflowDetails = ({
       {({ errors, touched, setFieldValue, values }) => {
         return (
           <Form>
-            <Box w="600px">
+            <Box w={['100%', '100%', "600px"]}>
               <Stack spacing="24px">
                 <FormControl
                   isInvalid={!!errors.cashflowSource && touched.cashflowSource}

@@ -274,14 +274,15 @@ export const StatCard = () => {
 export const AssetStatCard = ({label, children}:{label: string, children: ReactElement}) => {
   return (
     <Box
-      w="260px"
+      minW="260px"
       borderRadius="5px"
-      py="22px"
+      py="25px"
       border="1px solid #E4E4E4"
       boxShadow="sm"
       px="22px"
+      h={['auto','120px']}
     >
-      <Box>
+      <Box w='100%'>
         <Text mb="10px" fontSize={16} color="#ABABFF" fontWeight={500}>
           {label}
         </Text>

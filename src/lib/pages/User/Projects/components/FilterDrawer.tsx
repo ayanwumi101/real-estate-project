@@ -50,7 +50,7 @@ const FilterDrawer = ({
         transition={{ duration: 0.5 }}
         style={{
           backgroundColor: "#FFFFFF",
-          width: isMobile ? "85%" : "28%",
+          width: isMobile ? "90%" : "28%",
           height: "100%",
           position: "absolute",
           top: "0",

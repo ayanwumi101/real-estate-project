@@ -17,7 +17,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import { LocationIcon, ProfitIcon } from '~/lib/components/Icons/Icons';
 
-const OwnedAssets = () => {
+const OwnedAssets = ({assets}:{assets: any[]}) => {
   const router = useRouter();
   return (
     <Box>
@@ -68,7 +68,62 @@ const OwnedAssets = () => {
             </Tr>
           </Thead>
           <Tbody color="#222222">
-            {[1, 2, 3].map(() => {
+            {assets?.map((asset) => {
+              return (
+                <Tr
+                  key={asset?.id}
+                  // as="a"
+                  // passHref="/user/portfolio/property-details"
+                  border="none"
+                  _hover={{ bg: '#f5f5f5' }}
+                  px="0"
+                  cursor="pointer"
+                  onClick={() =>
+                    router.push('/user/portfolio/property-details')
+                  }
+                >
+                  <Td fontSize={15} color="#222222" fontWeight={600} px="0">
+                    <Stack>
+                      <Heading color="#2E353F" fontSize={16} fontWeight={600}>
+                        {asset?.property_name}
+                      </Heading>
+                      <Flex alignItems="center" gap="10px">
+                        <LocationIcon />
+                        <Text fontSize={12} color="#222222">
+                          {asset?.city_name}
+                        </Text>
+                      </Flex>
+                    </Stack>
+                  </Td>
+                  <Td fontWeight={500} fontSize={14} color="#8295AA">
+                    {asset?.property_type}
+                  </Td>
+                  <Td fontWeight={500} fontSize={14} color="#8295AA">
+                    ₦10,003,000
+                  </Td>
+                  <Td fontWeight={500} fontSize={14} color="#8295AA">
+                    ₦10,003,000
+                  </Td>
+                  <Td fontWeight={500} fontSize={14} color="#8295AA">
+                    <Flex alignItems="center" gap="35px">
+                      <Text>Completed</Text>
+                      <Text
+                        bg="#EDEDFF"
+                        color="#000080"
+                        fontSize={12}
+                        py="3px"
+                        px="12px"
+                        textAlign="center"
+                        borderRadius="50px"
+                      >
+                        View Asset
+                      </Text>
+                    </Flex>
+                  </Td>
+                </Tr>
+              );
+            })}
+            {/* {[1, 2, 3].map(() => {
               return (
                 <Tr
                   // as="a"
@@ -121,7 +176,7 @@ const OwnedAssets = () => {
                   </Td>
                 </Tr>
               );
-            })}
+            })} */}
           </Tbody>
         </Table>
       </TableContainer>

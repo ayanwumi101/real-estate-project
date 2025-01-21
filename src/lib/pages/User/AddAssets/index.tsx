@@ -15,10 +15,10 @@ import AssetImages from './components/AssetImages'
 const index = () => {
   const [step, setStep] = React.useState(1);
   return (
-    <Box borderTop="1px solid #E4E4E4" py="40px" px="55px">
-      <Flex alignItems="flex-start" gap="55px">
+    <Box borderTop="1px solid #E4E4E4" py="40px" px={['20px',"55px"]}>
+      <Flex alignItems="flex-start" gap="55px" flexDir={['column', 'column', 'row']}>
         <FormStepper step={step} />
-        <Box>
+        <Box w={['100%', '80%', '80%']}>
           {step === 1 && <PropertyDetailsForm step={step} setStep={setStep} />}
           {step === 2 && <DeliveryStatusForm step={step} setStep={setStep} />}
           {step === 3 && <PaymentPlan step={step} setStep={setStep} />}

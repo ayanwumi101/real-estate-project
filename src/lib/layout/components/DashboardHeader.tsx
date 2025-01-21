@@ -67,6 +67,7 @@ const DashboardHeader = ({
                       bg="#E4E4E4"
                       color="#ffffff"
                       fontSize={12}
+                      src={userDetails?.profile_image || '/path/to/default/image.png'}
                     />
                     <Box w="1px" h="40px" bg="#C0C0C0"></Box>
                     <Button

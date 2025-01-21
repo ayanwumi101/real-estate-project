@@ -83,7 +83,7 @@ const PersonalInformation = () => {
     <Box border="1px solid #E4E4E4" borderRadius="5px" px="24px" py="14px">
       <Stack spacing="12px">
         <Box>
-          <Flex alignItems="center" gap="15px" flexWrap="wrap">
+          <Flex alignItems="center" gap="15px" flexWrap={['wrap', 'nowrap']}>
             <Box w={['100%', '50%']}>
               <FormLabel
                 mb="13px"
@@ -141,7 +141,7 @@ const PersonalInformation = () => {
           </Flex>
         </Box>
         <Box>
-          <Flex alignItems="center" gap="15px" flexWrap="wrap">
+          <Flex alignItems="center" gap="15px" flexWrap={['wrap', 'nowrap']}>
             <Box w={['100%', '50%']}>
               <FormLabel
                 mb="13px"

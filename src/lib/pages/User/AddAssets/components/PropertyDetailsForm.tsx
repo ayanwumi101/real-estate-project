@@ -194,7 +194,7 @@ const PropertyDetailsForm = ({
 
         return (
           <Form>
-            <Box w="600px">
+            <Box w={['100%', '100%', "600px"]}>
               <Stack spacing="24px">
                 <FormControl
                   isInvalid={!!errors.propertyName && touched.propertyName}
@@ -262,6 +262,7 @@ const PropertyDetailsForm = ({
                     justifyContent="space-between"
                     mb="22px"
                     gap="10px"
+                    flexWrap={['wrap', 'wrap', 'nowrap']}
                   >
                     <FormControl
                       isInvalid={
@@ -333,6 +334,7 @@ const PropertyDetailsForm = ({
                     justifyContent="space-between"
                     mb="15px"
                     gap="10px"
+                    flexWrap={['wrap', 'wrap', 'nowrap']}
                   >
                     <FormControl
                       isInvalid={
@@ -446,6 +448,7 @@ const PropertyDetailsForm = ({
                     justifyContent="space-between"
                     mb="22px"
                     gap="10px"
+                    flexWrap={['wrap', 'wrap', 'nowrap']}
                   >
                     <FormControl
                       isInvalid={
@@ -516,6 +519,7 @@ const PropertyDetailsForm = ({
                     justifyContent="space-between"
                     mb="15px"
                     gap="10px"
+                    flexWrap={['wrap', 'wrap', 'nowrap']}
                   >
                     <FormControl
                       isInvalid={
@@ -581,7 +585,7 @@ const PropertyDetailsForm = ({
                   </FormLabel>
                   <Flex border="1px solid #C0C0C0" borderRadius="50px">
                     <Select
-                      w="115px"
+                      w="120px"
                       bg="#F5F5F5"
                       borderTopLeftRadius="50px"
                       borderBottomLeftRadius="50px"
