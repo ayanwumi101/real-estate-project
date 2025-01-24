@@ -36,8 +36,11 @@ const LoginForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
   const router = useRouter();
-  const rawUser = Cookie.get('user');
+  const rawUser = Cookie.get('vestier-user');
   const user = rawUser ? JSON.parse(rawUser) : null;
+
+  console.log(user);
+  
 
   const formik = useFormik({
     initialValues: {
@@ -49,7 +52,7 @@ const LoginForm = () => {
     onSubmit: async (values) => {
       setLoading(true);
       const formData = {
-        email: user?.user?.email,
+        email: user?.email,
         otp: Number(values.otp),
       };
       try {

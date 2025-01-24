@@ -243,8 +243,8 @@ export const HomeLayout = ({ children }: LayoutProps) => {
 };
 
 export const Layout = ({ children }: LayoutProps) => {
-  const user = Cookies.get('vestier-token');
-  const token = user ? JSON.parse(user) : null;
+  const rawToken = Cookies.get('vestier-token');
+  const token = rawToken ? JSON.parse(rawToken) : null;
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const pathname = usePathname();

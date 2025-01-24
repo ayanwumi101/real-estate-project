@@ -16,13 +16,10 @@ import { useRouter } from 'next/navigation';
 
 const index = () => {
   const router = useRouter();
-  const rawUser = Cookie.get('user');
+  const rawToken = Cookie.get('vestier-new-token');
+  const rawUser = Cookie.get('vestier-user');
+  const token = rawToken ? JSON.parse(rawToken) : null;
   const user = rawUser ? JSON.parse(rawUser) : null;
-
-  const handleClick = () => {
-    router.push('/signin');
-    Cookie.remove('user');
-  };
 
   return (
     <Box px={['24px', 0]} py="60px">
@@ -61,6 +58,8 @@ const index = () => {
             h="55px"
             borderRadius="50px"
             onClick={() => {
+              Cookie.set('vestier-token', JSON.stringify(token));
+              Cookie.remove('vestier-new-token');
               router.push('/user/profile-setup');
             }}
           >
@@ -75,6 +74,8 @@ const index = () => {
             h="55px"
             borderRadius="50px"
             onClick={() => {
+              Cookie.set('vestier-token', JSON.stringify(token))
+              Cookie.remove('vestier-new-token')
               router.push('/user/dashboard');
             }}
           >

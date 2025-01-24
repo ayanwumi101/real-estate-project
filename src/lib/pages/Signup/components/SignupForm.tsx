@@ -115,11 +115,11 @@ const SignupForm = () => {
             status: 'success',
           });
           Cookies.set(
-            'vestier-token',
+            'vestier-new-token',
             JSON.stringify(response.data.token)
           );
-          Cookies.set('vestier-user', JSON.stringify(response.data.user));
           router.push('/signup/verify-otp');
+          Cookies.set('vestier-user', JSON.stringify(response.data.user));
           resetForm();
         }
       } catch (error: any) {

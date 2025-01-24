@@ -99,14 +99,14 @@ const OwnedAssets = ({assets}:{assets: any[]}) => {
                     {asset?.property_type}
                   </Td>
                   <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    ₦10,003,000
+                    ₦{asset?.property_cost}
                   </Td>
                   <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    ₦10,003,000
+                    ₦{asset?.property_value}
                   </Td>
                   <Td fontWeight={500} fontSize={14} color="#8295AA">
                     <Flex alignItems="center" gap="35px">
-                      <Text>Completed</Text>
+                      <Text>{asset?.allocation_status}</Text>
                       <Text
                         bg="#EDEDFF"
                         color="#000080"
