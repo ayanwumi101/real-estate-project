@@ -16,12 +16,14 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import React, { useContext, useState } from 'react';
-import { SaveUserDetails } from '~/lib/api/services/profileService';
+import { GetUserProfileDetails, SaveUserDetails } from '~/lib/api/services/profileService';
 import { FileUploadIcon, SelectGenderIcon } from '~/lib/components/Icons/Icons';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { GoTrash } from 'react-icons/go';
 import { BsImageFill } from 'react-icons/bs';
+import { AppContext } from '~/lib/layout';
+
 
 
 // Validation Schema
@@ -39,6 +41,7 @@ interface PersonalDetailsProps {
 }
 
 const PersonalDetails = ({ step, setStep }: PersonalDetailsProps) => {
+  const { setUserDetails } = useContext<any>(AppContext);
   const initialValues = {
     profilePicture: null,
     dateOfBirth: '',
@@ -56,6 +59,8 @@ const PersonalDetails = ({ step, setStep }: PersonalDetailsProps) => {
     try {
       const response = await SaveUserDetails(formData);
       if (response.status === true) {
+        const newData = await GetUserProfileDetails();
+        setUserDetails(newData.data);
         toast({
           title: response.message as string,
           description: 'Personal details saved',

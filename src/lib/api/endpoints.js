@@ -9,6 +9,7 @@ const API_ROUTES = {
   RESEND_OTP: '/auth/resend-otp',
   FORGOT_PASSWORD: '/auth/forgot-password',
   VERIFY_RESET_PASSWORD_TOKEN: '/auth/verify-reset-password-token',
+  
 
   //profile endpoints
   SAVE_USER_DETAILS: '/user/saveDetail',

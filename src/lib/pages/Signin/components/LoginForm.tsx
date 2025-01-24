@@ -177,6 +177,7 @@ const LoginForm = () => {
                   _placeholder={{ color: '#8295AA' }}
                   h="50px"
                   name="password"
+                  fontSize={18}
                 />
                 <InputRightElement w="4rem" mt="1.5">
                   <Button onClick={() => setShowPassword(!showPassword)}>

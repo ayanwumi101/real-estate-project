@@ -67,7 +67,7 @@ const DashboardHeader = ({
                       bg="#E4E4E4"
                       color="#ffffff"
                       fontSize={12}
-                      src={userDetails?.profile_image || '/path/to/default/image.png'}
+                      src={userDetails?.profile_image}
                     />
                     <Box w="1px" h="40px" bg="#C0C0C0"></Box>
                     <Button
@@ -105,7 +105,7 @@ const DashboardHeader = ({
           </Stack>
         </Fragment>
       ) : (
-        <Box w="100%" px="40px" py="22px">
+        <Box w="100%" px="40px" py="20px">
           <Box display="flex" alignItems="center">
             <Flex alignItems="center" gap="32px" w="100%">
               <InputGroup w="80%">
@@ -135,6 +135,7 @@ const DashboardHeader = ({
                 h="50px"
                 bg="#E4E4E4"
                 color="#ffffff"
+                src={userDetails?.profile_image}
               />
             </Flex>
           </Box>

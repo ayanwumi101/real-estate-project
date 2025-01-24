@@ -53,9 +53,9 @@ const DashboardSidebar = () => {
   const toast = useToast();
 
   const LogoutUser = () => {
+    router.push('/signin');
     Cookies.remove('vestier-token');
     Cookies.remove('vestier-user');
-    Cookies.remove('token');
     toast({
       title: 'Logout Successful',
       description: 'You have been logged out successfully!',

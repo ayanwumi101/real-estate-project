@@ -192,7 +192,7 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
   }, []);
 
   return (
-    <AppContext.Provider value={{ userDetails }}>
+    <AppContext.Provider value={{ userDetails, setUserDetails }}>
       <Box
         w="100%"
         mx="auto"
@@ -216,7 +216,7 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
             left={isMobile ? '0%' : '20%'}
             w={isMobile ? '100%' : '80%'}
           >
-            <Stack direction="column" spacing="22px">
+            <Stack direction="column" spacing="12px">
               <DashboardHeader setShowSearchBar={setShowSearchBar} />
               <Box as="main" w="100%">
                 {children}

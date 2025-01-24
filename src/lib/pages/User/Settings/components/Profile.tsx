@@ -216,6 +216,7 @@ const ProfileHeader = () => {
           color="#fff"
           fontWeight={700}
           fontSize={32}
+          src={userDetails?.profile_image}
         />
         <Box>
           <Stack justifyContent="space-between">

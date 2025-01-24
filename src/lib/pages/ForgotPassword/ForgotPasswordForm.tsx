@@ -23,10 +23,13 @@ import React, { useState } from 'react';
 import { ForgotPassword } from '~/lib/api/services/userService';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
+import { useRouter } from 'next/navigation';
+import Cookie from 'js-cookie'
 
 const ForgotPasswordForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
+  const router = useRouter();
 
   const initialValues = {
     email: '',
@@ -36,7 +39,7 @@ const ForgotPasswordForm = () => {
     email: Yup.string().email('Invalid email').required('Email is required'),
   });
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: any, { setFieldValue }: any) => {
     setLoading(true);
     try {
       const response = await ForgotPassword(values);
@@ -50,10 +53,12 @@ const ForgotPasswordForm = () => {
           isClosable: true,
           position: 'top-right',
         });
+        router.push('/forgot-password/verify-otp');
+        setFieldValue('email', '', false);
+        Cookie.set('password-reset-email', values.email);
       }
     } catch (error: any) {
       console.log(error);
-
       toast({
         title: 'An error occurred.',
         description: error.response.data.data.error as string,
