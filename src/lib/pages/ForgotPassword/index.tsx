@@ -7,11 +7,11 @@ import ForgotPasswordForm from './ForgotPasswordForm';
 const index = () => {
   return (
     <Box as="section" w='100%' h={['auto','100vh']}>
-      <Flex>
-        <Box w={['100%', '50%']}>
+      <Flex alignItems='center' justifyContent='center' h='100%'>
+        <Box w={['100%', '50%']} h='100%'>
           <ForgotPasswordForm />
         </Box>
-        <Box display={['none', 'block']} w={['100%', '50%']}>
+        <Box display={['none', 'block']} w={['100%', '50%']} h='100%'>
           <SideImage />
         </Box>
       </Flex>

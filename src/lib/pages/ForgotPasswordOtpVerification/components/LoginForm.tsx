@@ -55,6 +55,7 @@ const LoginForm = () => {
       try {
         const response = await VerifyResetPasswordToken(formData);
         if (response.status === true) {
+          router.push('/reset-password');
           toast({
             title: response.data.message as string,
             description: 'Otp Verification successful',
@@ -63,8 +64,8 @@ const LoginForm = () => {
             isClosable: true,
             status: 'success',
           });
-          router.push('/reset-password');
-          Cookie.remove('password-reset-email')
+          Cookie.remove('password-reset-email');
+          Cookie.set('forgot-password-code', values.otp);
         } else {
           toast({
             title: 'Otp Verification failed',

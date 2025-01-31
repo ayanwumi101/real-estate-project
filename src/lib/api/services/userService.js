@@ -35,3 +35,9 @@ export const VerifyResetPasswordToken = async(data) => {
   const response = await axiosInstance.post(API_ROUTES.VERIFY_RESET_PASSWORD_TOKEN, data);
   return response.data;
 }
+
+
+export const ResetPassword = async(data) => {
+  const response = await axiosInstance.post(API_ROUTES.RESET_PASSWORD, data);
+  return response.data;
+}
