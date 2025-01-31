@@ -1,13 +1,16 @@
 'use client';
 
 import { Box, Heading, Text, Stack, Flex, Button } from '@chakra-ui/react';
+import Cookies from 'js-cookie';
 import Link from 'next/link';
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import { HiOutlineEye } from 'react-icons/hi2';
 import { AppContext } from '~/lib/layout';
 
 const AccountBalance = () => {
   const { userDetails } = useContext(AppContext);
+  const [showBalance, setShowBalance] = useState<boolean>(true);
+  const walletVisibility = Cookies.get('walletVisibility');
   return (
     <Box>
       <Fragment>
@@ -80,11 +83,27 @@ const AccountBalance = () => {
               Total Investments
             </Heading>
             <Box>
-              <Flex alignItems="center" gap="16px">
+              <Flex
+                alignItems={walletVisibility === 'true' ? 'center' : 'flex-end'}
+                gap="10px"
+              >
                 <Heading fontSize={24} fontWeight={500} color="#222222">
-                  ₦ {userDetails?.wallet_balance}
+                  {walletVisibility === 'true'
+                    ? `₦ ${userDetails?.wallet_balance ? userDetails?.wallet_balance : 0.0}`
+                    : '********'}
                 </Heading>
-                <HiOutlineEye color="black" fontSize={22} />
+                <Button
+                  bg="none"
+                  p="0"
+                  _hover={{ bg: 'none', p: 0 }}
+                  onClick={() => {
+                    const newVisibility = !showBalance;
+                    setShowBalance(newVisibility);
+                    Cookies.set('walletVisibility', newVisibility.toString());
+                  }}
+                >
+                  <HiOutlineEye color="black" fontSize={22} />
+                </Button>
               </Flex>
             </Box>
           </Stack>
