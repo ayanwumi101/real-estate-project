@@ -114,7 +114,7 @@ const DashboardMobileSidebar = ({setOpenSideNav}: { setOpenSideNav: (value: bool
             onClick={() => setOpenSideNav(false)}
           />
           <SideBarItem
-            label="My Portfolio"
+            label="Remittance"
             Icon={MyPortfolioIcon}
             isActive={pathname === '/user/portfolio'}
             href="/user/portfolio"

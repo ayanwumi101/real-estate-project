@@ -32,7 +32,7 @@ const index = () => {
   return (
     <Box pb="40px" overflow='auto'>
       <Stack w='100%'>
-        <AssetsStatistics />
+        <AssetsStatistics numberOfAssets={assets?.length} assetInNaira='' totalRemittance=''  />
         <Box px={['10px', '30px']}>
           <Flex justifyContent="space-between" alignItems="center" flexWrap={['wrap', 'nowrap']}>
             <NavigationTab
