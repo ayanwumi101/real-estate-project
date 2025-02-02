@@ -142,7 +142,9 @@ const AddNextOfKinModal = ({
                     />
                     <FormErrorMessage>{errors.phone}</FormErrorMessage>
                   </FormControl>
-                  <FormControl>
+                  <FormControl
+                    isInvalid={!!errors.email && touched.email}
+                  >
                     <FormLabel>Email Address of next of Kin</FormLabel>
                     <Field
                       as={Input}
