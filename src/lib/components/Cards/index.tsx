@@ -5,9 +5,9 @@ import {
   Stack,
   Heading,
   Flex,
-  Button,
+  Button, Divider, Avatar
 } from '@chakra-ui/react';
-import { LocationIcon } from '~/lib/components/Icons/Icons';
+import { LocationIcon, TelephoneIconWithBg, EmailIconWithBg } from '~/lib/components/Icons/Icons';
 import { IoMdArrowForward } from 'react-icons/io';
 import { FiEye } from 'react-icons/fi';
 import Link from 'next/link';
@@ -291,3 +291,87 @@ export const AssetStatCard = ({label, children}:{label: string, children: ReactE
     </Box>
   );
 };
+
+
+export const CustomerInformationItem = ({Icon, label, labelValue}:{Icon: any, label: string, labelValue: string}) => {
+  return (
+    <Box>
+      <Flex alignItems='flex-start' gap={['10px','17px']}>
+        <Icon />
+        <Stack spacing='10px'>
+            <Heading as='h3' fontSize={16} fontWeight={600} color='brand.300'>{label}</Heading>
+            <Text color='brand.400' fontSize={16} fontWeight={500}>{labelValue}</Text>
+        </Stack>
+      </Flex>
+    </Box>
+  )
+}
+
+
+
+export const SingleNextOfKinCard = ({name, relationship, phoneNumber, email}:{name: string, relationship: string, phoneNumber: string, email: string}) => {
+  return (
+    <Box
+      borderRadius="6px"
+      border="1px solid"
+      borderColor="border.100"
+      py="12px"
+      px="24px"
+    >
+      <Stack spacing="14px">
+        <Box>
+          <Flex
+            alignItems="center"
+            justifyContent="space-between"
+            flexWrap="wrap"
+            gap={['20px', '0']}
+          >
+            <Box>
+              <Flex gap='10px' alignItems="flex-start">
+                <Avatar
+                  name={name}
+                  w="40px"
+                  bg="brand.500"
+                  h="40px"
+                  color="brand.100"
+                  fontWeight={700}
+                  fontSize={20}
+                />
+                <Box>
+                  <Stack spacing='4px'>
+                    <Heading fontSize={16} color="brand.400" fontWeight={600}>
+                      {name}
+                    </Heading>
+                    <Text fontSize={14} color="brand.400" fontWeight={500}>
+                      {relationship}
+                    </Text>
+                  </Stack>
+                </Box>
+              </Flex>
+            </Box>
+            <Text fontSize={14} fontWeight={500} color="brand.100">
+              Associated with Harborview Towers
+            </Text>
+          </Flex>
+        </Box>
+        <Divider color="border.100" />
+        <Box>
+          <Stack spacing="12px">
+            <Flex alignItems="center" gap="10px">
+              <TelephoneIconWithBg />
+              <Text color="brand.400" fontSize={12} fontWeight={500}>
+                {phoneNumber}
+              </Text>
+            </Flex>
+            <Flex alignItems="center" gap="10px">
+              <EmailIconWithBg />
+              <Text color="brand.400" fontSize={12} fontWeight={500}>
+                {email}
+              </Text>
+            </Flex>
+          </Stack>
+        </Box>
+      </Stack>
+    </Box>
+  );
+}

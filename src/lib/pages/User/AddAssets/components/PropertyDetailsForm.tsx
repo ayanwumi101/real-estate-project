@@ -394,9 +394,9 @@ const PropertyDetailsForm = ({
                 </FormControl>
                 <FormControl>
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
-                    Enter your realtor details
+                    Enter your realtor name
                   </FormLabel>
-                  <FormControl
+                  {/* <FormControl
                     isInvalid={
                       !!errors.realtorDetails?.businessName &&
                       touched.realtorDetails?.businessName
@@ -409,16 +409,15 @@ const PropertyDetailsForm = ({
                       bg="#FBFBFB"
                       h="50px"
                       borderRadius="40px"
-                      placeholder="Realtor Business Name"
+                      placeholder="Realtor Name"
                       _placeholder={{ color: '#8295AA', fontWeight: 500 }}
                       name="realtorDetails.businessName"
                     />
                     <FormErrorMessage>
                       {errors.realtorDetails?.businessName}
                     </FormErrorMessage>
-                  </FormControl>
+                  </FormControl> */}
                   <FormControl
-                    mb="22px"
                     isInvalid={
                       !!errors.realtorDetails?.name &&
                       touched.realtorDetails?.name
@@ -439,7 +438,7 @@ const PropertyDetailsForm = ({
                     </FormErrorMessage>
                   </FormControl>
                 </FormControl>
-                <FormControl>
+                {/* <FormControl>
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     Office address of realtor
                   </FormLabel>
@@ -576,7 +575,7 @@ const PropertyDetailsForm = ({
                       </FormErrorMessage>
                     </FormControl>
                   </Flex>
-                </FormControl>
+                </FormControl> */}
                 <FormControl
                   isInvalid={!!errors.phoneNumber && touched.phoneNumber}
                 >

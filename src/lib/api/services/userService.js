@@ -41,3 +41,20 @@ export const ResetPassword = async(data) => {
   const response = await axiosInstance.post(API_ROUTES.RESET_PASSWORD, data);
   return response.data;
 }
+
+
+export const ChangePassword = async(data) => {
+  const response = await axiosInstance.post(API_ROUTES.CHANGE_PASSWORD, data);
+  return response.data;
+}
+
+
+export const AddNextOfKin = async(data) => {
+  const response = await axiosInstance.post(API_ROUTES.ADD_NEXT_OF_KIN, data);
+  return response.data;
+}
+
+export const GetNextOfKins = async() => {
+  const response = await axiosInstance.get(API_ROUTES.GET_NEXT_OF_KIN);
+  return response.data;
+}

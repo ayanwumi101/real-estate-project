@@ -214,7 +214,7 @@ const PropertyListTable = () => {
 };
 
 const index = () => {
-  const tabs = ['Active', 'Liquidated'];
+  const tabs = ['Active', 'Inactive'];
   const [activeTab, setActiveTab] = React.useState('Active');
   return (
     <Box pb='50px'>

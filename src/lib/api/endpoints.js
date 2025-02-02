@@ -10,6 +10,7 @@ const API_ROUTES = {
   FORGOT_PASSWORD: '/auth/forgot-password',
   VERIFY_RESET_PASSWORD_TOKEN: '/auth/verify-reset-password-token',
   RESET_PASSWORD: '/auth/password-reset',
+  CHANGE_PASSWORD: '/user/profile/change-password',
   
 
   //profile endpoints
@@ -18,6 +19,8 @@ const API_ROUTES = {
   UPDATE_BANK_DETAILS: '/user/bank-details',
   UPDATE_USER_ADDRESS: '/user/add-address',
   GET_USER_PROFILE_DETAILS: '/user/profile',
+  ADD_NEXT_OF_KIN: '/user/next-of-kin',
+  GET_NEXT_OF_KIN: '/user/next-of-kins',
 
   //assets endpoints
   ADD_ASSET_DETAILS: '/user/asset/add',

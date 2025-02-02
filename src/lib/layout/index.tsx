@@ -39,6 +39,7 @@ import {
   InputSearchIcon,
 } from '../components/Icons/Icons';
 import { GetUserProfileDetails } from '../api/services/profileService';
+import { GetNextOfKins } from '../api/services/userService';
 
 export const AppContext = createContext<any>({});
 
@@ -172,27 +173,40 @@ const DashboardSearchBar = ({
 export const DashboardLayout = ({ children }: LayoutProps) => {
   const [showSearBar, setShowSearchBar] = useState<boolean>(false);
   const [userDetails, setUserDetails] = useState<any>([]);
+  const [nextOfKins, setNextOfKins] = useState<any>([]);
   const [isMobile] = useMediaQuery('(max-width: 768px)');
 
   const handleChange = () => {
     setShowSearchBar(true);
   };
 
-  useEffect(() => {
-    const GetUserDetails = async () => {
-      try {
-        const res = await GetUserProfileDetails();
-        const data = await res.data;
-        setUserDetails(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    GetUserDetails();
-  }, []);
+  const GetUserDetails = async () => {
+    try {
+      const res = await GetUserProfileDetails();
+      const data = await res.data;
+      setUserDetails(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+   const GetUserNextOfKins = async () => {
+     try {
+       const res = await GetNextOfKins();
+       const data = await res.data;
+       setNextOfKins(data);
+     } catch (error) {
+       console.log(error);
+     }
+   };
+
+  useEffect(() => {
+    GetUserDetails();
+    GetUserNextOfKins();
+  }, []);
+  
   return (
-    <AppContext.Provider value={{ userDetails, setUserDetails }}>
+    <AppContext.Provider value={{ userDetails, setUserDetails, nextOfKins, setNextOfKins }}>
       <Box
         w="100%"
         mx="auto"
