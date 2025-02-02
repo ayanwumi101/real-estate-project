@@ -166,7 +166,7 @@ const PersonalInformation = () => {
             <Heading fontSize={14} color="brand.300">
               Customer Information
             </Heading>
-            <Button bg="brand.100" color="brand.200" fontWeight={500}>
+            <Button bg="brand.100" color="brand.200" onClick={() => setOpenModal(true)} fontWeight={500}>
               Edit Profile
             </Button>
           </Flex>

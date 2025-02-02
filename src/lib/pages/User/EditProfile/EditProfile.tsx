@@ -19,8 +19,10 @@ import { Formik, Form, Field } from 'formik';
 import React, { useContext, useState } from 'react';
 import CustomModal from '~/lib/components/Modal';
 import * as Yup from 'yup';
-import { AddNextOfKin, GetNextOfKins } from '~/lib/api/services/userService';
+import { AddNextOfKin, GetNextOfKins, UpdateUserProfile } from '~/lib/api/services/userService';
 import { AppContext } from '~/lib/layout';
+import { GetUserProfileDetails } from '~/lib/api/services/profileService';
+
 
 
 const EditProfileModal = ({
@@ -33,6 +35,7 @@ const EditProfileModal = ({
   const { setUserDetails, userDetails } = useContext<any>(AppContext);
   const toast = useToast();
     const [loading, setLoading] = useState<boolean>(false);
+
     const initialValues = {
       email: userDetails?.email || '',
       phone: userDetails?.phone || '',
@@ -50,14 +53,14 @@ const EditProfileModal = ({
     const handleSubmit = async (values: any) => {
       setLoading(true);
       try {
-        const res = await AddNextOfKin(values);
+        const res = await UpdateUserProfile(values);
         if (res.status) {
-          const res = await GetNextOfKins();
+          const res = await GetUserProfileDetails();
           const newData = await res.data;
-          // setNextOfKins(newData);
+          setUserDetails(newData);
           setLoading(false);
           toast({
-            title: 'Next of Kin added successfully',
+            title: 'Profile Details Updated successfully',
             status: 'success',
             duration: 3000,
             isClosable: true,
@@ -88,9 +91,9 @@ const EditProfileModal = ({
           {({ errors, touched, values, setFieldValue }) => {
             return (
               <Form>
-                <Stack spacing="24px">
+                <Stack spacing="20px">
                   <Heading fontSize={24} fontWeight={500} color="brand.100">
-                    Add a trusted person to manage or inherit your asset.
+                    Edit Profile Details
                   </Heading>
                   <Divider />
                   <FormControl
@@ -101,7 +104,7 @@ const EditProfileModal = ({
                       as={Input}
                       name="address"
                       type="text"
-                      placeholder="Enter your next of kin’s full name"
+                      placeholder="Enter your address"
                       h="50px"
                       border="1px solid #C0C0C0"
                       borderRadius="50px"
@@ -115,14 +118,13 @@ const EditProfileModal = ({
                     <Field
                       as={Select}
                       name="gender"
-                      placeholder="Select relationship with your next of kin"
+                      placeholder="Select your gender"
                       h="50px"
                       border="1px solid #C0C0C0"
                       borderRadius="50px"
                     >
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                      
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
                     </Field>
                     <FormErrorMessage>{typeof errors.gender === 'string' ? errors.gender : ''}</FormErrorMessage>
                   </FormControl>
@@ -132,7 +134,7 @@ const EditProfileModal = ({
                       as={Input}
                       name="phone"
                       type="text"
-                      placeholder="Enter your next of kin’s phone number"
+                      placeholder="Enter your phone number"
                       h="50px"
                       border="1px solid #C0C0C0"
                       borderRadius="50px"
@@ -147,7 +149,7 @@ const EditProfileModal = ({
                       as={Input}
                       name="email"
                       type="email"
-                      placeholder="Enter your next of kin’s email address"
+                      placeholder="Enter your email address"
                       h="50px"
                       border="1px solid #C0C0C0"
                       borderRadius="50px"
