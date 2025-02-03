@@ -13,9 +13,11 @@ import {
   Stack,
   Heading,
 } from '@chakra-ui/react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { LocationIcon, ProfitIcon } from '~/lib/components/Icons/Icons';
+
 
 const OwnedAssets = ({assets}:{assets: any[]}) => {
   const router = useRouter();
@@ -107,17 +109,19 @@ const OwnedAssets = ({assets}:{assets: any[]}) => {
                   <Td fontWeight={500} fontSize={14} color="#8295AA">
                     <Flex alignItems="center" gap="35px">
                       <Text>{asset?.allocation_status}</Text>
-                      <Text
-                        bg="#EDEDFF"
-                        color="#000080"
-                        fontSize={12}
-                        py="3px"
-                        px="12px"
-                        textAlign="center"
-                        borderRadius="50px"
-                      >
-                        View Asset
-                      </Text>
+                      <Link href={`/user/my-assets/${asset?.id}`}>
+                        <Text
+                          bg="#EDEDFF"
+                          color="#000080"
+                          fontSize={12}
+                          py="3px"
+                          px="12px"
+                          textAlign="center"
+                          borderRadius="50px"
+                        >
+                          View Asset
+                        </Text>
+                      </Link>
                     </Flex>
                   </Td>
                 </Tr>

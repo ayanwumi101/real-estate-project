@@ -14,9 +14,9 @@ const AccountBalance = () => {
   return (
     <Box>
       <Fragment>
-        {!userDetails?.personal_check ||
-          !userDetails?.bank_check ||
-          !userDetails?.nok_check ||
+        {!userDetails?.personal_check &&
+          !userDetails?.bank_check &&
+          !userDetails?.nok_check &&
           (!userDetails?.address_check && (
             <Box
               w="100%"

@@ -10,7 +10,7 @@ const extendedColors: DeepPartial<
     300: '#2E353F',
     400: '#222222',
     500: '#EDEDFF',
-    600: '',
+    600: '#ABABFF',
     700: '',
     800: '',
     900: '',
