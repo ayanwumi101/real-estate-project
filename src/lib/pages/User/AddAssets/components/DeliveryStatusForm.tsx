@@ -9,11 +9,13 @@ import {
   Button,
   FormErrorMessage, Spinner, useToast
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useContext } from 'react';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { UpdateAssetDeliveryStatus } from '~/lib/api/services/assetsService';
 import Cookie from 'js-cookie';
+import { CreateAssetContext } from '..';
+
 
 
 const DeliveryStatusForm = ({
@@ -26,6 +28,7 @@ const DeliveryStatusForm = ({
   const toast = useToast();
   const [loading, setLoading] = React.useState<boolean>(false);
   const assetId = Cookie.get('vestier-asset-id');
+  const {assetData, setAssetData} = useContext<any>(CreateAssetContext);
 
   const validationSchema = Yup.object().shape({
     paymentStatus: Yup.string().required('Payment status is required'),
@@ -67,6 +70,7 @@ const DeliveryStatusForm = ({
         });
         setLoading(false);
         setStep(step + 1);
+        setAssetData({...assetData, formData});
       }
     } catch (error: any) {
       setLoading(false);

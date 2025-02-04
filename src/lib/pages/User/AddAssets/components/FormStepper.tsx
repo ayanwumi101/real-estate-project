@@ -7,8 +7,11 @@ import {
   PaymentPlanIcon,
   DeliveryStatusIcon,
   PropertyDetailsIcon,
+  AddNextOfKinIcon,
 } from '~/lib/components/Icons/Icons';
 import { HiOutlineChevronDoubleRight } from 'react-icons/hi';
+
+
 
 const StepDivider = () => {
   return <Box borderRight="1.5px dashed #ABABFF" h="65px" mr="2"></Box>;
@@ -107,6 +110,11 @@ const FormStepper = ({ step }: { step: number }) => {
               label="Asset Images"
               isActive={step > 4 ? true : false}
             />
+            <HiOutlineChevronDoubleRight color="#000080" />
+            <MobileStepItem
+              label="Add Next of Kin"
+              isActive={step > 5 ? true : false}
+            />
           </Stack>
         </Box>
       ) : (
@@ -140,6 +148,12 @@ const FormStepper = ({ step }: { step: number }) => {
               label="Asset Images"
               Icon={CashflowDetailsIcon}
               isActive={step > 4 ? true : false}
+            />
+            <StepDivider />
+            <SingleStepItem
+              label="Add Next of Kin"
+              Icon={AddNextOfKinIcon}
+              isActive={step > 5 ? true : false}
             />
           </Stack>
         </Box>

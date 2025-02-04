@@ -14,7 +14,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { Formik, Field, Form } from 'formik';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { BsImageFill } from 'react-icons/bs';
 import { GoTrash } from 'react-icons/go';
 import * as Yup from 'yup';
@@ -22,6 +22,10 @@ import { FileUploadIcon } from '~/lib/components/Icons/Icons';
 import Cookie from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { AddAssetImages } from '~/lib/api/services/assetsService';
+import { CreateAssetContext } from '..';
+
+
+
 
 const validationSchema = Yup.object().shape({
   assetImages: Yup.array()
@@ -40,7 +44,12 @@ const AssetImages = ({
   const assetId = Cookie.get('vestier-asset-id');
   const toast = useToast();
   const router = useRouter();
+  const {assetData,setAssetData} = useContext<any>(CreateAssetContext);
 
+  
+  
+  console.log(assetData);
+  
   const initialValues: { assetImages: File[] } = {
     assetImages: [],
   };
@@ -63,8 +72,7 @@ const AssetImages = ({
           isClosable: true,
           position: 'top-right',
         });
-        router.push('/user/my-assets');
-        Cookie.remove('vestier-asset-id');
+        setStep(step + 1);
       }
     } catch (error: any) {
       toast({
@@ -213,7 +221,7 @@ const AssetImages = ({
                 _hover={{ bg: '#000080' }}
                 type="submit"
               >
-                {loading ? <Spinner /> : 'Submit'}
+                {loading ? <Spinner /> : 'Complete'}
               </Button>
             </Flex>
           </Box>

@@ -5,9 +5,15 @@ import {
   Stack,
   Heading,
   Flex,
-  Button, Divider, Avatar
+  Button,
+  Divider,
+  Avatar,
 } from '@chakra-ui/react';
-import { LocationIcon, TelephoneIconWithBg, EmailIconWithBg } from '~/lib/components/Icons/Icons';
+import {
+  LocationIcon,
+  TelephoneIconWithBg,
+  EmailIconWithBg,
+} from '~/lib/components/Icons/Icons';
 import { IoMdArrowForward } from 'react-icons/io';
 import { FiEye } from 'react-icons/fi';
 import Link from 'next/link';
@@ -271,7 +277,13 @@ export const StatCard = () => {
   );
 };
 
-export const AssetStatCard = ({label, children}:{label: string, children: ReactElement}) => {
+export const AssetStatCard = ({
+  label,
+  children,
+}: {
+  label: string;
+  children: ReactElement;
+}) => {
   return (
     <Box
       minW="260px"
@@ -280,9 +292,9 @@ export const AssetStatCard = ({label, children}:{label: string, children: ReactE
       border="1px solid #E4E4E4"
       boxShadow="sm"
       px="22px"
-      h={['auto','120px']}
+      h={['auto', '120px']}
     >
-      <Box w='100%'>
+      <Box w="100%">
         <Text mb="10px" fontSize={16} color="#ABABFF" fontWeight={500}>
           {label}
         </Text>
@@ -292,24 +304,43 @@ export const AssetStatCard = ({label, children}:{label: string, children: ReactE
   );
 };
 
-
-export const CustomerInformationItem = ({Icon, label, labelValue}:{Icon: any, label: string, labelValue: string}) => {
+export const CustomerInformationItem = ({
+  Icon,
+  label,
+  labelValue,
+}: {
+  Icon: any;
+  label: string;
+  labelValue: string;
+}) => {
   return (
     <Box>
-      <Flex alignItems='flex-start' gap={['10px','17px']}>
+      <Flex alignItems="flex-start" gap={['10px', '17px']}>
         <Icon />
-        <Stack spacing='10px'>
-            <Heading as='h3' fontSize={16} fontWeight={600} color='brand.300'>{label}</Heading>
-            <Text color='brand.400' fontSize={16} fontWeight={500}>{labelValue}</Text>
+        <Stack spacing="10px">
+          <Heading as="h3" fontSize={16} fontWeight={600} color="brand.300">
+            {label}
+          </Heading>
+          <Text color="brand.400" fontSize={16} fontWeight={500}>
+            {labelValue}
+          </Text>
         </Stack>
       </Flex>
     </Box>
-  )
-}
+  );
+};
 
-
-
-export const SingleNextOfKinCard = ({name, relationship, phoneNumber, email}:{name: string, relationship: string, phoneNumber: string, email: string}) => {
+export const SingleNextOfKinCard = ({
+  name,
+  relationship,
+  phoneNumber,
+  email,
+}: {
+  name: string;
+  relationship: string;
+  phoneNumber: string;
+  email: string;
+}) => {
   return (
     <Box
       borderRadius="6px"
@@ -327,7 +358,7 @@ export const SingleNextOfKinCard = ({name, relationship, phoneNumber, email}:{na
             gap={['20px', '0']}
           >
             <Box>
-              <Flex gap='10px' alignItems="flex-start">
+              <Flex gap="10px" alignItems="flex-start">
                 <Avatar
                   name={name}
                   w="40px"
@@ -338,7 +369,7 @@ export const SingleNextOfKinCard = ({name, relationship, phoneNumber, email}:{na
                   fontSize={20}
                 />
                 <Box>
-                  <Stack spacing='4px'>
+                  <Stack spacing="4px">
                     <Heading fontSize={16} color="brand.400" fontWeight={600}>
                       {name}
                     </Heading>
@@ -374,4 +405,102 @@ export const SingleNextOfKinCard = ({name, relationship, phoneNumber, email}:{na
       </Stack>
     </Box>
   );
-}
+};
+
+export const AddAssetNextOfKinCard = ({
+  id,
+  name,
+  relationship,
+  phoneNumber,
+  email,
+  selectedNextOfKin,
+  setSelectedNextOfKin,
+}: {
+  id: number;
+  name: string;
+  relationship: string;
+  phoneNumber: string;
+  email: string;
+  selectedNextOfKin: number;
+  setSelectedNextOfKin: (id: number) => void;
+}) => {
+  return (
+    <Box
+      borderRadius="6px"
+      border="1px solid"
+      borderColor="border.100"
+      py="12px"
+      px="24px"
+    >
+      <Stack spacing="14px">
+        <Box>
+          <Flex
+            alignItems="center"
+            justifyContent="space-between"
+            flexWrap="wrap"
+            gap={['20px', '0']}
+          >
+            <Box>
+              <Flex gap="10px" alignItems="flex-start">
+                <Avatar
+                  name={name}
+                  w="40px"
+                  bg="brand.500"
+                  h="40px"
+                  color="brand.100"
+                  fontWeight={700}
+                  fontSize={20}
+                />
+                <Box>
+                  <Stack spacing="4px">
+                    <Heading fontSize={16} color="brand.400" fontWeight={600}>
+                      {name}
+                    </Heading>
+                    <Text fontSize={14} color="brand.400" fontWeight={500}>
+                      {relationship}
+                    </Text>
+                  </Stack>
+                </Box>
+              </Flex>
+            </Box>
+            <Text fontSize={14} fontWeight={500} color="brand.100">
+              Associated with Harborview Towers
+            </Text>
+          </Flex>
+        </Box>
+        <Divider color="border.100" />
+        <Box>
+          <Flex alignItems="center" justifyContent="space-between">
+            <Stack spacing="12px">
+              <Flex alignItems="center" gap="10px">
+                <TelephoneIconWithBg />
+                <Text color="brand.400" fontSize={12} fontWeight={500}>
+                  {phoneNumber}
+                </Text>
+              </Flex>
+              <Flex alignItems="center" gap="10px">
+                <EmailIconWithBg />
+                <Text color="brand.400" fontSize={12} fontWeight={500}>
+                  {email}
+                </Text>
+              </Flex>
+            </Stack>
+            <Button
+              onClick={() => setSelectedNextOfKin(id)}
+              px="25px"
+              py="3"
+              h="40px"
+              fontSize={15}
+              bg="brand.100"
+              color="brand.200"
+              fontWeight={500}
+              isDisabled={selectedNextOfKin === id}
+            >
+              {selectedNextOfKin === id ? 'Selected' : 'Select'}
+            </Button>
+          </Flex>
+        </Box>
+      </Stack>
+    </Box>
+  );
+};

@@ -30,6 +30,7 @@ const API_ROUTES = {
   UPDATE_ASSET_CASHFLOW_DETAILS: '/user/asset/cashflow-details',
   GET_USER_ASSETS: '/user/assets',
   ADD_ASSET_IMAGES: '/user/asset/add-images',
+  ADD_NEXT_OF_KIN_TO_ASSET: '/user/asset/attach_noks',
 
   //location endpoints
   GET_ALL_COUNTRIES: '/countries',

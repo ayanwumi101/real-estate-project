@@ -12,11 +12,14 @@ import {
   useToast,
   Spinner,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { UpdateAssetPaymentPlan } from '~/lib/api/services/assetsService';
 import Cookie from 'js-cookie';
+import { CreateAssetContext } from '..';
+
+
 
 const PaymentPlan = ({
   step,
@@ -28,6 +31,7 @@ const PaymentPlan = ({
   const [loading, setLoading] = useState<boolean>(false);
   const assetId = Cookie.get('vestier-asset-id');
   const toast = useToast();
+  const {assetData,setAssetData} = useContext<any>(CreateAssetContext);
 
   // Validation schema using Yup
   const validationSchema = Yup.object().shape({
@@ -82,6 +86,7 @@ const PaymentPlan = ({
         });
         setLoading(false);
         setStep(step + 1);
+        setAssetData({ ...assetData, formData });
       }
     } catch (error) {
       toast({

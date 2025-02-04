@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+'use client'
+
+import React, { useContext, useState } from 'react';
 import {
   Box,
   Input,
@@ -17,6 +19,10 @@ import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { UpdateAssetCashflowDetails } from '~/lib/api/services/assetsService';
 import Cookie from 'js-cookie';
+import { CreateAssetContext } from '..';
+
+
+
 
 const CashflowDetails = ({
   step,
@@ -27,6 +33,7 @@ const CashflowDetails = ({
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const assetId = Cookie.get('vestier-asset-id');
+  const { assetData, setAssetData } = useContext<any>(CreateAssetContext);
   const toast = useToast();
 
   const initialValues = {
@@ -69,6 +76,7 @@ const CashflowDetails = ({
           position: 'top-right',
         });
         setStep(step + 1);
+        setAssetData({ ...assetData, formData });
       }
     } catch (error: any) {
       toast({

@@ -102,7 +102,7 @@ const DashboardSidebar = () => {
             <SideBarItem
               label="My Assets"
               Icon={MyAssetsIcon}
-              isActive={pathname === '/user/my-assets'}
+              isActive={pathname.includes('/user/my-assets')}
               href="/user/my-assets"
             />
             <SideBarItem

@@ -45,3 +45,9 @@ export const AddAssetImages = async (data) => {
   });
   return response.data;
 }
+
+
+export const AddNextOfKinToAsset = async (data) => {
+  const response = await axiosInstance.post(API_ROUTES.ADD_NEXT_OF_KIN_TO_ASSET, data);
+  return response.data;
+}

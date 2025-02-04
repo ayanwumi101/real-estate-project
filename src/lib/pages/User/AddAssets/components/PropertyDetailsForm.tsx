@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {
   Box,
@@ -12,9 +12,11 @@ import {
   Button,
   Textarea,
   Flex,
-  FormErrorMessage, Spinner, useToast
+  FormErrorMessage,
+  Spinner,
+  useToast,
 } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AddAssetDetails } from '~/lib/api/services/assetsService';
 import {
   GetCountryStates,
@@ -22,7 +24,9 @@ import {
 } from '~/lib/api/services/locationService';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
-import Cookie from 'js-cookie'
+import Cookie from 'js-cookie';
+import { CreateAssetContext } from '..';
+
 
 const PropertyDetailsForm = ({
   step,
@@ -35,6 +39,7 @@ const PropertyDetailsForm = ({
   const [states, setStates] = useState<[]>([]);
   const [lgas, setLgas] = useState<[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const {setAssetData} = useContext<any>(CreateAssetContext);
 
   useEffect(() => {
     const GetStates = async () => {
@@ -62,15 +67,7 @@ const PropertyDetailsForm = ({
       lga: '',
     },
     realtorDetails: {
-      businessName: '',
       name: '',
-      officeAddress: {
-        houseNumber: '',
-        streetName: '',
-        city: '',
-        state: '',
-        lga: '',
-      },
     },
     phoneNumber: '',
     additionalComments: '',
@@ -88,15 +85,7 @@ const PropertyDetailsForm = ({
       lga: Yup.string().required('LGA is required'),
     }),
     realtorDetails: Yup.object({
-      businessName: Yup.string().required('Realtor business name is required'),
       name: Yup.string().required('Realtor name is required'),
-      officeAddress: Yup.object({
-        houseNumber: Yup.string().required('Office house number is required'),
-        streetName: Yup.string().required('Office street name is required'),
-        city: Yup.string().required('Office city is required'),
-        state: Yup.string().required('Office state is required'),
-        lga: Yup.string().required('Office LGA is required'),
-      }),
     }),
     phoneNumber: Yup.string().required('Phone number is required'),
     additionalComments: Yup.string().optional(),
@@ -113,20 +102,13 @@ const PropertyDetailsForm = ({
       state_id: values.propertyAddress.state,
       comment: values.additionalComments,
       realtor_name: values.realtorDetails.name,
-      business_name: values.realtorDetails.businessName,
-      realtor_house_number: values.realtorDetails.officeAddress.houseNumber,
-      realtor_street_name: values.realtorDetails.officeAddress.streetName,
-      realtor_city_name: values.realtorDetails.officeAddress.city,
-      realtor_city_town: values.realtorDetails.officeAddress.city,
-      realtor_state_id: values.realtorDetails.officeAddress.state,
-      realtor_lga_id: values.realtorDetails.officeAddress.lga,
       phone: values.phoneNumber,
       lga_id: values.propertyAddress.lga,
     };
     setLoading(true);
     try {
       const res = await AddAssetDetails(formData);
-      if(res.status === true){
+      if (res.status === true) {
         setLoading(false);
         toast({
           title: res.message as string,
@@ -136,8 +118,9 @@ const PropertyDetailsForm = ({
           isClosable: true,
           status: 'success',
         });
-        Cookie.set('vestier-asset-id', res.data)
+        Cookie.set('vestier-asset-id', res.data);
         setStep(step + 1);
+        setAssetData({ ...formData });
       }
     } catch (error: any) {
       setLoading(false);
@@ -148,7 +131,7 @@ const PropertyDetailsForm = ({
         position: 'top-right',
         isClosable: true,
         status: 'error',
-      })
+      });
     }
   };
 
@@ -175,26 +158,9 @@ const PropertyDetailsForm = ({
           }
         }, [values.propertyAddress.state, setFieldValue]);
 
-        useEffect(() => {
-          if (values.realtorDetails.officeAddress.state) {
-            setFieldValue('values.realtorDetails.officeAddress.lga', ''); // Reset city
-            const fetchLgas = async () => {
-              try {
-                const res = await GetStateLgas(
-                  values.realtorDetails.officeAddress.state
-                );
-                setLgas(res?.data || []);
-              } catch (error) {
-                console.error('Error fetching cities:', error);
-              }
-            };
-            fetchLgas();
-          }
-        }, [values.realtorDetails.officeAddress.state, setFieldValue]);
-
         return (
           <Form>
-            <Box w={['100%', '100%', "600px"]}>
+            <Box w={['100%', '100%', '600px']}>
               <Stack spacing="24px">
                 <FormControl
                   isInvalid={!!errors.propertyName && touched.propertyName}
@@ -649,7 +615,7 @@ const PropertyDetailsForm = ({
                     type="submit"
                     minW="150px"
                   >
-                    {loading ? <Spinner /> : "Continue"}
+                    {loading ? <Spinner /> : 'Continue'}
                   </Button>
                 </Flex>
               </Stack>
