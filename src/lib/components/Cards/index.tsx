@@ -223,37 +223,33 @@ export const SingleApartmentCard = ({
   );
 };
 
-export const PortfolioStatCard = () => {
+export const PortfolioStatCard = ({label, balance, showHideIcon}:{label: string, balance: string | number, showHideIcon: boolean}) => {
   return (
     <Box
       w="357px"
       borderRadius="5px"
-      pt="32px"
+      py="32px"
+      px='20px'
       border="1px solid #E4E4E4"
       boxShadow="md"
+      h='140px'
     >
-      <Box px="16px" mb="16px">
-        <Text mb="16px" color="#ABABFF" fontWeight={500}>
-          Wallet Balance
+      <Stack spacing='16px'>
+        <Text color="#ABABFF" fontWeight={500}>
+          {label}
         </Text>
         <Flex alignItems="center" gap="16px">
           <Heading fontSize={24} fontWeight={500} color="#222222">
-            ₦ 150,000
+            {balance}
           </Heading>
-          <FiEye color="#2E353F" fontSize={20} />
+          {showHideIcon && <FiEye color="#2E353F" fontSize={20} />}
         </Flex>
-      </Box>
-      <Box borderTop="1px solid #D8D8FF" bg="#EDEDFF" p="16px">
-        <Flex alignItems="center" gap="10px">
-          <Text fontWeight={600} color="#2E353F">
-            Show more
-          </Text>
-          <IoMdArrowForward color="#2E353F" />
-        </Flex>
-      </Box>
+      </Stack>
     </Box>
   );
 };
+
+
 
 export const StatCard = () => {
   return (
@@ -276,6 +272,8 @@ export const StatCard = () => {
     </Box>
   );
 };
+
+
 
 export const AssetStatCard = ({
   label,

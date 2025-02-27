@@ -1,13 +1,25 @@
-'use client'
+'use client';
 
-import { Box, Image, Heading, Text, Button, Flex, Stack } from '@chakra-ui/react'
-import React from 'react'
-import { LocationIcon, InvestIcon, AddIcon } from '~/lib/components/Icons/Icons';
+import {
+  Box,
+  Image,
+  Heading,
+  Text,
+  Button,
+  Flex,
+  Stack,
+} from '@chakra-ui/react';
+import React from 'react';
+import {
+  LocationIcon,
+  InvestIcon,
+  AddIcon,
+  NextDueRemittanceIcon,
+} from '~/lib/components/Icons/Icons';
 import { HiPlus } from 'react-icons/hi2';
 import { PortfolioStatCard } from '~/lib/components/Cards';
-import FundWalletFlow from '~/lib/components/FundWalletFlow'
-
-
+import FundWalletFlow from '~/lib/components/FundWalletFlow';
+import Link from 'next/link';
 
 const Header = () => {
   const [showFundWalletModal, setShowFundWalletModal] = React.useState(false);
@@ -16,12 +28,18 @@ const Header = () => {
       <Stack>
         <Box py="30px" px="40px" borderBottom="1px solid #E4E4E4">
           <Flex alignItems="center" justifyContent="space-between">
-            <Heading fontSize={24} fontWeight={500} color="#222222">
-              3 Properties
-            </Heading>
+            <Stack spacing="10px">
+              <Heading fontSize={24} fontWeight={500} color="#222222">
+                Remittance
+              </Heading>
+              <Text color="brand.300">
+                All your cashflow properties with remittance
+              </Text>
+            </Stack>
+
             <Box>
               <Flex alignItems="center" gap="12px">
-                <Button
+                {/* <Button
                   bg="#EDEDFF"
                   color="#4040A0"
                   fontWeight={600}
@@ -29,34 +47,72 @@ const Header = () => {
                   borderRadius="50px"
                 >
                   Withdraw from wallet
-                </Button>
-                <Button
-                  bg="#000080"
-                  fontSize={14}
-                  color="#ffffff"
-                  fontWeight={500}
-                  onClick={() => setShowFundWalletModal(true)}
-                >
-                  <Flex alignItems="center" gap="10px">
-                    <Text>Fund Wallet</Text>
-                    <HiPlus color="white" fontSize={20} fontWeight={700} />
-                  </Flex>
-                </Button>
+                </Button> */}
+                <Link href="/user/my-assets/add-assets">
+                  <Button
+                    bg="#000080"
+                    fontSize={14}
+                    color="#ffffff"
+                    fontWeight={500}
+                    // onClick={() => setShowFundWalletModal(true)}
+                  >
+                    <Flex alignItems="center" gap="10px">
+                      <Text>Add cahsfow asset</Text>
+                      <HiPlus color="white" fontSize={20} fontWeight={700} />
+                    </Flex>
+                  </Button>
+                </Link>
               </Flex>
             </Box>
           </Flex>
         </Box>
-        <Box py="40px" px="40px" overflow='auto'>
+        <Box py="40px" px="40px" overflow="auto">
           <Flex alignItems="center" gap="16px">
-            <PortfolioStatCard />
-            <PortfolioStatCard />
-            <PortfolioStatCard />
+            <PortfolioStatCard
+              label="Total Cashflow Asset"
+              balance={3}
+              showHideIcon={false}
+            />
+            <PortfolioStatCard
+              label="Cashflow Assets in Naira"
+              balance="₦25,005,900"
+              showHideIcon={true}
+            />
+            <Box
+              w="357px"
+              borderRadius="5px"
+              py="32px"
+              px="20px"
+              border="1px solid #E4E4E4"
+              boxShadow="md"
+              h="140px"
+            >
+              <Stack spacing="16px">
+                <Text color="#ABABFF" fontWeight={500}>
+                  Next Due Remittance
+                </Text>
+                <Flex alignItems="center" gap="16px">
+                  <NextDueRemittanceIcon />
+                  <Stack spacing="5px">
+                    <Heading fontSize={18} fontWeight={500} color="brand.300">
+                      30,Mar 2025
+                    </Heading>
+                    <Text color="brand.300" fontSize={14} fontWeight={500}>
+                      Skyline Residence
+                    </Text>
+                  </Stack>
+                </Flex>
+              </Stack>
+            </Box>
           </Flex>
         </Box>
       </Stack>
-      <FundWalletFlow isOpen={showFundWalletModal} onClose={() => setShowFundWalletModal(false)}  />
+      {/* <FundWalletFlow
+        isOpen={showFundWalletModal}
+        onClose={() => setShowFundWalletModal(false)}
+      /> */}
     </Box>
   );
-}
+};
 
-export default Header
+export default Header;
