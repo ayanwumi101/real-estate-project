@@ -15,7 +15,6 @@ import {
 import React, { useContext } from 'react';
 import { EmptyStateIcon, InputSearchIcon } from '~/lib/components/Icons/Icons';
 import { AppContext } from '~/lib/layout';
-import AddNextOfKinModal from '../../AddNextOfKin';
 import {
   AddAssetNextOfKinCard,
   SingleNextOfKinCard,
@@ -23,6 +22,9 @@ import {
 import Cookie from 'js-cookie';
 import { AddNextOfKinToAsset } from '~/lib/api/services/assetsService';
 import { useRouter } from 'next/navigation';
+import AddNextOfKinModal from '~/lib/pages/User/AddNextOfKin';
+
+
 
 const AddNextOfKin = ({
   step,
@@ -40,45 +42,46 @@ const AddNextOfKin = ({
   const [loading, setLoading] = React.useState<boolean>(false);
 
   const handleSubmit = async () => {
-    const formData = {
-      nok_ids: [selectedNextOfKin],
-      asset_id: assetId,
-    };
-    try {
-      if (selectedNextOfKin) {
-        setLoading(true);
-        const res = await AddNextOfKinToAsset(formData);
-        if (res.status === true) {
-          toast({
-            title: 'Next of Kin added successfully',
-            status: 'success',
-            duration: 5000,
-            isClosable: true,
-          });
-          setLoading(false);
-          router.push('/user/my-assets');
-          Cookie.remove('vestier-asset-id');
-        }
-      } else {
-        toast({
-          title: 'Please select a Next of Kin',
-          status: 'error',
-          duration: 3000,
-          isClosable: true,
-          position: 'top-right',
-        });
-      }
-    } catch (error: any) {
-      setLoading(false);
-      toast({
-        title: error.response.data.message,
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-        position: 'top-right',
-      });
-    }
+    // const formData = {
+    //   nok_ids: [selectedNextOfKin],
+    //   asset_id: assetId,
+    // };
+    // try {
+    //   if (selectedNextOfKin) {
+    //     setLoading(true);
+    //     const res = await AddNextOfKinToAsset(formData);
+    //     if (res.status === true) {
+    //       toast({
+    //         title: 'Next of Kin added successfully',
+    //         status: 'success',
+    //         duration: 5000,
+    //         isClosable: true,
+    //       });
+    //       setLoading(false);
+    //       router.push('/user/my-assets');
+    //       Cookie.remove('vestier-asset-id');
+    //     }
+    //   } else {
+    //     toast({
+    //       title: 'Please select a Next of Kin',
+    //       status: 'error',
+    //       duration: 3000,
+    //       isClosable: true,
+    //       position: 'top-right',
+    //     });
+    //   }
+    // } catch (error: any) {
+    //   setLoading(false);
+    //   toast({
+    //     title: error.response.data.message,
+    //     status: 'error',
+    //     duration: 3000,
+    //     isClosable: true,
+    //     position: 'top-right',
+    //   });
+    // }
   };
+  
   return (
     <Box>
       <Stack spacing="32px">

@@ -17,7 +17,8 @@ import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { UpdateAssetPaymentPlan } from '~/lib/api/services/assetsService';
 import Cookie from 'js-cookie';
-import { CreateAssetContext } from '..';
+import { CreateAssetContext } from '../../..';
+
 
 
 
@@ -36,68 +37,65 @@ const PaymentPlan = ({
   // Validation schema using Yup
   const validationSchema = Yup.object().shape({
     propertyCost: Yup.string().required('Property cost is required'),
-    propertyValue: Yup.string().required('Property value is required'),
     paymentDuration: Yup.string().required('Payment duration is required'),
     amountPaid: Yup.string().required('Amount paid is required'),
     amountLeft: Yup.string().required('Amount left is required'),
     paymentPlan: Yup.string().required('Payment plan is required'),
     firstPaymentDate: Yup.string().required('First payment date is required'),
     nextDueDate: Yup.string().required('Next due date is required'),
-    yieldingCashflow: Yup.string().required('Yielding cashflow is required'),
   });
 
   // Initial form values
   const initialValues = {
     propertyCost: '',
-    propertyValue: '',
     paymentDuration: '',
     amountPaid: '',
     amountLeft: '',
     paymentPlan: '',
     firstPaymentDate: '',
     nextDueDate: '',
-    yieldingCashflow: '',
   };
 
   // Handle form submission
   const handleSubmit = async (values: any) => {
-    setLoading(true);
-    const formData = {
-      property_cost: values.propertyCost,
-      property_value: values.propertyValue,
-      duration: values.paymentDuration,
-      amount_left: values.amountLeft,
-      payment_plan: values.paymentPlan,
-      due_date: values.nextDueDate,
-      payment_date: values.firstPaymentDate,
-      bought_date: values.firstPaymentDate,
-      amount_paid: values.amountPaid,
-      yield_cashflow: values.yieldingCashflow === 'Yes' ? true : false,
-    };
-    try {
-      const res = await UpdateAssetPaymentPlan(assetId, formData);
-      if (res.status === true) {
-        toast({
-          title: res.message as string,
-          status: 'success',
-          duration: 3000,
-          isClosable: true,
-          position: 'top-right',
-        });
-        setLoading(false);
-        setStep(step + 1);
-        setAssetData({ ...assetData, formData });
-      }
-    } catch (error) {
-      toast({
-        title: 'An error occurred',
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-        position: 'top-right',
-      });
-      setLoading(false);
-    }
+    setStep(step + 1);
+    // setLoading(true);
+    // const formData = {
+    //   property_cost: values.propertyCost,
+    //   property_value: values.propertyValue,
+    //   duration: values.paymentDuration,
+    //   amount_left: values.amountLeft,
+    //   payment_plan: values.paymentPlan,
+    //   due_date: values.nextDueDate,
+    //   payment_date: values.firstPaymentDate,
+    //   bought_date: values.firstPaymentDate,
+    //   amount_paid: values.amountPaid,
+    //   yield_cashflow: values.yieldingCashflow === 'Yes' ? true : false,
+    // };
+    // try {
+    //   const res = await UpdateAssetPaymentPlan(assetId, formData);
+    //   if (res.status === true) {
+    //     toast({
+    //       title: res.message as string,
+    //       status: 'success',
+    //       duration: 3000,
+    //       isClosable: true,
+    //       position: 'top-right',
+    //     });
+    //     setLoading(false);
+    //     setStep(step + 1);
+    //     setAssetData({ ...assetData, formData });
+    //   }
+    // } catch (error) {
+    //   toast({
+    //     title: 'An error occurred',
+    //     status: 'error',
+    //     duration: 3000,
+    //     isClosable: true,
+    //     position: 'top-right',
+    //   });
+    //   setLoading(false);
+    // }
   };
   return (
     <Formik
@@ -108,7 +106,7 @@ const PaymentPlan = ({
       {({ errors, touched, setFieldValue, values }) => {
         return (
           <Form>
-            <Box w={['100%', '100%', "600px"]}>
+            <Box w={['100%', '100%', '600px']}>
               <Stack spacing="24px">
                 <FormControl
                   isInvalid={!!errors.propertyCost && touched.propertyCost}
@@ -127,25 +125,6 @@ const PaymentPlan = ({
                     _placeholder={{ color: '#8295AA', fontWeight: 500 }}
                   />
                   <FormErrorMessage>{errors.propertyCost}</FormErrorMessage>
-                </FormControl>
-                <FormControl
-                  isInvalid={!!errors.propertyValue && touched.propertyValue}
-                >
-                  <FormLabel fontWeight={600} fontSize={16} color="#222222">
-                    What is the current value of this property?
-                  </FormLabel>
-                  <Field
-                    as={Input}
-                    name="propertyValue"
-                    border="1px solid #C0C0C0"
-                    bg="#FBFBFB"
-                    h="50px"
-                    borderRadius="40px"
-                    placeholder="₦ 0, 00"
-                    _placeholder={{ color: '#8295AA', fontWeight: 500 }}
-                  />
-                  {/* <Checkbox size="md">Not Sure</Checkbox> */}
-                  <FormErrorMessage>{errors.propertyValue}</FormErrorMessage>
                 </FormControl>
                 <FormControl
                   isInvalid={
@@ -263,26 +242,6 @@ const PaymentPlan = ({
                   />
                   <FormErrorMessage>{errors.nextDueDate}</FormErrorMessage>
                 </FormControl>
-                <FormControl
-                  isInvalid={!!errors.nextDueDate && touched.nextDueDate}
-                >
-                  <FormLabel fontWeight={600} fontSize={16} color="#222222">
-                    Is it yielding cashflow?
-                  </FormLabel>
-                  <Field
-                    as={Select}
-                    name="yieldingCashflow"
-                    bg="#FBFBFB"
-                    border="1px solid #C0C0C0"
-                    borderRadius="50px"
-                    h="50px"
-                  >
-                    <option value="">Select-</option>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                  </Field>
-                  <FormErrorMessage>{errors.yieldingCashflow}</FormErrorMessage>
-                </FormControl>
                 <Flex justifyContent="flex-end" gap="20px">
                   <Button
                     color="#000080"
@@ -291,7 +250,7 @@ const PaymentPlan = ({
                     borderRadius="30px"
                     fontWeight={600}
                     fontSize={16}
-                    _hover={{ bg: 'lightgray' }}
+                    _hover={{ bg: '#EDEDFF' }}
                     onClick={() => setStep(step - 1)}
                     minW="100px"
                   >
@@ -306,9 +265,9 @@ const PaymentPlan = ({
                     fontSize={16}
                     _hover={{ bg: '#000080' }}
                     type="submit"
-                    minW='150px'
+                    minW="150px"
                   >
-                    {loading ? <Spinner /> : "Continue"}
+                    {loading ? <Spinner /> : 'Continue'}
                   </Button>
                 </Flex>
               </Stack>

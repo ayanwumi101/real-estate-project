@@ -1,42 +1,54 @@
 'use client';
 
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, Stack } from '@chakra-ui/react';
 import React, { useContext, createContext } from 'react';
-import FormStepper from './components/FormStepper';
+import FormStepper from './components/FormStepHeader';
 import PropertyDetailsForm from './components/PropertyDetailsForm';
-import PaymentPlan from './components/PaymentPlan';
-import DeliveryStatusForm from './components/DeliveryStatusForm';
-import CashflowDetails from './components/CashflowDetails';
-import AssetImages from './components/AssetImages';
-import AddNextOfKin from './components/AddNextOfKin';
-
+import CashflowAssetFlow from './components/CashflowAssetFlow';
+import InstallmentAssetFlow from './components/InstallmentAssetFlow';
+import OwnedAssetFlow from './components/OwnedAssetFlow';
 
 export const CreateAssetContext = createContext<any>({});
 
 const index = () => {
   const [step, setStep] = React.useState(1);
-  const [assetData, setAssetData] = React.useState({});
+  const [assetData, setAssetData] = React.useState({
+    propertyName: '',
+    propertyType: '',
+    propertySize: '',
+    propertyAddress: {
+      houseNumber: '',
+      streetName: '',
+      city: '',
+      state: '',
+      lga: '',
+    },
+    realtorDetails: {
+      name: '',
+    },
+    phoneNumber: '',
+    assetType: '',
+  });
   return (
     <Box borderTop="1px solid #E4E4E4" py="40px" px={['20px', '55px']}>
-      <Flex
-        alignItems="flex-start"
-        gap="55px"
-        flexDir={['column', 'column', 'row']}
-      >
-        <FormStepper step={step} />
-        <CreateAssetContext.Provider value={{ assetData, setAssetData }}>
-          <Box w={['100%', '80%', '80%']}>
+      <Stack spacing="24px">
+        <CreateAssetContext.Provider value={{ assetData, setAssetData, step, setStep }}>
+          <Box w={['100%', '65%', '65%']} mx="auto">
             {step === 1 && (
               <PropertyDetailsForm step={step} setStep={setStep} />
             )}
-            {step === 2 && <DeliveryStatusForm step={step} setStep={setStep} />}
-            {step === 3 && <PaymentPlan step={step} setStep={setStep} />}
-            {step === 4 && <CashflowDetails step={step} setStep={setStep} />}
-            {step === 5 && <AssetImages step={step} setStep={setStep} />}
-            {step === 6 && <AddNextOfKin step={step} setStep={setStep} />}
+            {step === 2 && (
+              <Box>
+                {assetData?.assetType === 'cashflow' && <CashflowAssetFlow />}
+                {assetData?.assetType === 'owned' && <OwnedAssetFlow />}
+                {assetData?.assetType === 'instalment' && (
+                  <InstallmentAssetFlow />
+                )}
+              </Box>
+            )}
           </Box>
         </CreateAssetContext.Provider>
-      </Flex>
+      </Stack>
     </Box>
   );
 };
