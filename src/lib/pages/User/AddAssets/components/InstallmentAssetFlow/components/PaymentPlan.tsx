@@ -58,44 +58,42 @@ const PaymentPlan = ({
 
   // Handle form submission
   const handleSubmit = async (values: any) => {
-    setStep(step + 1);
-    // setLoading(true);
-    // const formData = {
-    //   property_cost: values.propertyCost,
-    //   property_value: values.propertyValue,
-    //   duration: values.paymentDuration,
-    //   amount_left: values.amountLeft,
-    //   payment_plan: values.paymentPlan,
-    //   due_date: values.nextDueDate,
-    //   payment_date: values.firstPaymentDate,
-    //   bought_date: values.firstPaymentDate,
-    //   amount_paid: values.amountPaid,
-    //   yield_cashflow: values.yieldingCashflow === 'Yes' ? true : false,
-    // };
-    // try {
-    //   const res = await UpdateAssetPaymentPlan(assetId, formData);
-    //   if (res.status === true) {
-    //     toast({
-    //       title: res.message as string,
-    //       status: 'success',
-    //       duration: 3000,
-    //       isClosable: true,
-    //       position: 'top-right',
-    //     });
-    //     setLoading(false);
-    //     setStep(step + 1);
-    //     setAssetData({ ...assetData, formData });
-    //   }
-    // } catch (error) {
-    //   toast({
-    //     title: 'An error occurred',
-    //     status: 'error',
-    //     duration: 3000,
-    //     isClosable: true,
-    //     position: 'top-right',
-    //   });
-    //   setLoading(false);
-    // }
+    const formData = {
+      property_cost: values.propertyCost,
+      property_value: values.propertyValue,
+      duration: values.paymentDuration,
+      amount_left: values.amountLeft,
+      payment_plan: values.paymentPlan,
+      due_date: values.nextDueDate,
+      payment_date: values.firstPaymentDate,
+      bought_date: values.firstPaymentDate,
+      amount_paid: values.amountPaid,
+      yield_cashflow: values.yieldingCashflow === 'Yes' ? true : false,
+    };
+    try {
+      const res = await UpdateAssetPaymentPlan(assetId, formData);
+      if (res.status === true) {
+        toast({
+          title: res.message as string,
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        });
+        setLoading(false);
+        setStep(step + 1);
+        setAssetData({ ...assetData, formData });
+      }
+    } catch (error) {
+      toast({
+        title: 'An error occurred',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      });
+      setLoading(false);
+    }
   };
   return (
     <Formik

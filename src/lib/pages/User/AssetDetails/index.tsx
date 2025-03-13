@@ -10,8 +10,8 @@ const index = () => {
     <Box>
       <Stack>
         <Header />
-        <Box p='40px'>
-            <Flex alignItems='flex-start' gap='40px'>
+        <Box p={['20px','40px']}>
+            <Flex alignItems='flex-start' flexWrap={['wrap', 'nowrap']} gap='40px'>
                 <AssetDetails />
                 <Notes /> 
             </Flex>

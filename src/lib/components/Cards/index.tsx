@@ -226,7 +226,7 @@ export const SingleApartmentCard = ({
 export const PortfolioStatCard = ({label, balance, showHideIcon}:{label: string, balance: string | number, showHideIcon: boolean}) => {
   return (
     <Box
-      w="357px"
+      minW={['300px', '350px']}
       borderRadius="5px"
       py="32px"
       px='20px'
@@ -234,11 +234,11 @@ export const PortfolioStatCard = ({label, balance, showHideIcon}:{label: string,
       boxShadow="md"
       h='140px'
     >
-      <Stack spacing='16px'>
+      <Stack spacing='16px' w='100%'>
         <Text color="#ABABFF" fontWeight={500}>
           {label}
         </Text>
-        <Flex alignItems="center" gap="16px">
+        <Flex alignItems="center" gap="16px" w='100%'>
           <Heading fontSize={24} fontWeight={500} color="#222222">
             {balance}
           </Heading>

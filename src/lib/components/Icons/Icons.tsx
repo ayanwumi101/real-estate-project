@@ -1210,3 +1210,22 @@ export const NextDueRemittanceIcon = () => {
     </svg>
   );
 }
+
+export const ArrowUpIcon = () => { 
+  return (
+    <svg
+      width="28"
+      height="29"
+      viewBox="0 0 28 29"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M14 21.5V7.5M14 7.5L7 14.5M14 7.5L21 14.5"
+        stroke="#2E353F"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}

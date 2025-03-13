@@ -40,7 +40,7 @@ const PropertyDetailsForm = ({
   const [states, setStates] = useState<[]>([]);
   const [lgas, setLgas] = useState<[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const { setAssetData } = useContext<any>(CreateAssetContext);
+  const { setAssetType, assetType } = useContext<any>(CreateAssetContext);
 
   useEffect(() => {
     const GetStates = async () => {
@@ -95,50 +95,53 @@ const PropertyDetailsForm = ({
   });
 
   const handleSubmit = async (values: any) => {
-    setStep(step + 1);
-    setAssetData({ ...values });
-    // const formData = {
-    //   property_name: values.propertyName,
-    //   property_type: values.propertyType,
-    //   size: values.propertySize,
-    //   house_number: values.propertyAddress.houseNumber,
-    //   street_name: values.propertyAddress.streetName,
-    //   city_name: values.propertyAddress.city,
-    //   state_id: values.propertyAddress.state,
-    //   // comment: values.additionalComments,
-    //   realtor_name: values.realtorDetails.name,
-    //   phone: values.phoneNumber,
-    //   lga_id: values.propertyAddress.lga,
-    //   assetType: values.assetType,
-    // };
-    // setLoading(true);
-    // try {
-    //   const res = await AddAssetDetails(formData);
-    //   if (res.status === true) {
-    //     setLoading(false);
-    //     toast({
-    //       title: res.message as string,
-    //       description: 'Property details saved',
-    //       duration: 3000,
-    //       position: 'top-right',
-    //       isClosable: true,
-    //       status: 'success',
-    //     });
-    //     Cookie.set('vestier-asset-id', res.data);
-    //     setStep(step + 1);
-    //     setAssetData({ ...formData });
-    //   }
-    // } catch (error: any) {
-    //   setLoading(false);
-    //   toast({
-    //     title: error.response.data.message,
-    //     description: 'Error Adding Property Details',
-    //     duration: 3000,
-    //     position: 'top-right',
-    //     isClosable: true,
-    //     status: 'error',
-    //   });
-    // }
+    // setStep(step + 1);
+    // setAssetType(values.assetType);
+    const formData = {
+      property_name: values.propertyName,
+      property_type: values.propertyType,
+      size: values.propertySize,
+      house_number: values.propertyAddress.houseNumber,
+      street_name: values.propertyAddress.streetName,
+      city_name: values.propertyAddress.city,
+      state_id: values.propertyAddress.state,
+      // comment: values.additionalComments,
+      realtor_name: values.realtorDetails.name,
+      phone: values.phoneNumber,
+      lga_id: values.propertyAddress.lga,
+      asset_type: values.assetType,
+    };
+    setLoading(true);
+    try {
+      const res = await AddAssetDetails(formData);
+      if (res.status === true) {
+        setLoading(false);
+        toast({
+          title: res.message as string,
+          description: 'Property details saved',
+          duration: 3000,
+          position: 'top-right',
+          isClosable: true,
+          status: 'success',
+        });
+        Cookie.set('vestier-asset-id', res.data);
+        setAssetType(values.assetType);
+        // Cookie.set('vestier-asset-type', values.assetType);
+        if (assetType !== '') {
+           setStep(step + 1);
+        }
+      }
+    } catch (error: any) {
+      setLoading(false);
+      toast({
+        title: error.response.data.message,
+        description: 'Error Adding Property Details',
+        duration: 3000,
+        position: 'top-right',
+        isClosable: true,
+        status: 'error',
+      });
+    }
   };
 
   return (

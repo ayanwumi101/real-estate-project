@@ -29,8 +29,6 @@ const DeliveryStatusForm = ({
   const [loading, setLoading] = React.useState<boolean>(false);
   const assetId = Cookie.get('vestier-asset-id');
   const {
-    assetData,
-    setAssetData,
     step: parentStep,
     setStep: setParentStep,
   } = useContext<any>(CreateAssetContext);
@@ -54,43 +52,41 @@ const DeliveryStatusForm = ({
   };
 
   const handleSubmit = async (values: any) => {
-    setStep(step + 1);
-    // setLoading(true);
-    // const formData = {
-    //   payment_status: values.paymentStatus,
-    //   allocation_status: values.allocationStatus,
-    //   documentation_status: values.documentationStatus,
-    //   handover_status: values.handoverStatus,
-    // }
-    // try {
-    //   const res = await UpdateAssetDeliveryStatus(
-    //     assetId as string,
-    //     formData
-    //   );
-    //   if (res.status === true) {
-    //     toast({
-    //       title: res.message as string,
-    //       status: 'success',
-    //       duration: 3000,
-    //       isClosable: true,
-    //       position: 'top-right',
+    setLoading(true);
+    const formData = {
+      payment_status: values.paymentStatus,
+      allocation_status: values.allocationStatus,
+      documentation_status: values.documentationStatus,
+      handover_status: values.handoverStatus,
+    }
+    try {
+      const res = await UpdateAssetDeliveryStatus(
+        assetId as string,
+        formData
+      );
+      if (res.status === true) {
+        toast({
+          title: res.message as string,
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
 
-    //     });
-    //     setLoading(false);
-    //     setStep(step + 1);
-    //     setAssetData({...assetData, formData});
-    //   }
-    // } catch (error: any) {
-    //   setLoading(false);
-    //   toast({
-    //     title: 'An error occurred',
-    //     description: error.response.data.message,
-    //     status: 'error',
-    //     duration: 3000,
-    //     isClosable: true,
-    //     position: 'top-right',
-    //   });
-    // }
+        });
+        setLoading(false);
+        setStep(step + 1);
+      }
+    } catch (error: any) {
+      setLoading(false);
+      toast({
+        title: 'An error occurred',
+        description: error.response.data.message,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      });
+    }
   };
 
   return (

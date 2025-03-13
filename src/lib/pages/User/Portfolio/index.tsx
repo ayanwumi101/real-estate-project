@@ -24,12 +24,12 @@ import {
   ProfitIcon,
   LossIcon,
   ArrowForward,
-  OutwardTransactionIcon, InwardTransactionIcon
+  OutwardTransactionIcon, InwardTransactionIcon,
+  ArrowUpIcon
 } from '~/lib/components/Icons/Icons';
 import { IoMdArrowForward } from 'react-icons/io';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-
 
 
 
@@ -123,7 +123,7 @@ const PropertyListTable = () => {
                 fontSize={14}
                 textTransform="capitalize"
               >
-                Holding
+                Property Type
               </Th>
               <Th
                 color="#222222"
@@ -131,7 +131,7 @@ const PropertyListTable = () => {
                 fontSize={14}
                 textTransform="capitalize"
               >
-                Current Value
+                Amount Purchased
               </Th>
               <Th
                 color="#222222"
@@ -139,7 +139,34 @@ const PropertyListTable = () => {
                 fontSize={14}
                 textTransform="capitalize"
               >
-                Profit/Loss
+                Status
+              </Th>
+              <Th
+                color="#222222"
+                fontWeight={500}
+                fontSize={14}
+                textTransform="capitalize"
+              >
+                Remittance Amount
+              </Th>
+              <Th
+                color="#222222"
+                fontWeight={500}
+                fontSize={14}
+                textTransform="capitalize"
+              >
+                <Flex alignItems="center" gap="5px">
+                  <Text> Next Due Remittance</Text>
+                  <ArrowUpIcon />
+                </Flex>
+              </Th>
+              <Th
+                color="#222222"
+                fontWeight={500}
+                fontSize={14}
+                textTransform="capitalize"
+              >
+               
               </Th>
             </Tr>
           </Thead>
@@ -154,17 +181,11 @@ const PropertyListTable = () => {
                   px="0"
                   cursor="pointer"
                   onClick={() =>
-                    router.push('/user/portfolio/property-details')
+                    router.push('/user/portfolio/hfurr88ejhhfye')
                   }
                 >
                   <Td fontSize={18} fontWeight={700} px="0">
                     <Flex alignItems="center" gap="10px">
-                      <Image
-                        src="/assets/images/house-1.png"
-                        w="50px"
-                        h="50px"
-                        objectFit="cover"
-                      />
                       <Stack spacing="3px">
                         <Heading color="#2E353F" fontWeight={500} fontSize={16}>
                           Harborview Towers
@@ -179,29 +200,22 @@ const PropertyListTable = () => {
                     </Flex>
                   </Td>
                   <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    10 shares
+                    Land
                   </Td>
                   <Td fontWeight={500} fontSize={14} color="#8295AA">
                     ₦10,003,000
                   </Td>
                   <Td fontWeight={500} fontSize={13} px="0">
-                    <Flex alignItems="center" gap="10px">
-                      <Flex alignItems="center" gap="3px">
-                        <ProfitIcon />
-                        <Text color="#1BD155"> ₦3000 (+2.01%)</Text>
-                      </Flex>
-                      <Text
-                        bg="#EDEDFF"
-                        color="#000080"
-                        fontSize={12}
-                        py="3px"
-                        px="12px"
-                        textAlign="center"
-                        borderRadius="50px"
-                      >
-                        Trade
-                      </Text>
-                    </Flex>
+                    Annual
+                  </Td>
+                  <Td fontWeight={500} fontSize={14} color="#8295AA">
+                    ₦10,003,000
+                  </Td>
+                  <Td fontWeight={500} fontSize={14} color="#8295AA">
+                    Tue,30 Oct 2025
+                  </Td>
+                  <Td fontWeight={500} fontSize={14} color="#8295AA">
+                    <Button>View asset</Button>
                   </Td>
                 </Tr>
               );
@@ -217,25 +231,11 @@ const index = () => {
   const tabs = ['Active', 'Inactive'];
   const [activeTab, setActiveTab] = React.useState('Active');
   return (
-    <Box pb='50px'>
-      <Stack spacing="40px">
+    <Box pb="50px">
+      <Stack spacing="40px" w='100%' overflow='auto'>
         <Header />
-        <Box px="40px">
-          <Flex gap="30px">
-            <Box w="70%">
-              <Stack spacing="30px">
-                <NavigationTab
-                  tabs={tabs}
-                  activeTab={activeTab}
-                  setActiveTab={setActiveTab}
-                />
-                <PropertyListTable />
-              </Stack>
-            </Box>
-            <Box w="30%">
-              <TransactionsList />
-            </Box>
-          </Flex>
+        <Box px="10px">
+          <PropertyListTable />
         </Box>
       </Stack>
     </Box>

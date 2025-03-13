@@ -12,36 +12,20 @@ export const CreateAssetContext = createContext<any>({});
 
 const index = () => {
   const [step, setStep] = React.useState(1);
-  const [assetData, setAssetData] = React.useState({
-    propertyName: '',
-    propertyType: '',
-    propertySize: '',
-    propertyAddress: {
-      houseNumber: '',
-      streetName: '',
-      city: '',
-      state: '',
-      lga: '',
-    },
-    realtorDetails: {
-      name: '',
-    },
-    phoneNumber: '',
-    assetType: '',
-  });
+  const [assetType, setAssetType] = React.useState('');
   return (
     <Box borderTop="1px solid #E4E4E4" py="40px" px={['20px', '55px']}>
       <Stack spacing="24px">
-        <CreateAssetContext.Provider value={{ assetData, setAssetData, step, setStep }}>
+        <CreateAssetContext.Provider value={{ assetType, setAssetType, step, setStep }}>
           <Box w={['100%', '65%', '65%']} mx="auto">
             {step === 1 && (
               <PropertyDetailsForm step={step} setStep={setStep} />
             )}
             {step === 2 && (
               <Box>
-                {assetData?.assetType === 'cashflow' && <CashflowAssetFlow />}
-                {assetData?.assetType === 'owned' && <OwnedAssetFlow />}
-                {assetData?.assetType === 'instalment' && (
+                {assetType === 'cashflow' && <CashflowAssetFlow />}
+                {assetType === 'owned' && <OwnedAssetFlow />}
+                {assetType === 'instalment' && (
                   <InstallmentAssetFlow />
                 )}
               </Box>

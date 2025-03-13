@@ -19,7 +19,6 @@ import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { UpdateAssetCashflowDetails } from '~/lib/api/services/assetsService';
 import Cookie from 'js-cookie';
-import { CreateAssetContext } from '../../..';
 
 const CashflowDetails = ({
   step,
@@ -30,7 +29,6 @@ const CashflowDetails = ({
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const assetId = Cookie.get('vestier-asset-id');
-  const { assetData, setAssetData } = useContext<any>(CreateAssetContext);
   const toast = useToast();
 
   const initialValues = {
@@ -54,42 +52,40 @@ const CashflowDetails = ({
   });
 
   const handleSubmit = async (values: any) => {
-    setStep(step + 1);
-    // setLoading(true);
-    // const formData = {
-    //   cashflow_source: values.cashflowSource,
-    //   is_occupied: values.isPropertyOccupied,
-    //   last_cashflow_date: values.lastCashflowDate,
-    //   cashflow_amount: values.cashflowAmount,
-    //   cashflow_duration: values.cashflowDuration,
-    //   equity_ownership: values.equityOwnership,
-    // };
-    // try {
-    //   const res = await UpdateAssetCashflowDetails(assetId, formData);
-    //   if (res.status === true) {
-    //     toast({
-    //       title: res.message as string,
-    //       description: 'Cashflow details updated successfully',
-    //       status: 'success',
-    //       duration: 3000,
-    //       isClosable: true,
-    //       position: 'top-right',
-    //     });
-    //     setStep(step + 1);
-    //     setAssetData({ ...assetData, formData });
-    //   }
-    // } catch (error: any) {
-    //   toast({
-    //     title: 'An error occurred.',
-    //     description: error.response.data.message,
-    //     status: 'error',
-    //     duration: 3000,
-    //     isClosable: true,
-    //     position: 'top-right',
-    //   });
-    // } finally {
-    //   setLoading(false);
-    // }
+    setLoading(true);
+    const formData = {
+      cashflow_source: values.cashflowSource,
+      is_occupied: values.isPropertyOccupied,
+      last_cashflow_date: values.lastCashflowDate,
+      cashflow_amount: values.cashflowAmount,
+      cashflow_duration: values.cashflowDuration,
+      equity_ownership: values.equityOwnership,
+    };
+    try {
+      const res = await UpdateAssetCashflowDetails(assetId, formData);
+      if (res.status === true) {
+        toast({
+          title: res.message as string,
+          description: 'Cashflow details updated successfully',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        });
+        setStep(step + 1);
+      }
+    } catch (error: any) {
+      toast({
+        title: 'An error occurred.',
+        description: error.response.data.message,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

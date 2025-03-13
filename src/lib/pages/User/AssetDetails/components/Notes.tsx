@@ -6,7 +6,7 @@ import { EditCommentIcon } from '~/lib/components/Icons/Icons';
 const Notes = () => {
   return (
     <Box
-      w="335px"
+      w={['100%',"335px"]}
       bg="brand.200"
       minH="350px"
       p="30px"

@@ -192,7 +192,7 @@ const AssetDetails = () => {
             color="brand.400"
             mb="32px"
           >
-            Delivery Details
+            Delivery Status
           </Heading>
           <Box>
             <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
