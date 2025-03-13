@@ -9,7 +9,11 @@ export const AddAssetDetails = async (data) => {
 export const UpdateAssetDeliveryStatus = async (propertyId, data) => {
   const response = await axiosInstance.post(
     `${API_ROUTES.UPDATE_ASSET_DELIVERY_STATUS}/${propertyId}`,
-    data
+    data, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }
   );
   return response.data;
 };

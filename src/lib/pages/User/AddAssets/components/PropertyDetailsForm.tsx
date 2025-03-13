@@ -124,12 +124,9 @@ const PropertyDetailsForm = ({
           isClosable: true,
           status: 'success',
         });
+        setStep(step + 1);
         Cookie.set('vestier-asset-id', res.data);
         setAssetType(values.assetType);
-        // Cookie.set('vestier-asset-type', values.assetType);
-        if (assetType !== '') {
-           setStep(step + 1);
-        }
       }
     } catch (error: any) {
       setLoading(false);

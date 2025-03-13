@@ -60,6 +60,7 @@ const CashflowDetails = ({
       cashflow_amount: values.cashflowAmount,
       cashflow_duration: values.cashflowDuration,
       equity_ownership: values.equityOwnership,
+      cashflow_payment_due: values.nextCashflowDate,
     };
     try {
       const res = await UpdateAssetCashflowDetails(assetId, formData);

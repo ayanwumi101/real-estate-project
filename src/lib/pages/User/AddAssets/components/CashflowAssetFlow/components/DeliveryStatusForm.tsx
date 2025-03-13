@@ -7,7 +7,9 @@ import {
   Flex,
   Select,
   Button,
-  FormErrorMessage, Spinner, useToast
+  FormErrorMessage,
+  Spinner,
+  useToast,
 } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import * as Yup from 'yup';
@@ -15,9 +17,6 @@ import { Formik, Form, Field } from 'formik';
 import { UpdateAssetDeliveryStatus } from '~/lib/api/services/assetsService';
 import Cookie from 'js-cookie';
 import { CreateAssetContext } from '../../..';
-
-
-
 
 const DeliveryStatusForm = ({
   step,
@@ -29,31 +28,44 @@ const DeliveryStatusForm = ({
   const toast = useToast();
   const [loading, setLoading] = React.useState<boolean>(false);
   const assetId = Cookie.get('vestier-asset-id');
-  const { step: parentStep, setStep: setParentStep} = useContext<any>(CreateAssetContext);
+  const { step: parentStep, setStep: setParentStep } =
+    useContext<any>(CreateAssetContext);
 
   const validationSchema = Yup.object().shape({
     propertyCost: Yup.string().required('Property cost is required'),
     dateOfPurchase: Yup.string().required('Date of purchase is required'),
+    allocationStatus: Yup.string().required('Allocation status is required'),
+    documentationStatus: Yup.string().required(
+      'Documentation status is required'
+    ),
+    handoverStatus: Yup.string().required('Handover status is required'),
   });
 
   const initialValues = {
     propertyCost: '',
     dateOfPurchase: '',
+    allocationStatus: '',
+    documentationStatus: '',
+    handoverStatus: '',
   };
 
   const handleSubmit = async (values: any) => {
     setLoading(true);
-    const formData = {
-      payment_status: values.paymentStatus,
-      allocation_status: values.allocationStatus,
-      documentation_status: values.documentationStatus,
-      handover_status: values.handoverStatus,
-    }
+    // const formData = {
+    //   payment_status: values.paymentStatus,
+    //   allocation_status: values.allocationStatus,
+    //   documentation_status: values.documentationStatus,
+    //   handover_status: values.handoverStatus,
+    // }
+    const data = new FormData();
+    data.append('payment_status', 'completed');
+    data.append('property_cost', values.propertyCost);
+    data.append('date_of_purchase', values.dateOfPurchase);
+    data.append('allocation_status', values.allocationStatus);
+    data.append('documentation_status', values.documentationStatus);
+    data.append('handover_status', values.handoverStatus);
     try {
-      const res = await UpdateAssetDeliveryStatus(
-        assetId as string,
-        formData
-      );
+      const res = await UpdateAssetDeliveryStatus(assetId as string, data);
       if (res.status === true) {
         toast({
           title: res.message as string,
@@ -61,7 +73,6 @@ const DeliveryStatusForm = ({
           duration: 3000,
           isClosable: true,
           position: 'top-right',
-
         });
         setLoading(false);
         setStep(step + 1);
@@ -125,6 +136,72 @@ const DeliveryStatusForm = ({
                     placeholder="dd/mm/yyyy"
                   />
                   <FormErrorMessage>{errors.dateOfPurchase}</FormErrorMessage>
+                </FormControl>
+                <FormControl
+                  isInvalid={
+                    !!errors.allocationStatus && touched.allocationStatus
+                  }
+                >
+                  <FormLabel fontWeight={600} fontSize={16} color="#222222">
+                    What is the allocation status?
+                  </FormLabel>
+                  <Field
+                    as={Select}
+                    name="allocationStatus"
+                    bg="#FBFBFB"
+                    border="1px solid #C0C0C0"
+                    borderRadius="50px"
+                    h="50px"
+                  >
+                    <option value="Ongoing">Ongoing</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Completed">Completed</option>
+                  </Field>
+                  <FormErrorMessage>{errors.allocationStatus}</FormErrorMessage>
+                </FormControl>
+                <FormControl
+                  isInvalid={
+                    !!errors.documentationStatus && touched.documentationStatus
+                  }
+                >
+                  <FormLabel fontWeight={600} fontSize={16} color="#222222">
+                    What is the documentation status?
+                  </FormLabel>
+                  <Field
+                    as={Select}
+                    name="documentationStatus"
+                    bg="#FBFBFB"
+                    border="1px solid #C0C0C0"
+                    borderRadius="50px"
+                    h="50px"
+                  >
+                    <option value="Ongoing">Ongoing</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Completed">Completed</option>
+                  </Field>
+                  <FormErrorMessage>
+                    {errors.documentationStatus}
+                  </FormErrorMessage>
+                </FormControl>
+                <FormControl
+                  isInvalid={!!errors.handoverStatus && touched.handoverStatus}
+                >
+                  <FormLabel fontWeight={600} fontSize={16} color="#222222">
+                    What is the handover status?
+                  </FormLabel>
+                  <Field
+                    as={Select}
+                    name="handoverStatus"
+                    bg="#FBFBFB"
+                    border="1px solid #C0C0C0"
+                    borderRadius="50px"
+                    h="50px"
+                  >
+                    <option value="Ongoing">Ongoing</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Completed">Completed</option>
+                  </Field>
+                  <FormErrorMessage>{errors.handoverStatus}</FormErrorMessage>
                 </FormControl>
                 <Flex justifyContent="flex-end" gap="20px">
                   <Button

@@ -21,6 +21,7 @@ import { LocationIcon, ProfitIcon } from '~/lib/components/Icons/Icons';
 
 const OwnedAssets = ({assets}:{assets: any[]}) => {
   const router = useRouter();
+  console.log(assets);
   return (
     <Box>
       <TableContainer>
@@ -57,7 +58,7 @@ const OwnedAssets = ({assets}:{assets: any[]}) => {
                 fontSize={14}
                 textTransform="capitalize"
               >
-                Current Value
+                Delivery Status
               </Th>
               <Th
                 color="#222222"
@@ -65,7 +66,7 @@ const OwnedAssets = ({assets}:{assets: any[]}) => {
                 fontSize={14}
                 textTransform="capitalize"
               >
-                Delivery Status
+                Action
               </Th>
             </Tr>
           </Thead>
@@ -78,13 +79,13 @@ const OwnedAssets = ({assets}:{assets: any[]}) => {
                   // passHref="/user/portfolio/property-details"
                   border="none"
                   _hover={{ bg: '#f5f5f5' }}
-                  px="0"
+                  
                   cursor="pointer"
                   onClick={() =>
                     router.push('/user/portfolio/property-details')
                   }
                 >
-                  <Td fontSize={15} color="#222222" fontWeight={600} px="0">
+                  <Td fontSize={15} color="#222222" fontWeight={600} >
                     <Stack>
                       <Heading color="#2E353F" fontSize={16} fontWeight={600}>
                         {asset?.property_name}
@@ -104,83 +105,25 @@ const OwnedAssets = ({assets}:{assets: any[]}) => {
                     ₦{asset?.property_cost}
                   </Td>
                   <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    ₦{asset?.property_value}
+                    {asset?.allocation_status}
                   </Td>
-                  <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    <Flex alignItems="center" gap="35px">
-                      <Text>{asset?.allocation_status}</Text>
-                      <Link href={`/user/my-assets/${asset?.id}`}>
-                        <Text
-                          bg="#EDEDFF"
-                          color="#000080"
-                          fontSize={12}
-                          py="3px"
-                          px="12px"
-                          textAlign="center"
-                          borderRadius="50px"
-                        >
-                          View Asset
-                        </Text>
-                      </Link>
-                    </Flex>
+                  <Td>
+                    <Link href={`/user/portfolio/property-details`}>
+                      <Button
+                        bg="#EDEDFF"
+                        fontSize={14}
+                        color="brand.100"
+                        fontWeight={500}
+                        px='12px'
+                        py='5px'
+                      >
+                        View Asset
+                      </Button>
+                    </Link>
                   </Td>
                 </Tr>
               );
             })}
-            {/* {[1, 2, 3].map(() => {
-              return (
-                <Tr
-                  // as="a"
-                  // passHref="/user/portfolio/property-details"
-                  border="none"
-                  _hover={{ bg: '#f5f5f5' }}
-                  px="0"
-                  cursor="pointer"
-                  onClick={() =>
-                    router.push('/user/portfolio/property-details')
-                  }
-                >
-                  <Td fontSize={15} color="#222222" fontWeight={600} px="0">
-                    <Stack>
-                      <Heading color="#2E353F" fontSize={16} fontWeight={600}>
-                        Harborview Towers
-                      </Heading>
-                      <Flex alignItems="center" gap="10px">
-                        <LocationIcon />
-                        <Text fontSize={12} color="#222222">
-                          Lagos
-                        </Text>
-                      </Flex>
-                    </Stack>
-                  </Td>
-                  <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    Building
-                  </Td>
-                  <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    ₦10,003,000
-                  </Td>
-                  <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    ₦10,003,000
-                  </Td>
-                  <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    <Flex alignItems="center" gap="35px">
-                      <Text>Completed</Text>
-                      <Text
-                        bg="#EDEDFF"
-                        color="#000080"
-                        fontSize={12}
-                        py="3px"
-                        px="12px"
-                        textAlign="center"
-                        borderRadius="50px"
-                      >
-                        View Asset
-                      </Text>
-                    </Flex>
-                  </Td>
-                </Tr>
-              );
-            })} */}
           </Tbody>
         </Table>
       </TableContainer>
