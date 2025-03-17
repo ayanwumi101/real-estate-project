@@ -19,6 +19,7 @@ import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { UpdateAssetCashflowDetails } from '~/lib/api/services/assetsService';
 import Cookie from 'js-cookie';
+import next from 'next';
 
 const CashflowDetails = ({
   step,
@@ -35,10 +36,10 @@ const CashflowDetails = ({
     cashflowSource: '',
     isPropertyOccupied: '',
     lastCashflowDate: '',
+    nextCashflowDate: '',
     cashflowAmount: '',
     cashflowDuration: '',
     equityOwnership: '',
-    nextCashflowDate: '',
   };
 
   const validationSchema = Yup.object().shape({
@@ -48,7 +49,7 @@ const CashflowDetails = ({
     nextCashflowDate: Yup.string().required('Next cashflow date is required'),
     cashflowAmount: Yup.string().required('Cashflow amount is required'),
     cashflowDuration: Yup.string().required('Cashflow duration is required'),
-    equityOwnership: Yup.string().required('Equity Ownership is required'),
+    equityOwnership: Yup.number().required('Equity Ownership is required'),
   });
 
   const handleSubmit = async (values: any) => {
@@ -57,10 +58,10 @@ const CashflowDetails = ({
       cashflow_source: values.cashflowSource,
       is_occupied: values.isPropertyOccupied,
       last_cashflow_date: values.lastCashflowDate,
+      cashflow_payment_due: values.nextCashflowDate,
       cashflow_amount: values.cashflowAmount,
       cashflow_duration: values.cashflowDuration,
       equity_ownership: values.equityOwnership,
-      cashflow_payment_due: values.nextCashflowDate,
     };
     try {
       const res = await UpdateAssetCashflowDetails(assetId, formData);
@@ -217,7 +218,6 @@ const CashflowDetails = ({
                     placeholder="₦ 0, 00"
                     _placeholder={{ color: '#8295AA', fontWeight: 500 }}
                     type="date"
-                    mb="2"
                   />
                   <FormErrorMessage>{errors.nextCashflowDate}</FormErrorMessage>
                 </FormControl>
@@ -256,6 +256,7 @@ const CashflowDetails = ({
                     borderRadius="40px"
                     placeholder="100%"
                     _placeholder={{ color: '#8295AA', fontWeight: 500 }}
+                    type="number"
                   />
                   <FormErrorMessage>{errors.equityOwnership}</FormErrorMessage>
                 </FormControl>

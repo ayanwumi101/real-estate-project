@@ -95,8 +95,6 @@ const PropertyDetailsForm = ({
   });
 
   const handleSubmit = async (values: any) => {
-    // setStep(step + 1);
-    // setAssetType(values.assetType);
     const formData = {
       property_name: values.propertyName,
       property_type: values.propertyType,
@@ -105,7 +103,6 @@ const PropertyDetailsForm = ({
       street_name: values.propertyAddress.streetName,
       city_name: values.propertyAddress.city,
       state_id: values.propertyAddress.state,
-      // comment: values.additionalComments,
       realtor_name: values.realtorDetails.name,
       phone: values.phoneNumber,
       lga_id: values.propertyAddress.lga,
@@ -124,9 +121,10 @@ const PropertyDetailsForm = ({
           isClosable: true,
           status: 'success',
         });
+        setAssetType(values.assetType);
         setStep(step + 1);
         Cookie.set('vestier-asset-id', res.data);
-        setAssetType(values.assetType);
+       
       }
     } catch (error: any) {
       setLoading(false);

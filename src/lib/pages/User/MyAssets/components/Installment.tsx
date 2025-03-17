@@ -13,12 +13,15 @@ import {
   Stack,
   Heading,
 } from '@chakra-ui/react';
+import moment from 'moment';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { LocationIcon, ProfitIcon } from '~/lib/components/Icons/Icons';
 
 
-const Installment = () => {
+
+const Installment = ({ assets }: { assets: any[] }) => {
   const router = useRouter();
   return (
     <Box>
@@ -82,54 +85,61 @@ const Installment = () => {
               >
                 Delivery Status
               </Th>
+              <Th
+                color="#222222"
+                fontWeight={500}
+                fontSize={14}
+                textTransform="capitalize"
+              ></Th>
             </Tr>
           </Thead>
           <Tbody color="#222222">
-            {[1, 2, 3].map(() => {
+            {assets?.map((asset: any) => {
               return (
                 <Tr
-                  // as="a"
-                  // passHref="/user/portfolio/property-details"
                   border="none"
                   _hover={{ bg: '#f5f5f5' }}
-                  px="0"
+                  
                   cursor="pointer"
-                  onClick={() =>
-                    router.push('/user/portfolio/property-details')
-                  }
                 >
-                  <Td fontSize={15} color="#222222" fontWeight={600} px="0">
+                  <Td fontSize={15} color="#222222" fontWeight={600}>
                     <Stack>
                       <Heading color="#2E353F" fontSize={16} fontWeight={600}>
-                        Harborview Towers
+                        {asset?.property_name}
                       </Heading>
                       <Flex alignItems="center" gap="10px">
                         <LocationIcon />
                         <Text fontSize={12} color="#222222">
-                          Lagos
+                          {asset?.city_name}
                         </Text>
                       </Flex>
                     </Stack>
                   </Td>
                   <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    Building
+                    {asset?.property_type}
+                  </Td>
+                  <Td fontWeight={500} fontSize={14} color="#8295AA">
+                    ₦{asset?.property_cost}
                   </Td>
                   <Td fontWeight={500} fontSize={14} color="#8295AA">
                     ₦10,003,000
                   </Td>
                   <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    ₦10,003,000
+                    {asset?.cashflow_payment_due
+                      ? moment(asset?.cashflow_payment_due).format(
+                          'ddd, Do MMMM YYYY'
+                        )
+                      : 'N/A'}
                   </Td>
                   <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    Tue,30 Oct 2025
+                    {asset?.realtor_name}
                   </Td>
                   <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    Adron Homes
+                    {asset?.allocation_status}
                   </Td>
-                  <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    <Flex alignItems="center" gap="20px">
-                      <Text>Completed</Text>
-                      <Text
+                  <Td>
+                    <Link href="/user/portfolio/property-details">
+                      <Button
                         bg="#EDEDFF"
                         color="#000080"
                         fontSize={12}
@@ -139,8 +149,8 @@ const Installment = () => {
                         borderRadius="50px"
                       >
                         View Asset
-                      </Text>
-                    </Flex>
+                      </Button>
+                    </Link>
                   </Td>
                 </Tr>
               );

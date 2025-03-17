@@ -32,40 +32,37 @@ const DeliveryStatusForm = ({
     useContext<any>(CreateAssetContext);
 
   const validationSchema = Yup.object().shape({
+    // allocationStatus: Yup.string().required('Allocation status is required'),
+    // documentationStatus: Yup.string().required(
+    //   'Documentation status is required'
+    // ),
+    // handoverStatus: Yup.string().required('Handover status is required'),
+    // paymentStatus: Yup.string().required('Payment status is required'),
+    boughtDate: Yup.string().required('Bought date is required'),
     propertyCost: Yup.string().required('Property cost is required'),
-    dateOfPurchase: Yup.string().required('Date of purchase is required'),
-    allocationStatus: Yup.string().required('Allocation status is required'),
-    documentationStatus: Yup.string().required(
-      'Documentation status is required'
-    ),
-    handoverStatus: Yup.string().required('Handover status is required'),
   });
 
   const initialValues = {
+    // paymentStatus: '',
+    // allocationStatus: '',
+    // documentationStatus: '',
+    // handoverStatus: '',
+    boughtDate: '',
     propertyCost: '',
-    dateOfPurchase: '',
-    allocationStatus: '',
-    documentationStatus: '',
-    handoverStatus: '',
   };
 
   const handleSubmit = async (values: any) => {
     setLoading(true);
-    // const formData = {
-    //   payment_status: values.paymentStatus,
-    //   allocation_status: values.allocationStatus,
-    //   documentation_status: values.documentationStatus,
-    //   handover_status: values.handoverStatus,
-    // }
-    const data = new FormData();
-    data.append('payment_status', 'completed');
-    data.append('property_cost', values.propertyCost);
-    data.append('date_of_purchase', values.dateOfPurchase);
-    data.append('allocation_status', values.allocationStatus);
-    data.append('documentation_status', values.documentationStatus);
-    data.append('handover_status', values.handoverStatus);
+    const formData = {
+      payment_status: '',
+      allocation_status: '',
+      documentation_status: '',
+      handover_status: '',
+      bought_date: values.boughtDate,
+      property_cost: values.propertyCost
+    }
     try {
-      const res = await UpdateAssetDeliveryStatus(assetId as string, data);
+      const res = await UpdateAssetDeliveryStatus(assetId as string, formData);
       if (res.status === true) {
         toast({
           title: res.message as string,
@@ -114,28 +111,51 @@ const DeliveryStatusForm = ({
                     border="1px solid #C0C0C0"
                     borderRadius="50px"
                     h="50px"
-                    type="number"
-                    placeholder="₦ 0. 00"
+                    placeholder="₦ 0, 00"
+                    _placeholder={{ color: '#8295AA', fontWeight: 500 }}
+                    w="100%"
                   />
                   <FormErrorMessage>{errors.propertyCost}</FormErrorMessage>
                 </FormControl>
                 <FormControl
-                  isInvalid={!!errors.dateOfPurchase && touched.dateOfPurchase}
+                  isInvalid={!!errors.propertyCost && touched.propertyCost}
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
-                    When was this property bought?
+                   When was this proprty bought
                   </FormLabel>
                   <Field
                     as={Input}
-                    name="dateOfPurchase"
+                    type='date'
+                    name="boughtDate"
                     bg="#FBFBFB"
                     border="1px solid #C0C0C0"
                     borderRadius="50px"
                     h="50px"
-                    type="date"
-                    placeholder="dd/mm/yyyy"
+                    placeholder="₦ 0, 00"
+                    _placeholder={{ color: '#8295AA', fontWeight: 500 }}
+                    w="100%"
                   />
-                  <FormErrorMessage>{errors.dateOfPurchase}</FormErrorMessage>
+                  <FormErrorMessage>{errors.propertyCost}</FormErrorMessage>
+                </FormControl>
+                {/* <FormControl
+                  isInvalid={!!errors.paymentStatus && touched.paymentStatus}
+                >
+                  <FormLabel fontWeight={600} fontSize={16} color="#222222">
+                    What is the payment status?
+                  </FormLabel>
+                  <Field
+                    as={Select}
+                    name="paymentStatus"
+                    bg="#FBFBFB"
+                    border="1px solid #C0C0C0"
+                    borderRadius="50px"
+                    h="50px"
+                  >
+                    <option value="Ongoing">Ongoing</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Completed">Completed</option>
+                  </Field>
+                  <FormErrorMessage>{errors.paymentStatus}</FormErrorMessage>
                 </FormControl>
                 <FormControl
                   isInvalid={
@@ -202,7 +222,7 @@ const DeliveryStatusForm = ({
                     <option value="Completed">Completed</option>
                   </Field>
                   <FormErrorMessage>{errors.handoverStatus}</FormErrorMessage>
-                </FormControl>
+                </FormControl> */}
                 <Flex justifyContent="flex-end" gap="20px">
                   <Button
                     color="#000080"

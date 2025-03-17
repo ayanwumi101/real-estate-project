@@ -28,7 +28,12 @@ const index = () => {
 
   useEffect(() => {
     GetAssets()
-  }, [])
+  }, []);
+
+  const cashflowAssets = assets?.filter((asset) => asset?.asset_type === 'cashflow');
+  const installmentAssets = assets?.filter((asset) => asset?.asset_type === 'instalment');
+  const ownedAssets = assets?.filter((asset) => asset?.asset_type === 'owned');
+  
   return (
     <Box pb="40px" overflow='auto'>
       <Stack w='100%'>
@@ -55,10 +60,10 @@ const index = () => {
             </Link>
           </Flex>
         </Box>
-        <Box px={['10px',"40px"]}>
-          {activeTab === 'Owned' && <OwnedAssets assets={assets} />}
-          {activeTab === 'Installment' && <Installment />}
-          {activeTab === 'Cashflow' && <Cashflow />}
+        <Box px={['10px',"20px"]}>
+          {activeTab === 'Owned' && <OwnedAssets assets={ownedAssets} />}
+          {activeTab === 'Installment' && <Installment assets={installmentAssets} />}
+          {activeTab === 'Cashflow' && <Cashflow assets={cashflowAssets} />}
         </Box>
       </Stack>
     </Box>
