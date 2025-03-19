@@ -58,6 +58,7 @@ const AddNextOfKin = ({
             status: 'success',
             duration: 5000,
             isClosable: true,
+            position: 'top-right',
           });
           setLoading(false);
           router.push('/user/my-assets');
@@ -74,6 +75,7 @@ const AddNextOfKin = ({
       }
     } catch (error: any) {
       setLoading(false);
+      console.log(error);
       toast({
         title: error.response.data.message,
         status: 'error',

@@ -60,7 +60,7 @@ const PaymentPlan = ({
   const handleSubmit = async (values: any) => {
     const formData = {
       property_cost: values.propertyCost,
-      property_value: values.propertyValue,
+      property_value: '',
       duration: values.paymentDuration,
       amount_left: values.amountLeft,
       payment_plan: values.paymentPlan,

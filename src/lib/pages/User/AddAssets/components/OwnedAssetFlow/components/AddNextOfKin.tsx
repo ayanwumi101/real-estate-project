@@ -54,8 +54,9 @@ const AddNextOfKin = ({
           toast({
             title: 'Next of Kin added successfully',
             status: 'success',
-            duration: 5000,
+            duration: 3000,
             isClosable: true,
+            position: 'top-right',
           });
           setLoading(false);
           router.push('/user/my-assets');

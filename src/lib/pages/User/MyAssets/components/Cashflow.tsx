@@ -108,13 +108,17 @@ const Cashflow = ({assets}:{assets: any[]}) => {
                     {asset?.property_type}
                   </Td>
                   <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    ₦{asset?.property_cost}
+                    {asset?.property_cost ? `₦ ${asset?.property_cost}` : 'N/A'}
                   </Td>
                   <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    {asset?.allocation_status}
+                    {asset?.allocation_status ||
+                      asset?.payment_status ||
+                      asset?.documentation_status ||
+                      asset?.handover_status ||
+                      'N/A'}
                   </Td>
                   <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    ₦{asset?.cashflow_amount}
+                    {asset?.cashflow_amount ? `₦ ${asset?.cashflow_amount}` : 'N/A'}
                   </Td>
                   <Td fontWeight={500} fontSize={14} color="#8295AA">
                     {asset?.cashflow_payment_due

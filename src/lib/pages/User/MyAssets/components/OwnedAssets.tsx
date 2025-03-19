@@ -21,7 +21,6 @@ import { LocationIcon, ProfitIcon } from '~/lib/components/Icons/Icons';
 
 const OwnedAssets = ({assets}:{assets: any[]}) => {
   const router = useRouter();
-  console.log(assets);
   return (
     <Box>
       <TableContainer>

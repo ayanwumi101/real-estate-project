@@ -54,10 +54,12 @@ const DeliveryStatusForm = ({
   const handleSubmit = async (values: any) => {
     setLoading(true);
     const formData = {
-      payment_status: values.paymentStatus,
+      payment_status: '',
       allocation_status: values.allocationStatus,
       documentation_status: values.documentationStatus,
       handover_status: values.handoverStatus,
+      property_cost: values.propertyCost,
+      bought_date: values.dateOfPurchase,
     }
     try {
       const res = await UpdateAssetDeliveryStatus(
