@@ -36,7 +36,6 @@ const PaymentPlan = ({
 
   // Validation schema using Yup
   const validationSchema = Yup.object().shape({
-    propertyCost: Yup.string().required('Property cost is required'),
     paymentDuration: Yup.string().required('Payment duration is required'),
     amountPaid: Yup.string().required('Amount paid is required'),
     amountLeft: Yup.string().required('Amount left is required'),
@@ -47,7 +46,6 @@ const PaymentPlan = ({
 
   // Initial form values
   const initialValues = {
-    propertyCost: '',
     paymentDuration: '',
     amountPaid: '',
     amountLeft: '',
@@ -58,17 +56,14 @@ const PaymentPlan = ({
 
   // Handle form submission
   const handleSubmit = async (values: any) => {
+    setLoading(true);
     const formData = {
-      property_cost: values.propertyCost,
-      property_value: '',
       duration: values.paymentDuration,
       amount_left: values.amountLeft,
       payment_plan: values.paymentPlan,
       due_date: values.nextDueDate,
-      payment_date: values.firstPaymentDate,
       bought_date: values.firstPaymentDate,
       amount_paid: values.amountPaid,
-      yield_cashflow: values.yieldingCashflow === 'Yes' ? true : false,
     };
     try {
       const res = await UpdateAssetPaymentPlan(assetId, formData);
@@ -106,24 +101,6 @@ const PaymentPlan = ({
           <Form>
             <Box w={['100%', '100%', '600px']}>
               <Stack spacing="24px">
-                <FormControl
-                  isInvalid={!!errors.propertyCost && touched.propertyCost}
-                >
-                  <FormLabel fontWeight={600} fontSize={16} color="#222222">
-                    How much does the property cost?
-                  </FormLabel>
-                  <Field
-                    as={Input}
-                    name="propertyCost"
-                    border="1px solid #C0C0C0"
-                    bg="#FBFBFB"
-                    h="50px"
-                    borderRadius="40px"
-                    placeholder="₦ 0, 00"
-                    _placeholder={{ color: '#8295AA', fontWeight: 500 }}
-                  />
-                  <FormErrorMessage>{errors.propertyCost}</FormErrorMessage>
-                </FormControl>
                 <FormControl
                   isInvalid={
                     !!errors.paymentDuration && touched.paymentDuration
