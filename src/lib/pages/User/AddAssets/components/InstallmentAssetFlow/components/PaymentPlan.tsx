@@ -56,15 +56,15 @@ const PaymentPlan = ({
 
   // Handle form submission
   const handleSubmit = async (values: any) => {
-    setLoading(true);
     const formData = {
       duration: values.paymentDuration,
       amount_left: values.amountLeft,
       payment_plan: values.paymentPlan,
       due_date: values.nextDueDate,
-      bought_date: values.firstPaymentDate,
+      payment_date: values.firstPaymentDate,
       amount_paid: values.amountPaid,
     };
+    setLoading(true);
     try {
       const res = await UpdateAssetPaymentPlan(assetId, formData);
       if (res.status === true) {

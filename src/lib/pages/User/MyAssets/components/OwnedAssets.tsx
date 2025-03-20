@@ -69,22 +69,16 @@ const OwnedAssets = ({assets}:{assets: any[]}) => {
               </Th>
             </Tr>
           </Thead>
-          <Tbody color="#222222">
+          <Tbody color="#222222" maxH="450px" overflow="auto">
             {assets?.map((asset) => {
               return (
                 <Tr
                   key={asset?.id}
-                  // as="a"
-                  // passHref="/user/portfolio/property-details"
                   border="none"
                   _hover={{ bg: '#f5f5f5' }}
-                  
                   cursor="pointer"
-                  onClick={() =>
-                    router.push('/user/portfolio/property-details')
-                  }
                 >
-                  <Td fontSize={15} color="#222222" fontWeight={600} >
+                  <Td fontSize={15} color="#222222" fontWeight={600}>
                     <Stack>
                       <Heading color="#2E353F" fontSize={16} fontWeight={600}>
                         {asset?.property_name}
@@ -107,14 +101,14 @@ const OwnedAssets = ({assets}:{assets: any[]}) => {
                     {asset?.allocation_status}
                   </Td>
                   <Td>
-                    <Link href={`/user/portfolio/property-details`}>
+                    <Link href={`/user/my-assets/${asset?.id}`}>
                       <Button
                         bg="#EDEDFF"
                         fontSize={14}
                         color="brand.100"
                         fontWeight={500}
-                        px='12px'
-                        py='5px'
+                        px="12px"
+                        py="5px"
                       >
                         View Asset
                       </Button>
@@ -123,6 +117,13 @@ const OwnedAssets = ({assets}:{assets: any[]}) => {
                 </Tr>
               );
             })}
+            <Tr borderBlock="1px solid #C0C0C0">
+              <Td color="brand.300" fontWeight={600}>
+                Total Valuation
+              </Td>
+              <Td></Td>
+              <Td color='brand.400' fontWeight={500}>₦25,005,900</Td>
+            </Tr>
           </Tbody>
         </Table>
       </TableContainer>

@@ -19,9 +19,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import { LocationIcon, ProfitIcon } from '~/lib/components/Icons/Icons';
 
-
-
-const Cashflow = ({assets}:{assets: any[]}) => {
+const Cashflow = ({ assets }: { assets: any[] }) => {
   const router = useRouter();
   return (
     <Box>
@@ -82,12 +80,10 @@ const Cashflow = ({assets}:{assets: any[]}) => {
                 fontWeight={500}
                 fontSize={14}
                 textTransform="capitalize"
-              >
-                
-              </Th>
+              ></Th>
             </Tr>
           </Thead>
-          <Tbody color="#222222">
+          <Tbody color="#222222" maxH="250px" overflow="auto">
             {assets?.map((asset: any) => {
               return (
                 <Tr border="none" _hover={{ bg: '#f5f5f5' }} cursor="pointer">
@@ -118,7 +114,9 @@ const Cashflow = ({assets}:{assets: any[]}) => {
                       'N/A'}
                   </Td>
                   <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    {asset?.cashflow_amount ? `₦ ${asset?.cashflow_amount}` : 'N/A'}
+                    {asset?.cashflow_amount
+                      ? `₦ ${asset?.cashflow_amount}`
+                      : 'N/A'}
                   </Td>
                   <Td fontWeight={500} fontSize={14} color="#8295AA">
                     {asset?.cashflow_payment_due
@@ -128,7 +126,7 @@ const Cashflow = ({assets}:{assets: any[]}) => {
                       : 'N/A'}
                   </Td>
                   <Td>
-                    <Link href="/user/portfolio/property-details">
+                    <Link href={`/user/my-assets/${asset?.id}`}>
                       <Button
                         bg="#EDEDFF"
                         color="#000080"
@@ -146,6 +144,19 @@ const Cashflow = ({assets}:{assets: any[]}) => {
                 </Tr>
               );
             })}
+            <Tr borderBlock="1px solid #C0C0C0">
+              <Td color="brand.300" fontWeight={600}>
+                Total Valuation
+              </Td>
+              <Td></Td>
+              <Td color="brand.400" fontWeight={500}>
+                ₦25,005,900
+              </Td>
+              <Td></Td>
+              <Td color="brand.400" fontWeight={500}>
+                ₦25,005,900
+              </Td>
+            </Tr>
           </Tbody>
         </Table>
       </TableContainer>
