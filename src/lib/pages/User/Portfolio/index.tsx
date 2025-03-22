@@ -28,7 +28,7 @@ const index = () => {
   return (
     <Box pb="50px">
       <Stack spacing="40px" w="100%" overflow="auto">
-        <Header />
+        <Header  assets={cashflowAssets}/>
         <Box px="10px">
           <PropertyListTable assets={cashflowAssets} />
         </Box>

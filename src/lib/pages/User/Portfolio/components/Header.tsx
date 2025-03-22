@@ -20,24 +20,37 @@ import { HiPlus } from 'react-icons/hi2';
 import { PortfolioStatCard } from '~/lib/components/Cards';
 import FundWalletFlow from '~/lib/components/FundWalletFlow';
 import Link from 'next/link';
+import { FormatAmount } from '~/lib/utils/formatAmount';
 
 
-const RemittanceStatCards = () => {
+
+interface IProps { 
+  totalCashflowAsset?: number;
+  cashflowAssetsInNaira?: string;
+  nextDueRemittance?: {
+    date: string;
+    property: string;
+  };
+}
+
+
+const RemittanceStatCards = ({ totalCashflowAsset, cashflowAssetsInNaira, nextDueRemittance }: IProps) => {
+  
   return (
     <Box py="40px" px="20px" overflow="auto">
-      <Flex alignItems="center" gap="16px" pb='3' overflow="auto" w="100%">
+      <Flex alignItems="center" gap="16px" pb="3" overflow="auto" w="100%">
         <PortfolioStatCard
           label="Total Cashflow Asset"
-          balance={3}
+          balance={totalCashflowAsset || 0}
           showHideIcon={false}
         />
         <PortfolioStatCard
           label="Cashflow Assets in Naira"
-          balance="₦25,005,900"
+          balance={FormatAmount(Number(cashflowAssetsInNaira) || 0)}
           showHideIcon={true}
         />
         <Box
-          minW={['300px','350px']}
+          minW={['300px', '350px']}
           borderRadius="5px"
           py="32px"
           px="20px"
@@ -103,12 +116,13 @@ const RemitttanceHeading = () => {
   );
 }
 
-const Header = () => {
+const Header = ({assets}: {assets: any[]}) => {
   const [showFundWalletModal, setShowFundWalletModal] = React.useState(false);
+  const totalAssetsInNaira = assets?.reduce((acc, asset) => acc + Number(asset?.property_cost), 0);
   return (
     <Box borderY="1px solid #E4E4E4" overflow='auto' w='100%'>
       <RemitttanceHeading />
-      <RemittanceStatCards />
+      <RemittanceStatCards totalCashflowAsset={assets?.length} cashflowAssetsInNaira={totalAssetsInNaira} />
     </Box>
   );
 };
