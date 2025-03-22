@@ -1,5 +1,5 @@
 import React from 'react'
-import PropertyDetails from '~/lib/pages/User/Portfolio/components/PropertyDetails'
+import PropertyDetails from '~/lib/pages/User/AssetDetails'
 
 const page = () => {
   return <PropertyDetails />
