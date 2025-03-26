@@ -121,7 +121,7 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                 />
                 <AssetDetailsItem
                   label="Equity Ownership"
-                  labelValue={`${propertyDetails?.equity_ownership}%` || '0%'}
+                  labelValue={`${propertyDetails?.equity_ownership || 0}%`}
                 />
               </Flex>
             </Box>

@@ -21,7 +21,9 @@ import { PortfolioStatCard } from '~/lib/components/Cards';
 import FundWalletFlow from '~/lib/components/FundWalletFlow';
 import Link from 'next/link';
 import { FormatAmount } from '~/lib/utils/formatAmount';
-
+import next from 'next';
+import { findClosestDueAsset } from '~/lib/utils/findClosestDueAsset';
+import moment from 'moment';
 
 
 interface IProps { 
@@ -66,10 +68,14 @@ const RemittanceStatCards = ({ totalCashflowAsset, cashflowAssetsInNaira, nextDu
               <NextDueRemittanceIcon />
               <Stack spacing="5px">
                 <Heading fontSize={18} fontWeight={500} color="brand.300">
-                  30,Mar 2025
+                  {nextDueRemittance?.date
+                    ? moment(nextDueRemittance?.date).format(
+                        'ddd, Do MMMM YYYY'
+                      )
+                    : 'N/A'}
                 </Heading>
                 <Text color="brand.300" fontSize={14} fontWeight={500}>
-                  Skyline Residence
+                  {nextDueRemittance?.property}
                 </Text>
               </Stack>
             </Flex>
@@ -119,11 +125,18 @@ const RemitttanceHeading = () => {
 
 const Header = ({assets}: {assets: any[]}) => {
   const [showFundWalletModal, setShowFundWalletModal] = React.useState(false);
-  const totalAssetsInNaira = assets?.reduce((acc, asset) => acc + Number(asset?.property_cost), 0);
+  const totalAssetsInNaira = assets?.reduce((acc, asset) => acc + Number(asset?.cashflow_amount), 0);
+  const closestDueAsset = findClosestDueAsset(assets || []);
+
+  const nextDueRemittance = {
+    date: closestDueAsset?.cashflow_payment_due,
+    property: closestDueAsset?.property_name
+  }
+  
   return (
     <Box borderY="1px solid #E4E4E4" overflow='auto' w='100%'>
       <RemitttanceHeading />
-      <RemittanceStatCards totalCashflowAsset={assets?.length} cashflowAssetsInNaira={totalAssetsInNaira} />
+      <RemittanceStatCards totalCashflowAsset={assets?.length} cashflowAssetsInNaira={totalAssetsInNaira} nextDueRemittance={nextDueRemittance} />
     </Box>
   );
 };
