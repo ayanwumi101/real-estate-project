@@ -1,5 +1,7 @@
 import { Box, Stack, Text, Heading, Flex } from '@chakra-ui/react';
+import moment from 'moment';
 import React from 'react';
+import { FormatAmount } from '~/lib/utils/formatAmount';
 
 const AssetDetailsItem = ({
   label,
@@ -22,7 +24,7 @@ const AssetDetailsItem = ({
   );
 };
 
-const AssetDetails = () => {
+const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
   return (
     <Box>
       <Stack spacing="32px">
@@ -48,107 +50,156 @@ const AssetDetails = () => {
             <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
               <AssetDetailsItem
                 label="Amount Purchased"
-                labelValue="₦5,000,000"
+                labelValue={FormatAmount(propertyDetails?.property_cost || 0.0)}
               />
               <AssetDetailsItem
                 label="When was property bought?"
-                labelValue="1st of July 2024"
+                labelValue={
+                  propertyDetails?.bought_date
+                    ? moment(propertyDetails?.bought_date).format(
+                        'ddd, Do MMMM YYYY'
+                      )
+                    : 'N/A'
+                }
               />
               <AssetDetailsItem
                 label="Payment Status:"
-                labelValue="Completed"
+                labelValue={propertyDetails?.payment_status || 'N/A'}
               />
             </Flex>
           </Box>
         </Box>
 
         {/* Cashflow details */}
-        <Box
-          border="1px solid"
-          borderColor="border.100"
-          p="32px"
-          borderRadius="8px"
-          maxW="645px"
-        >
-          <Heading
-            pb="12px"
-            borderBottom="1px solid"
+        {propertyDetails?.asset_type === 'cashflow' && (
+          <Box
+            border="1px solid"
             borderColor="border.100"
-            fontSize={16}
-            color="brand.400"
-            mb="32px"
+            p="32px"
+            borderRadius="8px"
+            maxW="645px"
           >
-            Cashflow Details
-          </Heading>
-          <Box>
-            <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
-              <AssetDetailsItem label="Cashflow Source" labelValue="Rent" />
-              <AssetDetailsItem
-                label="Property Currently Occupied?"
-                labelValue="Yes"
-              />
-              <AssetDetailsItem
-                label="Last Cashflow Payment"
-                labelValue="10/10/2024"
-              />
-              <AssetDetailsItem label="Cashflow Duration" labelValue="Yearly" />
-              <AssetDetailsItem
-                label="Cashflow Amount"
-                labelValue="₦1,500,000"
-              />
-              <AssetDetailsItem label="Equity Ownership" labelValue="100%" />
-            </Flex>
+            <Heading
+              pb="12px"
+              borderBottom="1px solid"
+              borderColor="border.100"
+              fontSize={16}
+              color="brand.400"
+              mb="32px"
+            >
+              Cashflow Details
+            </Heading>
+            <Box>
+              <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
+                <AssetDetailsItem
+                  label="Cashflow Source"
+                  labelValue={propertyDetails?.cashflow_source || 'N/A'}
+                />
+                <AssetDetailsItem
+                  label="Property Currently Occupied?"
+                  labelValue={propertyDetails?.is_occupied ? 'Yes' : 'No'}
+                />
+                <AssetDetailsItem
+                  label="Last Cashflow Payment"
+                  labelValue={
+                    propertyDetails?.last_cashflow_date
+                      ? moment(propertyDetails?.last_cashflow_date).format(
+                          'ddd, Do MMMM YYYY'
+                        )
+                      : 'N/A'
+                  }
+                />
+                <AssetDetailsItem
+                  label="Cashflow Duration"
+                  labelValue={propertyDetails?.cashflow_duration || 'N/A'}
+                />
+                <AssetDetailsItem
+                  label="Cashflow Amount"
+                  labelValue={FormatAmount(
+                    propertyDetails?.cashflow_amount || 0.0
+                  )}
+                />
+                <AssetDetailsItem
+                  label="Equity Ownership"
+                  labelValue={`${propertyDetails?.equity_ownership}%` || '0%'}
+                />
+              </Flex>
+            </Box>
           </Box>
-        </Box>
+        )}
 
         {/* Payment Details */}
-        <Box
-          border="1px solid"
-          borderColor="border.100"
-          p="32px"
-          borderRadius="8px"
-          maxW="645px"
-        >
-          <Heading
-            pb="12px"
-            borderBottom="1px solid"
+        {propertyDetails?.asset_type === 'instalment' && (
+          <Box
+            border="1px solid"
             borderColor="border.100"
-            fontSize={16}
-            color="brand.400"
-            mb="32px"
+            p="32px"
+            borderRadius="8px"
+            maxW="645px"
           >
-            Payment Details
-          </Heading>
-          <Box>
-            <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
-              <AssetDetailsItem label="Amount Paid" labelValue="₦2,500,000" />
-              <AssetDetailsItem
-                label="Outstanding Balance"
-                labelValue="₦2,500,000"
-              />
-              <AssetDetailsItem label="Payment plan" labelValue="Monthly" />
-              <AssetDetailsItem
-                label="Installment payment"
-                labelValue="₦250,000"
-              />
-              <AssetDetailsItem
-                label="Last Payment Date"
-                labelValue="10/10/2024"
-              />
-              <AssetDetailsItem
-                label="Next Payment Date"
-                labelValue="10/10/2024"
-              />
-              <AssetDetailsItem
-                label="Duration of Payment"
-                labelValue="20 Months"
-              />
-            </Flex>
+            <Heading
+              pb="12px"
+              borderBottom="1px solid"
+              borderColor="border.100"
+              fontSize={16}
+              color="brand.400"
+              mb="32px"
+            >
+              Payment Details
+            </Heading>
+            <Box>
+              <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
+                <AssetDetailsItem
+                  label="Amount Paid"
+                  labelValue={FormatAmount(
+                    Number(propertyDetails?.amount_paid || 0.0)
+                  )}
+                />
+                <AssetDetailsItem
+                  label="Outstanding Balance"
+                  labelValue={FormatAmount(
+                    Number(propertyDetails?.amount_left || 0.0)
+                  )}
+                />
+                <AssetDetailsItem
+                  label="Payment plan"
+                  labelValue={propertyDetails?.payment_plan || 'N/A'}
+                />
+                <AssetDetailsItem
+                  label="Installment payment"
+                  labelValue={FormatAmount(Number(propertyDetails?.amount_paid) || 0.0)}
+                />
+                <AssetDetailsItem
+                  label="Last Payment Date"
+                  labelValue={
+                    propertyDetails?.payment_date
+                      ? moment(propertyDetails?.payment_date).format(
+                          'ddd, Do MMMM YYYY'
+                        )
+                      : 'N/A'
+                  }
+                />
+                <AssetDetailsItem
+                  label="Next Payment Date"
+                  labelValue={
+                    propertyDetails?.due_date
+                      ? moment(propertyDetails?.due_date).format(
+                          'ddd, Do MMMM YYYY'
+                        )
+                      : 'N/A'
+                  }
+                />
+                <AssetDetailsItem
+                  label="Duration of Payment"
+                  labelValue={propertyDetails?.duration || 'N/A'}
+                />
+              </Flex>
+            </Box>
           </Box>
-        </Box>
+        )}
 
         {/* Realtor Details */}
-        <Box
+        {/* <Box
           border="1px solid"
           borderColor="border.100"
           p="32px"
@@ -174,7 +225,7 @@ const AssetDetails = () => {
               <AssetDetailsItem label="Phone Number" labelValue="08127671686" />
             </Flex>
           </Box>
-        </Box>
+        </Box> */}
 
         {/* Delivery details */}
         <Box
@@ -196,18 +247,21 @@ const AssetDetails = () => {
           </Heading>
           <Box>
             <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
-              <AssetDetailsItem label="Payment Status" labelValue="Completed" />
+              <AssetDetailsItem
+                label="Payment Status"
+                labelValue={propertyDetails?.payment_status || 'N/A'}
+              />
               <AssetDetailsItem
                 label="Allocation Status"
-                labelValue="Completed"
+                labelValue={propertyDetails?.allocation_status || 'N/A'}
               />
               <AssetDetailsItem
                 label="Documentation Status"
-                labelValue="Completed"
+                labelValue={propertyDetails?.documentation_status || 'N/A'}
               />
               <AssetDetailsItem
                 label="Handover Status"
-                labelValue="Completed"
+                labelValue={propertyDetails?.handover_status || 'N/A'}
               />
             </Flex>
           </Box>

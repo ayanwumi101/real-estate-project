@@ -151,6 +151,7 @@ const DeliveryStatusForm = ({
                     border="1px solid #C0C0C0"
                     borderRadius="50px"
                     h="50px"
+                    placeholder="Select"
                   >
                     <option value="Ongoing">Ongoing</option>
                     <option value="Pending">Pending</option>
@@ -173,6 +174,7 @@ const DeliveryStatusForm = ({
                     border="1px solid #C0C0C0"
                     borderRadius="50px"
                     h="50px"
+                    placeholder="Select"
                   >
                     <option value="Ongoing">Ongoing</option>
                     <option value="Pending">Pending</option>
@@ -195,6 +197,7 @@ const DeliveryStatusForm = ({
                     border="1px solid #C0C0C0"
                     borderRadius="50px"
                     h="50px"
+                    placeholder="Select"
                   >
                     <option value="Ongoing">Ongoing</option>
                     <option value="Pending">Pending</option>

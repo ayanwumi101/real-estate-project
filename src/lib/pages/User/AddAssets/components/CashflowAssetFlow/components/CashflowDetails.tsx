@@ -114,6 +114,7 @@ const CashflowDetails = ({
                     borderRadius="50px"
                     h="50px"
                     name="cashflowSource"
+                    placeholder="Select"
                   >
                     <option value="Shortlet">Shortlet</option>
                     <option value="Weekly">Weekly</option>
@@ -135,6 +136,7 @@ const CashflowDetails = ({
                     borderRadius="50px"
                     h="50px"
                     name="isPropertyOccupied"
+                    placeholder="Select"
                   >
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
@@ -158,6 +160,7 @@ const CashflowDetails = ({
                     border="1px solid #C0C0C0"
                     borderRadius="50px"
                     h="50px"
+                    placeholder="Select"
                   >
                     <option value="Monthly">Monthly</option>
                     <option value="Weekly">Weekly</option>

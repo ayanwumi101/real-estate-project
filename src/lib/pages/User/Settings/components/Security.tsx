@@ -136,7 +136,7 @@ const Security = () => {
                   <InputGroup>
                     <Field
                       as={Input}
-                      type="password"
+                      type={showNewPassword ? 'text' : 'password'}
                       h="50px"
                       borderRadius="50px"
                       border="1px solid #C0C0C0"
@@ -148,10 +148,10 @@ const Security = () => {
                     <InputRightElement w="60px">
                       <Button
                         mt="2"
-                        onClick={() => setShowPassword(!showPassword)}
+                        onClick={() => setShowNewPassword(!showNewPassword)}
                         w="50px"
                       >
-                        {showPassword ? <FiEye /> : <FiEyeOff />}
+                        {showNewPassword ? <FiEye /> : <FiEyeOff />}
                       </Button>
                     </InputRightElement>
                   </InputGroup>
@@ -173,7 +173,7 @@ const Security = () => {
                   <InputGroup>
                     <Field
                       as={Input}
-                      type="password"
+                      type={showConfirmPassword ? 'text' : 'password'}
                       h="50px"
                       borderRadius="50px"
                       border="1px solid #C0C0C0"
@@ -185,17 +185,24 @@ const Security = () => {
                     <InputRightElement w="60px">
                       <Button
                         mt="2"
-                        onClick={() => setShowPassword(!showPassword)}
+                        onClick={() =>
+                          setShowConfirmPassword(!showConfirmPassword)
+                        }
                         w="50px"
                       >
-                        {showPassword ? <FiEye /> : <FiEyeOff />}
+                        {showConfirmPassword ? <FiEye /> : <FiEyeOff />}
                       </Button>
                     </InputRightElement>
                   </InputGroup>
                   <FormErrorMessage>{errors.confirmPassword}</FormErrorMessage>
                 </FormControl>
                 <Button
-                  isDisabled={loading}
+                  isDisabled={
+                    loading ||
+                    !values.currentPassword ||
+                    !values.newPassword ||
+                    !values.confirmPassword
+                  }
                   bg="brand.100"
                   color="brand.200"
                   type="submit"

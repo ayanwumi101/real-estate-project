@@ -18,7 +18,7 @@ export const SocialLoginButton = ({label, Icon} : {label: string, Icon: any}) =>
     return (
       <Button border="1px solid #8295AA" bg="#FBFBFB" w={['100%','200px']} py='25px'>
         <Flex alignItems="center" gap="12px">
-          {isMobile  && <Icon as={Icon} />}
+          <Icon as={Icon} />
           <Text fontWeight={700} color="#222222">
             {label}
           </Text>

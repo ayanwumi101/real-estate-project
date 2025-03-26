@@ -1,17 +1,15 @@
-'use client'
+'use client';
 
-import { Box, Stack, Flex, Button, Text } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
-import AssetsStatistics from './components/AssetsStatistics'
-import NavigationTab from './components/NavigationTab'
-import { HiPlus } from 'react-icons/hi2'
-import OwnedAssets from './components/OwnedAssets'
-import Cashflow from './components/Cashflow'
-import Installment from './components/Installment'
-import Link from 'next/link'
-import { GetUserAssets } from '~/lib/api/services/assetsService'
-
-
+import { Box, Stack, Flex, Button, Text } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import AssetsStatistics from './components/AssetsStatistics';
+import NavigationTab from './components/NavigationTab';
+import { HiPlus } from 'react-icons/hi2';
+import OwnedAssets from './components/OwnedAssets';
+import Cashflow from './components/Cashflow';
+import Installment from './components/Installment';
+import Link from 'next/link';
+import { GetUserAssets } from '~/lib/api/services/assetsService';
 
 const index = () => {
   const [activeTab, setActiveTab] = useState<string>('Owned');
@@ -20,27 +18,39 @@ const index = () => {
   const GetAssets = async () => {
     try {
       const res = await GetUserAssets();
-      setAssets(res.data)
+      setAssets(res.data);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
-    GetAssets()
+    GetAssets();
   }, []);
 
-  const cashflowAssets = assets?.filter((asset) => asset?.asset_type === 'cashflow');
-  const installmentAssets = assets?.filter((asset) => asset?.asset_type === 'instalment');
+  const cashflowAssets = assets?.filter(
+    (asset) => asset?.asset_type === 'cashflow'
+  );
+  const installmentAssets = assets?.filter(
+    (asset) => asset?.asset_type === 'instalment'
+  );
   const ownedAssets = assets?.filter((asset) => asset?.asset_type === 'owned');
-  
+
+  const totalAssetsInNaira = assets?.reduce((acc, asset) => {
+    return acc + Number(asset?.property_cost);
+  }, 0);
+
+  const totalRemittance = assets?.reduce((acc, asset) => {
+    return acc + Number(asset?.cashflow_amount);
+  }, 0);
+
   return (
     <Box pb="40px" overflow="auto">
       <Stack w="100%">
         <AssetsStatistics
           numberOfAssets={assets?.length}
-          assetInNaira=""
-          totalRemittance=""
+          assetInNaira={totalAssetsInNaira}
+          totalRemittance={totalRemittance}
         />
         <Box px={['10px', '30px']}>
           <Flex
@@ -79,6 +89,6 @@ const index = () => {
       </Stack>
     </Box>
   );
-}
+};
 
-export default index
+export default index;

@@ -3,7 +3,7 @@ import React from 'react';
 import { EditCommentIcon } from '~/lib/components/Icons/Icons';
 
 
-const Notes = () => {
+const Notes = ({notes}:{notes: string}) => {
   return (
     <Box
       w={['100%',"335px"]}
@@ -20,10 +20,7 @@ const Notes = () => {
             <Button bg='none' p='0'><EditCommentIcon /></Button>
         </Flex>
         <Text color='brand.400' fontWeight={500}>
-          This spacious single-family home is located in a family-friendly
-          neighborhood, perfect for those looking for a blend of comfort and
-          community. With modern amenities and a beautiful layout, this property
-          is ideal for families or anyone looking for extra space.
+          {notes || 'No comment available'}
         </Text>
       </Stack>
     </Box>

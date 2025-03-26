@@ -170,6 +170,7 @@ const PaymentPlan = ({
                     border="1px solid #C0C0C0"
                     borderRadius="50px"
                     h="50px"
+                    placeholder="Select"
                   >
                     <option value="Monthly">Monthly</option>
                     <option value="Weekly">Weekly</option>

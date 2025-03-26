@@ -29,6 +29,7 @@ const API_ROUTES = {
   UPDATE_ASSET_PAYMENT_PLAN: '/user/asset/payment-plan',
   UPDATE_ASSET_CASHFLOW_DETAILS: '/user/asset/cashflow-details',
   GET_USER_ASSETS: '/user/assets',
+  GET_ASSET_DETAILS: '/user/asset',
   ADD_ASSET_IMAGES: '/user/asset/add-images',
   ADD_NEXT_OF_KIN_TO_ASSET: '/user/asset/attach_noks',
 

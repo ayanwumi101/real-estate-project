@@ -124,7 +124,6 @@ const PropertyDetailsForm = ({
         setAssetType(values.assetType);
         setStep(step + 1);
         Cookie.set('vestier-asset-id', res.data);
-       
       }
     } catch (error: any) {
       setLoading(false);
@@ -440,13 +439,19 @@ const PropertyDetailsForm = ({
                       <Box
                         w="100%"
                         borderRadius="20px"
-                        py="30px"
-                        px="24px"
                         border="1px solid"
                         borderColor="border.200"
                       >
-                        <Flex alignItems="flex-start" gap="24px">
-                          <Radio name="cashflow" size="lg" value="cashflow" />
+                        <Radio
+                          name="cashflow"
+                          size="lg"
+                          value="cashflow"
+                          py="30px"
+                          px="24px"
+                          w="100%"
+                          alignItems="flex-start"
+                          gap="20px"
+                        >
                           <Stack>
                             <Heading
                               fontSize={16}
@@ -455,25 +460,31 @@ const PropertyDetailsForm = ({
                             >
                               Cashflow Asset
                             </Heading>
-                            <Text color="brand.300">
+                            <Text color="brand.300" fontSize={16}>
                               Property that generates a regular stream of income
                               such as lease, rental income regardless of its
                               price appreciation. These assets provide a steady
                               cash flow over time.
                             </Text>
                           </Stack>
-                        </Flex>
+                        </Radio>
                       </Box>
                       <Box
                         w="100%"
                         borderRadius="20px"
-                        py="30px"
-                        px="24px"
                         border="1px solid"
                         borderColor="border.200"
                       >
-                        <Flex alignItems="flex-start" gap="24px">
-                          <Radio name="owned" size="lg" value="owned" />
+                        <Radio
+                          name="owned"
+                          size="lg"
+                          value="owned"
+                          py="30px"
+                          px="24px"
+                          w="100%"
+                          alignItems="flex-start"
+                          gap="20px"
+                        >
                           <Stack>
                             <Heading
                               fontSize={16}
@@ -482,24 +493,30 @@ const PropertyDetailsForm = ({
                             >
                               Owned Asset
                             </Heading>
-                            <Text color="brand.300">
+                            <Text color="brand.300" fontSize={16}>
                               Property that you fully possess and control. They
                               simply appreciate in value over time or serve a
                               personal or operational purpose.
                             </Text>
                           </Stack>
-                        </Flex>
+                        </Radio>
                       </Box>
                       <Box
                         w="100%"
                         borderRadius="20px"
-                        py="30px"
-                        px="24px"
                         border="1px solid"
                         borderColor="border.200"
                       >
-                        <Flex alignItems="flex-start" gap="24px">
-                          <Radio name="instalment" size="lg" value="instalment" />
+                        <Radio
+                          py="30px"
+                          px="24px"
+                          name="instalment"
+                          size="lg"
+                          value="instalment"
+                          w="100%"
+                          alignItems="flex-start"
+                          gap="20px"
+                        >
                           <Stack>
                             <Heading
                               fontSize={16}
@@ -508,13 +525,13 @@ const PropertyDetailsForm = ({
                             >
                               Instalment Asset
                             </Heading>
-                            <Text color="brand.300">
+                            <Text color="brand.300" fontSize={16}>
                               Property you acquire through a financing
                               arrangement where you make regular payments over
                               time instead of paying the full amount upfront.
                             </Text>
                           </Stack>
-                        </Flex>
+                        </Radio>
                       </Box>
                     </Stack>
                   </RadioGroup>

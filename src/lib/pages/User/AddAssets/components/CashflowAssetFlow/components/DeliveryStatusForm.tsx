@@ -121,7 +121,7 @@ const DeliveryStatusForm = ({
                   isInvalid={!!errors.propertyCost && touched.propertyCost}
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
-                    When was this proprty bought
+                    When was this property bought
                   </FormLabel>
                   <Field
                     as={Input}
@@ -137,92 +137,6 @@ const DeliveryStatusForm = ({
                   />
                   <FormErrorMessage>{errors.propertyCost}</FormErrorMessage>
                 </FormControl>
-                {/* <FormControl
-                  isInvalid={!!errors.paymentStatus && touched.paymentStatus}
-                >
-                  <FormLabel fontWeight={600} fontSize={16} color="#222222">
-                    What is the payment status?
-                  </FormLabel>
-                  <Field
-                    as={Select}
-                    name="paymentStatus"
-                    bg="#FBFBFB"
-                    border="1px solid #C0C0C0"
-                    borderRadius="50px"
-                    h="50px"
-                  >
-                    <option value="Ongoing">Ongoing</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Completed">Completed</option>
-                  </Field>
-                  <FormErrorMessage>{errors.paymentStatus}</FormErrorMessage>
-                </FormControl>
-                <FormControl
-                  isInvalid={
-                    !!errors.allocationStatus && touched.allocationStatus
-                  }
-                >
-                  <FormLabel fontWeight={600} fontSize={16} color="#222222">
-                    What is the allocation status?
-                  </FormLabel>
-                  <Field
-                    as={Select}
-                    name="allocationStatus"
-                    bg="#FBFBFB"
-                    border="1px solid #C0C0C0"
-                    borderRadius="50px"
-                    h="50px"
-                  >
-                    <option value="Ongoing">Ongoing</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Completed">Completed</option>
-                  </Field>
-                  <FormErrorMessage>{errors.allocationStatus}</FormErrorMessage>
-                </FormControl>
-                <FormControl
-                  isInvalid={
-                    !!errors.documentationStatus && touched.documentationStatus
-                  }
-                >
-                  <FormLabel fontWeight={600} fontSize={16} color="#222222">
-                    What is the documentation status?
-                  </FormLabel>
-                  <Field
-                    as={Select}
-                    name="documentationStatus"
-                    bg="#FBFBFB"
-                    border="1px solid #C0C0C0"
-                    borderRadius="50px"
-                    h="50px"
-                  >
-                    <option value="Ongoing">Ongoing</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Completed">Completed</option>
-                  </Field>
-                  <FormErrorMessage>
-                    {errors.documentationStatus}
-                  </FormErrorMessage>
-                </FormControl>
-                <FormControl
-                  isInvalid={!!errors.handoverStatus && touched.handoverStatus}
-                >
-                  <FormLabel fontWeight={600} fontSize={16} color="#222222">
-                    What is the handover status?
-                  </FormLabel>
-                  <Field
-                    as={Select}
-                    name="handoverStatus"
-                    bg="#FBFBFB"
-                    border="1px solid #C0C0C0"
-                    borderRadius="50px"
-                    h="50px"
-                  >
-                    <option value="Ongoing">Ongoing</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Completed">Completed</option>
-                  </Field>
-                  <FormErrorMessage>{errors.handoverStatus}</FormErrorMessage>
-                </FormControl> */}
                 <Flex justifyContent="flex-end" gap="20px">
                   <Button
                     color="#000080"

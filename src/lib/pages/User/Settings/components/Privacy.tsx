@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { use, useEffect } from 'react';
 import { Box, Heading, Switch, Stack, Text, Flex } from '@chakra-ui/react';
+import Cookies from 'js-cookie';
 
 const Privacy = () => {
+  const [hideBalance, setHideBalance] = React.useState<boolean>();
+
+  useEffect(() => {
+    const walletVisibility = Cookies.get('walletVisibility');
+    setHideBalance(walletVisibility === 'true' ? false : true);
+  }, []);
+  
   return (
-    <Box px={['20px',"40px"]} pb="50px">
+    <Box px={['20px', '40px']} pb="50px">
       <Stack spacing="26px">
         {/* irst section of notification */}
         <Box border="1px solid #E4E4E4" borderRadius="5px" p="15px">
@@ -55,7 +63,14 @@ const Privacy = () => {
                     you're in public)
                   </Text>
                 </Box>
-                <Switch />
+                <Switch isChecked={hideBalance}
+                  onChange={
+                    (e) => {
+                      setHideBalance(e.target.checked);
+                      Cookies.set('walletVisibility', e.target.checked ? 'false' : 'true');
+                    }
+                  }
+                />
               </Flex>
             </Box>
           </Stack>
@@ -63,6 +78,6 @@ const Privacy = () => {
       </Stack>
     </Box>
   );
-}
+};
 
-export default Privacy
+export default Privacy;

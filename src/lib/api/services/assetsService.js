@@ -55,3 +55,8 @@ export const AddNextOfKinToAsset = async (data) => {
   const response = await axiosInstance.post(API_ROUTES.ADD_NEXT_OF_KIN_TO_ASSET, data);
   return response.data;
 }
+
+export const GetAssetDetails = async (propertyId) => {
+  const response = await axiosInstance.get(`${API_ROUTES.GET_ASSET_DETAILS}/${propertyId}`);
+  return response.data;
+}

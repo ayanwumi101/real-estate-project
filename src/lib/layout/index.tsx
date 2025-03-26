@@ -263,12 +263,12 @@ export const Layout = ({ children }: LayoutProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const pathname = usePathname();
 
-  useLayoutEffect(() => {
-    (async () => {
-      const LocomotiveScroll = (await import('locomotive-scroll')).default;
-      const locomotiveScroll = new LocomotiveScroll();
-    })();
-  }, []);
+  // useLayoutEffect(() => {
+  //   (async () => {
+  //     const LocomotiveScroll = (await import('locomotive-scroll')).default;
+  //     const locomotiveScroll = new LocomotiveScroll();
+  //   })();
+  // }, []);
 
   useEffect(() => {
     const isProtectedRoute = pathname.startsWith('/user');
