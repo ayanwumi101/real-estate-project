@@ -7,7 +7,7 @@ import FundWalletFlow from '~/lib/components/FundWalletFlow'
 const Header = () => {
     const [showFundWalletModal, setShowFundWalletModal] = React.useState(false);
   return (
-    <Box borderY="1px solid #E4E4E4" py='35px' px='40px'>
+    <Box borderY="1px solid #E4E4E4" py="35px" px="40px">
       <Box>
         <Flex alignItems="center" justifyContent="space-between">
           <Heading fontSize={24} fontWeight={500} color="#222222">
@@ -21,6 +21,7 @@ const Header = () => {
                 fontWeight={600}
                 fontSize={14}
                 borderRadius="50px"
+                _hover={{ bg: '#EDEDFF' }}
               >
                 Withdraw from wallet
               </Button>
@@ -29,6 +30,7 @@ const Header = () => {
                 fontSize={14}
                 color="#ffffff"
                 fontWeight={500}
+                _hover={{ bg: 'brand.100' }}
                 onClick={() => setShowFundWalletModal(true)}
               >
                 <Flex alignItems="center" gap="10px">
@@ -40,7 +42,10 @@ const Header = () => {
           </Box>
         </Flex>
       </Box>
-        <FundWalletFlow isOpen={showFundWalletModal} onClose={() => setShowFundWalletModal(false)}  />
+      <FundWalletFlow
+        isOpen={showFundWalletModal}
+        onClose={() => setShowFundWalletModal(false)}
+      />
     </Box>
   );
 }

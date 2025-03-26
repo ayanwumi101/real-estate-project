@@ -268,7 +268,7 @@ const CashflowDetails = ({
                     borderRadius="30px"
                     fontWeight={600}
                     fontSize={16}
-                    _hover={{ bg: '#EDEDFF' }}
+                    _hover={{ bg: '#000080' }}
                     onClick={() => setStep(step - 1)}
                     minW="100px"
                   >

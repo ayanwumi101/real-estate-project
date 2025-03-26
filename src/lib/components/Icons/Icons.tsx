@@ -1229,3 +1229,24 @@ export const ArrowUpIcon = () => {
     </svg>
   );
 }
+
+
+export const BlueArrowUpIcon = () => { 
+  return (
+    <svg
+      width="24"
+      height="25"
+      viewBox="0 0 24 25"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M15.4286 16.5822L20 12.0108M20 12.0108L15.4286 7.40625M20 12.0108H5.14286"
+        stroke="#000080"
+        stroke-width="1.14286"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}

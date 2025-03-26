@@ -109,11 +109,11 @@ const EditProfileModal = ({
                       border="1px solid #C0C0C0"
                       borderRadius="50px"
                     />
-                    <FormErrorMessage>{typeof errors.address === 'string' ? errors.address : ''}</FormErrorMessage>
+                    <FormErrorMessage>
+                      {typeof errors.address === 'string' ? errors.address : ''}
+                    </FormErrorMessage>
                   </FormControl>
-                  <FormControl
-                    isInvalid={!!errors.gender && !!touched.gender}
-                  >
+                  <FormControl isInvalid={!!errors.gender && !!touched.gender}>
                     <FormLabel>Gender</FormLabel>
                     <Field
                       as={Select}
@@ -126,7 +126,9 @@ const EditProfileModal = ({
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
                     </Field>
-                    <FormErrorMessage>{typeof errors.gender === 'string' ? errors.gender : ''}</FormErrorMessage>
+                    <FormErrorMessage>
+                      {typeof errors.gender === 'string' ? errors.gender : ''}
+                    </FormErrorMessage>
                   </FormControl>
                   <FormControl isInvalid={!!errors.phone && !!touched.phone}>
                     <FormLabel>Phone Number</FormLabel>
@@ -139,11 +141,11 @@ const EditProfileModal = ({
                       border="1px solid #C0C0C0"
                       borderRadius="50px"
                     />
-                    <FormErrorMessage>{typeof errors.phone === 'string' ? errors.phone : ''}</FormErrorMessage>
+                    <FormErrorMessage>
+                      {typeof errors.phone === 'string' ? errors.phone : ''}
+                    </FormErrorMessage>
                   </FormControl>
-                  <FormControl
-                    isInvalid={!!errors.email && !!touched.email}
-                  >
+                  <FormControl isInvalid={!!errors.email && !!touched.email}>
                     <FormLabel>Email Address</FormLabel>
                     <Field
                       as={Input}
@@ -154,7 +156,9 @@ const EditProfileModal = ({
                       border="1px solid #C0C0C0"
                       borderRadius="50px"
                     />
-                    <FormErrorMessage>{typeof errors.email === 'string' ? errors.email : ''}</FormErrorMessage>
+                    <FormErrorMessage>
+                      {typeof errors.email === 'string' ? errors.email : ''}
+                    </FormErrorMessage>
                   </FormControl>
                   <Flex
                     alignItems="center"
@@ -167,6 +171,7 @@ const EditProfileModal = ({
                       fontWeight={500}
                       minW="100px"
                       onClick={onClose}
+                      _hover={{ bg: '#EDEDFF' }}
                     >
                       Cancel
                     </Button>
@@ -177,6 +182,7 @@ const EditProfileModal = ({
                       minW="150px"
                       type="submit"
                       isDisabled={loading}
+                      _hover={{ bg: 'brand.100' }}
                     >
                       {loading ? <Spinner /> : 'Add Next of Kin'}
                     </Button>

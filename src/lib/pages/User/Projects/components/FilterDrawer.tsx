@@ -32,15 +32,15 @@ const FilterDrawer = ({
       exit={{ x: '100%' }}
       transition={{ duration: 0.3 }}
       style={{
-        backgroundColor: "rgba(0,0,0,0.3)",
-        width: "100%",
-        height: "100%",
-        position: "fixed",
-        top: "0",
-        right:"0",
-        zIndex:"10",
-        overflow: "auto",
-        backdropFilter:"blur(8px)"
+        backgroundColor: 'rgba(0,0,0,0.3)',
+        width: '100%',
+        height: '100%',
+        position: 'fixed',
+        top: '0',
+        right: '0',
+        zIndex: '10',
+        overflow: 'auto',
+        backdropFilter: 'blur(8px)',
       }}
     >
       <motion.div
@@ -49,16 +49,16 @@ const FilterDrawer = ({
         exit={{ x: '100%' }}
         transition={{ duration: 0.5 }}
         style={{
-          backgroundColor: "#FFFFFF",
-          width: isMobile ? "90%" : "28%",
-          height: "100%",
-          position: "absolute",
-          top: "0",
-          right: "0",
-          zIndex: "15",
-          padding: "24px",
-          overflow: "auto",
-          paddingTop: "30px"
+          backgroundColor: '#FFFFFF',
+          width: isMobile ? '90%' : '28%',
+          height: '100%',
+          position: 'absolute',
+          top: '0',
+          right: '0',
+          zIndex: '15',
+          padding: '24px',
+          overflow: 'auto',
+          paddingTop: '30px',
         }}
       >
         <Stack spacing="20px">
@@ -240,6 +240,7 @@ const FilterDrawer = ({
             borderRadius="50px"
             px="24px"
             py="12px"
+            _hover={{ bg: '#222222' }}
           >
             Apply
           </Button>

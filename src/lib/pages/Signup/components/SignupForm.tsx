@@ -370,6 +370,7 @@ const SignupForm = () => {
                 w="100%"
                 mb="10px"
                 bg="#000080"
+                _hover={{ bg: '#000080' }}
                 color="white"
                 h="55px"
                 borderRadius="50px"

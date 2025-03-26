@@ -101,6 +101,7 @@ const RemitttanceHeading = () => {
                 fontSize={14}
                 color="#ffffff"
                 fontWeight={500}
+                _hover={{ bg: 'brand.100' }}
                 // onClick={() => setShowFundWalletModal(true)}
               >
                 <Flex alignItems="center" gap="10px">

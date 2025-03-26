@@ -135,6 +135,7 @@ const Cashflow = ({ assets }: { assets: any[] }) => {
                         px="12px"
                         textAlign="center"
                         borderRadius="50px"
+                        _hover={{ bg: '#EDEDFF' }}
                       >
                         {' '}
                         View Asset

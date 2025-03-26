@@ -19,6 +19,7 @@ const Investments = () => {
             py="12px"
             px="15px"
             color="#000080"
+            _hover={{ bg: '#EDEDFF' }}
           >
             <Flex alignItems="center" gap="10px">
               <Text fontWeight={700}>View more</Text>

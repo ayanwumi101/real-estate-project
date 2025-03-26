@@ -44,7 +44,7 @@ const SingleDetail = ({
 
 const OtherDetails = () => {
   return (
-    <Box w={['100%', '100%', "38%"]}>
+    <Box w={['100%', '100%', '38%']}>
       <Stack spacing="30px">
         <SingleDetail
           label="Security Details:"
@@ -61,11 +61,16 @@ const OtherDetails = () => {
           label="Investment Type:"
           description=" Fractional Ownership"
         />
-        <Box bg="#EDEDFF" pt='12px' pb='10px' px='10px' borderRadius='50px'>
+        <Box bg="#EDEDFF" pt="12px" pb="10px" px="10px" borderRadius="50px">
           <Flex gap="2px" alignItems="flex-start">
             {/* <CautionIcon /> */}
-            <Image src='/assets/images/info.png' w='28px' h='28px' objectFit='cover' />
-            <Text mt='1' color="#000080" fontWeight={600} fontSize={13}>
+            <Image
+              src="/assets/images/info.png"
+              w="28px"
+              h="28px"
+              objectFit="cover"
+            />
+            <Text mt="1" color="#000080" fontWeight={600} fontSize={13}>
               Shares will be liquidated into portfolio balance
             </Text>
           </Flex>
@@ -106,6 +111,7 @@ const OtherDetails = () => {
               fontSize={15}
               w="165px"
               mx="auto"
+              _hover={{ bg: 'brand.100' }}
             >
               <Flex alignItems="center" gap="8px">
                 <Text>Invest now</Text>

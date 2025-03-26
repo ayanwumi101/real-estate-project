@@ -10,7 +10,12 @@ const Discover = () => {
         <Stack spacing="40px">
           <Box>
             <Flex justifyContent="space-between" flexWrap="wrap">
-              <Heading fontSize={40} color="#222222" fontWeight={700} mb={['32px', 0]}>
+              <Heading
+                fontSize={40}
+                color="#222222"
+                fontWeight={700}
+                mb={['32px', 0]}
+              >
                 Discover
               </Heading>
               <Text
@@ -50,6 +55,7 @@ const Discover = () => {
             borderRadius="50px"
             fontWeight={600}
             color="#EDEDFF"
+            _hover={{ bg: 'brand.100' }}
           >
             Explore all projects available
           </Button>

@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Box,
   Image,
@@ -8,6 +10,7 @@ import {
   Button,
   Divider,
   Avatar,
+  chakra,
 } from '@chakra-ui/react';
 import {
   LocationIcon,
@@ -18,11 +21,17 @@ import { IoMdArrowForward } from 'react-icons/io';
 import { FiEye } from 'react-icons/fi';
 import Link from 'next/link';
 import { ReactHTMLElement, ReactNode, ReactElement } from 'react';
+import { motion } from 'framer-motion';
+
+
+const MotionBox = chakra(motion.div);
+
+
 
 export const PropertyCard = ({ imageSource }: { imageSource: string }) => {
   return (
-    <Box w={['100%', '270px']} h="auto">
-      <Box
+    <Box w={['100%', '270px']} h="auto" overflow="hidden" borderRadius="10px">
+      <MotionBox
         w="100%"
         h="300px"
         borderRadius="10px"
@@ -33,6 +42,10 @@ export const PropertyCard = ({ imageSource }: { imageSource: string }) => {
         display="flex"
         alignItems="flex-end"
         justifyContent="flex-end"
+        whileHover={{
+          scale: 1.05,
+          transition: { duration: 0.3, ease: 'easeInOut' },
+        }}
       >
         <Box
           w="100%"
@@ -44,7 +57,7 @@ export const PropertyCard = ({ imageSource }: { imageSource: string }) => {
             ₦40,500 - 50,000 / Share
           </Text>
         </Box>
-      </Box>
+      </MotionBox>
       <Box pt="24px" pb="12px" borderBottom="1px solid #ABABFF">
         <Stack spacing="12px">
           <Heading fontSize={18} fontWeight={600} color="#222222">
@@ -205,13 +218,19 @@ export const SingleApartmentCard = ({
           {description}
         </Text>
         <Flex alignItems="center" gap="8px">
-          <Button bg="#EDEDFF" color="#000080" fontWeight={600}>
+          <Button
+            bg="#EDEDFF"
+            color="#000080"
+            _hover={{ bg: '#000080' }}
+            fontWeight={600}
+          >
             More information
           </Button>
           <Button
             bg="none"
             textDecoration="underline"
             color="#000080"
+            _hover={{ bg: '#000080' }}
             fontWeight={600}
             onClick={buyProperty}
           >

@@ -142,9 +142,7 @@ const AddNextOfKinModal = ({
                     />
                     <FormErrorMessage>{errors.phone}</FormErrorMessage>
                   </FormControl>
-                  <FormControl
-                    isInvalid={!!errors.email && touched.email}
-                  >
+                  <FormControl isInvalid={!!errors.email && touched.email}>
                     <FormLabel>Email Address of next of Kin</FormLabel>
                     <Field
                       as={Input}
@@ -168,6 +166,7 @@ const AddNextOfKinModal = ({
                       fontWeight={500}
                       minW="100px"
                       onClick={onClose}
+                      _hover={{ bg: '#EDEDFF' }}
                     >
                       Cancel
                     </Button>
@@ -178,6 +177,7 @@ const AddNextOfKinModal = ({
                       minW="150px"
                       type="submit"
                       isDisabled={loading}
+                      _hover={{ bg: '#000080' }}
                     >
                       {loading ? <Spinner /> : 'Add Next of Kin'}
                     </Button>

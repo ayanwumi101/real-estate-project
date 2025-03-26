@@ -14,6 +14,9 @@ import {
 import { usePathname } from 'next/navigation';
 import { Fragment } from 'react';
 import { UserIcon, EmailIcon } from '~/lib/components/Icons/Icons';
+import { scrollToSection } from '~/lib/utils/scrollToSection';
+
+
 
 export const Footer = () => {
   const pathname = usePathname();
@@ -131,9 +134,7 @@ export const Footer = () => {
           <Flex justifyContent="space-between" flexWrap="wrap">
             <Box mb={['32px', 0]}>
               <Stack spacing="24px">
-                <Heading fontSize={25} fontWeight={700}>
-                  Company Logo
-                </Heading>
+                <Image src="/assets/svgs/vestier-logo.svg" w="135px" h="40px" />
                 <Text color="#C0C0C0" fontStyle="italic">
                   Invest wisely. Invest with confidence.
                 </Text>
@@ -147,7 +148,12 @@ export const Footer = () => {
                 </Stack>
                 <Stack spacing="10px">
                   <Text>Support</Text>
-                  <Text>FAQs</Text>
+                  <Text
+                    cursor="pointer"
+                    onClick={() => scrollToSection('faqs')}
+                  >
+                    FAQs
+                  </Text>
                 </Stack>
                 <Stack spacing="10px">
                   <Text>Terms & Conditions</Text>
@@ -159,7 +165,7 @@ export const Footer = () => {
         </Box>
       </Stack>
       <Text textAlign={['left', 'center']} fontSize={14}>
-        Copyright © 2024 Company name
+        Copyright © {new Date().getFullYear()} Vestier
       </Text>
     </Box>
   );

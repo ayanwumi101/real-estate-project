@@ -114,6 +114,7 @@ const AccountDetails = ({
             w="110px"
             color="#4040A0"
             fontWeight={600}
+            _hover={{ bg: '#EDEDFF' }}
           >
             Close
           </Button>
@@ -123,6 +124,7 @@ const AccountDetails = ({
             fontWeight={600}
             w="182px"
             onClick={onClose}
+            _hover={{ bg: 'brand.100' }}
           >
             I’ve made transfer
           </Button>
@@ -295,6 +297,7 @@ const BuyPropertyForm = ({
             w="110px"
             color="#4040A0"
             fontWeight={600}
+            _hover={{ bg: '#EDEDFF' }}
           >
             Close
           </Button>
@@ -306,8 +309,8 @@ const BuyPropertyForm = ({
             onClick={() => {
               setStep(step + 1);
               console.log('step', step);
-              
             }}
+            _hover={{ bg: 'brand.100' }}
           >
             Continue
           </Button>

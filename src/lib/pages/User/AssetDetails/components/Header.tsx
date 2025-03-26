@@ -24,7 +24,13 @@ const Header = () => {
             </Flex>
           </Stack>
         </Box>
-        <Button bg="#000080" color="#ffffff" fontWeight={500} fontSize={15}>
+        <Button
+          bg="#000080"
+          _hover={{ bg: '#000080' }}
+          color="#ffffff"
+          fontWeight={500}
+          fontSize={15}
+        >
           <Flex alignItems="center" gap="8px">
             <Text>Liquidate property</Text>
             <InvestIcon />

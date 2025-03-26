@@ -121,6 +121,7 @@ const AddNextOfKin = ({
                 <Button
                   bg="brand.100"
                   color="brand.200"
+                  _hover={{ bg: '#000080' }}
                   py="16px"
                   px="32px"
                   fontWeight={500}
@@ -173,7 +174,7 @@ const AddNextOfKin = ({
             fontSize={16}
             _hover={{ bg: '#000080' }}
             onClick={handleSubmit}
-            minW='120px'
+            minW="120px"
           >
             {loading ? <Spinner /> : 'Complete'}
           </Button>

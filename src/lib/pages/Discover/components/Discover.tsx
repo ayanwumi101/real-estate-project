@@ -43,20 +43,104 @@ const Discover = () => {
                 </Text>
               </Flex>
             </Box>
-            <Box 
-              overflow="auto" 
-              w='100%'
+            <Box
+              w="full"
+              display="flex"
+              alignItems="center"
+              // justifyContent={['flex-start',"space-between"]}
+              // gap={['10px', 0]}
+              justifyContent="space-between"
+              // overflow="auto"
+
+              // flexWrap="wrap"
+              // pb={[5, 0]}
+            >
+              <Box display="flex" alignItems="center" gap={['10px', '16px']}>
+                <Box
+                  borderRadius="50px"
+                  border="1px solid #C0C0C0"
+                  px="15px"
+                  py="5px"
+                  w={['50%', 'auto']}
+                >
+                  <Flex alignItems="center" gap="0px">
+                    <LocationIcon />
+                    <Select
+                      color="#2E353F"
+                      fontWeight={[500, 600]}
+                      py="0"
+                      border="none"
+                      outline="none"
+                    >
+                      <option value="">All Locations </option>
+                      <option value="">All Locations </option>
+                      <option value="">All Locations </option>
+                    </Select>
+                  </Flex>
+                </Box>
+                <Box
+                  borderRadius="50px"
+                  border="1px solid #C0C0C0"
+                  px="15px"
+                  py="5px"
+                  w={['50%', 'auto']}
+                >
+                  <Flex alignItems="center" gap="0px">
+                    <Box
+                      w="100px"
+                      as="span"
+                      color="#2E353F"
+                      fontWeight={[500, 600]}
+                    >
+                      Sort by:
+                    </Box>
+                    <Select
+                      color="#2E353F"
+                      fontWeight={[500, 600]}
+                      py="0"
+                      bg="white"
+                      border="none"
+                      outline="none"
+                    >
+                      <option value="">Newest</option>
+                      <option value="">Newest</option>
+                      <option value="">Newest</option>
+                      <option value="">Newest</option>
+                    </Select>
+                  </Flex>
+                </Box>
+              </Box>
+              <Button
+                borderRadius="50px"
+                border="1px solid #C0C0C0"
+                px="15px"
+                py="10px"
+                w="100px"
+                onClick={() => setOpenFilterDrawer(true)}
+                bg="none"
+                mx="auto"
+                leftIcon={<FilterIcon />}
+                color="#2E353F"
+                fontWeight={500}
+              >
+                Filter
+              </Button>
+            </Box>
+            {/* <Box
+              // overflow="auto"
+              w="100%"
             >
               <Flex
                 alignItems="center"
-                justifyContent={['flex-start',"space-between"]}
-                gap={['10px', 0]}
+                // justifyContent={['flex-start',"space-between"]}
+                // gap={['10px', 0]}
+                justifyContent="space-between"
                 // overflow="auto"
-                w='100%'
-                flexWrap='wrap'
+                w="100%"
+                // flexWrap="wrap"
                 pb={[5, 0]}
               >
-                <Box display="flex" alignItems="center" gap={['10px',"16px"]}>
+                <Box display="flex" alignItems="center" gap={['10px', '16px']}>
                   <Box
                     borderRadius="50px"
                     border="1px solid #C0C0C0"
@@ -68,7 +152,7 @@ const Discover = () => {
                       <LocationIcon />
                       <Select
                         color="#2E353F"
-                        fontWeight={[500,600]}
+                        fontWeight={[500, 600]}
                         py="0"
                         border="none"
                         outline="none"
@@ -87,12 +171,17 @@ const Discover = () => {
                     w={['50%', 'auto']}
                   >
                     <Flex alignItems="center" gap="0px">
-                      <Box w="100px" as="span" color="#2E353F" fontWeight={[500,600]}>
+                      <Box
+                        w="100px"
+                        as="span"
+                        color="#2E353F"
+                        fontWeight={[500, 600]}
+                      >
                         Sort by:
                       </Box>
                       <Select
                         color="#2E353F"
-                        fontWeight={[500,600]}
+                        fontWeight={[500, 600]}
                         py="0"
                         bg="white"
                         border="none"
@@ -111,20 +200,18 @@ const Discover = () => {
                   border="1px solid #C0C0C0"
                   px="15px"
                   py="10px"
-                  w={['100px', 'auto']}
+                  w="100px"
                   onClick={() => setOpenFilterDrawer(true)}
-                  bg='none'
-                  mx='auto'
+                  bg="none"
+                  mx="auto"
+                  leftIcon={<FilterIcon />}
+                  color="#2E353F"
+                  fontWeight={500}
                 >
-                  <Flex alignItems="center" justifyContent={['space-between']} w='100%'>
-                    <FilterIcon />
-                    <Text fontWeight={700} color="#2E353F">
-                      Filter
-                    </Text>
-                  </Flex>
+                  Filter
                 </Button>
               </Flex>
-            </Box>
+            </Box> */}
             <Box>
               <Flex
                 justifyContent={['center', 'space-between']}
@@ -160,7 +247,9 @@ const Discover = () => {
           </Stack>
         </Box>
       </Box>
-      {openFilterDrawer && <FilterDrawer setOpenFilterDrawer={setOpenFilterDrawer} />}
+      {openFilterDrawer && (
+        <FilterDrawer setOpenFilterDrawer={setOpenFilterDrawer} />
+      )}
     </Fragment>
   );
 }

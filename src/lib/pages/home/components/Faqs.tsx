@@ -16,8 +16,12 @@ import { IoChevronForward, IoArrowForward } from 'react-icons/io5';
 
 const Faqs = () => {
   return (
-    <Box maxW="1200px" mx="auto" py="60px" px={['24px', 0]}>
-      <Flex alignItems="flex-start" justifyContent="space-between" flexWrap='wrap'>
+    <Box maxW="1200px" mx="auto" py="60px" px={['24px', 0]} id='faqs'>
+      <Flex
+        alignItems="flex-start"
+        justifyContent="space-between"
+        flexWrap="wrap"
+      >
         <Box w="560px" mb={['40px', 0]}>
           <Stack spacing="24px">
             <Heading color="#222222" fontSize={40} fontWeight={700}>
@@ -30,6 +34,7 @@ const Faqs = () => {
               <Button
                 w="175px"
                 bg="#000080"
+                _hover={{ bg: '#000080' }}
                 py="6"
                 px="24px"
                 borderRadius="50px"
@@ -49,15 +54,18 @@ const Faqs = () => {
           </Stack>
         </Box>
         <Box w="560px">
-          <Accordion allowToggle={true} allowMultiple={true} display='flex' flexDir='column' gap='20px'>
+          <Accordion
+            allowToggle={true}
+            allowMultiple={true}
+            display="flex"
+            flexDir="column"
+            gap="20px"
+          >
             {[1, 2, 3, 4].map(() => {
               return (
-                <AccordionItem>
+                <AccordionItem border="1px solid #3232470F" borderRadius="5px">
                   <h2>
-                    <AccordionButton
-                      border="1px solid #3232470F"
-                      borderRadius="5px"
-                    >
+                    <AccordionButton>
                       <Box
                         as="span"
                         flex="1"
@@ -70,12 +78,7 @@ const Faqs = () => {
                       <AccordionIcon color="#2E353F" />
                     </AccordionButton>
                   </h2>
-                  <AccordionPanel
-                    pb={4}
-                    color="#2E353F"
-                    fontWeight={500}
-                    borderBottom="1px solid #E4E4E4"
-                  >
+                  <AccordionPanel pb={4} color="#2E353F" fontWeight={500}>
                     Yes, you can access your personalized dashboard to view and
                     manage your investments. You’ll see detailed information
                     about ownership percentages, returns, and maturity status.
@@ -92,6 +95,7 @@ const Faqs = () => {
             borderRadius="50px"
             fontWeight={600}
             color="#000080"
+            mt="15px"
           >
             <Flex alignItems="center" justifyContent="space-between" gap="12px">
               <Text>View All FAQs</Text>

@@ -10,7 +10,9 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import React from 'react';
-import { ArrowForward } from '~/lib/components/Icons/Icons';
+import { ArrowForward, BlueArrowUpIcon } from '~/lib/components/Icons/Icons';
+
+
 
 export const SingleCard = ({
   image,
@@ -68,7 +70,7 @@ export const FeatureCard = ({
 
 const HowItWorks = () => {
   return (
-    <Box w="100%">
+    <Box w="100%" id='howItWorks'>
       <VStack maxW="1200px" mx="auto" spacing="60px" py="60px" px={['24px', 0]}>
         <Box textAlign="center" maxW="740px" mx="auto">
           <Heading mb="24px" fontSize={40} color="#222222">
@@ -114,6 +116,7 @@ const HowItWorks = () => {
             mx="auto"
             textAlign="center"
             bg="#000080"
+            _hover={{ bg: '#000080' }}
             py="6"
             px="24px"
             borderRadius="50px"
@@ -127,7 +130,7 @@ const HowItWorks = () => {
       <Box
         w="100%"
         h="500px"
-        bgImage="/assets/images/house-6.png"
+        bgImage="/assets/images/house-6.jpeg"
         backgroundRepeat="no-repeat"
         backgroundSize="cover"
         backgroundPosition="center"
@@ -135,12 +138,13 @@ const HowItWorks = () => {
         alignItems="center"
         justifyContent="center"
       >
-        <Box maxW="1200px" mx="auto" px={['24px', 0]}>
+        <Box w="100%" mx="auto" px={['24px', 0]} h="100%" bg="rgba(0, 0, 0, 0.7)" display='flex' alignItems='center' justifyContent='center'>
           <Flex
             alignItems="flex-start"
             justifyContent="space-between"
-            // gap="80px"
-            flexWrap="wrap"
+            flexWrap={['wrap', 'nowrap']}
+            w={['95%','90%']}
+            margin='auto'
           >
             <Box maxW="550px" mb={['32px', 0]}>
               <Heading fontSize={[34, 48]} fontWeight={700} color="#ffffff">
@@ -164,6 +168,7 @@ const HowItWorks = () => {
                   borderRadius="50px"
                   fontWeight={700}
                   color="#000080"
+                  rightIcon={<BlueArrowUpIcon />}
                 >
                   Load More
                 </Button>
@@ -172,7 +177,7 @@ const HowItWorks = () => {
           </Flex>
         </Box>
       </Box>
-      <Box py="70px" maxW="1200px" mx="auto" px={['24px', 0]}>
+      <Box py="70px" maxW="1200px" mx="auto" px={['24px', 0]} id='features'>
         <Flex
           alignItems="flex-start"
           justifyContent="space-between"

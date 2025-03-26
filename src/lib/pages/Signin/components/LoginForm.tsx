@@ -82,7 +82,7 @@ const LoginForm = () => {
     });
 
   return (
-    <Box px={['24px', '44px']} pb="60px" pt='30px'>
+    <Box px={['24px', '44px']} pb="60px" pt="30px">
       <Box mb="45px">
         <Link href="/">
           <Image
@@ -90,10 +90,10 @@ const LoginForm = () => {
             w="auto"
             h="50px"
             objectFit="contain"
-            mb='30px'
+            mb="30px"
           />
         </Link>
-        <Heading fontSize={[25,30]} fontWeight={500} color="#222222">
+        <Heading fontSize={[25, 30]} fontWeight={500} color="#222222">
           Welcome Back
         </Heading>
       </Box>
@@ -205,6 +205,7 @@ const LoginForm = () => {
                 w="100%"
                 mb="10px"
                 bg="#000080"
+                _hover={{ bg: '#000080' }}
                 color="white"
                 h="55px"
                 borderRadius="50px"

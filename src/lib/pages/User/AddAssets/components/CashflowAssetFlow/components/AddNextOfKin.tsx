@@ -129,6 +129,7 @@ const AddNextOfKin = ({
                   fontWeight={500}
                   h="50px"
                   onClick={() => setOpenModal(true)}
+                  _hover={{ bg: '#000080' }}
                 >
                   Add Next of Kin
                 </Button>
@@ -156,12 +157,12 @@ const AddNextOfKin = ({
         <Flex justifyContent="flex-end" gap="10px">
           <Button
             color="#000080"
+            _hover={{ bg: '#000080' }}
             bg="#EDEDFF"
             h="48px"
             borderRadius="30px"
             fontWeight={500}
             fontSize={16}
-            _hover={{ bg: '#EDEDFF' }}
             onClick={() => setStep(step - 1)}
             minW="100px"
           >
@@ -169,12 +170,12 @@ const AddNextOfKin = ({
           </Button>
           <Button
             bg="#000080"
+            _hover={{ bg: '#000080' }}
             color="white"
             h="48px"
             borderRadius="30px"
             fontWeight={500}
             fontSize={16}
-            _hover={{ bg: '#000080' }}
             onClick={handleSubmit}
             minW="120px"
           >

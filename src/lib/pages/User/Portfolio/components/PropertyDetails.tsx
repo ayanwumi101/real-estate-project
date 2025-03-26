@@ -116,7 +116,7 @@ const PropertyListTable = ({ assets }: { assets: any[] }) => {
                   </Td>
                   <Td fontWeight={500} fontSize={14} color="#8295AA">
                     <Link href={`/user/portfolio/${asset?.id}`}>
-                      <Button>View asset</Button>
+                      <Button bg='#ededff' _hover={{ bg: '#EDEDFF' }}>View asset</Button>
                     </Link>
                   </Td>
                 </Tr>

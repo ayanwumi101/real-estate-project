@@ -202,6 +202,7 @@ const Security = () => {
                   h="48px"
                   fontWeight={500}
                   w="100%"
+                  _hover={{ bg: 'brand.100' }}
                 >
                   {loading ? <Spinner /> : 'Change Password'}
                 </Button>

@@ -123,6 +123,7 @@ const AddNextOfKin = ({
                   py="16px"
                   px="32px"
                   fontWeight={500}
+                  _hover={{ bg: '#000080' }}
                   h="50px"
                   onClick={() => setOpenModal(true)}
                 >
@@ -157,7 +158,7 @@ const AddNextOfKin = ({
             borderRadius="30px"
             fontWeight={500}
             fontSize={16}
-            _hover={{ bg: '#000080' }}
+            _hover={{ bg: '#EDEDFF' }}
             onClick={() => setStep(step - 1)}
             minW="100px"
           >
@@ -172,7 +173,7 @@ const AddNextOfKin = ({
             fontSize={16}
             _hover={{ bg: '#000080' }}
             onClick={handleSubmit}
-            minW='120px'
+            minW="120px"
           >
             {loading ? <Spinner /> : 'Complete'}
           </Button>

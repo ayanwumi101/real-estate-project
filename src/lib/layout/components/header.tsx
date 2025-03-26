@@ -4,6 +4,8 @@ import { usePathname } from 'next/navigation';
 import { Fragment, useState } from 'react';
 import { HiBars3BottomRight } from 'react-icons/hi2';
 import MobileSidenav from './MobileSidenav';
+import { scrollToSection } from '~/lib/utils/scrollToSection';
+
 
 
 export const Header = () => {
@@ -24,6 +26,7 @@ export const Header = () => {
     return null;
   }
 
+
   return (
     <Fragment>
       <Box
@@ -33,7 +36,7 @@ export const Header = () => {
         backgroundColor="#F5F5F5"
         borderRadius="50px"
         px={['14px', '24px']}
-        mt={['20px',"36px"]}
+        mt={['20px', '36px']}
         py="10px"
         color="#222222"
         boxShadow="sm"
@@ -42,7 +45,7 @@ export const Header = () => {
         <Flex alignItems="center" justifyContent="space-between">
           <Link href="/">
             <Image
-              src="/assets/images/logo3.png"
+              src="/assets/svgs/vestier-blue-logo.svg"
               display="block"
               mx="auto"
               w={['120px', '100%']}
@@ -52,12 +55,22 @@ export const Header = () => {
           </Link>
           <Box display={['none', 'block']}>
             <Flex alignItems="center" gap="32px">
-              <Text>Features</Text>
+              <Text
+                cursor="pointer"
+                onClick={() => scrollToSection('features')}
+              >
+                Features
+              </Text>
               <Text>About Us</Text>
               <Link href="/discover">
                 <Text>Discover</Text>
               </Link>
-              <Text>How it works</Text>
+              <Text
+                cursor="pointer"
+                onClick={() => scrollToSection('howItWorks')}
+              >
+                How it works
+              </Text>
               <Link href="/signin">
                 <Text>Sign in</Text>
               </Link>
@@ -96,7 +109,7 @@ export const Header = () => {
           </Box>
         </Flex>
       </Box>
-      {openSideNav &&<MobileSidenav setOpenSideNav={setOpenSideNav} />}
+      {openSideNav && <MobileSidenav setOpenSideNav={setOpenSideNav} />}
     </Fragment>
   );
 };

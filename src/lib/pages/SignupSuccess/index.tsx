@@ -36,8 +36,8 @@ const index = () => {
             w="50%"
             h="auto"
             objectFit="contain"
-            display='block'
-            mx='auto'
+            display="block"
+            mx="auto"
           />
         </Link>
         <Image src="/assets/svgs/success-image.svg" w="80px" mx="auto" />
@@ -54,6 +54,7 @@ const index = () => {
             w="100%"
             mb="10px"
             bg="#000080"
+            _hover={{ bg: '#000080' }}
             color="white"
             h="55px"
             borderRadius="50px"
@@ -71,11 +72,12 @@ const index = () => {
             mb="10px"
             bg="#EDEDFF"
             color="#000080"
+            _hover={{ bg: '#000080' }}
             h="55px"
             borderRadius="50px"
             onClick={() => {
-              Cookie.set('vestier-token', JSON.stringify(token))
-              Cookie.remove('vestier-new-token')
+              Cookie.set('vestier-token', JSON.stringify(token));
+              Cookie.remove('vestier-new-token');
               router.push('/user/dashboard');
             }}
           >

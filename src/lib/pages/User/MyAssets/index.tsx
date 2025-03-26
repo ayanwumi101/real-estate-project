@@ -35,22 +35,31 @@ const index = () => {
   const ownedAssets = assets?.filter((asset) => asset?.asset_type === 'owned');
   
   return (
-    <Box pb="40px" overflow='auto'>
-      <Stack w='100%'>
-        <AssetsStatistics numberOfAssets={assets?.length} assetInNaira='' totalRemittance=''  />
+    <Box pb="40px" overflow="auto">
+      <Stack w="100%">
+        <AssetsStatistics
+          numberOfAssets={assets?.length}
+          assetInNaira=""
+          totalRemittance=""
+        />
         <Box px={['10px', '30px']}>
-          <Flex justifyContent="space-between" alignItems="center" flexWrap={['wrap', 'nowrap']}>
+          <Flex
+            justifyContent="space-between"
+            alignItems="center"
+            flexWrap={['wrap', 'nowrap']}
+          >
             <NavigationTab
               tabs={['Owned', 'Cashflow', 'Installment']}
               activeTab={activeTab}
               setActiveTab={setActiveTab}
             />
-            <Link href='/user/my-assets/add-assets'>
+            <Link href="/user/my-assets/add-assets">
               <Button
                 bg="#000080"
                 fontSize={14}
                 color="#ffffff"
                 fontWeight={500}
+                _hover={{ bg: 'brand.100' }}
               >
                 <Flex alignItems="center" gap="10px">
                   <Text>Add new asset</Text>
@@ -60,9 +69,11 @@ const index = () => {
             </Link>
           </Flex>
         </Box>
-        <Box px={['10px',"20px"]}>
+        <Box px={['10px', '20px']}>
           {activeTab === 'Owned' && <OwnedAssets assets={ownedAssets} />}
-          {activeTab === 'Installment' && <Installment assets={installmentAssets} />}
+          {activeTab === 'Installment' && (
+            <Installment assets={installmentAssets} />
+          )}
           {activeTab === 'Cashflow' && <Cashflow assets={cashflowAssets} />}
         </Box>
       </Stack>

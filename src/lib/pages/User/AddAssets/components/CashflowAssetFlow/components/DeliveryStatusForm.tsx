@@ -121,11 +121,11 @@ const DeliveryStatusForm = ({
                   isInvalid={!!errors.propertyCost && touched.propertyCost}
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
-                   When was this proprty bought
+                    When was this proprty bought
                   </FormLabel>
                   <Field
                     as={Input}
-                    type='date'
+                    type="date"
                     name="boughtDate"
                     bg="#FBFBFB"
                     border="1px solid #C0C0C0"
@@ -231,7 +231,7 @@ const DeliveryStatusForm = ({
                     borderRadius="30px"
                     fontWeight={600}
                     fontSize={16}
-                    _hover={{ bg: '#EDEDFF' }}
+                    _hover={{ bg: '#000080' }}
                     onClick={() => setParentStep(parentStep - 1)}
                     minW="100px"
                   >

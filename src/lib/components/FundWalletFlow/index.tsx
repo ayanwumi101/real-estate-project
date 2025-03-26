@@ -97,6 +97,7 @@ const AccountDetails = ({
             fontWeight={600}
             w="182px"
             onClick={onClose}
+            _hover={{ bg: '#000080' }}
           >
             I’ve made transfer
           </Button>
@@ -177,6 +178,7 @@ const PaymentType = ({
           </Button>
           <Button
             bg="#000080"
+            _hover={{ bg: '#000080' }}
             color="#ffffff"
             fontWeight={600}
             w="182px"
@@ -228,7 +230,9 @@ const DepositToWallet = ({step, setStep, onClose}:{step: number, onClose: () => 
                 h="50px"
                 mb="13px"
               />
-              <Text color="#2E353F" fontWeight={500}>Min Deposit is ₦ 10,000</Text>
+              <Text color="#2E353F" fontWeight={500}>
+                Min Deposit is ₦ 10,000
+              </Text>
             </Box>
           </Box>
           <Flex alignItems="center" gap="8px" justifyContent="flex-end">
@@ -243,6 +247,7 @@ const DepositToWallet = ({step, setStep, onClose}:{step: number, onClose: () => 
             </Button>
             <Button
               bg="#000080"
+              _hover={{ bg: '#000080' }}
               color="#ffffff"
               fontWeight={600}
               w="182px"

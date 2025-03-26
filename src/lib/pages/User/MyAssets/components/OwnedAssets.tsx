@@ -109,6 +109,7 @@ const OwnedAssets = ({assets}:{assets: any[]}) => {
                         fontWeight={500}
                         px="12px"
                         py="5px"
+                        _hover={{ bg: '#EDEDFF' }}
                       >
                         View Asset
                       </Button>

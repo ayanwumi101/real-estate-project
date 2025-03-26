@@ -186,7 +186,7 @@ const NextOfKinDetails = ({
                   borderRadius="30px"
                   fontWeight={600}
                   fontSize={16}
-                  _hover={{ bg: '#000080' }}
+                  _hover={{ bg: '#ededff' }}
                   onClick={() => setStep(step - 1)}
                   minW="100px"
                 >

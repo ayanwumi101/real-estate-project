@@ -80,7 +80,12 @@ const ForgotPasswordForm = () => {
       {({ errors, touched, setFieldValue, values }) => {
         return (
           <Form>
-            <Box px={['24px', '44px']} pb="60px" pt='30px' h={['auto', '100vh']}>
+            <Box
+              px={['24px', '44px']}
+              pb="60px"
+              pt="30px"
+              h={['auto', '100vh']}
+            >
               <Box mb="45px">
                 <Link href="/">
                   <Image
@@ -92,7 +97,7 @@ const ForgotPasswordForm = () => {
                   />
                 </Link>
                 <Heading
-                  fontSize={[25,30]}
+                  fontSize={[25, 30]}
                   fontWeight={500}
                   mb="16px"
                   color="#222222"
@@ -131,6 +136,7 @@ const ForgotPasswordForm = () => {
                       bg="#000080"
                       color="white"
                       h="55px"
+                      _hover={{ bg: '#000080' }}
                       borderRadius="50px"
                       type="submit"
                     >
