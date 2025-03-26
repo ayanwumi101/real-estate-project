@@ -20,12 +20,12 @@ const Header = ({propertyName, location}:Headerprops) => {
         <Box>
           <Stack spacing="10px">
             <Heading fontSize={[20, 24]} fontWeight={500} color="#222222">
-              {propertyName || ''}
+              {propertyName ? propertyName : 'Property Name'}
             </Heading>
             <Flex alignItems="center" gap="10px">
               <LocationIcon />
               <Text color="#2E353F" fontWeight={500}>
-                {location || ''}
+                {location ? location : 'Location'}
                 {/* Plot 10, Adewunmi Layout, Iju Ishaga, Lagos */}
               </Text>
             </Flex>

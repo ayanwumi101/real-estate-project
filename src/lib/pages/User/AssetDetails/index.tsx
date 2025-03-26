@@ -31,7 +31,7 @@ const index = () => {
       <Stack>
         <Header
           propertyName={propertyDetails?.property_name}
-          location={`${propertyDetails?.house_number}, ${propertyDetails?.street_name}, ${propertyDetails?.state_id} state`}
+          location={`${propertyDetails?.house_number || ''}, ${propertyDetails?.street_name || ''}, ${propertyDetails?.state_id || ''} state`}
         />
         <Box p={['20px', '40px']}>
           <Flex
