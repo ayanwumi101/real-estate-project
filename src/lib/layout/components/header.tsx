@@ -32,17 +32,24 @@ export const Header = () => {
       <Box
         as="header"
         maxW={['95%', '1300px']}
+        h='80px'
         mx="auto"
-        backgroundColor="#F5F5F5"
+        bg="bg.100"
         borderRadius="50px"
         px={['14px', '24px']}
-        mt={['20px', '36px']}
         py="10px"
         color="#222222"
         boxShadow="sm"
-        fontWeight={700}
+        fontWeight={600}
+        display='flex'
+        justifyContent="center"
+        zIndex={5}
+        position='sticky'
+        top={['20px', '36px']}
+        backdropFilter="blur(8px)"
+        transition="all 0.3s ease-in-out"
       >
-        <Flex alignItems="center" justifyContent="space-between">
+        <Flex alignItems="center" justifyContent="space-between" w='100%'>
           <Link href="/">
             <Image
               src="/assets/svgs/vestier-blue-logo.svg"
@@ -59,11 +66,10 @@ export const Header = () => {
                 cursor="pointer"
                 onClick={() => scrollToSection('features')}
               >
-                Features
+                Help Center
               </Text>
-              <Text>About Us</Text>
               <Link href="/discover">
-                <Text>Discover</Text>
+                <Text>About Us</Text>
               </Link>
               <Text
                 cursor="pointer"
@@ -72,7 +78,7 @@ export const Header = () => {
                 How it works
               </Text>
               <Link href="/signin">
-                <Text>Sign in</Text>
+                <Button _hover={{bg: 'none'}} variant='outline' border='1px solid' color='brand.100' borderColor='brand.100' px='20px'>Sign in</Button>
               </Link>
               <Link href="/signup">
                 <Button
@@ -81,7 +87,7 @@ export const Header = () => {
                   py="8px"
                   px="20px"
                   borderRadius="50px"
-                  fontWeight={700}
+                  fontWeight={600}
                 >
                   Get Started
                 </Button>
@@ -92,7 +98,8 @@ export const Header = () => {
             <Flex alignItems="center" gap="10px">
               <Link href="/signin">
                 <Button
-                  bg="#4040A0"
+                  bg='brand.100'
+                  _hover={{bg: 'brand.100'}}
                   color="white"
                   py="8px"
                   px="20px"

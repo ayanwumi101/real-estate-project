@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {
   Box,
@@ -23,10 +23,7 @@ import Link from 'next/link';
 import { ReactHTMLElement, ReactNode, ReactElement } from 'react';
 import { motion } from 'framer-motion';
 
-
 const MotionBox = chakra(motion.div);
-
-
 
 export const PropertyCard = ({ imageSource }: { imageSource: string }) => {
   return (
@@ -133,11 +130,11 @@ export const UserPropertyCard = ({ imageSource }: { imageSource: string }) => {
 };
 
 export const FeatureCard = ({
-  image,
+  Icon,
   heading,
   description,
 }: {
-  image: string;
+  Icon: any;
   heading: string;
   description: string;
 }) => {
@@ -149,11 +146,9 @@ export const FeatureCard = ({
       py="10px"
     >
       <Stack spacing="24px">
-        <Box w="60px" h="60px">
-          <Image src={image} w="100%" />
-        </Box>
+        <Icon />
         <Box>
-          <Heading fontSize={20} color="#222222" fontWeight={700} mb="12px">
+          <Heading fontSize={18} color="#222222" fontWeight={700} mb="12px">
             {heading}
           </Heading>
           <Text color="#2E353F" fontWeight={400}>
@@ -242,22 +237,30 @@ export const SingleApartmentCard = ({
   );
 };
 
-export const PortfolioStatCard = ({label, balance, showHideIcon}:{label: string, balance: string | number, showHideIcon: boolean}) => {
+export const PortfolioStatCard = ({
+  label,
+  balance,
+  showHideIcon,
+}: {
+  label: string;
+  balance: string | number;
+  showHideIcon: boolean;
+}) => {
   return (
     <Box
       minW={['300px', '350px']}
       borderRadius="5px"
       py="32px"
-      px='20px'
+      px="20px"
       border="1px solid #E4E4E4"
       boxShadow="md"
-      h='140px'
+      h="140px"
     >
-      <Stack spacing='16px' w='100%'>
+      <Stack spacing="16px" w="100%">
         <Text color="#ABABFF" fontWeight={500}>
           {label}
         </Text>
-        <Flex alignItems="center" gap="16px" w='100%'>
+        <Flex alignItems="center" gap="16px" w="100%">
           <Heading fontSize={24} fontWeight={500} color="#222222">
             {balance}
           </Heading>
@@ -267,8 +270,6 @@ export const PortfolioStatCard = ({label, balance, showHideIcon}:{label: string,
     </Box>
   );
 };
-
-
 
 export const StatCard = () => {
   return (
@@ -292,8 +293,6 @@ export const StatCard = () => {
   );
 };
 
-
-
 export const AssetStatCard = ({
   label,
   children,
@@ -303,7 +302,7 @@ export const AssetStatCard = ({
 }) => {
   return (
     <Box
-      minW={['300px',"33%"]}
+      minW={['300px', '33%']}
       borderRadius="5px"
       py="25px"
       border="1px solid #E4E4E4"

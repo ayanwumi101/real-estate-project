@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     title: 'nextarter-chakra',
     description: 'Next.js + chakra-ui + TypeScript template',
     images: {
-      url: '/assets/images/logo.png',
+      url: 'https://res.cloudinary.com/ddke4ujej/image/upload/v1743789583/Open_graph_g5dg3k.png',
       alt: 'Vestier Logo',
     },
   },

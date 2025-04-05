@@ -46,7 +46,7 @@ const MobileSidenav = ({
         left: '0',
         overflow: 'hidden',
         backdropFilter: 'blur(8px)',
-        zIndex: '2',
+        zIndex: '10',
       }}
       initial={{ x: '-100%' }}
       animate={{ x: 0 }}

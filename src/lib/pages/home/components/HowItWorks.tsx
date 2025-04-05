@@ -25,18 +25,9 @@ export const SingleCard = ({
     <Box w="220px">
       <VStack spacing="24px">
         <Image src={image} />
-        <Flex
-          justifyContent="center"
-          fontWeight={600}
-          alignItems="center"
-          gap="8px"
-          flexDir={['column', 'row']}
-        >
-          <Text fontSize={14} color="#222222">
-            {label}
-          </Text>
-          <ArrowForward />
-        </Flex>
+        <Text fontSize={16} color="#222222" fontWeight={600}>
+          {label}
+        </Text>
       </VStack>
     </Box>
   );
@@ -70,10 +61,10 @@ export const FeatureCard = ({
 
 const HowItWorks = () => {
   return (
-    <Box w="100%" id='howItWorks'>
-      <VStack maxW="1200px" mx="auto" spacing="60px" py="60px" px={['24px', 0]}>
+    <Box w="100%" id="howItWorks">
+      <VStack maxW="1300px" mx="auto" spacing="60px" py="60px" px={['24px', 0]}>
         <Box textAlign="center" maxW="740px" mx="auto">
-          <Heading mb="24px" fontSize={40} color="#222222">
+          <Heading mb="24px" fontWeight={500} fontSize={40} color="#222222">
             How it works
           </Heading>
           <Text textAlign="center" color="#2E353F">
@@ -86,28 +77,33 @@ const HowItWorks = () => {
           <HStack
             flexWrap="wrap"
             justifyContent={['center', 'space-between']}
-            alignItems="flex-end"
+            alignItems={['center',"flex-end"]}
             spacing={[3, 0]}
+            flexDir={['column', 'row']}
           >
             <SingleCard
               image="/assets/icons/google.png"
-              label="Explore Available Projects"
+              label="Sign Up & Get Started"
             />
+            <ArrowForward />
             <SingleCard
               image="/assets/icons/cursor.png"
-              label="Select project of interest"
+              label="Add your properties"
             />
+            <ArrowForward />
             <SingleCard
               image="/assets/icons/card.png"
-              label="Make first payment"
+              label="Key property details"
             />
+            <ArrowForward />
             <SingleCard
               image="/assets/icons/dashboard.png"
-              label="Track your portfolio"
+              label="Stay Updated on Payments"
             />
+            <ArrowForward />
             <SingleCard
               image="/assets/icons/stock.png"
-              label="Engage The Marketplace"
+              label="Manage your assets"
             />
           </HStack>
         </Box>
@@ -115,15 +111,15 @@ const HowItWorks = () => {
           <Button
             mx="auto"
             textAlign="center"
-            bg="#000080"
-            _hover={{ bg: '#000080' }}
+            bg="brand.400"
+            _hover={{ bg: 'brand.400' }}
             py="6"
             px="24px"
             borderRadius="50px"
             fontWeight={700}
             color="#ffffff"
           >
-            Load More
+            Learn More
           </Button>
         </Box>
       </VStack>
@@ -138,13 +134,22 @@ const HowItWorks = () => {
         alignItems="center"
         justifyContent="center"
       >
-        <Box w="100%" mx="auto" px={['24px', 0]} h="100%" bg="rgba(0, 0, 0, 0.7)" display='flex' alignItems='center' justifyContent='center'>
+        <Box
+          w="100%"
+          mx="auto"
+          px={['24px', 0]}
+          h="100%"
+          bg="rgba(0, 0, 0, 0.7)"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
           <Flex
             alignItems="flex-start"
             justifyContent="space-between"
             flexWrap={['wrap', 'nowrap']}
-            w={['95%','90%']}
-            margin='auto'
+            w={['95%', '90%']}
+            margin="auto"
           >
             <Box maxW="550px" mb={['32px', 0]}>
               <Heading fontSize={[34, 48]} fontWeight={700} color="#ffffff">
@@ -177,7 +182,7 @@ const HowItWorks = () => {
           </Flex>
         </Box>
       </Box>
-      <Box py="70px" maxW="1200px" mx="auto" px={['24px', 0]} id='features'>
+      <Box py="70px" maxW="1200px" mx="auto" px={['24px', 0]} id="features">
         <Flex
           alignItems="flex-start"
           justifyContent="space-between"
