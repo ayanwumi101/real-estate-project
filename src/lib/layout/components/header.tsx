@@ -32,7 +32,7 @@ export const Header = () => {
       <Box
         as="header"
         maxW={['95%', '1300px']}
-        h='80px'
+        h={['70px',"80px"]}
         mx="auto"
         bg="bg.100"
         borderRadius="50px"
@@ -41,15 +41,15 @@ export const Header = () => {
         color="#222222"
         boxShadow="sm"
         fontWeight={600}
-        display='flex'
+        display="flex"
         justifyContent="center"
         zIndex={5}
-        position='sticky'
+        position="sticky"
         top={['20px', '36px']}
         backdropFilter="blur(8px)"
         transition="all 0.3s ease-in-out"
       >
-        <Flex alignItems="center" justifyContent="space-between" w='100%'>
+        <Flex alignItems="center" justifyContent="space-between" w="100%">
           <Link href="/">
             <Image
               src="/assets/svgs/vestier-blue-logo.svg"
@@ -62,13 +62,14 @@ export const Header = () => {
           </Link>
           <Box display={['none', 'block']}>
             <Flex alignItems="center" gap="32px">
-              <Text
-                cursor="pointer"
-                onClick={() => scrollToSection('features')}
-              >
-                Help Center
-              </Text>
-              <Link href="/discover">
+              <Link href='/contact-us'>
+                <Text
+                  cursor="pointer"
+                >
+                  Help Center
+                </Text>
+              </Link>
+              <Link href="/about-us">
                 <Text>About Us</Text>
               </Link>
               <Text
@@ -78,7 +79,16 @@ export const Header = () => {
                 How it works
               </Text>
               <Link href="/signin">
-                <Button _hover={{bg: 'none'}} variant='outline' border='1px solid' color='brand.100' borderColor='brand.100' px='20px'>Sign in</Button>
+                <Button
+                  _hover={{ bg: 'none' }}
+                  variant="outline"
+                  border="1px solid"
+                  color="brand.100"
+                  borderColor="brand.100"
+                  px="20px"
+                >
+                  Sign in
+                </Button>
               </Link>
               <Link href="/signup">
                 <Button
@@ -98,8 +108,8 @@ export const Header = () => {
             <Flex alignItems="center" gap="10px">
               <Link href="/signin">
                 <Button
-                  bg='brand.100'
-                  _hover={{bg: 'brand.100'}}
+                  bg="brand.100"
+                  _hover={{ bg: 'brand.100' }}
                   color="white"
                   py="8px"
                   px="20px"
