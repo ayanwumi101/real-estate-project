@@ -12,7 +12,8 @@ const APP_NAME = 'Vestier';
 
 export const metadata: Metadata = {
   title: { default: APP_NAME, template: 'Vestier' },
-  description: 'A real estate and investment platform',
+  description:
+    "At Vestier, we're redefining real estate asset management with technology-driven solutions that help property owners, investors, and managers stay in control of their portfolios.",
   applicationName: APP_NAME,
   appleWebApp: {
     capable: true,
@@ -23,16 +24,17 @@ export const metadata: Metadata = {
     telephone: false,
   },
   openGraph: {
-    url: 'https://nextarter-chakra.sznm.dev',
-    title: 'nextarter-chakra',
-    description: 'Next.js + chakra-ui + TypeScript template',
+    url: 'https://vestier.com',
+    title: 'Vestier',
+    description:
+      "At Vestier, we're redefining real estate asset management with technology-driven solutions that help property owners, investors, and managers stay in control of their portfolios.",
     images: {
       url: 'https://res.cloudinary.com/ddke4ujej/image/upload/v1743789583/Open_graph_g5dg3k.png',
       alt: 'Vestier Logo',
     },
   },
   twitter: {
-    creator: '@sozonome',
+    creator: '@vestier',
     card: 'summary_large_image',
   },
 };

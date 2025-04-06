@@ -4,8 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { VscClose } from 'react-icons/vsc';
-// import { useRouter } from 'nextjs-toploader/dist/app';
-
+import { scrollToSection } from '~/lib/utils/scrollToSection';
 
 const MobileSidenav = ({
   setOpenSideNav,
@@ -15,20 +14,16 @@ const MobileSidenav = ({
   const router = useRouter();
   const links = [
     {
-        name: 'Features',
-        link: 'discover',
+      name: 'Help Center',
+      link: 'contact-us',
     },
     {
       name: 'About Us',
-      link: 'discover',
-    },
-    {
-      name: 'Discover',
-      link: 'discover',
+      link: 'about-us',
     },
     {
       name: 'How it works',
-      link: 'discover',
+      link: '/',
     },
   ];
   const handleClick = (link: string) => {
@@ -99,7 +94,22 @@ const MobileSidenav = ({
         <Flex flexDir="column">
           <VStack color="black" spacing="20px">
             {links.map((link) => (
-              <Button bg='none' p='0' _hover={{bg: 'none', p: 0}} onClick={() => handleClick(`/${link.link}`)} key={link.name}>
+              <Button
+                bg="none"
+                p="0"
+                _hover={{ bg: 'none', p: 0 }}
+                onClick={() => {
+                  if (link.link === 'how-it-works') {
+                    setOpenSideNav(false);
+                    router.push('/');
+                    scrollToSection('howItWorks');
+                  } else {
+                    router.push(link.link);
+                    setOpenSideNav(false);
+                  }
+                }}
+                key={link.name}
+              >
                 <Text
                   onClick={() => setOpenSideNav(false)}
                   fontSize={16}
@@ -112,13 +122,13 @@ const MobileSidenav = ({
             ))}
             <Button
               fontWeight={500}
-              bg='#4040A0'
+              bg="#4040A0"
               color="white"
               borderRadius="49px"
               py="8px"
               px="20px"
               onClick={() => handleClick('/signin')}
-              minW='150px'
+              minW="150px"
             >
               Sign in
             </Button>
