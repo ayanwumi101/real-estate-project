@@ -16,7 +16,7 @@ import { IoChevronForward, IoArrowForward } from 'react-icons/io5';
 
 const Faqs = () => {
   return (
-    <Box maxW="1200px" mx="auto" py="60px" px={['24px', 0]} id='faqs'>
+    <Box maxW="1200px" mx="auto" py="60px" px={['24px', 0]} id="faqs">
       <Flex
         alignItems="flex-start"
         justifyContent="space-between"
@@ -24,14 +24,15 @@ const Faqs = () => {
       >
         <Box w="560px" mb={['40px', 0]}>
           <Stack spacing="24px">
-            <Heading color="#222222" fontSize={40} fontWeight={700}>
+            <Heading color="#222222" fontSize={32} fontWeight={500}>
               Frequently Asked Questions
             </Heading>
             <Box>
               <Text color="#222222" fontWeight={500} mb="16px">
-                Can’t find what you’re looking for?
+                Get in touch with us today to learn how our technology-driven
+                solutions can unlock new potential for your assets.
               </Text>
-              <Button
+              {/* <Button
                 w="175px"
                 bg="#000080"
                 _hover={{ bg: '#000080' }}
@@ -49,7 +50,7 @@ const Faqs = () => {
                   <Text>Help Center</Text>
                   <IoChevronForward />
                 </Flex>
-              </Button>
+              </Button> */}
             </Box>
           </Stack>
         </Box>

@@ -105,11 +105,11 @@ const ContactDetails = () => {
         <Heading fontWeight={500} fontSize={32}>
           Contact Us
         </Heading>
-        <Text fontSize={18} color="brand.300">
+        <Text fontSize={[16,18]} color="brand.300">
           Email, call, or complete the form to learn how Vestier can solve your
           real estate management problem.
         </Text>
-        <Text fontSize={18} color="brand.300">
+        <Text fontSize={[16,18]} color="brand.300">
           info@vestier.com
         </Text>
         <Box>

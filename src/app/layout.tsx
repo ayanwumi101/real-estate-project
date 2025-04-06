@@ -47,7 +47,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
   return (
     <html lang="en">
       <body>
-        <NextTopLoader showSpinner={false} color="#2E353F" />
+        <NextTopLoader showSpinner={false} color="#000080" />
         <RootProviders>
           <Layout>{children}</Layout>
         </RootProviders>

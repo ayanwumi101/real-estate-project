@@ -11,6 +11,7 @@ import {
   Divider,
   Avatar,
   chakra,
+  VStack,
 } from '@chakra-ui/react';
 import {
   LocationIcon,
@@ -517,6 +518,42 @@ export const AddAssetNextOfKinCard = ({
           </Flex>
         </Box>
       </Stack>
+    </Box>
+  );
+};
+
+
+export const OfferCard = ({
+  image,
+  title,
+  description,
+}: {
+  image: string;
+  title: string;
+  description: string;
+}) => {
+  return (
+    <Box
+      border="1px solid"
+      borderColor="border.200"
+      borderRadius="10px"
+      py="30px"
+      px="20px"
+      w={['100%','300px']}
+    >
+      <VStack alignItems="center" textAlign="center" spacing="20px">
+        <Image
+          src={image}
+          w="193px"
+          h="193px"
+          borderRadius="50%"
+          objectFit="cover"
+        />
+        <Heading fontSize={18} color="brand.400">
+          {title}
+        </Heading>
+        <Text color="brand.300">{description}</Text>
+      </VStack>
     </Box>
   );
 };
