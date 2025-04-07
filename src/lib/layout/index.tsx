@@ -15,8 +15,7 @@ import {
   Tr,
   Td,
   Tbody,
-  keyframes,
-  useMediaQuery,
+  useMediaQuery
 } from '@chakra-ui/react';
 import {
   createContext,
@@ -40,6 +39,7 @@ import {
 } from '../components/Icons/Icons';
 import { GetUserProfileDetails } from '../api/services/profileService';
 import { GetNextOfKins } from '../api/services/userService';
+import './style.css'
 
 export const AppContext = createContext<any>({});
 
@@ -281,18 +281,6 @@ export const Layout = ({ children }: LayoutProps) => {
   }, [pathname, router, token]);
 
   if (isLoading) {
-    const zoomInOut = keyframes`
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.2);
-    }
-    100% {
-      transform: scale(1);
-    }
-  `;
-
     return (
       <Box
         w="100%"
@@ -306,7 +294,7 @@ export const Layout = ({ children }: LayoutProps) => {
           w="250px"
           h="250px"
           objectFit="cover"
-          animation={`${zoomInOut} 1s infinite`}
+          className='zoom-in-out'
         />
       </Box>
     );
