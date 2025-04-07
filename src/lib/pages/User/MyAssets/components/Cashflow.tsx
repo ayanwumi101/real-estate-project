@@ -36,17 +36,10 @@ const Cashflow = ({ assets }: { assets: any[] }) => {
           <Stack spacing="15px" alignItems="center" textAlign="center">
             {' '}
             <Image src="/assets/images/briefcase.png" />
-            <Heading fontSize={18}>Your Asset list is empty</Heading>
+            <Heading fontSize={18}>No Cash Flow Properties Yet!</Heading>
             <Text color="#2E353F">
-              Easily{' '}
-              <Link
-                href="/user/my-assets/add-assets"
-                style={{ color: '#000080', textDecoration: 'underline' }}
-              >
-                add new asset
-              </Link>{' '}
-              and monitor all your properties in one place. Managing your
-              portfolio has never been smoother!
+              You haven’t added any cash-flowing assets. Track rental income,
+              monitor returns, and manage payments effortlessly.
             </Text>
           </Stack>
         </Box>

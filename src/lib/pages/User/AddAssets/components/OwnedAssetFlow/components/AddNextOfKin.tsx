@@ -24,8 +24,6 @@ import { AddNextOfKinToAsset } from '~/lib/api/services/assetsService';
 import { useRouter } from 'next/navigation';
 import AddNextOfKinModal from '~/lib/pages/User/AddNextOfKin';
 
-
-
 const AddNextOfKin = ({
   step,
   setStep,
@@ -40,6 +38,22 @@ const AddNextOfKin = ({
   const [selectedNextOfKin, setSelectedNextOfKin] = React.useState<any>('');
   const [openModal, setOpenModal] = React.useState<boolean>(false);
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [searchTerm, setSearchTerm] = React.useState<string>('');
+  const [filteredNextOfKins, setFilteredNextOfKins] =
+    React.useState<any>(nextOfKins);
+
+  const handleChange = (searchValue: string) => {
+    setSearchTerm(searchValue);
+    if (searchTerm === '') {
+      setFilteredNextOfKins(nextOfKins);
+    } else {
+      setFilteredNextOfKins(
+        nextOfKins.filter((nextOfKin: any) =>
+          nextOfKin?.fullname?.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      );
+    }
+  };
 
   const handleSubmit = async () => {
     const formData = {
@@ -82,7 +96,7 @@ const AddNextOfKin = ({
       });
     }
   };
-  
+
   return (
     <Box>
       <Stack spacing="32px">
@@ -103,10 +117,12 @@ const AddNextOfKin = ({
             borderRadius="50px"
             color="brand.800"
             pl="12"
+            value={searchTerm}
+            onChange={(e) => handleChange(e.target.value)}
           />
         </InputGroup>
         <Box>
-          {nextOfKins.length < 1 ? (
+          {filteredNextOfKins?.length < 1 ? (
             <Box maxW="460px" mx="auto">
               <Stack spacing="12px" alignItems="center" textAlign="center">
                 <EmptyStateIcon />
@@ -134,7 +150,7 @@ const AddNextOfKin = ({
           ) : (
             <Box>
               <Stack spacing="12px">
-                {nextOfKins.map((nextOfKin: any, index: number) => (
+                {filteredNextOfKins?.map((nextOfKin: any, index: number) => (
                   <AddAssetNextOfKinCard
                     name={nextOfKin?.fullname}
                     email={nextOfKin?.email}

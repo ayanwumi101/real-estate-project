@@ -105,30 +105,30 @@ const DashboardSidebar = () => {
               isActive={pathname.includes('/user/my-assets')}
               href="/user/my-assets"
             />
-            <SideBarItem
+            {/* <SideBarItem
               label="Browse Project"
               Icon={BrowseProjectIcon}
               isActive={pathname === '/user/projects'}
               href="/user/projects"
-            />
+            /> */}
             <SideBarItem
               label="Remittance"
               Icon={MyPortfolioIcon}
               isActive={pathname === '/user/portfolio'}
               href="/user/portfolio"
             />
-            <SideBarItem
+            {/* <SideBarItem
               label="Transactions"
               Icon={TransactionsIcon}
               isActive={pathname === '/user/transactions'}
               href="/user/transactions"
-            />
-            <SideBarItem
+            /> */}
+            {/* <SideBarItem
               label="Help and Support"
               Icon={HelpAndSupportIcon}
               isActive={pathname === '/user/support'}
               href="/user/support"
-            />
+            /> */}
             <SideBarItem
               label="Settings"
               Icon={SettingsIcon}

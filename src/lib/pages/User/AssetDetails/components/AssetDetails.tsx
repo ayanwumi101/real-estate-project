@@ -167,7 +167,9 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                 />
                 <AssetDetailsItem
                   label="Installment payment"
-                  labelValue={FormatAmount(Number(propertyDetails?.amount_paid) || 0.0)}
+                  labelValue={FormatAmount(
+                    Number(propertyDetails?.amount_paid) || 0.0
+                  )}
                 />
                 <AssetDetailsItem
                   label="Last Payment Date"
@@ -249,19 +251,43 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
             <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
               <AssetDetailsItem
                 label="Payment Status"
-                labelValue={propertyDetails?.payment_status || 'N/A'}
+                labelValue={
+                  propertyDetails?.payment_status
+                    ? propertyDetails?.payment_status
+                    : propertyDetails?.asset_type === 'cashflow'
+                      ? 'Completed'
+                      : 'N/A'
+                }
               />
               <AssetDetailsItem
                 label="Allocation Status"
-                labelValue={propertyDetails?.allocation_status || 'N/A'}
+                labelValue={
+                  propertyDetails?.allocation_status
+                    ? propertyDetails?.allocation_status
+                    : propertyDetails?.asset_type === 'cashflow'
+                      ? 'Completed'
+                      : 'N/A'
+                }
               />
               <AssetDetailsItem
                 label="Documentation Status"
-                labelValue={propertyDetails?.documentation_status || 'N/A'}
+                labelValue={
+                  propertyDetails?.documentation_status
+                    ? propertyDetails?.documentation_status
+                    : propertyDetails?.asset_type === 'cashflow'
+                      ? 'Completed'
+                      : 'N/A'
+                }
               />
               <AssetDetailsItem
                 label="Handover Status"
-                labelValue={propertyDetails?.handover_status || 'N/A'}
+                labelValue={
+                  propertyDetails?.handover_status
+                    ? propertyDetails?.handover_status
+                    : propertyDetails?.asset_type === 'cashflow'
+                      ? 'Completed'
+                      : 'N/A'
+                }
               />
             </Flex>
           </Box>

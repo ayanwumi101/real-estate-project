@@ -9,8 +9,8 @@ const index = () => {
   return (
     <Box pt={[3,0]}>
         <AccountBalance />
-        <Investments />
-        <MarketUpdates />
+        {/* <Investments />
+        <MarketUpdates /> */}
     </Box>
   )
 }

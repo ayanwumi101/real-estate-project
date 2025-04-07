@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Box,
   Input,
@@ -13,13 +13,14 @@ import {
   Checkbox,
   Spinner,
   FormErrorMessage,
-  useToast,
+  useToast
 } from '@chakra-ui/react';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { UpdateAssetCashflowDetails } from '~/lib/api/services/assetsService';
 import Cookie from 'js-cookie';
-import next from 'next';
+
+
 
 const CashflowDetails = ({
   step,
@@ -39,7 +40,6 @@ const CashflowDetails = ({
     nextCashflowDate: '',
     cashflowAmount: '',
     cashflowDuration: '',
-    equityOwnership: '',
   };
 
   const validationSchema = Yup.object().shape({
@@ -49,7 +49,6 @@ const CashflowDetails = ({
     nextCashflowDate: Yup.string().required('Next cashflow date is required'),
     cashflowAmount: Yup.string().required('Cashflow amount is required'),
     cashflowDuration: Yup.string().required('Cashflow duration is required'),
-    equityOwnership: Yup.number().required('Equity Ownership is required'),
   });
 
   const handleSubmit = async (values: any) => {
@@ -61,7 +60,6 @@ const CashflowDetails = ({
       cashflow_payment_due: values.nextCashflowDate,
       cashflow_amount: values.cashflowAmount,
       cashflow_duration: values.cashflowDuration,
-      equity_ownership: values.equityOwnership,
     };
     try {
       const res = await UpdateAssetCashflowDetails(assetId, formData);
@@ -90,6 +88,8 @@ const CashflowDetails = ({
     }
   };
 
+  
+
   return (
     <Formik
       initialValues={initialValues}
@@ -97,6 +97,42 @@ const CashflowDetails = ({
       onSubmit={handleSubmit}
     >
       {({ errors, touched, setFieldValue, values }) => {
+        useEffect(() => {
+          if (
+            values.lastCashflowDate &&
+            values.lastCashflowDate !== 'Never Collected' &&
+            values.cashflowDuration
+          ) {
+            const lastDate = new Date(values.lastCashflowDate);
+            let nextDate;
+
+            switch (values.cashflowDuration) {
+              case 'Daily':
+                nextDate = new Date(lastDate);
+                nextDate.setDate(lastDate.getDate() + 1);
+                break;
+              case 'Weekly':
+                nextDate = new Date(lastDate);
+                nextDate.setDate(lastDate.getDate() + 7);
+                break;
+              case 'Monthly':
+                nextDate = new Date(lastDate);
+                nextDate.setMonth(lastDate.getMonth() + 1);
+                break;
+              case 'Yearly':
+                nextDate = new Date(lastDate);
+                nextDate.setFullYear(lastDate.getFullYear() + 1);
+                break;
+              default:
+                nextDate = '';
+            }
+
+            if (nextDate instanceof Date && !isNaN(nextDate.getTime())) {
+              const formatted = nextDate.toISOString().split('T')[0];
+              setFieldValue('nextCashflowDate', formatted);
+            }
+          }
+        }, [values.lastCashflowDate, values.cashflowDuration, setFieldValue]);
         return (
           <Form>
             <Box w={['100%', '100%', '600px']}>
@@ -162,9 +198,10 @@ const CashflowDetails = ({
                     h="50px"
                     placeholder="Select"
                   >
-                    <option value="Monthly">Monthly</option>
-                    <option value="Weekly">Weekly</option>
                     <option value="Daily">Daily</option>
+                    <option value="Weekly">Weekly</option>
+                    <option value="Monthly">Monthly</option>
+                    <option value="Yearly">Yearly</option>
                   </Field>
                   <FormErrorMessage>{errors.cashflowDuration}</FormErrorMessage>
                 </FormControl>
@@ -241,27 +278,6 @@ const CashflowDetails = ({
                     _placeholder={{ color: '#8295AA', fontWeight: 500 }}
                   />
                   <FormErrorMessage>{errors.cashflowAmount}</FormErrorMessage>
-                </FormControl>
-                <FormControl
-                  isInvalid={
-                    !!errors.equityOwnership && touched.equityOwnership
-                  }
-                >
-                  <FormLabel fontWeight={600} fontSize={16} color="#222222">
-                    What is your equity ownership?
-                  </FormLabel>
-                  <Field
-                    as={Input}
-                    name="equityOwnership"
-                    border="1px solid #C0C0C0"
-                    bg="#FBFBFB"
-                    h="50px"
-                    borderRadius="40px"
-                    placeholder="100%"
-                    _placeholder={{ color: '#8295AA', fontWeight: 500 }}
-                    type="number"
-                  />
-                  <FormErrorMessage>{errors.equityOwnership}</FormErrorMessage>
                 </FormControl>
                 <Flex justifyContent="flex-end" gap="10px">
                   <Button

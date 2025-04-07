@@ -97,7 +97,7 @@ const LoginForm = () => {
           Welcome Back
         </Heading>
       </Box>
-      <Box mb="32px">
+      {/* <Box mb="32px">
         <HStack
           alignItems="center"
           gap={['17px', 0]}
@@ -108,8 +108,8 @@ const LoginForm = () => {
           <SocialLoginButton label="Apple" Icon={AppleIcon} />
           <SocialLoginButton label="Microsoft Account" Icon={MicrosoftIcon} />
         </HStack>
-      </Box>
-      <Box pos="relative" mb="40px">
+      </Box> */}
+      {/* <Box pos="relative" mb="40px">
         <Box w="100%" h="1px" bg="#8295AA"></Box>
         <Text
           pos="absolute"
@@ -125,7 +125,7 @@ const LoginForm = () => {
         >
           Or
         </Text>
-      </Box>
+      </Box> */}
       <Box>
         <form onSubmit={formik.handleSubmit}>
           <Stack spacing="32px">

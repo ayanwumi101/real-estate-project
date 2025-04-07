@@ -158,7 +158,7 @@ const SignupForm = () => {
           Thank you for joining our platform. Let's set up your profile.{' '}
         </Text>
       </Box>
-      <Box mb="32px">
+      {/* <Box mb="32px">
         <HStack
           alignItems="center"
           gap={['17px', 2]}
@@ -186,7 +186,7 @@ const SignupForm = () => {
         >
           Or
         </Text>
-      </Box>
+      </Box> */}
       <Box>
         <form onSubmit={formik.handleSubmit}>
           <Stack spacing="32px">

@@ -38,17 +38,10 @@ const Installment = ({ assets }: { assets: any[] }) => {
           <Stack spacing="15px" alignItems="center" textAlign="center">
             {' '}
             <Image src="/assets/images/briefcase.png" />
-            <Heading fontSize={18}>Your Asset list is empty</Heading>
+            <Heading fontSize={18}>No Active Instalment Plans!</Heading>
             <Text color="#2E353F">
-              Easily{' '}
-              <Link
-                href="/user/my-assets/add-assets"
-                style={{ color: '#000080', textDecoration: 'underline' }}
-              >
-                add new asset
-              </Link>{' '}
-              and monitor all your properties in one place. Managing your
-              portfolio has never been smoother!
+              Keep track of installment payments and property details in one
+              place. Add your property to stay on top of due dates.
             </Text>
           </Stack>
         </Box>
@@ -151,7 +144,10 @@ const Installment = ({ assets }: { assets: any[] }) => {
                       {FormatAmount(Number(asset?.property_cost))}
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
-                     {FormatAmount(Number(asset?.property_cost) - Number(asset?.amount_paid))}
+                      {FormatAmount(
+                        Number(asset?.property_cost) -
+                          Number(asset?.amount_paid)
+                      )}
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
                       {asset?.cashflow_payment_due
@@ -191,10 +187,12 @@ const Installment = ({ assets }: { assets: any[] }) => {
                 </Td>
                 <Td></Td>
                 <Td color="brand.400" fontWeight={500}>
-                 {FormatAmount(Number(totalValuation))}
+                  {FormatAmount(Number(totalValuation))}
                 </Td>
                 <Td color="brand.400" fontWeight={500}>
-                 {FormatAmount(Number(totalValuation) - Number(totalAmountPaid))}
+                  {FormatAmount(
+                    Number(totalValuation) - Number(totalAmountPaid)
+                  )}
                 </Td>
               </Tr>
             </Tbody>

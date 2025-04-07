@@ -32,17 +32,10 @@ const OwnedAssets = ({assets}:{assets: any[]}) => {
           <Stack spacing="15px" alignItems="center" textAlign="center">
             {' '}
             <Image src="/assets/images/briefcase.png" />
-            <Heading fontSize={18}>Your Asset list is empty</Heading>
+            <Heading fontSize={18}>No Owned Properties Listed!</Heading>
             <Text color="#2E353F">
-              Easily{' '}
-              <Link
-                href="/user/my-assets/add-assets"
-                style={{ color: '#000080', textDecoration: 'underline' }}
-              >
-                add new asset
-              </Link>{' '}
-              and monitor all your properties in one place. Managing your
-              portfolio has never been smoother!
+              Manage and monitor your properties all in one place. Upload
+              ownership details and stay organized.
             </Text>
           </Stack>
         </Box>

@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, Button } from '@chakra-ui/react';
 import React, { createContext, useEffect, useState } from 'react';
 import FormStepper from './components/FormStepper';
 import PersonalDetails from './components/PersonalDetails';
@@ -9,6 +9,8 @@ import AddressDetails from './components/AddressDetails';
 import NextOfKinDetails from './components/NextOfKinDetails';
 import { GetNigerianBanks } from '~/lib/api/services/profileService';
 import { GetAllCountries } from '~/lib/api/services/locationService';
+import Link from 'next/link';
+
 
 export const ProfileSetupContext = createContext<any>(null);
 
@@ -44,10 +46,34 @@ const index = () => {
     <ProfileSetupContext.Provider value={{ banks, countries }}>
       <Box
         borderTop={['none', 'none', '1px solid #E4E4E4']}
-        py="40px"
+        py="20px"
         px={['20px', '20px', '55px']}
       >
-        <Flex alignItems="flex-start" flexDir={['column', 'column', 'row']} gap={['40px', '40px', '55px']}>
+        <Box
+          w={['100%', '80%', '80%']}
+          display="flex"
+          mb="10"
+          justifyContent="flex-end"
+          alignItems="flex-end"
+        >
+          {' '}
+          <Link href='/user/dashboard'>
+            <Button
+              bg="bg.200"
+              _hover={{ bg: 'bg.200' }}
+              px="8"
+              color="brand.100"
+              fontWeight={600}
+            >
+              Skip
+            </Button>
+          </Link>
+        </Box>
+        <Flex
+          alignItems="flex-start"
+          flexDir={['column', 'column', 'row']}
+          gap={['40px', '40px', '55px']}
+        >
           <FormStepper step={step} />
           <Box w={['100%', '80%', '80%']}>
             {step === 1 && <PersonalDetails step={step} setStep={setStep} />}
