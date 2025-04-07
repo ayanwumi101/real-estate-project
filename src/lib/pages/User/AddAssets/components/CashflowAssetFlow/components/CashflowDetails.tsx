@@ -30,23 +30,18 @@ const CashflowDetails = ({
   step: number;
   setStep: (value: number) => void;
 }) => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const assetId = Cookie.get('vestier-asset-id');
-  const toast = useToast();
    const {
-      step: parentStep,
-      setStep: setParentStep,
       assetData,
       setAssetData,
     } = useContext<any>(CreateAssetContext);
 
   const initialValues = {
-    cashflowSource: '',
-    isPropertyOccupied: '',
-    lastCashflowDate: '',
-    nextCashflowDate: '',
-    cashflowAmount: '',
-    cashflowDuration: '',
+    cashflowSource: assetData?.cashflowSource || '',
+    isPropertyOccupied: assetData?.isPropertyOccupied || '',
+    lastCashflowDate: assetData?.lastCashflowDate || '',
+    nextCashflowDate: assetData?.nextCashflowDate || '',
+    cashflowAmount: assetData?.cashflowAmount || '',
+    cashflowDuration: assetData?.cashflowDuration || '',
   };
 
   const validationSchema = Yup.object().shape({
@@ -61,12 +56,12 @@ const CashflowDetails = ({
   const handleSubmit = async (values: any) => {
     setAssetData({
       ...assetData,
-      cashflow_source: values.cashflowSource,
-      is_occupied: values.isPropertyOccupied,
-      last_cashflow_date: values.lastCashflowDate,
-      cashflow_payment_due: values.nextCashflowDate,
-      cashflow_amount: values.cashflowAmount,
-      cashflow_duration: values.cashflowDuration,
+      cashflowSource: values.cashflowSource,
+      isPropertyOccupied: values.isPropertyOccupied,
+      lastCashflowDate: values.lastCashflowDate,
+      nextCashflowDate: values.nextCashflowDate,
+      cashflowAmount: values.cashflowAmount,
+      cashflowDuration: values.cashflowDuration,
     });
     setStep(step + 1);
   };
@@ -121,7 +116,7 @@ const CashflowDetails = ({
             <Box w={['100%', '100%', '600px']}>
               <Stack spacing="24px">
                 <FormControl
-                  isInvalid={!!errors.cashflowSource && touched.cashflowSource}
+                  isInvalid={!!errors.cashflowSource && !!touched.cashflowSource}
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     What is the cashflow source?
@@ -135,14 +130,16 @@ const CashflowDetails = ({
                     name="cashflowSource"
                     placeholder="Select"
                   >
-                    <option value="Shortlet">Shortlet</option>
-                    <option value="Weekly">Weekly</option>
+                    <option value="Rent">Rent</option>
+                    <option value="Lease">Lease</option>
                   </Field>
-                  <FormErrorMessage>{errors.cashflowSource}</FormErrorMessage>
+                  <FormErrorMessage>
+                    {typeof errors.cashflowSource === 'string' ? errors.cashflowSource : null}
+                  </FormErrorMessage>
                 </FormControl>
                 <FormControl
                   isInvalid={
-                    !!errors.isPropertyOccupied && touched.isPropertyOccupied
+                    !!errors.isPropertyOccupied && !!touched.isPropertyOccupied
                   }
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
@@ -161,12 +158,12 @@ const CashflowDetails = ({
                     <option value="No">No</option>
                   </Field>
                   <FormErrorMessage>
-                    {errors.isPropertyOccupied}
+                    {typeof errors.isPropertyOccupied === 'string' ? errors.isPropertyOccupied : null}
                   </FormErrorMessage>
                 </FormControl>
                 <FormControl
                   isInvalid={
-                    !!errors.cashflowDuration && touched.cashflowDuration
+                    !!errors.cashflowDuration && !!touched.cashflowDuration
                   }
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
@@ -186,11 +183,13 @@ const CashflowDetails = ({
                     <option value="Monthly">Monthly</option>
                     <option value="Yearly">Yearly</option>
                   </Field>
-                  <FormErrorMessage>{errors.cashflowDuration}</FormErrorMessage>
+                  <FormErrorMessage>
+                    {typeof errors.cashflowDuration === 'string' ? errors.cashflowDuration : null}
+                  </FormErrorMessage>
                 </FormControl>
                 <FormControl
                   isInvalid={
-                    !!errors.lastCashflowDate && touched.lastCashflowDate
+                    !!errors.lastCashflowDate && !!touched.lastCashflowDate
                   }
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
@@ -221,11 +220,13 @@ const CashflowDetails = ({
                   >
                     Never collected
                   </Checkbox>
-                  <FormErrorMessage>{errors.lastCashflowDate}</FormErrorMessage>
+                  <FormErrorMessage>
+                    {typeof errors.lastCashflowDate === 'string' ? errors.lastCashflowDate : null}
+                  </FormErrorMessage>
                 </FormControl>
                 <FormControl
                   isInvalid={
-                    !!errors.nextCashflowDate && touched.nextCashflowDate
+                    !!errors.nextCashflowDate && !!touched.nextCashflowDate
                   }
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
@@ -242,10 +243,12 @@ const CashflowDetails = ({
                     _placeholder={{ color: '#8295AA', fontWeight: 500 }}
                     type="date"
                   />
-                  <FormErrorMessage>{errors.nextCashflowDate}</FormErrorMessage>
+                  <FormErrorMessage>
+                    {typeof errors.nextCashflowDate === 'string' ? errors.nextCashflowDate : null}
+                  </FormErrorMessage>
                 </FormControl>
                 <FormControl
-                  isInvalid={!!errors.cashflowAmount && touched.cashflowAmount}
+                  isInvalid={!!errors.cashflowAmount && !!touched.cashflowAmount}
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     What is the cashflow amount?
@@ -260,7 +263,9 @@ const CashflowDetails = ({
                     placeholder="₦ 0, 00"
                     _placeholder={{ color: '#8295AA', fontWeight: 500 }}
                   />
-                  <FormErrorMessage>{errors.cashflowAmount}</FormErrorMessage>
+                  <FormErrorMessage>
+                    {typeof errors.cashflowAmount === 'string' ? errors.cashflowAmount : null}
+                  </FormErrorMessage>
                 </FormControl>
                 <Flex justifyContent="flex-end" gap="10px">
                   <Button

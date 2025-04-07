@@ -108,7 +108,7 @@ const PropertyDetailsForm = ({
       asset_type: values.assetType,
     };
     setAssetType(values.assetType);
-    setAssetData(formData);
+    setAssetData(values);
     setStep(step + 1);
   };
 

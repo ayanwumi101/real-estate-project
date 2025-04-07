@@ -19,9 +19,6 @@ import { UpdateAssetPaymentPlan } from '~/lib/api/services/assetsService';
 import Cookie from 'js-cookie';
 import { CreateAssetContext } from '../../..';
 
-
-
-
 const PaymentPlan = ({
   step,
   setStep,
@@ -32,7 +29,12 @@ const PaymentPlan = ({
   const [loading, setLoading] = useState<boolean>(false);
   const assetId = Cookie.get('vestier-asset-id');
   const toast = useToast();
-  const {assetData,setAssetData} = useContext<any>(CreateAssetContext);
+  const {
+    assetData,
+    setAssetData,
+    step: parentStep,
+    setStep: setParentStep,
+  } = useContext<any>(CreateAssetContext);
 
   // Validation schema using Yup
   const validationSchema = Yup.object().shape({
@@ -227,7 +229,7 @@ const PaymentPlan = ({
                     fontWeight={600}
                     fontSize={16}
                     _hover={{ bg: '#EDEDFF' }}
-                    onClick={() => setStep(step - 1)}
+                    onClick={() => setParentStep(parentStep - 1)}
                     minW="100px"
                   >
                     Back
@@ -243,7 +245,7 @@ const PaymentPlan = ({
                     type="submit"
                     minW="150px"
                   >
-                    {loading ? <Spinner /> : 'Continue'}
+                    Continue
                   </Button>
                 </Flex>
               </Stack>

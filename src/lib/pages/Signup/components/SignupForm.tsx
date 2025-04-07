@@ -229,7 +229,7 @@ const SignupForm = () => {
                 _placeholder={{ color: '#8295AA' }}
                 py="25px"
                 px="20px"
-                placeholder="Enter your full name"
+                placeholder="Enter your email address"
                 color="#222222"
                 type="email"
                 name="email"
