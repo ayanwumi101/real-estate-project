@@ -45,8 +45,6 @@ const AddNextOfKin = ({
   const [filteredNextOfKins, setFilteredNextOfKins] =
     React.useState<any>(nextOfKins);
      const {
-        step: parentStep,
-        setStep: setParentStep,
         assetData,
         setAssetData,
      } = useContext<any>(CreateAssetContext);
@@ -67,7 +65,25 @@ const AddNextOfKin = ({
 
   const handleSubmit = async () => {
     const formData = {
-      assetData,
+      property_name: assetData?.propertyName,
+      property_type: assetData?.propertyType,
+      size: assetData?.propertySize,
+      house_number: assetData?.propertyAddress?.houseNumber,
+      street_name: assetData?.propertyAddress?.streetName,
+      city_name: assetData?.propertyAddress?.city,
+      state_id: assetData?.propertyAddress?.state,
+      realtor_name: assetData?.realtorDetails?.name,
+      phone: assetData?.phoneNumber,
+      lga_id: assetData?.propertyAddress?.lga,
+      asset_type: assetData?.assetType,
+      property_cost: assetData?.propertyCost,
+      bought_date: assetData?.boughtDate,
+      cashflow_source: assetData?.cashflowSource,
+      is_occupied: assetData?.isPropertyOccupied,
+      last_cashflow_date: assetData?.lastCashflowDate,
+      cashflow_payment_due: assetData?.nextCashflowDate,
+      cashflow_amount: assetData?.cashflowAmount,
+      cashflow_duration: assetData?.cashflowDuration,
       nok_ids: [selectedNextOfKin],
     };
     try {
@@ -76,7 +92,7 @@ const AddNextOfKin = ({
         const res = await AddAsset(formData);
         if (res.status === true) {
           toast({
-            title: 'Asset Added Successfully',
+            title: 'Asset created Successfully',
             status: 'success',
             duration: 3000,
             isClosable: true,
