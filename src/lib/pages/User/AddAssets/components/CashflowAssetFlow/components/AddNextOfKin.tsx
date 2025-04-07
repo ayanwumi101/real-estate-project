@@ -20,9 +20,12 @@ import {
   SingleNextOfKinCard,
 } from '~/lib/components/Cards';
 import Cookie from 'js-cookie';
-import { AddNextOfKinToAsset } from '~/lib/api/services/assetsService';
+import { AddAsset, AddNextOfKinToAsset } from '~/lib/api/services/assetsService';
 import { useRouter } from 'next/navigation';
 import AddNextOfKinModal from '~/lib/pages/User/AddNextOfKin';
+import { CreateAssetContext } from '../../..';
+
+
 
 const AddNextOfKin = ({
   step,
@@ -41,6 +44,13 @@ const AddNextOfKin = ({
   const [searchTerm, setSearchTerm] = React.useState<string>('');
   const [filteredNextOfKins, setFilteredNextOfKins] =
     React.useState<any>(nextOfKins);
+     const {
+        step: parentStep,
+        setStep: setParentStep,
+        assetData,
+        setAssetData,
+     } = useContext<any>(CreateAssetContext);
+  
 
   const handleChange = (searchValue: string) => {
     setSearchTerm(searchValue);
@@ -57,24 +67,23 @@ const AddNextOfKin = ({
 
   const handleSubmit = async () => {
     const formData = {
+      assetData,
       nok_ids: [selectedNextOfKin],
-      asset_id: assetId,
     };
     try {
       if (selectedNextOfKin) {
         setLoading(true);
-        const res = await AddNextOfKinToAsset(formData);
+        const res = await AddAsset(formData);
         if (res.status === true) {
           toast({
-            title: 'Next of Kin added successfully',
+            title: 'Asset Added Successfully',
             status: 'success',
-            duration: 5000,
+            duration: 3000,
             isClosable: true,
             position: 'top-right',
           });
           setLoading(false);
           router.push('/user/my-assets');
-          Cookie.remove('vestier-asset-id');
         }
       } else {
         toast({

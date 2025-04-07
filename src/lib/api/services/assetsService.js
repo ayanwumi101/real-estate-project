@@ -60,3 +60,13 @@ export const GetAssetDetails = async (propertyId) => {
   const response = await axiosInstance.get(`${API_ROUTES.GET_ASSET_DETAILS}/${propertyId}`);
   return response.data;
 }
+
+
+export const AddAsset = async (data) => {
+  const response = await axiosInstance.post(API_ROUTES.ADD_ASSET_DETAILS, data, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+  return response.data;
+}

@@ -19,6 +19,7 @@ import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { UpdateAssetCashflowDetails } from '~/lib/api/services/assetsService';
 import Cookie from 'js-cookie';
+import { CreateAssetContext } from '../../..';
 
 
 
@@ -32,6 +33,12 @@ const CashflowDetails = ({
   const [loading, setLoading] = useState<boolean>(false);
   const assetId = Cookie.get('vestier-asset-id');
   const toast = useToast();
+   const {
+      step: parentStep,
+      setStep: setParentStep,
+      assetData,
+      setAssetData,
+    } = useContext<any>(CreateAssetContext);
 
   const initialValues = {
     cashflowSource: '',
@@ -52,40 +59,16 @@ const CashflowDetails = ({
   });
 
   const handleSubmit = async (values: any) => {
-    setLoading(true);
-    const formData = {
+    setAssetData({
+      ...assetData,
       cashflow_source: values.cashflowSource,
       is_occupied: values.isPropertyOccupied,
       last_cashflow_date: values.lastCashflowDate,
       cashflow_payment_due: values.nextCashflowDate,
       cashflow_amount: values.cashflowAmount,
       cashflow_duration: values.cashflowDuration,
-    };
-    try {
-      const res = await UpdateAssetCashflowDetails(assetId, formData);
-      if (res.status === true) {
-        toast({
-          title: res.message as string,
-          description: 'Cashflow details updated successfully',
-          status: 'success',
-          duration: 3000,
-          isClosable: true,
-          position: 'top-right',
-        });
-        setStep(step + 1);
-      }
-    } catch (error: any) {
-      toast({
-        title: 'An error occurred.',
-        description: error.response.data.message,
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-        position: 'top-right',
-      });
-    } finally {
-      setLoading(false);
-    }
+    });
+    setStep(step + 1);
   };
 
   
@@ -303,7 +286,7 @@ const CashflowDetails = ({
                     _hover={{ bg: '#000080' }}
                     type="submit"
                   >
-                    {loading ? <Spinner /> : 'Continue'}
+                    Continue
                   </Button>
                 </Flex>
               </Stack>

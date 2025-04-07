@@ -13,10 +13,11 @@ export const CreateAssetContext = createContext<any>({});
 const index = () => {
   const [step, setStep] = React.useState(1);
   const [assetType, setAssetType] = React.useState('');
+  const [assetData, setAssetData] = React.useState<any>({});
   return (
     <Box borderTop="1px solid #E4E4E4" py="40px" px={['20px', '55px']}>
       <Stack spacing="24px">
-        <CreateAssetContext.Provider value={{ assetType, setAssetType, step, setStep }}>
+        <CreateAssetContext.Provider value={{ assetType, setAssetType, step, setStep, assetData, setAssetData }}>
           <Box w={['100%', '65%', '65%']} mx="auto">
             {step === 1 && (
               <PropertyDetailsForm step={step} setStep={setStep} />

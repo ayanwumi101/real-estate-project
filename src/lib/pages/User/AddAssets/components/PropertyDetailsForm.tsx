@@ -40,7 +40,8 @@ const PropertyDetailsForm = ({
   const [states, setStates] = useState<[]>([]);
   const [lgas, setLgas] = useState<[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const { setAssetType, assetType } = useContext<any>(CreateAssetContext);
+  const { setAssetType, assetType, assetData, setAssetData } =
+    useContext<any>(CreateAssetContext);
 
   useEffect(() => {
     const GetStates = async () => {
@@ -57,22 +58,21 @@ const PropertyDetailsForm = ({
   }, []);
 
   const initialValues = {
-    propertyName: '',
-    propertyType: '',
-    propertySize: '',
+    propertyName: assetData?.propertyName || '',
+    propertyType: assetData?.propertyType || '',
+    propertySize: assetData?.propertySize || '',
     propertyAddress: {
-      houseNumber: '',
-      streetName: '',
-      city: '',
-      state: '',
-      lga: '',
+      houseNumber: assetData?.propertyAddress?.houseNumber || '',
+      streetName: assetData?.propertyAddress?.streetName || '',
+      city: assetData?.propertyAddress?.city || '',
+      state: assetData?.propertyAddress?.state || '',
+      lga: assetData?.propertyAddress?.lga || '',
     },
     realtorDetails: {
-      name: '',
+      name: assetData?.realtorDetails?.name || '',
     },
-    phoneNumber: '',
-    assetType: 'cashflow',
-    // additionalComments: '',
+    phoneNumber: assetData?.phoneNumber || '',
+    assetType: assetData?.assetType || 'cashflow',
   };
 
   const validationSchema = Yup.object({
@@ -91,7 +91,6 @@ const PropertyDetailsForm = ({
     }),
     phoneNumber: Yup.string().required('Phone number is required'),
     assetType: Yup.string().required('Asset type is required'),
-    // additionalComments: Yup.string().optional(),
   });
 
   const handleSubmit = async (values: any) => {
@@ -108,34 +107,9 @@ const PropertyDetailsForm = ({
       lga_id: values.propertyAddress.lga,
       asset_type: values.assetType,
     };
-    setLoading(true);
-    try {
-      const res = await AddAssetDetails(formData);
-      if (res.status === true) {
-        setLoading(false);
-        toast({
-          title: res.message as string,
-          description: 'Property details saved',
-          duration: 3000,
-          position: 'top-right',
-          isClosable: true,
-          status: 'success',
-        });
-        setAssetType(values.assetType);
-        setStep(step + 1);
-        Cookie.set('vestier-asset-id', res.data);
-      }
-    } catch (error: any) {
-      setLoading(false);
-      toast({
-        title: error.response.data.message,
-        description: 'Error Adding Property Details',
-        duration: 3000,
-        position: 'top-right',
-        isClosable: true,
-        status: 'error',
-      });
-    }
+    setAssetType(values.assetType);
+    setAssetData(formData);
+    setStep(step + 1);
   };
 
   return (
@@ -143,11 +117,12 @@ const PropertyDetailsForm = ({
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
+      enableReinitialize
     >
       {({ errors, touched, setFieldValue, values }) => {
         // Fetch lgas when state changes
         useEffect(() => {
-          if (values.propertyAddress.state) {
+          if (values?.propertyAddress?.state) {
             setFieldValue('values.propertyAddress.lga', ''); // Reset city
             const fetchLgas = async () => {
               try {
@@ -159,7 +134,7 @@ const PropertyDetailsForm = ({
             };
             fetchLgas();
           }
-        }, [values.propertyAddress.state, setFieldValue]);
+        }, [values?.propertyAddress?.state, setFieldValue]);
 
         return (
           <Form>
@@ -180,7 +155,7 @@ const PropertyDetailsForm = ({
                   </Text>
                 </Box>
                 <FormControl
-                  isInvalid={!!errors.propertyName && touched.propertyName}
+                  isInvalid={!!errors.propertyName && !!touched.propertyName}
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     What would you like to name your property?
@@ -195,11 +170,13 @@ const PropertyDetailsForm = ({
                     placeholder="Name your property"
                     _placeholder={{ color: '#8295AA', fontWeight: 500 }}
                   />
-                  <FormErrorMessage>{errors.propertyName}</FormErrorMessage>
+                  <FormErrorMessage>
+                    {typeof errors.propertyName === 'string' ? errors.propertyName : null}
+                  </FormErrorMessage>
                 </FormControl>
 
                 <FormControl
-                  isInvalid={!!errors.propertyType && touched.propertyType}
+                  isInvalid={!!errors.propertyType && !!touched.propertyType}
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     What kind of property are you listing?
@@ -217,11 +194,13 @@ const PropertyDetailsForm = ({
                       </Radio>
                     </Stack>
                   </RadioGroup>
-                  <FormErrorMessage>{errors.propertyType}</FormErrorMessage>
+                  <FormErrorMessage>
+                    {typeof errors.propertyType === 'string' ? errors.propertyType : null}
+                  </FormErrorMessage>
                 </FormControl>
 
                 <FormControl
-                  isInvalid={!!errors.propertySize && touched.propertySize}
+                  isInvalid={!!errors.propertySize && !!touched.propertySize}
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     What is the size of this property?
@@ -240,7 +219,9 @@ const PropertyDetailsForm = ({
                     }
                     _placeholder={{ color: '#8295AA', fontWeight: 500 }}
                   />
-                  <FormErrorMessage>{errors.propertySize}</FormErrorMessage>
+                  <FormErrorMessage>
+                    {typeof errors.propertySize === 'string' ? errors.propertySize : null}
+                  </FormErrorMessage>
                 </FormControl>
                 <FormControl>
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
@@ -255,8 +236,8 @@ const PropertyDetailsForm = ({
                   >
                     <FormControl
                       isInvalid={
-                        !!errors.propertyAddress?.houseNumber &&
-                        touched.propertyAddress?.houseNumber
+                        !!errors?.propertyAddress?.houseNumber &&
+                        !!touched?.propertyAddress?.houseNumber
                       }
                     >
                       <Field
@@ -271,14 +252,14 @@ const PropertyDetailsForm = ({
                         w="100%"
                       />
                       <FormErrorMessage>
-                        {errors.propertyAddress?.houseNumber}
+                        {typeof errors?.propertyAddress?.houseNumber === 'string' ? errors.propertyAddress.houseNumber : null}
                       </FormErrorMessage>
                     </FormControl>
 
                     <FormControl
                       isInvalid={
                         !!errors.propertyAddress?.streetName &&
-                        touched.propertyAddress?.streetName
+                        !!touched.propertyAddress?.streetName
                       }
                     >
                       <Field
@@ -293,13 +274,13 @@ const PropertyDetailsForm = ({
                         w="100%"
                       />
                       <FormErrorMessage>
-                        {errors.propertyAddress?.streetName}
+                        {typeof errors.propertyAddress?.streetName === 'string' ? errors.propertyAddress?.streetName : null}
                       </FormErrorMessage>
                     </FormControl>
                     <FormControl
                       isInvalid={
                         !!errors.propertyAddress?.city &&
-                        touched.propertyAddress?.city
+                        !!touched.propertyAddress?.city
                       }
                     >
                       <Field
@@ -314,7 +295,7 @@ const PropertyDetailsForm = ({
                         w="100%"
                       />
                       <FormErrorMessage>
-                        {errors.propertyAddress?.city}
+                        {typeof errors.propertyAddress?.city === 'string' ? errors.propertyAddress?.city : null}
                       </FormErrorMessage>
                     </FormControl>
                   </Flex>
@@ -328,7 +309,7 @@ const PropertyDetailsForm = ({
                     <FormControl
                       isInvalid={
                         !!errors.propertyAddress?.state &&
-                        touched.propertyAddress?.state
+                        !!touched.propertyAddress?.state
                       }
                     >
                       <Field
@@ -349,13 +330,13 @@ const PropertyDetailsForm = ({
                         ))}
                       </Field>
                       <FormErrorMessage>
-                        {errors.propertyAddress?.state}
+                        {typeof errors.propertyAddress?.state === 'string' ? errors.propertyAddress?.state : null}
                       </FormErrorMessage>
                     </FormControl>
                     <FormControl
                       isInvalid={
                         !!errors.propertyAddress?.lga &&
-                        touched.propertyAddress?.lga
+                        !!touched.propertyAddress?.lga
                       }
                     >
                       <Field
@@ -376,7 +357,7 @@ const PropertyDetailsForm = ({
                         ))}
                       </Field>
                       <FormErrorMessage>
-                        {errors.propertyAddress?.lga}
+                        {typeof errors.propertyAddress?.lga === 'string' ? errors.propertyAddress?.lga : null}
                       </FormErrorMessage>
                     </FormControl>
                   </Flex>
@@ -388,7 +369,7 @@ const PropertyDetailsForm = ({
                   <FormControl
                     isInvalid={
                       !!errors.realtorDetails?.name &&
-                      touched.realtorDetails?.name
+                      !!touched.realtorDetails?.name
                     }
                   >
                     <Field
@@ -402,12 +383,12 @@ const PropertyDetailsForm = ({
                       name="realtorDetails.name"
                     />
                     <FormErrorMessage>
-                      {errors.realtorDetails?.name}
+                      {typeof errors.realtorDetails?.name === 'string' ? errors.realtorDetails?.name : null}
                     </FormErrorMessage>
                   </FormControl>
                 </FormControl>
                 <FormControl
-                  isInvalid={!!errors.phoneNumber && touched.phoneNumber}
+                  isInvalid={!!errors.phoneNumber && !!touched.phoneNumber}
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     Enter Realtor’s Phone number
@@ -423,10 +404,12 @@ const PropertyDetailsForm = ({
                     border="1px solid #C0C0C0"
                     borderRadius="50px"
                   />
-                  <FormErrorMessage>{errors.phoneNumber}</FormErrorMessage>
+                  <FormErrorMessage>
+                    {typeof errors?.phoneNumber === 'string' ? errors.phoneNumber : null}
+                  </FormErrorMessage>
                 </FormControl>
                 <FormControl
-                  isInvalid={!!errors.assetType && touched.assetType}
+                  isInvalid={!!errors.assetType && !!touched.assetType}
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     What kind of asset are you registering?
@@ -535,7 +518,9 @@ const PropertyDetailsForm = ({
                       </Box>
                     </Stack>
                   </RadioGroup>
-                  <FormErrorMessage>{errors.assetType}</FormErrorMessage>
+                  <FormErrorMessage>
+                    {typeof errors.assetType === 'string' ? errors.assetType : null}
+                  </FormErrorMessage>
                 </FormControl>
                 <Flex justifyContent="flex-end">
                   <Button
@@ -549,7 +534,7 @@ const PropertyDetailsForm = ({
                     type="submit"
                     minW="150px"
                   >
-                    {loading ? <Spinner /> : 'Continue'}
+                    Continue
                   </Button>
                 </Flex>
               </Stack>
