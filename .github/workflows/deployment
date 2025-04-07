@@ -1,0 +1,44 @@
+name: Deploy App
+
+on:
+  push:
+    branches:
+      - main
+  release:
+    types:
+      - published
+
+jobs:
+  deploy-production:
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Deploy (Production) to DigitalOcean droplet via SSH
+      uses: appleboy/ssh-action@v0.1.3
+      with:
+        host: ${{ secrets.DO_HOST }}
+        username: ${{ secrets.DO_USERNAME }}
+        key: ${{ secrets.DO_SSH_KEY }}
+        script: |
+          cd /var/www/vestier-ui-prod
+          ls
+          git pull
+          npm ci
+          npm run build
+
+          # Check if PM2 process is running
+          if pm2 list | grep -q 'vestier-prod'; then
+            # Reload application to ensure zero downtime
+            echo "Restarting application after build"
+            pm2 reload vestier-prod
+          else
+            # Start the application with PM2 if not already running
+            # pm2 start yarn --name "frontend" -- start
+            echo "Starting new instance of app"
+            pm2 start npm --name "vestier-prod" -- run start -- --port 8900
+          fi
+          pm2 list
