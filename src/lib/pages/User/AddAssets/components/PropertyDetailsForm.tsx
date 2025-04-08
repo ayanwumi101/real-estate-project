@@ -36,10 +36,8 @@ const PropertyDetailsForm = ({
   step: number;
   setStep: (value: number) => void;
 }) => {
-  const toast = useToast();
   const [states, setStates] = useState<[]>([]);
   const [lgas, setLgas] = useState<[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
   const { setAssetType, assetType, assetData, setAssetData } =
     useContext<any>(CreateAssetContext);
 
