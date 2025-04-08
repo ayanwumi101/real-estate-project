@@ -10,10 +10,12 @@ import Cashflow from './components/Cashflow';
 import Installment from './components/Installment';
 import Link from 'next/link';
 import { GetUserAssets } from '~/lib/api/services/assetsService';
+import { useRouter } from 'next/navigation';
 
 const index = () => {
   const [activeTab, setActiveTab] = useState<string>('Owned');
   const [assets, setAssets] = useState<any[]>([]);
+  const router = useRouter();
 
   const GetAssets = async () => {
     try {
@@ -63,20 +65,20 @@ const index = () => {
               activeTab={activeTab}
               setActiveTab={setActiveTab}
             />
-            <Link href="/user/my-assets/add-assets">
-              <Button
-                bg="#000080"
-                fontSize={14}
-                color="#ffffff"
-                fontWeight={500}
-                _hover={{ bg: 'brand.100' }}
-              >
-                <Flex alignItems="center" gap="10px">
-                  <Text>Add new asset</Text>
-                  <HiPlus color="white" fontSize={20} fontWeight={700} />
-                </Flex>
-              </Button>
-            </Link>
+
+            <Button
+              bg="#000080"
+              fontSize={14}
+              color="#ffffff"
+              fontWeight={500}
+              _hover={{ bg: 'brand.100' }}
+              onClick={() => router.push('/user/my-assets/add-assets')}
+            >
+              <Flex alignItems="center" gap="10px">
+                <Text>Add new asset</Text>
+                <HiPlus color="white" fontSize={20} fontWeight={700} />
+              </Flex>
+            </Button>
           </Flex>
         </Box>
         <Box px={['10px', '20px']}>

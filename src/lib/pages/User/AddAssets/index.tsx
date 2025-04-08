@@ -10,7 +10,7 @@ import OwnedAssetFlow from './components/OwnedAssetFlow';
 
 export const CreateAssetContext = createContext<any>({});
 
-const index = () => {
+const Index = () => {
   const [step, setStep] = React.useState(1);
   const [assetType, setAssetType] = React.useState('');
   const [assetData, setAssetData] = React.useState<any>({});
@@ -38,4 +38,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;
