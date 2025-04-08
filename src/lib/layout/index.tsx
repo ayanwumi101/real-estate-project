@@ -39,7 +39,6 @@ import {
 } from '../components/Icons/Icons';
 import { GetUserProfileDetails } from '../api/services/profileService';
 import { GetNextOfKins } from '../api/services/userService';
-import styles from './styles.module.css'
 
 export const AppContext = createContext<any>({});
 
@@ -294,7 +293,7 @@ export const Layout = ({ children }: LayoutProps) => {
           w="250px"
           h="250px"
           objectFit="cover"
-          className={styles.zoomInOut}
+          // className={styles.zoomInOut}
         />
       </Box>
     );

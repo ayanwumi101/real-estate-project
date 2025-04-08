@@ -11,7 +11,8 @@ import {
   Td,
   TableContainer,
   Stack,
-  Heading, Image, 
+  Heading,
+  Image,
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -19,12 +20,11 @@ import React from 'react';
 import { LocationIcon, ProfitIcon } from '~/lib/components/Icons/Icons';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 
-
-const OwnedAssets = ({assets}:{assets: any[]}) => {
+const OwnedAssets = ({ assets }: { assets: any[] }) => {
   const router = useRouter();
-   const totalValuation = assets?.reduce((acc, asset) => {
-     return acc + Number(asset?.property_cost);
-   }, 0);
+  const totalValuation = assets?.reduce((acc, asset) => {
+    return acc + Number(asset?.property_cost);
+  }, 0);
   return (
     <Box>
       {assets?.length < 1 ? (
@@ -34,7 +34,7 @@ const OwnedAssets = ({assets}:{assets: any[]}) => {
             <Image src="/assets/images/briefcase.png" />
             <Heading fontSize={18}>No Owned Properties Listed!</Heading>
             <Text color="#2E353F">
-              Manage and monitor your properties all in one place. Upload
+              Manage and monitor all your properties all in one place. Upload
               ownership details and stay organized.
             </Text>
           </Stack>
