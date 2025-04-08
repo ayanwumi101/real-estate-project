@@ -84,6 +84,13 @@ const AddNextOfKin = ({
       cashflow_payment_due: assetData?.nextCashflowDate,
       cashflow_amount: assetData?.cashflowAmount,
       cashflow_duration: assetData?.cashflowDuration,
+      duration: '',
+      amount_left: '',
+      amount_paid: '',
+      payment_plan: '',
+      due_date: '',
+      equity_ownership: '',
+      payment_date: '',
       nok_ids: [selectedNextOfKin],
     };
     try {

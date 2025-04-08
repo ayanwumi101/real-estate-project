@@ -26,10 +26,7 @@ const DeliveryStatusForm = ({
   step: number;
   setStep: (value: number) => void;
 }) => {
-  const toast = useToast();
-  const [loading, setLoading] = React.useState<boolean>(false);
-  const assetId = Cookie.get('vestier-asset-id');
-  const {step: parentStep, setStep: setParentStep} = useContext<any>(CreateAssetContext);
+  const {step: parentStep, setStep: setParentStep, assetData, setAssetData} = useContext<any>(CreateAssetContext);
 
   const validationSchema = Yup.object().shape({
     propertyCost: Yup.string().required('Propety cost is required'),
@@ -42,51 +39,23 @@ const DeliveryStatusForm = ({
   });
 
   const initialValues = {
-    propertyCost: '',
-    dateOfPurchase: '',
-    allocationStatus: '',
-    documentationStatus: '',
-    handoverStatus: '',
+    propertyCost: assetData.propertyCost || '',
+    dateOfPurchase: assetData.dateOfPurchase || '',
+    allocationStatus: assetData.allocationStatus || '',
+    documentationStatus: assetData.documentationStatus || '',
+    handoverStatus: assetData.handoverStatus || '',
   };
-
+   
   const handleSubmit = async (values: any) => {
-    setLoading(true);
-    const formData = {
-      payment_status: '',
-      allocation_status: values.allocationStatus,
-      documentation_status: values.documentationStatus,
-      handover_status: values.handoverStatus,
-      property_cost: values.propertyCost,
-      bought_date: values.dateOfPurchase,
-    }
-    try {
-      const res = await UpdateAssetDeliveryStatus(
-        assetId as string,
-        formData
-      );
-      if (res.status === true) {
-        toast({
-          title: res.message as string,
-          status: 'success',
-          duration: 3000,
-          isClosable: true,
-          position: 'top-right',
-
-        });
-        setLoading(false);
-        setStep(step + 1);
-      }
-    } catch (error: any) {
-      setLoading(false);
-      toast({
-        title: 'An error occurred',
-        description: error.response.data.message,
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-        position: 'top-right',
-      });
-    }
+    setAssetData({
+      ...assetData,
+      propertyCost: values.propertyCost,
+      dateOfPurchase: values.dateOfPurchase,
+      allocationStatus: values.allocationStatus,
+      documentationStatus: values.documentationStatus,
+      handoverStatus: values.handoverStatus,
+    });
+    setStep(step + 1);
   };
 
   return (
@@ -101,7 +70,7 @@ const DeliveryStatusForm = ({
             <Box as="section" w={['100%', '100%', '600px']}>
               <Stack spacing="24px">
                 <FormControl
-                  isInvalid={!!errors.propertyCost && touched.propertyCost}
+                  isInvalid={!!errors.propertyCost && !!touched.propertyCost}
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     How much does the property cost?
@@ -116,10 +85,12 @@ const DeliveryStatusForm = ({
                     placeholder="₦ 0. 00"
                     type="number"
                   />
-                  <FormErrorMessage>{errors.propertyCost}</FormErrorMessage>
+                  <FormErrorMessage>
+                    {typeof errors.propertyCost === 'string' ? errors.propertyCost : ''}
+                  </FormErrorMessage>
                 </FormControl>
                 <FormControl
-                  isInvalid={!!errors.dateOfPurchase && touched.dateOfPurchase}
+                  isInvalid={!!errors.dateOfPurchase && !!touched.dateOfPurchase}
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     When was this property bought?
@@ -134,11 +105,13 @@ const DeliveryStatusForm = ({
                     placeholder="dd/mm/yyyy"
                     type="date"
                   />
-                  <FormErrorMessage>{errors.dateOfPurchase}</FormErrorMessage>
+                  <FormErrorMessage>
+                    {typeof errors.dateOfPurchase === 'string' ? errors.dateOfPurchase : ''}
+                  </FormErrorMessage>
                 </FormControl>
                 <FormControl
                   isInvalid={
-                    !!errors.allocationStatus && touched.allocationStatus
+                    !!errors.allocationStatus && !!touched.allocationStatus
                   }
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
@@ -157,11 +130,13 @@ const DeliveryStatusForm = ({
                     <option value="Pending">Pending</option>
                     <option value="Completed">Completed</option>
                   </Field>
-                  <FormErrorMessage>{errors.allocationStatus}</FormErrorMessage>
+                  <FormErrorMessage>
+                    {typeof errors.allocationStatus === 'string' ? errors.allocationStatus : ''}
+                  </FormErrorMessage>
                 </FormControl>
                 <FormControl
                   isInvalid={
-                    !!errors.documentationStatus && touched.documentationStatus
+                    !!errors.documentationStatus && !!touched.documentationStatus
                   }
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
@@ -181,11 +156,11 @@ const DeliveryStatusForm = ({
                     <option value="Completed">Completed</option>
                   </Field>
                   <FormErrorMessage>
-                    {errors.documentationStatus}
+                    {typeof errors.documentationStatus === 'string' ? errors.documentationStatus : ''}
                   </FormErrorMessage>
                 </FormControl>
                 <FormControl
-                  isInvalid={!!errors.handoverStatus && touched.handoverStatus}
+                  isInvalid={!!errors.handoverStatus && !!touched.handoverStatus}
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     What is the handover status?
@@ -203,7 +178,9 @@ const DeliveryStatusForm = ({
                     <option value="Pending">Pending</option>
                     <option value="Completed">Completed</option>
                   </Field>
-                  <FormErrorMessage>{errors.handoverStatus}</FormErrorMessage>
+                  <FormErrorMessage>
+                    {typeof errors.handoverStatus === 'string' ? errors.handoverStatus : ''}
+                  </FormErrorMessage>
                 </FormControl>
                 <Flex justifyContent="flex-end" gap="20px">
                   <Button
@@ -230,7 +207,7 @@ const DeliveryStatusForm = ({
                     type="submit"
                     minW="150px"
                   >
-                    {loading ? <Spinner /> : 'Continue'}
+                    Continue
                   </Button>
                 </Flex>
               </Stack>

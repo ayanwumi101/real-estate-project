@@ -12,6 +12,6 @@
     }
 }
 
- .zoom-in-out {
+ .zoomInOut {
      animation: zoom-in-out 1s infinite;
  }
