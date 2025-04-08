@@ -43,20 +43,20 @@ const PropertyDetailsForm = ({
   const { setAssetType, assetType, assetData, setAssetData } =
     useContext<any>(CreateAssetContext);
 
-  useEffect(() => {
-    const GetStates = async () => {
-      try {
-        const res = await GetCountryStates(
-          // 'da4e88a4-4c55-4724-8727-098b50731b96'
-          '3646b5dc-8c00-4f70-87ca-f4840b83b9b3'
-        );
-        setStates(res?.data || []);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    GetStates();
-  }, []);
+  // useEffect(() => {
+  //   const GetStates = async () => {
+  //     try {
+  //       const res = await GetCountryStates(
+  //         // 'da4e88a4-4c55-4724-8727-098b50731b96'
+  //         '3646b5dc-8c00-4f70-87ca-f4840b83b9b3'
+  //       );
+  //       setStates(res?.data || []);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   GetStates();
+  // }, []);
 
   const initialValues = {
     propertyName: assetData?.propertyName || '',
