@@ -20,9 +20,12 @@ import {
   SingleNextOfKinCard,
 } from '~/lib/components/Cards';
 import Cookie from 'js-cookie';
-import { AddNextOfKinToAsset } from '~/lib/api/services/assetsService';
+import { AddAsset, AddNextOfKinToAsset } from '~/lib/api/services/assetsService';
 import { useRouter } from 'next/navigation';
 import AddNextOfKinModal from '~/lib/pages/User/AddNextOfKin';
+import { CreateAssetContext } from '../../..';
+
+
 
 const AddNextOfKin = ({
   step,
@@ -33,7 +36,6 @@ const AddNextOfKin = ({
 }) => {
   const toast = useToast();
   const router = useRouter();
-  const assetId = Cookie.get('vestier-asset-id');
   const { nextOfKins, setNextOfKins } = useContext<any>(AppContext);
   const [selectedNextOfKin, setSelectedNextOfKin] = React.useState<any>('');
   const [openModal, setOpenModal] = React.useState<boolean>(false);
@@ -41,6 +43,8 @@ const AddNextOfKin = ({
   const [searchTerm, setSearchTerm] = React.useState<string>('');
   const [filteredNextOfKins, setFilteredNextOfKins] =
     React.useState<any>(nextOfKins);
+  const { assetData, setAssetData } = useContext<any>(CreateAssetContext);
+
 
   const handleChange = (searchValue: string) => {
     setSearchTerm(searchValue);
@@ -56,17 +60,32 @@ const AddNextOfKin = ({
   };
 
   const handleSubmit = async () => {
-    const formData = {
-      nok_ids: [selectedNextOfKin],
-      asset_id: assetId,
-    };
+     const formData = {
+       property_name: assetData?.propertyName,
+       property_type: assetData?.propertyType,
+       size: assetData?.propertySize,
+       house_number: assetData?.propertyAddress?.houseNumber,
+       street_name: assetData?.propertyAddress?.streetName,
+       city_name: assetData?.propertyAddress?.city,
+       state_id: assetData?.propertyAddress?.state,
+       realtor_name: assetData?.realtorDetails?.name,
+       phone: assetData?.phoneNumber,
+       lga_id: assetData?.propertyAddress?.lga,
+       asset_type: assetData?.assetType,
+       property_cost: assetData?.propertyCost,
+       bought_date: assetData?.dateOfPurchase,
+       documentation_status: assetData?.documentationStatus,
+       handover_status: assetData?.handoverStatus,
+       allocation_status: assetData?.allocationStatus,
+       nok_ids: [selectedNextOfKin],
+     };
     try {
       if (selectedNextOfKin) {
         setLoading(true);
-        const res = await AddNextOfKinToAsset(formData);
+        const res = await AddAsset(formData);
         if (res.status === true) {
           toast({
-            title: 'Next of Kin added successfully',
+            title: 'Asset created successfully',
             status: 'success',
             duration: 3000,
             isClosable: true,
@@ -74,7 +93,6 @@ const AddNextOfKin = ({
           });
           setLoading(false);
           router.push('/user/my-assets');
-          Cookie.remove('vestier-asset-id');
         }
       } else {
         toast({

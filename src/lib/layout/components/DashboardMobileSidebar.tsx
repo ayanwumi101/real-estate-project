@@ -106,13 +106,13 @@ const DashboardMobileSidebar = ({setOpenSideNav}: { setOpenSideNav: (value: bool
             href="/user/my-assets"
             onClick={() => setOpenSideNav(false)}
           />
-          <SideBarItem
+          {/* <SideBarItem
             label="Browse Project"
             Icon={BrowseProjectIcon}
             isActive={pathname === '/user/projects'}
             href="/user/projects"
             onClick={() => setOpenSideNav(false)}
-          />
+          /> */}
           <SideBarItem
             label="Remittance"
             Icon={MyPortfolioIcon}
@@ -120,7 +120,7 @@ const DashboardMobileSidebar = ({setOpenSideNav}: { setOpenSideNav: (value: bool
             href="/user/portfolio"
             onClick={() => setOpenSideNav(false)}
           />
-          <SideBarItem
+          {/* <SideBarItem
             label="Transactions"
             Icon={TransactionsIcon}
             isActive={pathname === '/user/transactions'}
@@ -133,7 +133,7 @@ const DashboardMobileSidebar = ({setOpenSideNav}: { setOpenSideNav: (value: bool
             isActive={pathname === '/user/support'}
             href="/user/support"
             onClick={() => setOpenSideNav(false)}
-          />
+          /> */}
           <SideBarItem
             label="Settings"
             Icon={SettingsIcon}

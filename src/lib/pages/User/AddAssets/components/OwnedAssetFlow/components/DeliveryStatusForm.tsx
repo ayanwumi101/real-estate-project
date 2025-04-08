@@ -13,7 +13,6 @@ import React, { useContext } from 'react';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { UpdateAssetDeliveryStatus } from '~/lib/api/services/assetsService';
-import Cookie from 'js-cookie';
 import { CreateAssetContext } from '../../..';
 
 

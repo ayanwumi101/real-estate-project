@@ -93,7 +93,7 @@ const OwnedAssets = ({ assets }: { assets: any[] }) => {
               </Tr>
             </Thead>
             <Tbody color="#222222" maxH="450px" overflow="auto">
-              {assets?.map((asset) => {
+                {assets?.map((asset) => {
                 return (
                   <Tr
                     key={asset?.id}

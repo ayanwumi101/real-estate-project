@@ -12,7 +12,7 @@ import {
   useToast,
   Spinner,
 } from '@chakra-ui/react';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { UpdateAssetPaymentPlan } from '~/lib/api/services/assetsService';
@@ -26,8 +26,6 @@ const PaymentPlan = ({
   step: number;
   setStep: (value: number) => void;
 }) => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const assetId = Cookie.get('vestier-asset-id');
   const toast = useToast();
   const {
     assetData,
@@ -48,49 +46,26 @@ const PaymentPlan = ({
 
   // Initial form values
   const initialValues = {
-    paymentDuration: '',
-    amountPaid: '',
-    amountLeft: '',
-    paymentPlan: '',
-    firstPaymentDate: '',
-    nextDueDate: '',
+    paymentDuration: assetData?.paymentDuration || '',
+    amountPaid: assetData?.amountPaid || '',
+    amountLeft: assetData?.amountLeft || '',
+    paymentPlan: assetData?.paymentPlan || '',
+    firstPaymentDate: assetData?.firstPaymentDate || '',
+    nextDueDate: assetData?.nextDueDate || '',
   };
 
   // Handle form submission
   const handleSubmit = async (values: any) => {
-    const formData = {
-      duration: values.paymentDuration,
-      amount_left: values.amountLeft,
-      payment_plan: values.paymentPlan,
-      due_date: values.nextDueDate,
-      payment_date: values.firstPaymentDate,
-      amount_paid: values.amountPaid,
-    };
-    setLoading(true);
-    try {
-      const res = await UpdateAssetPaymentPlan(assetId, formData);
-      if (res.status === true) {
-        toast({
-          title: res.message as string,
-          status: 'success',
-          duration: 3000,
-          isClosable: true,
-          position: 'top-right',
-        });
-        setLoading(false);
-        setStep(step + 1);
-        setAssetData({ ...assetData, formData });
-      }
-    } catch (error) {
-      toast({
-        title: 'An error occurred',
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-        position: 'top-right',
-      });
-      setLoading(false);
-    }
+    setAssetData({
+      ...assetData,
+      paymentDuration: values.paymentDuration,
+      amountLeft: values.amountLeft,
+      paymentPlan: values.paymentPlan,
+      firstPaymentDate: values.firstPaymentDate,
+      nextDueDate: values.nextDueDate,
+      amountPaid: values.amountPaid,
+    });
+    setStep(step + 1);
   };
   return (
     <Formik
@@ -99,13 +74,45 @@ const PaymentPlan = ({
       onSubmit={handleSubmit}
     >
       {({ errors, touched, setFieldValue, values }) => {
+        useEffect(() => {
+          if (values.firstPaymentDate && values.paymentPlan) {
+            const lastDate = new Date(values.firstPaymentDate);
+            let nextDate;
+
+            switch (values.paymentPlan) {
+              case 'Daily':
+                nextDate = new Date(lastDate);
+                nextDate.setDate(lastDate.getDate() + 1);
+                break;
+              case 'Weekly':
+                nextDate = new Date(lastDate);
+                nextDate.setDate(lastDate.getDate() + 7);
+                break;
+              case 'Monthly':
+                nextDate = new Date(lastDate);
+                nextDate.setMonth(lastDate.getMonth() + 1);
+                break;
+              case 'Yearly':
+                nextDate = new Date(lastDate);
+                nextDate.setFullYear(lastDate.getFullYear() + 1);
+                break;
+              default:
+                nextDate = '';
+            }
+
+            if (nextDate instanceof Date && !isNaN(nextDate.getTime())) {
+              const formatted = nextDate.toISOString().split('T')[0];
+              setFieldValue('nextDueDate', formatted);
+            }
+          }
+        }, [values.firstPaymentDate, values.paymentPlan, setFieldValue]);
         return (
           <Form>
             <Box w={['100%', '100%', '600px']}>
               <Stack spacing="24px">
                 <FormControl
                   isInvalid={
-                    !!errors.paymentDuration && touched.paymentDuration
+                    !!errors.paymentDuration && !!touched.paymentDuration
                   }
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
@@ -121,10 +128,13 @@ const PaymentPlan = ({
                     placeholder="0 months"
                     _placeholder={{ color: '#8295AA', fontWeight: 500 }}
                   />
-                  <FormErrorMessage>{errors.paymentDuration}</FormErrorMessage>
+                  <FormErrorMessage>
+                    {typeof errors.paymentDuration === 'string' &&
+                      errors.paymentDuration}
+                  </FormErrorMessage>
                 </FormControl>
                 <FormControl
-                  isInvalid={!!errors.amountPaid && touched.amountPaid}
+                  isInvalid={!!errors.amountPaid && !!touched.amountPaid}
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     How much have you paid so far?
@@ -139,10 +149,12 @@ const PaymentPlan = ({
                     placeholder="₦ 0, 00"
                     _placeholder={{ color: '#8295AA', fontWeight: 500 }}
                   />
-                  <FormErrorMessage>{errors.amountPaid}</FormErrorMessage>
+                  <FormErrorMessage>
+                    {typeof errors.amountPaid === 'string' && errors.amountPaid}
+                  </FormErrorMessage>
                 </FormControl>
                 <FormControl
-                  isInvalid={!!errors.amountLeft && touched.amountLeft}
+                  isInvalid={!!errors.amountLeft && !!touched.amountLeft}
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     How much do you have left to pay?
@@ -157,10 +169,12 @@ const PaymentPlan = ({
                     placeholder="₦ 0, 00"
                     _placeholder={{ color: '#8295AA', fontWeight: 500 }}
                   />
-                  <FormErrorMessage>{errors.amountLeft}</FormErrorMessage>
+                  <FormErrorMessage>
+                    {typeof errors.amountLeft === 'string' && errors.amountLeft}
+                  </FormErrorMessage>
                 </FormControl>
                 <FormControl
-                  isInvalid={!!errors.paymentPlan && touched.paymentPlan}
+                  isInvalid={!!errors.paymentPlan && !!touched.paymentPlan}
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     What payment plan do you follow?
@@ -174,15 +188,19 @@ const PaymentPlan = ({
                     h="50px"
                     placeholder="Select"
                   >
-                    <option value="Monthly">Monthly</option>
-                    <option value="Weekly">Weekly</option>
                     <option value="Daily">Daily</option>
+                    <option value="Weekly">Weekly</option>
+                    <option value="Monthly">Monthly</option>
+                    <option value="Yearly">Yearly</option>
                   </Field>
-                  <FormErrorMessage>{errors.paymentPlan}</FormErrorMessage>
+                  <FormErrorMessage>
+                    {typeof errors.paymentPlan === 'string' &&
+                      errors.paymentPlan}
+                  </FormErrorMessage>
                 </FormControl>
                 <FormControl
                   isInvalid={
-                    !!errors.firstPaymentDate && touched.firstPaymentDate
+                    !!errors.firstPaymentDate && !!touched.firstPaymentDate
                   }
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
@@ -199,10 +217,13 @@ const PaymentPlan = ({
                     _placeholder={{ color: '#8295AA', fontWeight: 500 }}
                     type="date"
                   />
-                  <FormErrorMessage>{errors.firstPaymentDate}</FormErrorMessage>
+                  <FormErrorMessage>
+                    {typeof errors.firstPaymentDate === 'string' &&
+                      errors.firstPaymentDate}
+                  </FormErrorMessage>
                 </FormControl>
                 <FormControl
-                  isInvalid={!!errors.nextDueDate && touched.nextDueDate}
+                  isInvalid={!!errors.nextDueDate && !!touched.nextDueDate}
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     When is the next due date for payment?
@@ -218,7 +239,10 @@ const PaymentPlan = ({
                     _placeholder={{ color: '#8295AA', fontWeight: 500 }}
                     type="date"
                   />
-                  <FormErrorMessage>{errors.nextDueDate}</FormErrorMessage>
+                  <FormErrorMessage>
+                    {typeof errors.nextDueDate === 'string' &&
+                      errors.nextDueDate}
+                  </FormErrorMessage>
                 </FormControl>
                 <Flex justifyContent="flex-end" gap="20px">
                   <Button
