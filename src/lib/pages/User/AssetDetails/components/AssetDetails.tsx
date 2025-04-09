@@ -64,7 +64,13 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
               />
               <AssetDetailsItem
                 label="Payment Status:"
-                labelValue={propertyDetails?.payment_status || 'N/A'}
+                labelValue={
+                  propertyDetails?.asset_type === 'instalment'
+                    ? 'Ongoing'
+                    : propertyDetails?.asset_type === 'owned'
+                      ? 'Completed'
+                      : 'Completed'
+                }
               />
             </Flex>
           </Box>
@@ -252,11 +258,11 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
               <AssetDetailsItem
                 label="Payment Status"
                 labelValue={
-                  propertyDetails?.payment_status
-                    ? propertyDetails?.payment_status
-                    : propertyDetails?.asset_type === 'cashflow'
+                  propertyDetails?.asset_type === 'instalment'
+                    ? 'Ongoing'
+                    : propertyDetails?.asset_type === 'owned'
                       ? 'Completed'
-                      : 'N/A'
+                      : 'Completed'
                 }
               />
               <AssetDetailsItem

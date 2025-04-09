@@ -118,7 +118,7 @@ const OwnedAssets = ({ assets }: { assets: any[] }) => {
                       {asset?.property_type}
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
-                      ₦{asset?.property_cost}
+                      {FormatAmount(Number(asset?.property_cost))}
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
                       {asset?.allocation_status}

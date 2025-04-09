@@ -11,7 +11,8 @@ import {
   Td,
   TableContainer,
   Stack,
-  Heading, Image
+  Heading,
+  Image,
 } from '@chakra-ui/react';
 import moment from 'moment';
 import Link from 'next/link';
@@ -20,16 +21,14 @@ import React from 'react';
 import { LocationIcon, ProfitIcon } from '~/lib/components/Icons/Icons';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 
-
-
 const Installment = ({ assets }: { assets: any[] }) => {
   const router = useRouter();
-  const totalValuation = assets?.reduce((acc, asset) => {
-    return acc + Number(asset?.property_cost);
+  const totalAmountpaid = assets?.reduce((acc, asset) => {
+    return acc + Number(asset?.amount_paid);
   }, 0);
 
-  const totalAmountPaid = assets?.reduce((acc, asset) => {
-    return acc + Number(asset?.amount_paid);
+  const totalAmountLeft = assets?.reduce((acc, asset) => {
+    return acc + Number(asset?.amount_left);
   }, 0);
   return (
     <Box>
@@ -78,7 +77,7 @@ const Installment = ({ assets }: { assets: any[] }) => {
                   fontSize={14}
                   textTransform="capitalize"
                 >
-                  Amount Purchased
+                  Amount Paid
                 </Th>
                 <Th
                   color="#222222"
@@ -96,14 +95,14 @@ const Installment = ({ assets }: { assets: any[] }) => {
                 >
                   Next Payment
                 </Th>
-                <Th
+                {/* <Th
                   color="#222222"
                   fontWeight={500}
                   fontSize={14}
                   textTransform="capitalize"
                 >
                   Realtor
-                </Th>
+                </Th> */}
                 <Th
                   color="#222222"
                   fontWeight={500}
@@ -141,26 +140,21 @@ const Installment = ({ assets }: { assets: any[] }) => {
                       {asset?.property_type}
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
-                      {FormatAmount(Number(asset?.property_cost))}
+                      {FormatAmount(Number(asset?.amount_paid))}
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
-                      {FormatAmount(
-                        Number(asset?.property_cost) -
-                          Number(asset?.amount_paid)
-                      )}
+                      {FormatAmount(Number(asset?.amount_left))}
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
-                      {asset?.cashflow_payment_due
-                        ? moment(asset?.cashflow_payment_due).format(
-                            'ddd, Do MMMM YYYY'
-                          )
+                      {asset?.due_date
+                        ? moment(asset?.due_date).format('ddd, Do MMMM YYYY')
                         : 'N/A'}
                     </Td>
-                    <Td fontWeight={500} fontSize={14} color="#8295AA">
+                    {/* <Td fontWeight={500} fontSize={14} color="#8295AA">
                       {asset?.realtor_name}
-                    </Td>
+                    </Td> */}
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
-                      {asset?.allocation_status}
+                      Ongoing
                     </Td>
                     <Td>
                       <Link href={`/user/my-assets/${asset?.id}`}>
@@ -187,11 +181,11 @@ const Installment = ({ assets }: { assets: any[] }) => {
                 </Td>
                 <Td></Td>
                 <Td color="brand.400" fontWeight={500}>
-                  {FormatAmount(Number(totalValuation))}
+                  {FormatAmount(Number(totalAmountpaid))}
                 </Td>
                 <Td color="brand.400" fontWeight={500}>
                   {FormatAmount(
-                    Number(totalValuation) - Number(totalAmountPaid)
+                  Number(totalAmountLeft) || 0.0
                   )}
                 </Td>
               </Tr>

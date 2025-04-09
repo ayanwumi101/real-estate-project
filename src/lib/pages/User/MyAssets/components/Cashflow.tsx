@@ -21,6 +21,7 @@ import { LocationIcon, ProfitIcon } from '~/lib/components/Icons/Icons';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 
 
+
 const Cashflow = ({ assets }: { assets: any[] }) => {
   const router = useRouter();
   const totalValuation = assets?.reduce((acc, asset) => {
@@ -84,7 +85,7 @@ const Cashflow = ({ assets }: { assets: any[] }) => {
                   fontSize={14}
                   textTransform="capitalize"
                 >
-                  Status
+                  Payment Status
                 </Th>
                 <Th
                   color="#222222"
@@ -132,19 +133,15 @@ const Cashflow = ({ assets }: { assets: any[] }) => {
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
                       {asset?.property_cost
-                        ? `₦ ${asset?.property_cost}`
+                        ? `${FormatAmount(Number(asset?.property_cost))}`
                         : 'N/A'}
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
-                      {asset?.allocation_status ||
-                        asset?.payment_status ||
-                        asset?.documentation_status ||
-                        asset?.handover_status ||
-                        'N/A'}
+                      Completed
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
                       {asset?.cashflow_amount
-                        ? `₦ ${asset?.cashflow_amount}`
+                        ? `${FormatAmount(Number(asset?.cashflow_amount))}`
                         : 'N/A'}
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
