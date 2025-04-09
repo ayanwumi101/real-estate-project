@@ -24,7 +24,7 @@ const API_ROUTES = {
   UPDATE_USER_PROFILE: '/user/profile/update',
 
   //assets endpoints
-  ADD_ASSET_DETAILS: '/user/asset/add',
+  ADD_ASSET_DETAILS: '/user/asset/create',
   UPDATE_ASSET_DELIVERY_STATUS: '/user/asset/delivery-status',
   UPDATE_ASSET_PAYMENT_PLAN: '/user/asset/payment-plan',
   UPDATE_ASSET_CASHFLOW_DETAILS: '/user/asset/cashflow-details',

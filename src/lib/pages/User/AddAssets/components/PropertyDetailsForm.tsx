@@ -29,6 +29,8 @@ import { Formik, Form, Field } from 'formik';
 import Cookie from 'js-cookie';
 import { CreateAssetContext } from '..';
 
+
+
 const PropertyDetailsForm = ({
   step,
   setStep,

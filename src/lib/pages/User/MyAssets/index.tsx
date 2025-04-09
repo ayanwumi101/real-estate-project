@@ -65,20 +65,21 @@ const index = () => {
               activeTab={activeTab}
               setActiveTab={setActiveTab}
             />
-
-            <Button
-              bg="#000080"
-              fontSize={14}
-              color="#ffffff"
-              fontWeight={500}
-              _hover={{ bg: 'brand.100' }}
-              onClick={() => router.push('/user/my-assets/add-assets')}
-            >
-              <Flex alignItems="center" gap="10px">
-                <Text>Add new asset</Text>
-                <HiPlus color="white" fontSize={20} fontWeight={700} />
-              </Flex>
-            </Button>
+            <Link href="/user/my-assets/add-assets">
+              <Button
+                bg="#000080"
+                fontSize={14}
+                color="#ffffff"
+                fontWeight={500}
+                _hover={{ bg: 'brand.100' }}
+                // onClick={() => router.push('/user/my-assets/add-assets')}
+              >
+                <Flex alignItems="center" gap="10px">
+                  <Text>Add new asset</Text>
+                  <HiPlus color="white" fontSize={20} fontWeight={700} />
+                </Flex>
+              </Button>
+            </Link>
           </Flex>
         </Box>
         <Box px={['10px', '20px']}>
