@@ -1,11 +1,25 @@
-'use client'
-import React from "react";
-import { Box, Stack, Flex, Button, Text, Table, TableContainer, Thead, Image, Tr, Th, Tbody, Heading, Td } from "@chakra-ui/react";
-import { ArrowUpIcon, LocationIcon } from "~/lib/components/Icons/Icons";
-import moment from "moment";
-import Link from "next/link";
-
-
+'use client';
+import React from 'react';
+import {
+  Box,
+  Stack,
+  Flex,
+  Button,
+  Text,
+  Table,
+  TableContainer,
+  Thead,
+  Image,
+  Tr,
+  Th,
+  Tbody,
+  Heading,
+  Td,
+} from '@chakra-ui/react';
+import { ArrowUpIcon, LocationIcon } from '~/lib/components/Icons/Icons';
+import moment from 'moment';
+import Link from 'next/link';
+import { FormatAmount } from '~/lib/utils/formatAmount';
 
 const PropertyListTable = ({ assets }: { assets: any[] }) => {
   return (
@@ -100,7 +114,7 @@ const PropertyListTable = ({ assets }: { assets: any[] }) => {
               </Tr>
             </Thead>
             <Tbody color="#222222">
-              {assets?.map((asset: any) => {
+                {assets?.map((asset: any) => {
                 return (
                   <Tr
                     border="none"
@@ -136,18 +150,22 @@ const PropertyListTable = ({ assets }: { assets: any[] }) => {
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
                       {asset?.property_cost
-                        ? `₦ ${asset?.property_cost}`
+                        ? `${FormatAmount(Number(asset?.property_cost))}`
                         : 'N/A'}
                     </Td>
                     <Td fontWeight={500} fontSize={13} px="0">
-                      {asset?.payment_plan}
+                      {asset?.is_occupied ? 'Occupied' : 'Not Occupied'}
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
-                      {asset?.due_date ? `₦ ${asset?.due_date}` : 'N/A'}
+                      {asset?.cashflow_amount
+                        ? `${FormatAmount(Number(asset?.cashflow_amount))}`
+                        : 'N/A'}
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
-                      {asset?.due_date
-                        ? moment(asset?.due_date).format('ddd, Do MMMM YYYY')
+                      {asset?.cashflow_payment_due
+                        ? moment(asset?.cashflow_payment_due).format(
+                            'ddd, Do MMMM YYYY'
+                          )
                         : 'N/A'}
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
@@ -168,5 +186,4 @@ const PropertyListTable = ({ assets }: { assets: any[] }) => {
   );
 };
 
-
-export default PropertyListTable
+export default PropertyListTable;

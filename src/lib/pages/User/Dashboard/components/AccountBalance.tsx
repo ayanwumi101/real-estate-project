@@ -6,11 +6,14 @@ import Link from 'next/link';
 import React, { Fragment, useContext, useState } from 'react';
 import { HiOutlineEye } from 'react-icons/hi2';
 import { AppContext } from '~/lib/layout';
+import { FormatAmount } from '~/lib/utils/formatAmount';
 
-const AccountBalance = () => {
+
+const AccountBalance = ({totalInvestment}:{totalInvestment: number}) => {
   const { userDetails } = useContext(AppContext);
   const [showBalance, setShowBalance] = useState<boolean>(true);
   const walletVisibility = Cookies.get('walletVisibility');
+  
   return (
     <Box>
       <Fragment>
@@ -89,7 +92,7 @@ const AccountBalance = () => {
               >
                 <Heading fontSize={24} fontWeight={500} color="#222222">
                   {walletVisibility === 'true'
-                    ? `₦ ${userDetails?.wallet_balance ? userDetails?.wallet_balance : 0.0}`
+                    ? `${FormatAmount(totalInvestment) || 0.0}`
                     : '********'}
                 </Heading>
                 <Button

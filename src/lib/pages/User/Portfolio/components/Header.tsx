@@ -22,8 +22,9 @@ import FundWalletFlow from '~/lib/components/FundWalletFlow';
 import Link from 'next/link';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import next from 'next';
-import { findClosestDueAsset } from '~/lib/utils/findClosestDueAsset';
 import moment from 'moment';
+import { getAssetWithEarliestPaymentDue } from '~/lib/utils/findClosestDueAsset';
+
 
 
 interface IProps { 
@@ -126,12 +127,13 @@ const RemitttanceHeading = () => {
 const Header = ({assets}: {assets: any[]}) => {
   const [showFundWalletModal, setShowFundWalletModal] = React.useState(false);
   const totalAssetsInNaira = assets?.reduce((acc, asset) => acc + Number(asset?.cashflow_amount), 0);
-  const closestDueAsset = findClosestDueAsset(assets || []);
+  const closestDueAsset = getAssetWithEarliestPaymentDue(assets || []);
 
   const nextDueRemittance = {
     date: closestDueAsset?.cashflow_payment_due,
     property: closestDueAsset?.property_name
   }
+  
   
   return (
     <Box borderY="1px solid #E4E4E4" overflow='auto' w='100%'>
