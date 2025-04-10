@@ -48,7 +48,7 @@ const RemittanceStatCards = ({ totalCashflowAsset, cashflowAssetsInNaira, nextDu
           showHideIcon={false}
         />
         <PortfolioStatCard
-          label="Cashflow Assets in Naira"
+          label="Total Cashflow in Naira"
           balance={FormatAmount(Number(cashflowAssetsInNaira) || 0)}
           showHideIcon={true}
         />
@@ -90,7 +90,7 @@ const RemittanceStatCards = ({ totalCashflowAsset, cashflowAssetsInNaira, nextDu
 const RemitttanceHeading = () => {
   return (
     <Box py="30px" px="20px" borderBottom="1px solid #E4E4E4">
-      <Flex alignItems="center" justifyContent="space-between">
+      <Flex alignItems="center" justifyContent="space-between" rowGap={['20px', 0]} flexWrap={['wrap', 'nowrap']}>
         <Stack spacing="10px">
           <Heading fontSize={24} fontWeight={500} color="#222222">
             Remittance
@@ -112,7 +112,7 @@ const RemitttanceHeading = () => {
                 // onClick={() => setShowFundWalletModal(true)}
               >
                 <Flex alignItems="center" gap="10px">
-                  <Text>Add cahsfow asset</Text>
+                  <Text>Add cashflow asset</Text>
                   <HiPlus color="white" fontSize={20} fontWeight={700} />
                 </Flex>
               </Button>

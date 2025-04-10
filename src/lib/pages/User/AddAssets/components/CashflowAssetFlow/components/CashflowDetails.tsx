@@ -78,7 +78,7 @@ const CashflowDetails = ({
         useEffect(() => {
           if (
             values.lastCashflowDate &&
-            values.lastCashflowDate !== 'Never Collected' &&
+            values.lastCashflowDate !== 'never collected' &&
             values.cashflowDuration
           ) {
             const lastDate = new Date(values.lastCashflowDate);
@@ -206,17 +206,17 @@ const CashflowDetails = ({
                     _placeholder={{ color: '#8295AA', fontWeight: 500 }}
                     type="date"
                     mb="2"
-                    disabled={values.lastCashflowDate === 'Never Collected'}
+                    disabled={values.lastCashflowDate === 'never collected'}
                   />
                   <Checkbox
                     size="lg"
                     onChange={(e) =>
                       setFieldValue(
                         'lastCashflowDate',
-                        e.target.checked ? 'Never Collected' : ''
+                        e.target.checked ? 'never collected' : ''
                       )
                     }
-                    isChecked={values.lastCashflowDate === 'Never Collected'}
+                    isChecked={values.lastCashflowDate === 'never collected'}
                   >
                     Never collected
                   </Checkbox>

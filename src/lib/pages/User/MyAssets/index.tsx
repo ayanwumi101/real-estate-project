@@ -54,7 +54,7 @@ const index = () => {
           assetInNaira={totalAssetsInNaira}
           totalRemittance={totalRemittance}
         />
-        <Box px={['10px', '30px']}>
+        <Box px={['10px', '30px']} mb={[5, 0]}>
           <Flex
             justifyContent="space-between"
             alignItems="center"

@@ -28,7 +28,7 @@ import { AppContext } from '~/lib/layout';
 
 // Validation Schema
 const validationSchema = Yup.object().shape({
-  profilePicture: Yup.mixed().required('Profile picture is required'),
+  profilePicture: Yup.mixed(),
   dateOfBirth: Yup.date()
     .max(new Date(), 'Date of birth cannot be in the future')
     .required('Date of birth is required'),

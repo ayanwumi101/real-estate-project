@@ -85,7 +85,7 @@ const Installment = ({ assets }: { assets: any[] }) => {
                   fontSize={14}
                   textTransform="capitalize"
                 >
-                  Balanced Left
+                  Balance Left
                 </Th>
                 <Th
                   color="#222222"

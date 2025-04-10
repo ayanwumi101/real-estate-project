@@ -123,8 +123,8 @@ const EditProfileModal = ({
                       border="1px solid #C0C0C0"
                       borderRadius="50px"
                     >
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
                     </Field>
                     <FormErrorMessage>
                       {typeof errors.gender === 'string' ? errors.gender : ''}
@@ -155,6 +155,7 @@ const EditProfileModal = ({
                       h="50px"
                       border="1px solid #C0C0C0"
                       borderRadius="50px"
+                      readOnly={true}
                     />
                     <FormErrorMessage>
                       {typeof errors.email === 'string' ? errors.email : ''}

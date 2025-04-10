@@ -111,7 +111,7 @@ const NextOfKins = () => {
     <Fragment>
       <Box border="1px solid #E4E4E4" borderRadius="5px" px="24px" py="14px">
         <Stack spacing="20px">
-          <Flex alignItems="center" justifyContent="space-between">
+          <Flex alignItems="center" justifyContent="space-between" flexWrap={['wrap', 'nowrap']} gap={['20px', '0']}>
             <Box w={['100%', '50%']}>
               <Heading fontSize={14} mb="12px" fontWeight={700} color="#2E353F">
                 Next Of Kins

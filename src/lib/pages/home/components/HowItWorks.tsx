@@ -11,8 +11,7 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import { ArrowForward, BlueArrowUpIcon } from '~/lib/components/Icons/Icons';
-
-
+import { IoIosArrowRoundForward } from 'react-icons/io';
 
 export const SingleCard = ({
   image,
@@ -41,10 +40,7 @@ export const FeatureCard = ({
   description: string;
 }) => {
   return (
-    <Box
-      borderBottom="1px solid #C0C0C0"
-      py="10px"
-    >
+    <Box borderBottom="1px solid #C0C0C0" py="10px">
       <Stack spacing="24px">
         <Stack spacing="16px">
           <Heading fontSize={20} fontWeight={700} color="#222222">
@@ -77,7 +73,7 @@ const HowItWorks = () => {
           <HStack
             flexWrap="wrap"
             justifyContent={['center', 'space-between']}
-            alignItems={['center',"flex-end"]}
+            alignItems={['center', 'flex-end']}
             spacing={[3, 0]}
             flexDir={['column', 'row']}
           >
@@ -125,7 +121,7 @@ const HowItWorks = () => {
       </VStack>
       <Box
         w="100%"
-        h="500px"
+        h={['auto', '500px']}
         bgImage="/assets/images/house-6.jpeg"
         backgroundRepeat="no-repeat"
         backgroundSize="cover"
@@ -143,46 +139,41 @@ const HowItWorks = () => {
           display="flex"
           alignItems="center"
           justifyContent="center"
+          py={['100px', 0]}
         >
-          <Flex
-            alignItems="flex-start"
-            justifyContent="space-between"
-            flexWrap={['wrap', 'nowrap']}
-            w={['95%', '90%']}
-            margin="auto"
-          >
-            <Box maxW="550px" mb={['32px', 0]}>
-              <Heading fontSize={[34, 48]} fontWeight={700} color="#ffffff">
-                Start Your Investment <br /> Journey Today
+          <Box maxW="1300px" mx="auto">
+            <Stack spacing="24px">
+              <Text
+                fontSize={[16, 18]}
+                fontWeight={600}
+                textTransform="uppercase"
+                color="#FBFBFB"
+              >
+                The Future of Asset Management is Here
+              </Text>
+              <Heading color="brand.200" fontWeight={500} fontSize={[30, 32]}>
+                We are pioneering the future of real estate asset management. By
+                combining real-time data, machine learning, and cutting-edge
+                analytics, we are transforming the way real estate investments
+                are managed and grown.
               </Heading>
-            </Box>
-            <Box maxW="550px">
-              <Stack spacing="24px">
-                <Text fontSize={18} fontWeight={500} color="#FBFBFB">
-                  Ready to explore the world of fractional real estate
-                  ownership? <br />
-                  Become part of a thriving community of investors by selecting
-                  a <br />
-                  project and start investing
-                </Text>
-                <Button
-                  w="225px"
-                  bg="#EDEDFF"
-                  py="6"
-                  px="24px"
-                  borderRadius="50px"
-                  fontWeight={700}
-                  color="#000080"
-                  rightIcon={<BlueArrowUpIcon />}
-                >
-                  Load More
-                </Button>
-              </Stack>
-            </Box>
-          </Flex>
+              <Button
+                _hover={{ bg: 'none' }}
+                borderRadius="50px"
+                fontWeight={500}
+                color="#fbfbfb"
+                rightIcon={<IoIosArrowRoundForward />}
+                variant="ghost"
+                w="145px"
+                textDecoration="underline"
+              >
+                More About Us
+              </Button>
+            </Stack>
+          </Box>
         </Box>
       </Box>
-      <Box py="70px" maxW="1200px" mx="auto" px={['24px', 0]} id="features">
+      {/* <Box py="70px" maxW="1200px" mx="auto" px={['24px', 0]} id="features">
         <Flex
           alignItems="flex-start"
           justifyContent="space-between"
@@ -217,7 +208,7 @@ const HowItWorks = () => {
             </Text>
           </Box>
         </Flex>
-      </Box>
+      </Box> */}
     </Box>
   );
 };

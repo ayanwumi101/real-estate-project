@@ -214,7 +214,7 @@ const LoginForm = () => {
                 {loading ? <Spinner /> : 'Continue'}
               </Button>
               <Text color="#131339" fontWeight={500}>
-                Dont Have and Account?{' '}
+                Don't have an account?{' '}
                 <Box as="span" color="#FFAE42" fontWeight={700}>
                   <Link href="/signup">Sign up</Link>
                 </Box>
