@@ -114,7 +114,7 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                       ? moment(propertyDetails?.last_cashflow_date).format(
                           'ddd, Do MMMM YYYY'
                         )
-                      : 'N/A'
+                      : 'Never Collected'
                   }
                 />
                 <AssetDetailsItem
