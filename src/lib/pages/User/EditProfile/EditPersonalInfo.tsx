@@ -281,9 +281,9 @@ const EditPersonalInfoModal = ({
                         fontWeight={600}
                         fontSize={16}
                         _hover={{ bg: '#000080' }}
-                        minW="200px"
+                        minW={['100%',"200px"]}
                       >
-                        {loading ? <Spinner /> : 'Edit Personal Info'}
+                        {loading ? <Spinner /> : 'Update Info'}
                       </Button>
                     </Flex>
                   </Stack>

@@ -81,7 +81,7 @@ const EditProfileModal = ({
     };
 
   return (
-    <Box>
+    <Box w='100%'>
       <CustomModal isOpen={isOpen} onClose={onClose}>
         <Formik
           initialValues={initialValues}
@@ -91,7 +91,7 @@ const EditProfileModal = ({
           {({ errors, touched, values, setFieldValue }) => {
             return (
               <Form>
-                <Stack spacing="20px">
+                <Stack spacing="20px" w='100%'>
                   <Heading fontSize={24} fontWeight={500} color="brand.100">
                     Edit Profile Details
                   </Heading>
@@ -185,7 +185,7 @@ const EditProfileModal = ({
                       isDisabled={loading}
                       _hover={{ bg: 'brand.100' }}
                     >
-                      {loading ? <Spinner /> : 'Add Next of Kin'}
+                      {loading ? <Spinner /> : 'Update Details'}
                     </Button>
                   </Flex>
                 </Stack>

@@ -7,10 +7,9 @@ const CustomModal = ({isOpen, onClose, children,}: {isOpen: boolean, onClose: ()
       <ModalOverlay backdropFilter="blur(8px)" />
       <ModalContent
         bg="white"
-        py="20px"
-        px="20px"
+        p={['10px', '20px']}
         borderRadius="5px"
-        w='100%'
+        w={['95%','100%']}
         h='auto'
         maxH='90vh'
         overflow='auto'
