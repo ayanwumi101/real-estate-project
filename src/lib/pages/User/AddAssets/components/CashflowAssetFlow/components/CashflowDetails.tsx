@@ -67,7 +67,7 @@ const CashflowDetails = ({
     setAssetData({
       ...assetData,
       cashflowSource: values.cashflowSource,
-      isPropertyOccupied: values.isPropertyOccupied,
+      isPropertyOccupied: values.isPropertyOccupied === 'Yes' ? true : false,
       lastCashflowDate: values.lastCashflowDate,
       nextCashflowDate: values.nextCashflowDate,
       cashflowAmount: values.cashflowAmount,

@@ -114,7 +114,7 @@ const PropertyListTable = ({ assets }: { assets: any[] }) => {
               </Tr>
             </Thead>
             <Tbody color="#222222">
-                {assets?.map((asset: any) => {
+              {assets?.map((asset: any) => {
                 return (
                   <Tr
                     border="none"
@@ -154,7 +154,9 @@ const PropertyListTable = ({ assets }: { assets: any[] }) => {
                         : 'N/A'}
                     </Td>
                     <Td fontWeight={500} fontSize={13} px="0">
-                      {asset?.is_occupied ? 'Occupied' : 'Not Occupied'}
+                      {asset?.is_occupied === true
+                        ? 'Occupied'
+                        : 'Not Occupied'}
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
                       {asset?.cashflow_amount
