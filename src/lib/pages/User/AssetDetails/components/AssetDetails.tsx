@@ -24,9 +24,7 @@ const AssetDetailsItem = ({
   );
 };
 
-const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
-  console.log(propertyDetails);
-  
+const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {  
   return (
     <Box>
       <Stack spacing="32px">

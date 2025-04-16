@@ -7,16 +7,16 @@ import {
   Flex,
   Select,
   Button,
-  FormErrorMessage, Spinner, useToast
+  FormErrorMessage,
+  Spinner,
+  useToast,
 } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { UpdateAssetDeliveryStatus } from '~/lib/api/services/assetsService';
 import { CreateAssetContext } from '../../..';
-
-
-
+import { formatCurrency } from '~/lib/utils/formatAmount';
 
 const DeliveryStatusForm = ({
   step,
@@ -25,8 +25,13 @@ const DeliveryStatusForm = ({
   step: number;
   setStep: (value: number) => void;
 }) => {
-  const {step: parentStep, setStep: setParentStep, assetData, setAssetData} = useContext<any>(CreateAssetContext);
-
+  const {
+    step: parentStep,
+    setStep: setParentStep,
+    assetData,
+    setAssetData,
+  } = useContext<any>(CreateAssetContext);
+  const [propertyCost, setPropertyCost] = React.useState<string>('');
   const validationSchema = Yup.object().shape({
     propertyCost: Yup.string().required('Propety cost is required'),
     dateOfPurchase: Yup.string().required('Date of purchase is required'),
@@ -44,7 +49,7 @@ const DeliveryStatusForm = ({
     documentationStatus: assetData.documentationStatus || '',
     handoverStatus: assetData.handoverStatus || '',
   };
-   
+
   const handleSubmit = async (values: any) => {
     setAssetData({
       ...assetData,
@@ -74,22 +79,31 @@ const DeliveryStatusForm = ({
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     How much does the property cost?
                   </FormLabel>
-                  <Field
-                    as={Input}
+                  <Input
+                    type="text"
+                    value={formatCurrency(propertyCost)}
+                    onChange={(e) => {
+                      const rawValue = e.target.value.replace(/[^\d]/g, '');
+                      setPropertyCost(rawValue);
+                      setFieldValue('propertyCost', rawValue);
+                    }}
                     name="propertyCost"
                     bg="#FBFBFB"
                     border="1px solid #C0C0C0"
                     borderRadius="50px"
                     h="50px"
                     placeholder="₦ 0. 00"
-                    type="number"
                   />
                   <FormErrorMessage>
-                    {typeof errors.propertyCost === 'string' ? errors.propertyCost : ''}
+                    {typeof errors.propertyCost === 'string'
+                      ? errors.propertyCost
+                      : ''}
                   </FormErrorMessage>
                 </FormControl>
                 <FormControl
-                  isInvalid={!!errors.dateOfPurchase && !!touched.dateOfPurchase}
+                  isInvalid={
+                    !!errors.dateOfPurchase && !!touched.dateOfPurchase
+                  }
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     When was this property bought?
@@ -105,7 +119,9 @@ const DeliveryStatusForm = ({
                     type="date"
                   />
                   <FormErrorMessage>
-                    {typeof errors.dateOfPurchase === 'string' ? errors.dateOfPurchase : ''}
+                    {typeof errors.dateOfPurchase === 'string'
+                      ? errors.dateOfPurchase
+                      : ''}
                   </FormErrorMessage>
                 </FormControl>
                 <FormControl
@@ -130,12 +146,15 @@ const DeliveryStatusForm = ({
                     <option value="Completed">Completed</option>
                   </Field>
                   <FormErrorMessage>
-                    {typeof errors.allocationStatus === 'string' ? errors.allocationStatus : ''}
+                    {typeof errors.allocationStatus === 'string'
+                      ? errors.allocationStatus
+                      : ''}
                   </FormErrorMessage>
                 </FormControl>
                 <FormControl
                   isInvalid={
-                    !!errors.documentationStatus && !!touched.documentationStatus
+                    !!errors.documentationStatus &&
+                    !!touched.documentationStatus
                   }
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
@@ -155,11 +174,15 @@ const DeliveryStatusForm = ({
                     <option value="Completed">Completed</option>
                   </Field>
                   <FormErrorMessage>
-                    {typeof errors.documentationStatus === 'string' ? errors.documentationStatus : ''}
+                    {typeof errors.documentationStatus === 'string'
+                      ? errors.documentationStatus
+                      : ''}
                   </FormErrorMessage>
                 </FormControl>
                 <FormControl
-                  isInvalid={!!errors.handoverStatus && !!touched.handoverStatus}
+                  isInvalid={
+                    !!errors.handoverStatus && !!touched.handoverStatus
+                  }
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     What is the handover status?
@@ -178,7 +201,9 @@ const DeliveryStatusForm = ({
                     <option value="Completed">Completed</option>
                   </Field>
                   <FormErrorMessage>
-                    {typeof errors.handoverStatus === 'string' ? errors.handoverStatus : ''}
+                    {typeof errors.handoverStatus === 'string'
+                      ? errors.handoverStatus
+                      : ''}
                   </FormErrorMessage>
                 </FormControl>
                 <Flex justifyContent="flex-end" gap="20px">

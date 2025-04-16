@@ -18,6 +18,7 @@ import { Formik, Form, Field } from 'formik';
 import { UpdateAssetPaymentPlan } from '~/lib/api/services/assetsService';
 import Cookie from 'js-cookie';
 import { CreateAssetContext } from '../../..';
+import { formatCurrency } from '~/lib/utils/formatAmount';
 
 const PaymentPlan = ({
   step,
@@ -33,6 +34,8 @@ const PaymentPlan = ({
     step: parentStep,
     setStep: setParentStep,
   } = useContext<any>(CreateAssetContext);
+  const [amountPaid, setAmountPaid] = useState<string>('');
+  const [amountLeft, setAmountLeft] = useState<string>('');
 
   // Validation schema using Yup
   const validationSchema = Yup.object().shape({
@@ -99,7 +102,6 @@ const PaymentPlan = ({
               default:
                 nextDate = '';
             }
-
             if (nextDate instanceof Date && !isNaN(nextDate.getTime())) {
               const formatted = nextDate.toISOString().split('T')[0];
               setFieldValue('nextDueDate', formatted);
@@ -139,8 +141,14 @@ const PaymentPlan = ({
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     How much have you paid so far?
                   </FormLabel>
-                  <Field
-                    as={Input}
+                  <Input
+                    type="text"
+                    value={formatCurrency(amountPaid)}
+                    onChange={(e) => {
+                      const rawValue = e.target.value.replace(/[^\d]/g, '');
+                      setAmountPaid(rawValue);
+                      setFieldValue('amountPaid', rawValue);
+                    }}
                     name="amountPaid"
                     border="1px solid #C0C0C0"
                     bg="#FBFBFB"
@@ -159,8 +167,14 @@ const PaymentPlan = ({
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     How much do you have left to pay?
                   </FormLabel>
-                  <Field
-                    as={Input}
+                  <Input
+                    type="text"
+                    value={formatCurrency(amountLeft)}
+                    onChange={(e) => {
+                      const rawValue = e.target.value.replace(/[^\d]/g, '');
+                      setAmountLeft(rawValue);
+                      setFieldValue('amountLeft', rawValue);
+                    }}
                     name="amountLeft"
                     border="1px solid #C0C0C0"
                     bg="#FBFBFB"

@@ -17,6 +17,10 @@ import { Formik, Form, Field } from 'formik';
 import { UpdateAssetDeliveryStatus } from '~/lib/api/services/assetsService';
 import Cookie from 'js-cookie';
 import { CreateAssetContext } from '../../..';
+import { formatCurrency } from '~/lib/utils/formatAmount';
+
+
+
 
 const DeliveryStatusForm = ({
   step,
@@ -28,11 +32,9 @@ const DeliveryStatusForm = ({
   const toast = useToast();
   const [loading, setLoading] = React.useState<boolean>(false);
   const assetId = Cookie.get('vestier-asset-id');
-  const {
-    step: parentStep,
-    setStep: setParentStep,
-  } = useContext<any>(CreateAssetContext);
-
+  const { step: parentStep, setStep: setParentStep } =
+    useContext<any>(CreateAssetContext);
+  const [propertyCost, setPropertyCost] = React.useState<string>('');
   const validationSchema = Yup.object().shape({
     propertyCost: Yup.string().required('Property cost is required'),
     dateOfPurchase: Yup.string().required('Date of purchase is required'),
@@ -60,12 +62,9 @@ const DeliveryStatusForm = ({
       handover_status: values.handoverStatus,
       property_cost: values.propertyCost,
       bought_date: values.dateOfPurchase,
-    }
+    };
     try {
-      const res = await UpdateAssetDeliveryStatus(
-        assetId as string,
-        formData
-      );
+      const res = await UpdateAssetDeliveryStatus(assetId as string, formData);
       if (res.status === true) {
         toast({
           title: res.message as string,
@@ -73,7 +72,6 @@ const DeliveryStatusForm = ({
           duration: 3000,
           isClosable: true,
           position: 'top-right',
-
         });
         setLoading(false);
         setStep(step + 1);
@@ -108,15 +106,20 @@ const DeliveryStatusForm = ({
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     How much does the property cost?
                   </FormLabel>
-                  <Field
-                    as={Input}
+                  <Input
+                    type="text"
+                    value={formatCurrency(propertyCost)}
+                    onChange={(e) => {
+                      const rawValue = e.target.value.replace(/[^\d]/g, '');
+                      setPropertyCost(rawValue);
+                      setFieldValue('propertyCost', rawValue);
+                    }}
                     name="propertyCost"
                     bg="#FBFBFB"
                     border="1px solid #C0C0C0"
                     borderRadius="50px"
                     h="50px"
                     placeholder="₦ 0. 00"
-                    type="number"
                   />
                   <FormErrorMessage>{errors.propertyCost}</FormErrorMessage>
                 </FormControl>

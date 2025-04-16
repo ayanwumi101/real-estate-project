@@ -24,6 +24,7 @@ const index = () => {
   const cashflowAssets = assets?.filter(
     (asset) => asset?.asset_type === 'cashflow'
   );
+  
 
   return (
     <Box pb="50px">

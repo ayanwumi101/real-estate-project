@@ -13,15 +13,14 @@ import {
   Checkbox,
   Spinner,
   FormErrorMessage,
-  useToast
+  useToast,
 } from '@chakra-ui/react';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { UpdateAssetCashflowDetails } from '~/lib/api/services/assetsService';
 import Cookie from 'js-cookie';
 import { CreateAssetContext } from '../../..';
-
-
+import { formatCurrency } from '~/lib/utils/formatAmount';
 
 const CashflowDetails = ({
   step,
@@ -30,10 +29,8 @@ const CashflowDetails = ({
   step: number;
   setStep: (value: number) => void;
 }) => {
-   const {
-      assetData,
-      setAssetData,
-    } = useContext<any>(CreateAssetContext);
+  const { assetData, setAssetData } = useContext<any>(CreateAssetContext);
+  const [cashflowAmount, setCashflowAmount] = useState<string>('');
 
   const initialValues = {
     cashflowSource: assetData?.cashflowSource || '',
@@ -47,8 +44,21 @@ const CashflowDetails = ({
   const validationSchema = Yup.object().shape({
     cashflowSource: Yup.string().required('Cashflow source is required'),
     isPropertyOccupied: Yup.string().required('This field is required'),
-    lastCashflowDate: Yup.string().required('Last cashflow date is required'),
-    nextCashflowDate: Yup.string().required('Next cashflow date is required'),
+    lastCashflowDate: Yup.string().when('isPropertyOccupied', {
+      is: 'Yes',
+      then: (schema) => schema.required('Last cashflow date is required'),
+      otherwise: (schema) => schema.notRequired(),
+    }),
+    nextCashflowDate: Yup.string().when(
+      ['lastCashflowDate', 'isPropertyOccupied'],
+      {
+        is: (lastCashflowDate: string, isPropertyOccupied: string) =>
+          lastCashflowDate !== 'never collected' &&
+          isPropertyOccupied === 'Yes',
+        then: (schema) => schema.required('Next cashflow date is required'),
+        otherwise: (schema) => schema.notRequired(),
+      }
+    ),
     cashflowAmount: Yup.string().required('Cashflow amount is required'),
     cashflowDuration: Yup.string().required('Cashflow duration is required'),
   });
@@ -65,8 +75,6 @@ const CashflowDetails = ({
     });
     setStep(step + 1);
   };
-
-  
 
   return (
     <Formik
@@ -116,7 +124,9 @@ const CashflowDetails = ({
             <Box w={['100%', '100%', '600px']}>
               <Stack spacing="24px">
                 <FormControl
-                  isInvalid={!!errors.cashflowSource && !!touched.cashflowSource}
+                  isInvalid={
+                    !!errors.cashflowSource && !!touched.cashflowSource
+                  }
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     What is the cashflow source?
@@ -132,9 +142,12 @@ const CashflowDetails = ({
                   >
                     <option value="Rent">Rent</option>
                     <option value="Lease">Lease</option>
+                    <option value="Shortlet">Shortlet</option>
                   </Field>
                   <FormErrorMessage>
-                    {typeof errors.cashflowSource === 'string' ? errors.cashflowSource : null}
+                    {typeof errors.cashflowSource === 'string'
+                      ? errors.cashflowSource
+                      : null}
                   </FormErrorMessage>
                 </FormControl>
                 <FormControl
@@ -158,7 +171,9 @@ const CashflowDetails = ({
                     <option value="No">No</option>
                   </Field>
                   <FormErrorMessage>
-                    {typeof errors.isPropertyOccupied === 'string' ? errors.isPropertyOccupied : null}
+                    {typeof errors.isPropertyOccupied === 'string'
+                      ? errors.isPropertyOccupied
+                      : null}
                   </FormErrorMessage>
                 </FormControl>
                 <FormControl
@@ -184,77 +199,97 @@ const CashflowDetails = ({
                     <option value="Yearly">Yearly</option>
                   </Field>
                   <FormErrorMessage>
-                    {typeof errors.cashflowDuration === 'string' ? errors.cashflowDuration : null}
+                    {typeof errors.cashflowDuration === 'string'
+                      ? errors.cashflowDuration
+                      : null}
                   </FormErrorMessage>
                 </FormControl>
-                <FormControl
-                  isInvalid={
-                    !!errors.lastCashflowDate && !!touched.lastCashflowDate
-                  }
-                >
-                  <FormLabel fontWeight={600} fontSize={16} color="#222222">
-                    When did you collect your last cashflow?
-                  </FormLabel>
-                  <Field
-                    as={Input}
-                    name="lastCashflowDate"
-                    border="1px solid #C0C0C0"
-                    bg="#FBFBFB"
-                    h="50px"
-                    borderRadius="40px"
-                    placeholder="₦ 0, 00"
-                    _placeholder={{ color: '#8295AA', fontWeight: 500 }}
-                    type="date"
-                    mb="2"
-                    disabled={values.lastCashflowDate === 'never collected'}
-                  />
-                  <Checkbox
-                    size="lg"
-                    onChange={(e) =>
-                      setFieldValue(
-                        'lastCashflowDate',
-                        e.target.checked ? 'never collected' : ''
-                      )
+                {values.isPropertyOccupied === 'Yes' && (
+                  <FormControl
+                    isInvalid={
+                      !!errors.lastCashflowDate && !!touched.lastCashflowDate
                     }
-                    isChecked={values.lastCashflowDate === 'never collected'}
                   >
-                    Never collected
-                  </Checkbox>
-                  <FormErrorMessage>
-                    {typeof errors.lastCashflowDate === 'string' ? errors.lastCashflowDate : null}
-                  </FormErrorMessage>
-                </FormControl>
+                    <FormLabel fontWeight={600} fontSize={16} color="#222222">
+                      When did you collect your last cashflow?
+                    </FormLabel>
+                    <Field
+                      as={Input}
+                      name="lastCashflowDate"
+                      border="1px solid #C0C0C0"
+                      bg="#FBFBFB"
+                      h="50px"
+                      borderRadius="40px"
+                      placeholder="₦ 0, 00"
+                      _placeholder={{ color: '#8295AA', fontWeight: 500 }}
+                      type="date"
+                      mb="2"
+                      disabled={values.lastCashflowDate === 'never collected'}
+                    />
+                    <Checkbox
+                      size="lg"
+                      onChange={(e) =>
+                        setFieldValue(
+                          'lastCashflowDate',
+                          e.target.checked ? 'never collected' : ''
+                        )
+                      }
+                      isChecked={values.lastCashflowDate === 'never collected'}
+                    >
+                      Never collected
+                    </Checkbox>
+                    <FormErrorMessage>
+                      {typeof errors.lastCashflowDate === 'string'
+                        ? errors.lastCashflowDate
+                        : null}
+                    </FormErrorMessage>
+                  </FormControl>
+                )}
+
+                {values.lastCashflowDate !== 'never collected' &&
+                  (values.isPropertyOccupied === 'Yes' && (
+                    <FormControl
+                      isInvalid={
+                        !!errors.nextCashflowDate && !!touched.nextCashflowDate
+                      }
+                    >
+                      <FormLabel fontWeight={600} fontSize={16} color="#222222">
+                        When is the next cashflow payment due?
+                      </FormLabel>
+                      <Field
+                        as={Input}
+                        name="nextCashflowDate"
+                        border="1px solid #C0C0C0"
+                        bg="#FBFBFB"
+                        h="50px"
+                        borderRadius="40px"
+                        placeholder="₦ 0, 00"
+                        _placeholder={{ color: '#8295AA', fontWeight: 500 }}
+                        type="date"
+                      />
+                      <FormErrorMessage>
+                        {typeof errors.nextCashflowDate === 'string'
+                          ? errors.nextCashflowDate
+                          : null}
+                      </FormErrorMessage>
+                    </FormControl>
+                  ))}
                 <FormControl
                   isInvalid={
-                    !!errors.nextCashflowDate && !!touched.nextCashflowDate
+                    !!errors.cashflowAmount && !!touched.cashflowAmount
                   }
-                >
-                  <FormLabel fontWeight={600} fontSize={16} color="#222222">
-                    When is the next cashflow payment due?
-                  </FormLabel>
-                  <Field
-                    as={Input}
-                    name="nextCashflowDate"
-                    border="1px solid #C0C0C0"
-                    bg="#FBFBFB"
-                    h="50px"
-                    borderRadius="40px"
-                    placeholder="₦ 0, 00"
-                    _placeholder={{ color: '#8295AA', fontWeight: 500 }}
-                    type="date"
-                  />
-                  <FormErrorMessage>
-                    {typeof errors.nextCashflowDate === 'string' ? errors.nextCashflowDate : null}
-                  </FormErrorMessage>
-                </FormControl>
-                <FormControl
-                  isInvalid={!!errors.cashflowAmount && !!touched.cashflowAmount}
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     What is the cashflow amount?
                   </FormLabel>
-                  <Field
-                    as={Input}
+                  <Input
+                    type="text"
+                    value={formatCurrency(cashflowAmount)}
+                    onChange={(e) => {
+                      const rawValue = e.target.value.replace(/[^\d]/g, '');
+                      setCashflowAmount(rawValue);
+                      setFieldValue('cashflowAmount', rawValue);
+                    }}
                     name="cashflowAmount"
                     border="1px solid #C0C0C0"
                     bg="#FBFBFB"
@@ -264,7 +299,9 @@ const CashflowDetails = ({
                     _placeholder={{ color: '#8295AA', fontWeight: 500 }}
                   />
                   <FormErrorMessage>
-                    {typeof errors.cashflowAmount === 'string' ? errors.cashflowAmount : null}
+                    {typeof errors.cashflowAmount === 'string'
+                      ? errors.cashflowAmount
+                      : null}
                   </FormErrorMessage>
                 </FormControl>
                 <Flex justifyContent="flex-end" gap="10px">

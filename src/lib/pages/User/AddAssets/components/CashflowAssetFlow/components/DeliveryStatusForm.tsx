@@ -17,6 +17,9 @@ import { Formik, Form, Field } from 'formik';
 import { UpdateAssetDeliveryStatus } from '~/lib/api/services/assetsService';
 import Cookie from 'js-cookie';
 import { CreateAssetContext } from '../../..';
+import { formatCurrency } from '~/lib/utils/formatAmount';
+
+
 
 const DeliveryStatusForm = ({
   step,
@@ -31,7 +34,7 @@ const DeliveryStatusForm = ({
     assetData,
     setAssetData,
   } = useContext<any>(CreateAssetContext);
-
+  const [propertyCost, setPropertyCost] = React.useState<string>('');
   const validationSchema = Yup.object().shape({
     boughtDate: Yup.string().required('Bought date is required'),
     propertyCost: Yup.string().required('Property cost is required'),
@@ -68,8 +71,14 @@ const DeliveryStatusForm = ({
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     How much does the property cost?
                   </FormLabel>
-                  <Field
-                    as={Input}
+                  <Input
+                    type="text"
+                    value={formatCurrency(propertyCost)}
+                    onChange={(e) => {
+                      const rawValue = e.target.value.replace(/[^\d]/g, '');
+                      setPropertyCost(rawValue);
+                      setFieldValue('propertyCost', rawValue);
+                    }}
                     name="propertyCost"
                     bg="#FBFBFB"
                     border="1px solid #C0C0C0"
@@ -80,7 +89,9 @@ const DeliveryStatusForm = ({
                     w="100%"
                   />
                   <FormErrorMessage>
-                    {typeof errors.propertyCost === 'string' ? errors.propertyCost : ''}
+                    {typeof errors.propertyCost === 'string'
+                      ? errors.propertyCost
+                      : ''}
                   </FormErrorMessage>
                 </FormControl>
                 <FormControl
@@ -102,7 +113,9 @@ const DeliveryStatusForm = ({
                     w="100%"
                   />
                   <FormErrorMessage>
-                    {typeof errors.propertyCost === 'string' ? errors.propertyCost : ''}
+                    {typeof errors.propertyCost === 'string'
+                      ? errors.propertyCost
+                      : ''}
                   </FormErrorMessage>
                 </FormControl>
                 <Flex justifyContent="flex-end" gap="20px">
