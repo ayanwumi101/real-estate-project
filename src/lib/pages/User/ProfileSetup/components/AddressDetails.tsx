@@ -8,16 +8,20 @@ import {
   Flex,
   Select,
   Button,
-  Checkbox, FormErrorMessage,
-  useToast, Spinner
+  Checkbox,
+  FormErrorMessage,
+  useToast,
+  Spinner,
 } from '@chakra-ui/react';
 import { ProfileSetupContext } from '..';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
-import { GetCountryStates, GetStateCities } from '~/lib/api/services/locationService';
+import {
+  GetCountryStates,
+  GetStateCities,
+} from '~/lib/api/services/locationService';
 import { UpdateUserAddress } from '~/lib/api/services/profileService';
-
-
+import { ChevronLeftIcon } from '~/lib/components/Icons/Icons';
 
 const AddressDetails = ({
   step,
@@ -59,10 +63,10 @@ const AddressDetails = ({
       country_id: values.country,
       state_id: values.state,
       city_id: values.city,
-    }
+    };
     try {
       const res = await UpdateUserAddress(formData);
-      if(res.status === true) {
+      if (res.status === true) {
         toast({
           title: res.message as string,
           status: 'success',
@@ -84,7 +88,6 @@ const AddressDetails = ({
     }
     setLoading(false);
   };
-  
 
   return (
     <Formik
@@ -270,33 +273,45 @@ const AddressDetails = ({
                 </FormControl>
 
                 {/* Buttons */}
-                <Flex justifyContent="flex-end" gap="20px">
+                <Flex justifyContent="space-between" alignItems="center">
                   <Button
-                    color="#000080"
-                    bg="#EDEDFF"
-                    h="48px"
-                    borderRadius="30px"
-                    fontWeight={600}
-                    fontSize={16}
-                    _hover={{ bg: '#ededff' }}
-                    onClick={() => setStep(step - 1)}
-                    minW="100px"
+                    leftIcon={<ChevronLeftIcon />}
+                    variant="ghost"
+                    _hover={{ bg: 'none' }}
+                    color="brand.100"
                   >
                     Back
                   </Button>
-                  <Button
-                    type="submit"
-                    bg="#000080"
-                    color="white"
-                    h="48px"
-                    borderRadius="30px"
-                    fontWeight={600}
-                    fontSize={16}
-                    _hover={{ bg: '#000080' }}
-                    minW="150px"
-                  >
-                    {loading ? <Spinner /> : 'Continue'}
-                  </Button>
+                  <Box>
+                    <Flex alignItems="center" gap={['10px', '20px']}>
+                      <Button
+                        bg="brand.500"
+                        color="brand.100"
+                        _hover={{ bg: 'brand.500' }}
+                        h="48px"
+                        borderRadius="30px"
+                        fontWeight={600}
+                        fontSize={16}
+                        minW="100px"
+                        onClick={() => setStep(step + 1)}
+                      >
+                        Skip
+                      </Button>
+                      <Button
+                        type="submit"
+                        bg="#000080"
+                        color="white"
+                        h="48px"
+                        borderRadius="30px"
+                        fontWeight={600}
+                        fontSize={16}
+                        _hover={{ bg: '#000080' }}
+                        minW={['100px', '170px']}
+                      >
+                        {loading ? <Spinner /> : 'Continue'}
+                      </Button>
+                    </Flex>
+                  </Box>
                 </Flex>
               </Stack>
             </Box>

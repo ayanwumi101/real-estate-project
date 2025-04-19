@@ -6,16 +6,17 @@ import {
   Stack,
   Flex,
   Select,
-  Button, FormErrorMessage,
-  useToast, Spinner
+  Button,
+  FormErrorMessage,
+  useToast,
+  Spinner,
 } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { ProfileSetupContext } from '..';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { UpdatebankDetails } from '~/lib/api/services/profileService';
-
-
+import { ChevronLeftIcon } from '~/lib/components/Icons/Icons';
 
 const BankDetails = ({
   step,
@@ -44,7 +45,6 @@ const BankDetails = ({
     accountName: '',
   };
 
-
   // Handle form submission
   const handleSubmit = async (values: any) => {
     setLoading(true);
@@ -52,10 +52,10 @@ const BankDetails = ({
       bank_name: values.bank,
       account_number: values.accountNumber,
       account_name: values.accountName,
-    }
+    };
     try {
       const res = await UpdatebankDetails(formData);
-      if(res.status === true){
+      if (res.status === true) {
         toast({
           title: res.message as string,
           description: 'Bank details updated successfully',
@@ -77,10 +77,9 @@ const BankDetails = ({
         position: 'top-right',
         isClosable: true,
         status: 'error',
-      })
+      });
     }
   };
-
 
   return (
     <Formik
@@ -90,7 +89,7 @@ const BankDetails = ({
     >
       {({ errors, touched }) => (
         <Form>
-          <Box as="section" w={['100%', '100%', "600px"]}>
+          <Box as="section" w={['100%', '100%', '600px']}>
             <Stack spacing="24px">
               {/* Bank Selection */}
               <FormControl isInvalid={!!errors.bank && touched.bank}>
@@ -159,33 +158,45 @@ const BankDetails = ({
               </FormControl>
 
               {/* Buttons */}
-              <Flex justifyContent="flex-end" gap="20px">
+              <Flex justifyContent="space-between" alignItems="center">
                 <Button
-                  color="#000080"
-                  bg="#EDEDFF"
-                  h="48px"
-                  borderRadius="30px"
-                  fontWeight={600}
-                  fontSize={16}
-                  _hover={{ bg: '#ededff' }}
-                  onClick={() => setStep(step - 1)}
-                  minW="100px"
+                  leftIcon={<ChevronLeftIcon />}
+                  variant="ghost"
+                  _hover={{ bg: 'none' }}
+                  color="brand.100"
                 >
                   Back
                 </Button>
-                <Button
-                  type="submit"
-                  bg="#000080"
-                  color="white"
-                  h="48px"
-                  borderRadius="30px"
-                  fontWeight={600}
-                  fontSize={16}
-                  _hover={{ bg: '#000080' }}
-                  minW='150px'
-                >
-                  {loading ? <Spinner /> : 'Continue'}
-                </Button>
+                <Box>
+                  <Flex alignItems="center" gap={['10px', '20px']}>
+                    <Button
+                      bg="brand.500"
+                      color="brand.100"
+                      _hover={{ bg: 'brand.500' }}
+                      h="48px"
+                      borderRadius="30px"
+                      fontWeight={600}
+                      fontSize={16}
+                      minW="100px"
+                      onClick={() => setStep(step + 1)}
+                    >
+                      Skip
+                    </Button>
+                    <Button
+                      type="submit"
+                      bg="#000080"
+                      color="white"
+                      h="48px"
+                      borderRadius="30px"
+                      fontWeight={600}
+                      fontSize={16}
+                      _hover={{ bg: '#000080' }}
+                      minW={['100px', '170px']}
+                    >
+                      {loading ? <Spinner /> : 'Continue'}
+                    </Button>
+                  </Flex>
+                </Box>
               </Flex>
             </Stack>
           </Box>

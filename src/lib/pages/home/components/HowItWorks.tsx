@@ -151,7 +151,7 @@ const HowItWorks = () => {
               >
                 The Future of Asset Management is Here
               </Text>
-              <Heading color="brand.200" fontWeight={500} fontSize={[30, 32]}>
+              <Heading color="brand.200" fontWeight={500} fontSize={[26, 32]}>
                 We are pioneering the future of real estate asset management. By
                 combining real-time data, machine learning, and cutting-edge
                 analytics, we are transforming the way real estate investments

@@ -33,6 +33,8 @@ import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { SignupUser } from '~/lib/api/services/userService';
 import Cookies from 'js-cookie';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 export const SocialLoginButton = ({
   label,
@@ -65,14 +67,16 @@ const SignupForm = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] =
     useState<boolean>(false);
+  const [phone, setPhone] = React.useState<string>('234');
 
   const formik = useFormik({
     initialValues: {
       fullname: '',
       email: '',
-      phone: '',
+      phone: '234',
       password: '',
       confirmPassword: '',
+      termsAndConditions: false,
     },
     validationSchema: Yup.object({
       email: Yup.string()
@@ -93,49 +97,52 @@ const SignupForm = () => {
       confirmPassword: Yup.string()
         .required('Confirm Password is required')
         .oneOf([Yup.ref('password'), ''], 'Passwords must match'),
+      termsAndConditions: Yup.boolean().oneOf(
+        [true],
+        'You must accept the terms and conditions'
+      ),
     }),
     onSubmit: async (values, { resetForm }) => {
-      setLoading(true);
-      const formData = {
-        email: values.email,
-        fullname: values.fullname,
-        phone: values.phone,
-        password: values.password,
-        confirm_password: values.confirmPassword,
-      };
-      try {
-        const response = await SignupUser(formData);
-        if (response.status === true) {
-          toast({
-            title: response.message as string,
-            description: response.message as string,
-            duration: 3000,
-            position: 'top-right',
-            isClosable: true,
-            status: 'success',
-          });
-          Cookies.set(
-            'vestier-new-token',
-            JSON.stringify(response.data.token)
-          );
-          router.push('/signup/verify-otp');
-          Cookies.set('vestier-user', JSON.stringify(response.data.user));
-          resetForm();
-        }
-      } catch (error: any) {
-        console.log(error);
-        setLoading(false);
-        toast({
-          title: error.response.data.error as string,
-          description: error.response.data.message,
-          duration: 3000,
-          position: 'top-right',
-          isClosable: true,
-          status: 'error',
-        });
-      } finally {
-        setLoading(false);
-      }
+      console.log(values);
+
+      // setLoading(true);
+      // const formData = {
+      //   email: values.email,
+      //   fullname: values.fullname,
+      //   phone: values.phone,
+      //   password: values.password,
+      //   confirm_password: values.confirmPassword,
+      // };
+      // try {
+      //   const response = await SignupUser(formData);
+      //   if (response.status === true) {
+      //     toast({
+      //       title: response.message as string,
+      //       description: response.message as string,
+      //       duration: 3000,
+      //       position: 'top-right',
+      //       isClosable: true,
+      //       status: 'success',
+      //     });
+      //     Cookies.set('vestier-new-token', JSON.stringify(response.data.token));
+      //     router.push('/signup/verify-otp');
+      //     Cookies.set('vestier-user', JSON.stringify(response.data.user));
+      //     resetForm();
+      //   }
+      // } catch (error: any) {
+      //   console.log(error);
+      //   setLoading(false);
+      //   toast({
+      //     title: error.response.data.error as string,
+      //     description: error.response.data.message,
+      //     duration: 3000,
+      //     position: 'top-right',
+      //     isClosable: true,
+      //     status: 'error',
+      //   });
+      // } finally {
+      //   setLoading(false);
+      // }
     },
   });
 
@@ -249,21 +256,28 @@ const SignupForm = () => {
               <FormLabel mb="10px" color="#222222" fontWeight={600}>
                 Phone number*
               </FormLabel>
-              <Input
-                border="1px solid #C0C0C0"
-                bg="#FBFBFB"
-                borderRadius="50px"
-                _placeholder={{ color: '#8295AA' }}
-                py="25px"
-                px="20px"
-                placeholder="Enter your phone number"
-                color="#222222"
-                type="tel"
-                name="phone"
-                maxLength={11}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
+              <PhoneInput
                 value={formik.values.phone}
+                onChange={(value: string) =>
+                  formik.setFieldValue('phone', value)
+                }
+                onBlur={() => formik.setFieldTouched('phone', true)}
+                containerStyle={{
+                  border: '1px solid #C0C0C0',
+                  backgroundColor: '#FBFBFB',
+                  padding: '5px 14px 5px 14px',
+                  borderRadius: '24px',
+                  height: '50px',
+                }}
+                inputStyle={{
+                  border: 'none',
+                  paddingLeft: '50px',
+                  paddingTop: '5px',
+                }}
+                buttonStyle={{
+                  border: 'none',
+                  background: 'none',
+                }}
               />
               {formik.errors.phone && formik.touched.phone && (
                 <Text color="red.500" mt="2">
@@ -279,8 +293,6 @@ const SignupForm = () => {
               </FormLabel>
               <InputGroup w="100%">
                 <Input
-                  pr="12"
-                  py="12px"
                   border="1px solid #C0C0C0"
                   type={showPassword ? 'text' : 'password'}
                   onChange={formik.handleChange}
@@ -290,9 +302,9 @@ const SignupForm = () => {
                   borderRadius="50px"
                   bg="#FBFBFB"
                   color="#8295AA"
-                  _placeholder={{ color: '#8295AA' }}
-                  h="50px"
+                  _placeholder={{ color: '#8295AA', fontSize: 16 }}
                   name="password"
+                  h="50px"
                 />
                 <InputRightElement w="4rem" mt="1.5">
                   <Button onClick={() => setShowPassword(!showPassword)}>
@@ -335,6 +347,7 @@ const SignupForm = () => {
                   _placeholder={{ color: '#8295AA' }}
                   h="50px"
                   name="confirmPassword"
+                  fontSize={20}
                 />
                 <InputRightElement w="4rem" mt="1.5">
                   <Button
@@ -355,17 +368,33 @@ const SignupForm = () => {
                   </Text>
                 )}
             </FormControl>
-            <Checkbox
-              color="#222222"
-              fontWeight={500}
-              borderColor="#2E353F"
-              size="lg"
-              isChecked={true}
+            <FormControl
+              isInvalid={
+                !!formik.errors.termsAndConditions &&
+                formik.touched.termsAndConditions
+              }
             >
-              I agree with terms and conditions
-            </Checkbox>
+              <Checkbox
+                color="#222222"
+                fontWeight={500}
+                borderColor="#2E353F"
+                size="lg"
+                name="termsAndConditions"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                isChecked={formik.values.termsAndConditions}
+              >
+                I agree with terms and conditions
+              </Checkbox>
+              {formik.errors.termsAndConditions &&
+                formik.touched.termsAndConditions && (
+                  <Text color="red.500" mt="2">
+                    {formik.errors.termsAndConditions}
+                  </Text>
+                )}
+            </FormControl>
+
             <Box w="100%">
-              {/* <Link href="/signup/secure-account"> */}
               <Button
                 w="100%"
                 mb="10px"
@@ -378,7 +407,6 @@ const SignupForm = () => {
               >
                 {loading ? <Spinner /> : 'Continue'}
               </Button>
-              {/* </Link> */}
               <Text color="#131339" fontWeight={500}>
                 Already Have an Account?{' '}
                 <Box as="span" color="#FFAE42" fontWeight={700}>

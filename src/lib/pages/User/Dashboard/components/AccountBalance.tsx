@@ -5,50 +5,64 @@ import Cookies from 'js-cookie';
 import Link from 'next/link';
 import React, { Fragment, useContext, useState } from 'react';
 import { HiOutlineEye } from 'react-icons/hi2';
+import { PortfolioStatCard } from '~/lib/components/Cards';
+import { DashboardCautionIcon } from '~/lib/components/Icons/Icons';
 import { AppContext } from '~/lib/layout';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 
 
-const AccountBalance = ({totalInvestment}:{totalInvestment: number}) => {
+const AccountBalance = ({ totalInvestment, totalAssets }: { totalInvestment: number, totalAssets: number }) => {
   const { userDetails } = useContext(AppContext);
   const [showBalance, setShowBalance] = useState<boolean>(true);
   const walletVisibility = Cookies.get('walletVisibility');
-  
+
   return (
     <Box>
-      <Fragment>
-        {!userDetails?.personal_check &&
-          !userDetails?.bank_check &&
-          !userDetails?.nok_check &&
-          (!userDetails?.address_check && (
-            <Box
-              w="100%"
-              px={['20px', '40px']}
-              pb="30px"
-              borderBottom="1px solid #E4E4E4"
-            >
-              <Box
-                w="100%"
-                borderRadius="5px"
-                py="16px"
-                px={['16px', '48px']}
-                bgGradient="linear(to-r, #D8D8FF4D, #EDEDFF4D, #FFE6C44D)"
-              >
+      {/* banner that shows user name and profile setup */}
+      <Box w="100%" px={['20px', '40px']} pt='20px'>
+        <Box
+          w="100%"
+          borderRadius="5px"
+          py="20px"
+          px={['16px', '25px']}
+          bgGradient="linear(to-r, #D8D8FF, #EDEDFF, #FFE6C4)"
+        >
+          <Stack spacing="20px">
+            {' '}
+            <Stack spacing="5px">
+              <Text fontSize={14} fontWeight={500} color="brand.300">
+                Welcome back.
+              </Text>
+              <Heading fontSize={24} fontWeight={500} color="brand.300">
+                {userDetails?.fullname}
+              </Heading>
+            </Stack>
+            {!userDetails?.personal_check &&
+              !userDetails?.bank_check &&
+              !userDetails?.nok_check &&
+              !userDetails?.address_check && (
                 <Flex
                   alignItems="center"
                   justifyContent="space-between"
                   flexWrap="wrap"
+                  bg="brand.700"
+                  py="16px"
+                  px={['16px', '20px']}
+                  borderRadius="5px"
                 >
                   <Box mb={['16px', '0']}>
-                    <Stack spacing="6px" color="#000000">
-                      <Heading fontWeight={700} fontSize={15}>
-                        Complete Profile Setup
-                      </Heading>
-                      <Text fontSize={13} fontWeight={500}>
-                        To get the most out of your experience here, please take
-                        a moment to complete your profile.
-                      </Text>
-                    </Stack>
+                    <Flex alignItems="flex-start" gap="21px">
+                      <DashboardCautionIcon />
+                      <Stack spacing="6px" color="#000000">
+                        <Heading fontWeight={700} fontSize={15}>
+                          Please complete Profile Setup
+                        </Heading>
+                        <Text fontSize={13} fontWeight={500}>
+                          To get the most out of your experience here, please
+                          take a moment to complete your profile.
+                        </Text>
+                      </Stack>
+                    </Flex>
                   </Box>
                   <Link href="/user/profile-setup">
                     <Button
@@ -64,17 +78,31 @@ const AccountBalance = ({totalInvestment}:{totalInvestment: number}) => {
                     </Button>
                   </Link>
                 </Flex>
-              </Box>
-            </Box>
-          ))}
-      </Fragment>
+              )}
+          </Stack>
+        </Box>
+      </Box>
+      {/* the asset sumary and account balance goes here */}
       <Box
         w="100%"
         px={['20px', '40px']}
         py="30px"
         borderBottom="1px solid #E4E4E4"
+        overflow="auto"
       >
-        <Box
+        <Flex alignItems="ceter" gap="20px" w="100%" overflow="auto">
+          <PortfolioStatCard
+            label="Total Asset Registered"
+            balance={totalAssets || 0}
+            showHideIcon={false}
+          />
+          <PortfolioStatCard
+            label="Total Assets Valuation (Naira)"
+            balance={FormatAmount(Number(totalInvestment) || 0)}
+            showHideIcon={true}
+          />
+        </Flex>
+        {/* <Box
           borderRadius="5px"
           bgGradient="linear(to-r,#D8D8FF, #D8D8FF4D, #FFEFD9)"
           py={['24px', '32px']}
@@ -110,7 +138,7 @@ const AccountBalance = ({totalInvestment}:{totalInvestment: number}) => {
               </Flex>
             </Box>
           </Stack>
-        </Box>
+        </Box> */}
       </Box>
     </Box>
   );

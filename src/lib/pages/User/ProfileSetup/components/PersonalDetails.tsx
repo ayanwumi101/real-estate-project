@@ -16,19 +16,24 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import React, { useContext, useState } from 'react';
-import { GetUserProfileDetails, SaveUserDetails } from '~/lib/api/services/profileService';
-import { FileUploadIcon, SelectGenderIcon } from '~/lib/components/Icons/Icons';
+import {
+  GetUserProfileDetails,
+  SaveUserDetails,
+} from '~/lib/api/services/profileService';
+import {
+  ChevronLeftIcon,
+  FileUploadIcon,
+  SelectGenderIcon,
+} from '~/lib/components/Icons/Icons';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { GoTrash } from 'react-icons/go';
 import { BsImageFill } from 'react-icons/bs';
 import { AppContext } from '~/lib/layout';
 
-
-
 // Validation Schema
 const validationSchema = Yup.object().shape({
-  profilePicture: Yup.mixed(),
+  profilePicture: Yup.mixed().notRequired(),
   dateOfBirth: Yup.date()
     .max(new Date(), 'Date of birth cannot be in the future')
     .required('Date of birth is required'),
@@ -92,12 +97,12 @@ const PersonalDetails = ({ step, setStep }: PersonalDetailsProps) => {
     >
       {({ errors, touched, setFieldValue, values }) => (
         <Form>
-          <Box w={['100%', '100%', "600px"]}>
-            <Stack spacing="25px" w='100%'>
+          <Box w={['100%', '100%', '600px']}>
+            <Stack spacing="25px" w="100%">
               {/* Profile Picture */}
               <FormControl
-               w='100%'
-                isInvalid={!!errors.profilePicture && touched.profilePicture}
+                w="100%"
+                // isInvalid={!!errors.profilePicture && touched.profilePicture}
               >
                 <FormLabel
                   fontWeight={600}
@@ -183,8 +188,7 @@ const PersonalDetails = ({ step, setStep }: PersonalDetailsProps) => {
                     </Box>
                   </FormLabel>
                 )}
-
-                <FormErrorMessage>{errors.profilePicture}</FormErrorMessage>
+                {/* <FormErrorMessage>{errors.profilePicture}</FormErrorMessage> */}
               </FormControl>
 
               {/* Date of Birth */}
@@ -249,20 +253,46 @@ const PersonalDetails = ({ step, setStep }: PersonalDetailsProps) => {
               </FormControl>
 
               {/* Submit Button */}
-              <Flex justifyContent="flex-end">
+              <Flex justifyContent="space-between" alignItems="center">
                 <Button
-                  type="submit"
-                  bg="#000080"
-                  color="white"
-                  h="48px"
-                  borderRadius="30px"
-                  fontWeight={600}
-                  fontSize={16}
-                  _hover={{ bg: '#000080' }}
-                  minW="200px"
+                  leftIcon={<ChevronLeftIcon />}
+                  variant="ghost"
+                  _hover={{ bg: 'none' }}
+                  color="brand.100"
+                  isDisabled={step < 2}
                 >
-                  {loading ? <Spinner /> : 'Continue'}
+                  Back
                 </Button>
+                <Box>
+                  <Flex alignItems="center" gap={['10px',"20px"]}>
+                    <Button
+                      bg="brand.500"
+                      color="brand.100"
+                      _hover={{bg: 'brand.500'}}
+                      h="48px"
+                      borderRadius="30px"
+                      fontWeight={600}
+                      fontSize={16}
+                      minW="100px"
+                      onClick={() => setStep(step + 1)}
+                    >
+                      Skip
+                    </Button>
+                    <Button
+                      type="submit"
+                      bg="#000080"
+                      color="white"
+                      h="48px"
+                      borderRadius="30px"
+                      fontWeight={600}
+                      fontSize={16}
+                      _hover={{ bg: '#000080' }}
+                      minW={['100px',"170px"]}
+                    >
+                      {loading ? <Spinner /> : 'Continue'}
+                    </Button>
+                  </Flex>
+                </Box>
               </Flex>
             </Stack>
           </Box>

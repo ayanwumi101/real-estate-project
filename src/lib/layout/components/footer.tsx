@@ -58,8 +58,8 @@ export const Footer = () => {
                 justifyContent={['center', 'space-between']}
                 flexWrap="wrap"
               >
-                <Box w={['100%', '530px']} color="white" mb={['40px', 0]}>
-                  <Heading fontSize={40} fontWeight={700} mb="16px">
+                <Box w={['100%', '530px']} px={['16px', 0]} color="white" mb={['40px', 0]}>
+                  <Heading fontSize={[32,40]} fontWeight={700} mb="16px">
                     Stay Updated
                   </Heading>
                   <Text

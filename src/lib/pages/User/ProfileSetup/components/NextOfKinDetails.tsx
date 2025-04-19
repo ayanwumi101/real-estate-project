@@ -8,14 +8,15 @@ import {
   Flex,
   Select,
   Button,
-  FormErrorMessage, useToast, Spinner
+  FormErrorMessage,
+  useToast,
+  Spinner,
 } from '@chakra-ui/react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { UpdateNextOfKinDetails } from '~/lib/api/services/profileService';
 import { useRouter } from 'next/navigation';
-
-
+import { ChevronLeftIcon } from '~/lib/components/Icons/Icons';
 
 const NextOfKinDetails = ({
   step,
@@ -24,9 +25,9 @@ const NextOfKinDetails = ({
   step: number;
   setStep: (value: number) => void;
 }) => {
-    const toast = useToast();
-    const router = useRouter();
-    const [loading, setLoading] = React.useState<boolean>(false);
+  const toast = useToast();
+  const router = useRouter();
+  const [loading, setLoading] = React.useState<boolean>(false);
 
   // Validation schema using Yup
   const validationSchema = Yup.object().shape({
@@ -52,35 +53,35 @@ const NextOfKinDetails = ({
   const handleSubmit = async (values: any) => {
     setLoading(true);
     const formData = {
-        fullname: values.name,
-        relationship: values.relationship,
-        phone: values.phoneNumber,
-        email: values.email,
-    }
+      fullname: values.name,
+      relationship: values.relationship,
+      phone: values.phoneNumber,
+      email: values.email,
+    };
     try {
-        const res = await UpdateNextOfKinDetails(formData);
-        if(res.status === true){
-            toast({
-                title: res.message as string,
-                description: 'Next of Kin details updated successfully',
-                duration: 3000,
-                position: 'top-right',
-                isClosable: true,
-                status: 'success',
-            });
-            setLoading(false);
-            router.push('/user/dashboard');
-        }
-    } catch (error: any) {
-        setLoading(false);
+      const res = await UpdateNextOfKinDetails(formData);
+      if (res.status === true) {
         toast({
-            title: error.response.data.message as string,
-            description: 'An error occurred',
-            duration: 3000,
-            position: 'top-right',
-            isClosable: true,
-            status: 'error',
-        })
+          title: res.message as string,
+          description: 'Next of Kin details updated successfully',
+          duration: 3000,
+          position: 'top-right',
+          isClosable: true,
+          status: 'success',
+        });
+        setLoading(false);
+        router.push('/user/dashboard');
+      }
+    } catch (error: any) {
+      setLoading(false);
+      toast({
+        title: error.response.data.message as string,
+        description: 'An error occurred',
+        duration: 3000,
+        position: 'top-right',
+        isClosable: true,
+        status: 'error',
+      });
     }
   };
 
@@ -92,7 +93,7 @@ const NextOfKinDetails = ({
     >
       {({ errors, touched }) => (
         <Form>
-          <Box as="section" w={['100%', '100%',"600px"]}>
+          <Box as="section" w={['100%', '100%', '600px']}>
             <Stack spacing="24px">
               {/* Name of Next of Kin */}
               <FormControl isInvalid={!!errors.name && touched.name}>
@@ -178,33 +179,47 @@ const NextOfKinDetails = ({
               </FormControl>
 
               {/* Buttons */}
-              <Flex justifyContent="flex-end" gap="20px">
+              <Flex justifyContent="space-between" alignItems="center">
                 <Button
-                  color="#000080"
-                  bg="#EDEDFF"
-                  h="48px"
-                  borderRadius="30px"
-                  fontWeight={600}
-                  fontSize={16}
-                  _hover={{ bg: '#ededff' }}
-                  onClick={() => setStep(step - 1)}
-                  minW="100px"
+                  leftIcon={<ChevronLeftIcon />}
+                  variant="ghost"
+                  _hover={{ bg: 'none' }}
+                  color="brand.100"
+                  isDisabled={step < 2}
                 >
                   Back
                 </Button>
-                <Button
-                  type="submit"
-                  bg="#000080"
-                  color="white"
-                  h="48px"
-                  borderRadius="30px"
-                  fontWeight={600}
-                  fontSize={16}
-                  _hover={{ bg: '#000080' }}
-                  minW='150px'
-                >
-                    {loading ? <Spinner /> : 'Complete'}
-                </Button>
+                <Box>
+                  <Flex alignItems="center" gap={['10px', '20px']}>
+                    <Button
+                      bg="brand.500"
+                      color="brand.100"
+                      _hover={{ bg: 'brand.500' }}
+                      h="48px"
+                      borderRadius="30px"
+                      fontWeight={600}
+                      fontSize={16}
+                      minW="100px"
+                      onClick={() => setStep(step + 1)}
+                      isDisabled={step > 3}
+                    >
+                      Skip
+                    </Button>
+                    <Button
+                      type="submit"
+                      bg="#000080"
+                      color="white"
+                      h="48px"
+                      borderRadius="30px"
+                      fontWeight={600}
+                      fontSize={16}
+                      _hover={{ bg: '#000080' }}
+                      minW={['100px', '170px']}
+                    >
+                      {loading ? <Spinner /> : 'Complete'}
+                    </Button>
+                  </Flex>
+                </Box>
               </Flex>
             </Stack>
           </Box>

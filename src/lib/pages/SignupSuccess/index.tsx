@@ -45,7 +45,7 @@ const index = () => {
           Congratulations {user?.fullname}, your account is now active.
         </Heading>
         <Text color="#2E353F" fontWeight={500}>
-          Welcome aboard! Begin your investment journey with (Company name) and
+          Welcome aboard! Begin your investment journey with Vestier and
           unlock exclusive real estate opportunities. Finish setting up your
           profile to get started.
         </Text>

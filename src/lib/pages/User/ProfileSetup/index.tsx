@@ -46,29 +46,9 @@ const index = () => {
     <ProfileSetupContext.Provider value={{ banks, countries }}>
       <Box
         borderTop={['none', 'none', '1px solid #E4E4E4']}
-        py="20px"
+        py="40px"
         px={['20px', '20px', '55px']}
       >
-        <Box
-          w={['100%', '80%', '80%']}
-          display="flex"
-          mb="10"
-          justifyContent="flex-end"
-          alignItems="flex-end"
-        >
-          {' '}
-          <Link href='/user/dashboard'>
-            <Button
-              bg="bg.200"
-              _hover={{ bg: 'bg.200' }}
-              px="8"
-              color="brand.100"
-              fontWeight={600}
-            >
-              Skip
-            </Button>
-          </Link>
-        </Box>
         <Flex
           alignItems="flex-start"
           flexDir={['column', 'column', 'row']}

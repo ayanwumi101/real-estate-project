@@ -5,6 +5,7 @@ import Investments from './components/Investments';
 import MarketUpdates from './components/MarketUpdates';
 import { Box } from '@chakra-ui/react';
 import { GetUserAssets } from '~/lib/api/services/assetsService';
+import DashboardInfo from './components/DashboardInfo';
 
 const index = () => {
   const [assets, setAssets] = React.useState<any[]>([]);
@@ -27,7 +28,8 @@ const index = () => {
 
   return (
     <Box pt={[3, 0]}>
-      <AccountBalance totalInvestment={totalInvestment} />
+      <AccountBalance totalAssets={assets?.length} totalInvestment={totalInvestment} />
+      <DashboardInfo />
       {/* <Investments />
         <MarketUpdates /> */}
     </Box>

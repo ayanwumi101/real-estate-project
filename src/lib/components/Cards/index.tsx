@@ -397,9 +397,9 @@ export const SingleNextOfKinCard = ({
                 </Box>
               </Flex>
             </Box>
-            <Text fontSize={14} fontWeight={500} color="brand.100">
+            {/* <Text fontSize={14} fontWeight={500} color="brand.100">
               Associated with Harborview Towers
-            </Text>
+            </Text> */}
           </Flex>
         </Box>
         <Divider color="border.100" />
