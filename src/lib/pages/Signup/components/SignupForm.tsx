@@ -103,46 +103,44 @@ const SignupForm = () => {
       ),
     }),
     onSubmit: async (values, { resetForm }) => {
-      console.log(values);
-
-      // setLoading(true);
-      // const formData = {
-      //   email: values.email,
-      //   fullname: values.fullname,
-      //   phone: values.phone,
-      //   password: values.password,
-      //   confirm_password: values.confirmPassword,
-      // };
-      // try {
-      //   const response = await SignupUser(formData);
-      //   if (response.status === true) {
-      //     toast({
-      //       title: response.message as string,
-      //       description: response.message as string,
-      //       duration: 3000,
-      //       position: 'top-right',
-      //       isClosable: true,
-      //       status: 'success',
-      //     });
-      //     Cookies.set('vestier-new-token', JSON.stringify(response.data.token));
-      //     router.push('/signup/verify-otp');
-      //     Cookies.set('vestier-user', JSON.stringify(response.data.user));
-      //     resetForm();
-      //   }
-      // } catch (error: any) {
-      //   console.log(error);
-      //   setLoading(false);
-      //   toast({
-      //     title: error.response.data.error as string,
-      //     description: error.response.data.message,
-      //     duration: 3000,
-      //     position: 'top-right',
-      //     isClosable: true,
-      //     status: 'error',
-      //   });
-      // } finally {
-      //   setLoading(false);
-      // }
+      setLoading(true);
+      const formData = {
+        email: values.email,
+        fullname: values.fullname,
+        phone: values.phone,
+        password: values.password,
+        confirm_password: values.confirmPassword,
+      };
+      try {
+        const response = await SignupUser(formData);
+        if (response.status === true) {
+          toast({
+            title: response.message as string,
+            description: response.message as string,
+            duration: 3000,
+            position: 'top-right',
+            isClosable: true,
+            status: 'success',
+          });
+          Cookies.set('vestier-new-token', JSON.stringify(response.data.token));
+          router.push('/signup/verify-otp');
+          Cookies.set('vestier-user', JSON.stringify(response.data.user));
+          resetForm();
+        }
+      } catch (error: any) {
+        console.log(error);
+        setLoading(false);
+        toast({
+          title: error.response.data.error as string,
+          description: error.response.data.message,
+          duration: 3000,
+          position: 'top-right',
+          isClosable: true,
+          status: 'error',
+        });
+      } finally {
+        setLoading(false);
+      }
     },
   });
 

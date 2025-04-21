@@ -13,7 +13,7 @@ import {
   Heading,
 } from '@chakra-ui/react';
 import React, { useContext } from 'react';
-import { EmptyStateIcon, InputSearchIcon } from '~/lib/components/Icons/Icons';
+import { EmptyStateIcon, InputSearchIcon, NextOfKinEmptyStateIcon, ArrowBackIcon } from '~/lib/components/Icons/Icons';
 import { AppContext } from '~/lib/layout';
 import {
   AddAssetNextOfKinCard,
@@ -24,6 +24,7 @@ import { AddAsset, AddNextOfKinToAsset } from '~/lib/api/services/assetsService'
 import { useRouter } from 'next/navigation';
 import AddNextOfKinModal from '~/lib/pages/User/AddNextOfKin';
 import { CreateAssetContext } from '../../..';
+import { GetNextOfKins } from '~/lib/api/services/userService';
 
 
 
@@ -62,6 +63,7 @@ const AddNextOfKin = ({
       );
     }
   };
+
 
   const handleSubmit = async () => {
     const formData = {
@@ -155,78 +157,93 @@ const AddNextOfKin = ({
           />
         </InputGroup>
         <Box>
-          {filteredNextOfKins?.length < 1 ? (
-            <Box maxW="460px" mx="auto">
-              <Stack spacing="12px" alignItems="center" textAlign="center">
-                <EmptyStateIcon />
-                <Heading fontSize={18} color="brand.300">
-                  No Next of Kin Registered{' '}
-                </Heading>
-                <Text color="brand.300">
-                  Secure your assets by assigning a next of kin. Ensure your
-                  properties are managed and transferred seamlessly when needed
-                </Text>
+          <Stack spacing="32px">
+            {filteredNextOfKins?.length < 1 ? (
+              <Box>
                 <Button
-                  bg="brand.100"
-                  color="brand.200"
-                  py="16px"
-                  px="32px"
-                  fontWeight={500}
-                  h="50px"
-                  onClick={() => setOpenModal(true)}
-                  _hover={{ bg: '#000080' }}
+                  variant="ghost"
+                  _hover={{ bg: 'none' }}
+                  color="brand.100"
+                  mb="30px"
+                  onClick={() => setStep(step - 1)}
+                  leftIcon={<ArrowBackIcon />}
                 >
-                  Add Next of Kin
+                  Back
                 </Button>
-              </Stack>
-            </Box>
-          ) : (
-            <Box>
-              <Stack spacing="12px">
-                {filteredNextOfKins?.map((nextOfKin: any, index: number) => (
-                  <AddAssetNextOfKinCard
-                    name={nextOfKin?.fullname}
-                    email={nextOfKin?.email}
-                    phoneNumber={nextOfKin?.phone}
-                    relationship={nextOfKin?.relationship}
-                    key={nextOfKin?.id}
-                    id={nextOfKin?.id}
-                    selectedNextOfKin={selectedNextOfKin}
-                    setSelectedNextOfKin={setSelectedNextOfKin}
-                  />
-                ))}
-              </Stack>
-            </Box>
-          )}
+                <Box maxW="460px" mx="auto">
+                  <Stack spacing="15px" alignItems="center" textAlign="center">
+                    <NextOfKinEmptyStateIcon />
+                    <Heading fontSize={18} color="brand.300">
+                      No Next of Kin Registered{' '}
+                    </Heading>
+                    <Text color="brand.300">
+                      Secure your assets by assigning a next of kin. Ensure your
+                      properties are managed and transferred seamlessly when
+                      needed
+                    </Text>
+                    <Button
+                      bg="brand.100"
+                      color="brand.200"
+                      py="16px"
+                      px="32px"
+                      fontWeight={500}
+                      h="50px"
+                      onClick={() => setOpenModal(true)}
+                      _hover={{ bg: '#000080' }}
+                    >
+                      Add Next of Kin
+                    </Button>
+                  </Stack>
+                </Box>
+              </Box>
+            ) : (
+              <Box>
+                <Stack spacing="12px">
+                  {filteredNextOfKins?.map((nextOfKin: any, index: number) => (
+                    <AddAssetNextOfKinCard
+                      name={nextOfKin?.fullname}
+                      email={nextOfKin?.email}
+                      phoneNumber={nextOfKin?.phone}
+                      relationship={nextOfKin?.relationship}
+                      key={nextOfKin?.id}
+                      id={nextOfKin?.id}
+                      selectedNextOfKin={selectedNextOfKin}
+                      setSelectedNextOfKin={setSelectedNextOfKin}
+                    />
+                  ))}
+                  <Flex justifyContent="flex-end" gap="10px">
+                    <Button
+                      color="#000080"
+                      _hover={{ bg: '#000080' }}
+                      bg="#EDEDFF"
+                      h="48px"
+                      borderRadius="30px"
+                      fontWeight={500}
+                      fontSize={16}
+                      onClick={() => setStep(step - 1)}
+                      minW="100px"
+                    >
+                      Back
+                    </Button>
+                    <Button
+                      bg="#000080"
+                      _hover={{ bg: '#000080' }}
+                      color="white"
+                      h="48px"
+                      borderRadius="30px"
+                      fontWeight={500}
+                      fontSize={16}
+                      onClick={handleSubmit}
+                      minW="120px"
+                    >
+                      {loading ? <Spinner /> : 'Complete'}
+                    </Button>
+                  </Flex>
+                </Stack>
+              </Box>
+            )}
+          </Stack>
         </Box>
-        <Flex justifyContent="flex-end" gap="10px">
-          <Button
-            color="#000080"
-            _hover={{ bg: '#000080' }}
-            bg="#EDEDFF"
-            h="48px"
-            borderRadius="30px"
-            fontWeight={500}
-            fontSize={16}
-            onClick={() => setStep(step - 1)}
-            minW="100px"
-          >
-            Back
-          </Button>
-          <Button
-            bg="#000080"
-            _hover={{ bg: '#000080' }}
-            color="white"
-            h="48px"
-            borderRadius="30px"
-            fontWeight={500}
-            fontSize={16}
-            onClick={handleSubmit}
-            minW="120px"
-          >
-            {loading ? <Spinner /> : 'Complete'}
-          </Button>
-        </Flex>
       </Stack>
       <AddNextOfKinModal
         isOpen={openModal}
