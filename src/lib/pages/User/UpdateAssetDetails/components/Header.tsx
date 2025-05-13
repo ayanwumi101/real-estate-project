@@ -1,4 +1,4 @@
-import { Box, Flex, Stack, Heading, Text, Button } from '@chakra-ui/react';
+import { Box, Flex, Stack, Heading, Text, Button, Spinner } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import {
@@ -12,9 +12,11 @@ import {
 interface Headerprops {
   propertyName: string;
   location: string;
+  editAssetDetails?: () => void;
+  loading?: boolean;
 }
 
-const Header = ({ propertyName, location }: Headerprops) => {
+const Header = ({ propertyName, location, editAssetDetails, loading }: Headerprops) => {
   const router = useRouter();
   ``;
   return (
@@ -74,8 +76,9 @@ const Header = ({ propertyName, location }: Headerprops) => {
                 leftIcon={<SaveAssetDetailsIcon />}
                 h="50px"
                 px="30px"
+                onClick={editAssetDetails}
               >
-                Save
+                {loading ? <Spinner /> : "Save"}
               </Button>
             </Flex>
           </Box>

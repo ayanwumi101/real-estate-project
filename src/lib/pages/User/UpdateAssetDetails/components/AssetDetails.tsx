@@ -12,10 +12,11 @@ import {
   Select,
 } from '@chakra-ui/react';
 import moment from 'moment';
-import React from 'react';
+import React, { useContext } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { FormatAmount } from '~/lib/utils/formatAmount';
+import { AssetDetailsContext } from '..';
 
 const AssetDetailsItem = ({
   label,
@@ -39,6 +40,40 @@ const AssetDetailsItem = ({
 };
 
 const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
+  const {
+    propertySize,
+    setPropertySize,
+    boughtDate,
+    setBoughtDate,
+    propertyCost,
+    setPropertyCost,
+    paymentStatus,
+    setPaymentStatus,
+    cashflowSource,
+    setCashflowSource,
+    isPropertyOccupied,
+    setIsPropertyOccupied,
+    remittanceAmount,
+    setRemittanceAmount,
+    cashflowDuration,
+    setCashflowDuration,
+    lastRemittanceDate,
+    setLastRemittanceDate,
+    equityOwnership,
+    setEquityOwnership,
+    realtorName,
+    setRealtorName,
+    realtorPhone,
+    setRealtorPhone,
+    allocationStatus,
+    setAllocationStatus,
+    documentationStatus,
+    setDocumentationStatus,
+    handoverStatus,
+    setHandoverStatus,
+  } = useContext(AssetDetailsContext);
+  // console.log(propertyDetails);
+
   return (
     <Box>
       <Stack spacing="32px">
@@ -48,7 +83,7 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
           borderColor="border.100"
           p="32px"
           borderRadius="8px"
-          maxW="800px"
+          w={['100%', '700px']}
         >
           <Heading
             pb="12px"
@@ -77,6 +112,8 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                   rounded="40px"
                   border="1px solid"
                   borderColor="border.200"
+                  value={propertySize}
+                  onChange={(e) => setPropertySize(e.target.value)}
                 />
               </FormControl>
               <FormControl>
@@ -89,6 +126,8 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                   rounded="40px"
                   border="1px solid"
                   borderColor="border.200"
+                  value={boughtDate.split(' ')[0]}
+                  onChange={(e) => setBoughtDate(e.target.value)}
                 />
               </FormControl>
             </Flex>
@@ -98,11 +137,13 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                   Amount Purchased
                 </FormLabel>
                 <Input
-                  type="number"
+                  type="text"
                   h="50px"
                   rounded="40px"
                   border="1px solid"
                   borderColor="border.200"
+                  value={propertyCost}
+                  onChange={(e) => setPropertyCost(e.target.value)}
                 />
               </FormControl>
               <FormControl>
@@ -114,11 +155,12 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                   rounded="40px"
                   border="1px solid"
                   borderColor="border.200"
+                  value={paymentStatus}
+                  onChange={(e) => setPaymentStatus(e.target.value)}
                 >
-                  <option value="completed">Completed</option>
-                  <option value="completed">Pending</option>
-                  <option value="completed">Ongoing</option>
-                  <option value="completed">Completed</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Ongoing">Ongoing</option>
                 </Select>
               </FormControl>
             </Flex>
@@ -132,7 +174,7 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
             borderColor="border.100"
             p="32px"
             borderRadius="8px"
-            maxW="645px"
+            w={['100%', '700px']}
           >
             <Heading
               pb="12px"
@@ -161,11 +203,11 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                     rounded="40px"
                     border="1px solid"
                     borderColor="border.200"
+                    value={cashflowSource}
+                    onChange={(e) => setCashflowSource(e.target.value)}
                   >
-                    <option value="completed">Rent</option>
-                    <option value="completed">Lease</option>
-                    <option value="completed">Ongoing</option>
-                    <option value="completed">Completed</option>
+                    <option value="rent">Rent</option>
+                    <option value="lease">Lease</option>
                   </Select>
                 </FormControl>
                 <FormControl>
@@ -177,11 +219,11 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                     rounded="40px"
                     border="1px solid"
                     borderColor="border.200"
+                    value={isPropertyOccupied === true ? 'yes' : 'no'}
+                    onChange={(e) => setIsPropertyOccupied(e.target.value)}
                   >
-                    <option value="completed">Completed</option>
-                    <option value="completed">Pending</option>
-                    <option value="completed">Ongoing</option>
-                    <option value="completed">Completed</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
                   </Select>
                 </FormControl>
               </Flex>
@@ -195,33 +237,27 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                   <FormLabel fontWeight={600} fontSize={15} color="brand.300">
                     Remittance Value
                   </FormLabel>
-                  <Select
+                  <Input
                     h="50px"
                     rounded="40px"
                     border="1px solid"
                     borderColor="border.200"
-                  >
-                    <option value="completed">Rent</option>
-                    <option value="completed">Lease</option>
-                    <option value="completed">Ongoing</option>
-                    <option value="completed">Completed</option>
-                  </Select>
+                    value={remittanceAmount}
+                    onChange={(e) => setRemittanceAmount(e.target.value)}
+                  />
                 </FormControl>
                 <FormControl>
                   <FormLabel fontWeight={600} fontSize={15} color="brand.300">
                     Duration of Yield
                   </FormLabel>
-                  <Select
+                  <Input
                     h="50px"
                     rounded="40px"
                     border="1px solid"
                     borderColor="border.200"
-                  >
-                    <option value="completed">Completed</option>
-                    <option value="completed">Pending</option>
-                    <option value="completed">Ongoing</option>
-                    <option value="completed">Completed</option>
-                  </Select>
+                    value={cashflowDuration}
+                    onChange={(e) => setCashflowDuration(e.target.value)}
+                  />
                 </FormControl>
               </Flex>
               <Flex
@@ -234,33 +270,29 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                   <FormLabel fontWeight={600} fontSize={15} color="brand.300">
                     Last Remittance Payment
                   </FormLabel>
-                  <Select
+                  <Input
+                    type="date"
                     h="50px"
                     rounded="40px"
                     border="1px solid"
                     borderColor="border.200"
-                  >
-                    <option value="completed">Rent</option>
-                    <option value="completed">Lease</option>
-                    <option value="completed">Ongoing</option>
-                    <option value="completed">Completed</option>
-                  </Select>
+                    value={lastRemittanceDate.split(' ')[0]}
+                    onChange={(e) => setLastRemittanceDate(e.target.value)}
+                  />
                 </FormControl>
                 <FormControl>
                   <FormLabel fontWeight={600} fontSize={15} color="brand.300">
                     Equity Ownership
                   </FormLabel>
-                  <Select
+                  <Input
+                    type="text"
                     h="50px"
                     rounded="40px"
                     border="1px solid"
                     borderColor="border.200"
-                  >
-                    <option value="completed">Completed</option>
-                    <option value="completed">Pending</option>
-                    <option value="completed">Ongoing</option>
-                    <option value="completed">Completed</option>
-                  </Select>
+                    value={equityOwnership}
+                    onChange={(e) => setEquityOwnership(e.target.value)}
+                  />
                 </FormControl>
               </Flex>
             </Box>
@@ -345,7 +377,7 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
           borderColor="border.100"
           p="32px"
           borderRadius="8px"
-          maxW="645px"
+          w={['100%', '700px']}
         >
           <Heading
             pb="12px"
@@ -370,6 +402,8 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                   rounded="40px"
                   border="1px solid"
                   borderColor="border.200"
+                  value={realtorName}
+                  onChange={(e) => setRealtorName(e.target.value)}
                 />
               </FormControl>
               <FormControl w={['100%', '50%']}>
@@ -377,6 +411,8 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                   Phone Number
                 </FormLabel>
                 <PhoneInput
+                  value={realtorPhone}
+                  onChange={(value: string) => setRealtorPhone(value)}
                   // value={formik.values.phone}
                   // onChange={(value: string) =>
                   //   formik.setFieldValue('phone', value)
@@ -413,7 +449,7 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
           borderColor="border.100"
           p="32px"
           borderRadius="8px"
-          maxW="645px"
+          w={['100%', '700px']}
         >
           <Heading
             pb="12px"
@@ -441,11 +477,12 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                   rounded="40px"
                   border="1px solid"
                   borderColor="border.200"
+                  value={paymentStatus}
+                  onChange={(e) => setPaymentStatus(e.target.value)}
                 >
-                  <option value="completed">Completed</option>
-                  <option value="completed">Pending</option>
-                  <option value="completed">Ongoing</option>
-                  <option value="completed">Completed</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Ongoing">Ongoing</option>
                 </Select>
               </FormControl>
               <FormControl>
@@ -457,11 +494,12 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                   rounded="40px"
                   border="1px solid"
                   borderColor="border.200"
+                  value={allocationStatus}
+                  onChange={(e) => setAllocationStatus(e.target.value)}
                 >
-                  <option value="completed">Completed</option>
-                  <option value="completed">Pending</option>
-                  <option value="completed">Ongoing</option>
-                  <option value="completed">Completed</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Ongoing">Ongoing</option>
                 </Select>
               </FormControl>
             </Flex>
@@ -475,11 +513,12 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                   rounded="40px"
                   border="1px solid"
                   borderColor="border.200"
+                  value={documentationStatus}
+                  onChange={(e) => setDocumentationStatus(e.target.value)}
                 >
-                  <option value="completed">Completed</option>
-                  <option value="completed">Pending</option>
-                  <option value="completed">Ongoing</option>
-                  <option value="completed">Completed</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Ongoing">Ongoing</option>
                 </Select>
               </FormControl>
               <FormControl>
@@ -491,11 +530,12 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                   rounded="40px"
                   border="1px solid"
                   borderColor="border.200"
+                  value={handoverStatus}
+                  onChange={(e) => setHandoverStatus(e.target.value)}
                 >
-                  <option value="completed">Completed</option>
-                  <option value="completed">Pending</option>
-                  <option value="completed">Ongoing</option>
-                  <option value="completed">Completed</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Ongoing">Ongoing</option>
                 </Select>
               </FormControl>
             </Flex>
