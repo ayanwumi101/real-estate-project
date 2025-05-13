@@ -39,6 +39,7 @@ const CashflowDetails = ({
     nextCashflowDate: assetData?.nextCashflowDate || '',
     cashflowAmount: assetData?.cashflowAmount || '',
     cashflowDuration: assetData?.cashflowDuration || '',
+    equityOwnership: assetData?.equityOwnership || '',
   };
 
   const validationSchema = Yup.object().shape({
@@ -61,6 +62,7 @@ const CashflowDetails = ({
     ),
     cashflowAmount: Yup.string().required('Cashflow amount is required'),
     cashflowDuration: Yup.string().required('Cashflow duration is required'),
+    equityOwnership: Yup.string().required('Equity ownership is required'),
   });
 
   const handleSubmit = async (values: any) => {
@@ -72,6 +74,7 @@ const CashflowDetails = ({
       nextCashflowDate: values.nextCashflowDate,
       cashflowAmount: values.cashflowAmount,
       cashflowDuration: values.cashflowDuration,
+      equityOwnership: values.equityOwnership,
     });
     setStep(step + 1);
   };
@@ -247,7 +250,7 @@ const CashflowDetails = ({
                 )}
 
                 {values.lastCashflowDate !== 'never collected' &&
-                  (values.isPropertyOccupied === 'Yes' && (
+                  values.isPropertyOccupied === 'Yes' && (
                     <FormControl
                       isInvalid={
                         !!errors.nextCashflowDate && !!touched.nextCashflowDate
@@ -273,7 +276,7 @@ const CashflowDetails = ({
                           : null}
                       </FormErrorMessage>
                     </FormControl>
-                  ))}
+                  )}
                 <FormControl
                   isInvalid={
                     !!errors.cashflowAmount && !!touched.cashflowAmount
@@ -301,6 +304,31 @@ const CashflowDetails = ({
                   <FormErrorMessage>
                     {typeof errors.cashflowAmount === 'string'
                       ? errors.cashflowAmount
+                      : null}
+                  </FormErrorMessage>
+                </FormControl>
+                <FormControl
+                  isInvalid={
+                    !!errors.equityOwnership && !!touched.equityOwnership
+                  }
+                >
+                  <FormLabel fontWeight={600} fontSize={16} color="#222222">
+                    What is your equity ownership?
+                  </FormLabel>
+                  <Field
+                    as={Input}
+                    name="equityOwnership"
+                    border="1px solid #C0C0C0"
+                    bg="#FBFBFB"
+                    h="50px"
+                    borderRadius="40px"
+                    placeholder="e.g. 50%"
+                    _placeholder={{ color: '#8295AA', fontWeight: 500 }}
+                    type="date"
+                  />
+                  <FormErrorMessage>
+                    {typeof errors.equityOwnership === 'string'
+                      ? errors.equityOwnership
                       : null}
                   </FormErrorMessage>
                 </FormControl>

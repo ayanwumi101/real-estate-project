@@ -1,4 +1,15 @@
-import { Box, Stack, Text, Heading, Flex } from '@chakra-ui/react';
+import {
+  Box,
+  Stack,
+  Text,
+  Heading,
+  Flex,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  FormControl,
+  FormLabel,
+} from '@chakra-ui/react';
 import moment from 'moment';
 import React from 'react';
 import { FormatAmount } from '~/lib/utils/formatAmount';
@@ -24,7 +35,15 @@ const AssetDetailsItem = ({
   );
 };
 
-const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {  
+const AssetDetails = ({
+  propertyDetails,
+  updateAssetDetails,
+  setUpdateAssetDetails,
+}: {
+  propertyDetails: any;
+  updateAssetDetails: boolean;
+  setUpdateAssetDetails: (value: boolean) => void;
+}) => {
   return (
     <Box>
       <Stack spacing="32px">
@@ -46,34 +65,40 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
           >
             Basic Details
           </Heading>
-          <Box>
-            <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
-              <AssetDetailsItem
-                label="Amount Purchased"
-                labelValue={FormatAmount(propertyDetails?.property_cost || 0.0)}
-              />
-              <AssetDetailsItem
-                label="When was property bought?"
-                labelValue={
-                  propertyDetails?.bought_date
-                    ? moment(propertyDetails?.bought_date).format(
-                        'ddd, Do MMMM YYYY'
-                      )
-                    : 'N/A'
-                }
-              />
-              <AssetDetailsItem
-                label="Payment Status:"
-                labelValue={
-                  propertyDetails?.asset_type === 'instalment'
-                    ? 'Ongoing'
-                    : propertyDetails?.asset_type === 'owned'
-                      ? 'Completed'
-                      : 'Completed'
-                }
-              />
-            </Flex>
-          </Box>
+          {updateAssetDetails ? (
+            <Box></Box>
+          ) : (
+            <Box>
+              <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
+                <AssetDetailsItem
+                  label="Amount Purchased"
+                  labelValue={FormatAmount(
+                    propertyDetails?.property_cost || 0.0
+                  )}
+                />
+                <AssetDetailsItem
+                  label="When was property bought?"
+                  labelValue={
+                    propertyDetails?.bought_date
+                      ? moment(propertyDetails?.bought_date).format(
+                          'ddd, Do MMMM YYYY'
+                        )
+                      : 'N/A'
+                  }
+                />
+                <AssetDetailsItem
+                  label="Payment Status:"
+                  labelValue={
+                    propertyDetails?.asset_type === 'instalment'
+                      ? 'Ongoing'
+                      : propertyDetails?.asset_type === 'owned'
+                        ? 'Completed'
+                        : 'Completed'
+                  }
+                />
+              </Flex>
+            </Box>
+          )}
         </Box>
 
         {/* Cashflow details */}

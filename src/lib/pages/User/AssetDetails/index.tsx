@@ -11,6 +11,8 @@ import { useParams } from 'next/navigation';
 const index = () => {
   const [propertyDetails, setPropertyDetails] = React.useState<any>([]);
   const { id } = useParams();
+  const [updateAssetDetails, setUpdateAssetDetails] =
+    React.useState<boolean>(false);
 
   const getAssetDetails = async () => {
     try {
@@ -30,6 +32,8 @@ const index = () => {
     <Box>
       <Stack>
         <Header
+          updateAssetDetails={updateAssetDetails}
+          setUpdateAssetDetails={setUpdateAssetDetails}
           propertyName={propertyDetails?.property_name}
           location={`${propertyDetails?.house_number || ''}, ${propertyDetails?.street_name || ''}, ${propertyDetails?.state_id || ''} state`}
         />
@@ -39,7 +43,11 @@ const index = () => {
             flexWrap={['wrap', 'nowrap']}
             gap="40px"
           >
-            <AssetDetails propertyDetails={propertyDetails}  />
+            <AssetDetails
+              updateAssetDetails={updateAssetDetails}
+              setUpdateAssetDetails={setUpdateAssetDetails}
+              propertyDetails={propertyDetails}
+            />
             {/* <Notes notes={propertyDetails?.comment} /> */}
           </Flex>
         </Box>

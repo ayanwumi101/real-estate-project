@@ -13,15 +13,24 @@ import {
   Stack,
   Heading,
   Image,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 } from '@chakra-ui/react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import React from 'react';
-import { LocationIcon, ProfitIcon } from '~/lib/components/Icons/Icons';
+import {
+  LocationIcon,
+  ProfitIcon,
+  VerticalEllipsisIcon,
+} from '~/lib/components/Icons/Icons';
 import { FormatAmount } from '~/lib/utils/formatAmount';
+import useNavigate from '~/lib/utils/useNavigate';
+
+
 
 const OwnedAssets = ({ assets }: { assets: any[] }) => {
-  const router = useRouter();
+  const navigate = useNavigate();
   const totalValuation = assets?.reduce((acc, asset) => {
     return acc + Number(asset?.property_cost);
   }, 0);
@@ -87,18 +96,15 @@ const OwnedAssets = ({ assets }: { assets: any[] }) => {
                   fontWeight={500}
                   fontSize={14}
                   textTransform="capitalize"
-                >
-                  Action
-                </Th>
+                ></Th>
               </Tr>
             </Thead>
             <Tbody color="#222222" maxH="450px" overflow="auto">
-                {assets?.map((asset) => {
+              {assets?.map((asset) => {
                 return (
                   <Tr
                     key={asset?.id}
                     border="none"
-                    _hover={{ bg: '#f5f5f5' }}
                     cursor="pointer"
                   >
                     <Td fontSize={15} color="#222222" fontWeight={600}>
@@ -124,19 +130,48 @@ const OwnedAssets = ({ assets }: { assets: any[] }) => {
                       {asset?.allocation_status}
                     </Td>
                     <Td>
-                      <Link href={`/user/my-assets/${asset?.id}`}>
-                        <Button
-                          bg="#EDEDFF"
-                          fontSize={14}
-                          color="brand.100"
-                          fontWeight={500}
-                          px="12px"
-                          py="5px"
-                          _hover={{ bg: '#EDEDFF' }}
-                        >
-                          View Asset
-                        </Button>
-                      </Link>
+                      <Menu>
+                        <MenuButton as={Button} rounded="5px" bg="bg.200">
+                          <VerticalEllipsisIcon />
+                        </MenuButton>
+                        <MenuList py='0px'>
+                          <MenuItem
+                            py="12px"
+                            px="16px"
+                            _hover={{ bg: 'border.100' }}
+                            fontSize={14}
+                            color="color.100"
+                            fontWeight={500}
+                            onClick={() =>
+                              navigate(
+                                `/user/my-assets/${asset?.id}`
+                              )
+                            }
+                          >
+                            View asset
+                          </MenuItem>
+                          <MenuItem
+                            py="12px"
+                            px="16px"
+                            _hover={{ bg: 'border.100' }}
+                            fontSize={14}
+                            color="color.100"
+                            fontWeight={500}
+                          >
+                            Update asset details
+                          </MenuItem>
+                          <MenuItem
+                            py="12px"
+                            px="16px"
+                            _hover={{ bg: 'border.100' }}
+                            fontSize={14}
+                            color="color.100"
+                            fontWeight={500}
+                          >
+                            Delete asset
+                          </MenuItem>
+                        </MenuList>
+                      </Menu>
                     </Td>
                   </Tr>
                 );
