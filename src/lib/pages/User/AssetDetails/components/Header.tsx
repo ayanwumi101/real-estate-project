@@ -1,5 +1,5 @@
 import { Box, Flex, Stack, Heading, Text, Button } from '@chakra-ui/react';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import React from 'react';
 import {
   InvestIcon,
@@ -8,22 +8,17 @@ import {
   AddIcon,
   SaveAssetDetailsIcon,
 } from '~/lib/components/Icons/Icons';
+import useNavigate from '~/lib/utils/useNavigate';
 
 interface Headerprops {
   propertyName: string;
   location: string;
-  updateAssetDetails: boolean;
-  setUpdateAssetDetails: (value: boolean) => void;
 }
 
-const Header = ({
-  propertyName,
-  location,
-  updateAssetDetails,
-  setUpdateAssetDetails,
-}: Headerprops) => {
+const Header = ({ propertyName, location }: Headerprops) => {
   const router = useRouter();
-  ``;
+  const navigate = useNavigate();
+  const { id } = useParams();
   return (
     <Box py="30px" px={['20px', '40px']} borderY="1px solid #E4E4E4">
       <Stack spacing="30px" alignItems="flex-start" w="full">
@@ -59,59 +54,30 @@ const Header = ({
             </Stack>
           </Box>
           <Box>
-            {updateAssetDetails ? (
-              <Flex alignItems="center" gap="10px">
-                <Button
-                  bg="bg.200"
-                  _hover={{ bg: 'bg.200' }}
-                  color="brand.100"
-                  fontWeight={600}
-                  fontSize={15}
-                  h="50px"
-                  px="30px"
-                  onClick={() => setUpdateAssetDetails(false)}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  bg="#000080"
-                  _hover={{ bg: '#000080' }}
-                  color="#ffffff"
-                  fontWeight={500}
-                  fontSize={15}
-                  leftIcon={<SaveAssetDetailsIcon />}
-                  h="50px"
-                  px="30px"
-                >
-                  Save
-                </Button>
-              </Flex>
-            ) : (
-              <Flex alignItems="center" gap="10px">
-                <Button
-                  bg="bg.200"
-                  _hover={{ bg: 'bg.200' }}
-                  color="brand.100"
-                  fontWeight={600}
-                  fontSize={15}
-                  h="50px"
-                >
-                  Change Asset Status
-                </Button>
-                <Button
-                  bg="#000080"
-                  _hover={{ bg: '#000080' }}
-                  color="#ffffff"
-                  fontWeight={500}
-                  fontSize={15}
-                  leftIcon={<AddIcon />}
-                  h="50px"
-                  onClick={() => setUpdateAssetDetails(true)}
-                >
-                  Update Details
-                </Button>
-              </Flex>
-            )}
+            <Flex alignItems="center" gap="10px">
+              <Button
+                bg="bg.200"
+                _hover={{ bg: 'bg.200' }}
+                color="brand.100"
+                fontWeight={600}
+                fontSize={15}
+                h="50px"
+              >
+                Change Asset Status
+              </Button>
+              <Button
+                bg="#000080"
+                _hover={{ bg: '#000080' }}
+                color="#ffffff"
+                fontWeight={500}
+                fontSize={15}
+                leftIcon={<AddIcon />}
+                h="50px"
+                onClick={() => navigate(`/user/my-assets/${id}/update-details`)}
+              >
+                Update Details
+              </Button>
+            </Flex>
           </Box>
         </Flex>
       </Stack>
