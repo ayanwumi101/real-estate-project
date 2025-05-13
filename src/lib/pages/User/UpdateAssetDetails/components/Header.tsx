@@ -14,10 +14,7 @@ interface Headerprops {
   location: string;
 }
 
-const Header = ({
-  propertyName,
-  location,
-}: Headerprops) => {
+const Header = ({ propertyName, location }: Headerprops) => {
   const router = useRouter();
   ``;
   return (
@@ -55,59 +52,32 @@ const Header = ({
             </Stack>
           </Box>
           <Box>
-            {updateAssetDetails ? (
-              <Flex alignItems="center" gap="10px">
-                <Button
-                  bg="bg.200"
-                  _hover={{ bg: 'bg.200' }}
-                  color="brand.100"
-                  fontWeight={600}
-                  fontSize={15}
-                  h="50px"
-                  px="30px"
-                  onClick={() => setUpdateAssetDetails(false)}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  bg="#000080"
-                  _hover={{ bg: '#000080' }}
-                  color="#ffffff"
-                  fontWeight={500}
-                  fontSize={15}
-                  leftIcon={<SaveAssetDetailsIcon />}
-                  h="50px"
-                  px="30px"
-                >
-                  Save
-                </Button>
-              </Flex>
-            ) : (
-              <Flex alignItems="center" gap="10px">
-                <Button
-                  bg="bg.200"
-                  _hover={{ bg: 'bg.200' }}
-                  color="brand.100"
-                  fontWeight={600}
-                  fontSize={15}
-                  h="50px"
-                >
-                  Change Asset Status
-                </Button>
-                <Button
-                  bg="#000080"
-                  _hover={{ bg: '#000080' }}
-                  color="#ffffff"
-                  fontWeight={500}
-                  fontSize={15}
-                  leftIcon={<AddIcon />}
-                  h="50px"
-                  onClick={() => setUpdateAssetDetails(true)}
-                >
-                  Update Details
-                </Button>
-              </Flex>
-            )}
+            <Flex alignItems="center" gap="10px">
+              <Button
+                bg="bg.200"
+                _hover={{ bg: 'bg.200' }}
+                color="brand.100"
+                fontWeight={600}
+                fontSize={15}
+                h="50px"
+                px="30px"
+                onClick={() => router.back()}
+              >
+                Cancel
+              </Button>
+              <Button
+                bg="#000080"
+                _hover={{ bg: '#000080' }}
+                color="#ffffff"
+                fontWeight={500}
+                fontSize={15}
+                leftIcon={<SaveAssetDetailsIcon />}
+                h="50px"
+                px="30px"
+              >
+                Save
+              </Button>
+            </Flex>
           </Box>
         </Flex>
       </Stack>

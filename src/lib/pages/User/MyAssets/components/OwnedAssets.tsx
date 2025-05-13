@@ -27,8 +27,6 @@ import {
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
 
-
-
 const OwnedAssets = ({ assets }: { assets: any[] }) => {
   const navigate = useNavigate();
   const totalValuation = assets?.reduce((acc, asset) => {
@@ -102,11 +100,7 @@ const OwnedAssets = ({ assets }: { assets: any[] }) => {
             <Tbody color="#222222" maxH="450px" overflow="auto">
               {assets?.map((asset) => {
                 return (
-                  <Tr
-                    key={asset?.id}
-                    border="none"
-                    cursor="pointer"
-                  >
+                  <Tr key={asset?.id} border="none" cursor="pointer">
                     <Td fontSize={15} color="#222222" fontWeight={600}>
                       <Stack>
                         <Heading color="#2E353F" fontSize={16} fontWeight={600}>
@@ -134,7 +128,7 @@ const OwnedAssets = ({ assets }: { assets: any[] }) => {
                         <MenuButton as={Button} rounded="5px" bg="bg.200">
                           <VerticalEllipsisIcon />
                         </MenuButton>
-                        <MenuList py='0px'>
+                        <MenuList py="0px">
                           <MenuItem
                             py="12px"
                             px="16px"
@@ -143,9 +137,7 @@ const OwnedAssets = ({ assets }: { assets: any[] }) => {
                             color="color.100"
                             fontWeight={500}
                             onClick={() =>
-                              navigate(
-                                `/user/my-assets/${asset?.id}`
-                              )
+                              navigate(`/user/my-assets/${asset?.id}`)
                             }
                           >
                             View asset
@@ -157,6 +149,11 @@ const OwnedAssets = ({ assets }: { assets: any[] }) => {
                             fontSize={14}
                             color="color.100"
                             fontWeight={500}
+                            onClick={() =>
+                              navigate(
+                                `/user/my-assets/${asset?.id}/update-details`
+                              )
+                            }
                           >
                             Update asset details
                           </MenuItem>

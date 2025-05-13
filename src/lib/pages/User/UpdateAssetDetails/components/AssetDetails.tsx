@@ -38,15 +38,7 @@ const AssetDetailsItem = ({
   );
 };
 
-const AssetDetails = ({
-  propertyDetails,
-  updateAssetDetails,
-  setUpdateAssetDetails,
-}: {
-  propertyDetails: any;
-  updateAssetDetails: boolean;
-  setUpdateAssetDetails: (value: boolean) => void;
-}) => {
+const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
   return (
     <Box>
       <Stack spacing="32px">
@@ -56,7 +48,7 @@ const AssetDetails = ({
           borderColor="border.100"
           p="32px"
           borderRadius="8px"
-          maxW="645px"
+          maxW="800px"
         >
           <Heading
             pb="12px"
@@ -68,106 +60,69 @@ const AssetDetails = ({
           >
             Basic Details
           </Heading>
-          {updateAssetDetails ? (
-            <Box>
-              <Flex
-                alignItems="center"
-                gap="16px"
-                flexWrap={['wrap', 'nowrap']}
-                mb="16px"
-              >
-                <FormControl>
-                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                    Property Size
-                  </FormLabel>
-                  <Input
-                    type="text"
-                    h="50px"
-                    rounded="40px"
-                    border="1px solid"
-                    borderColor="border.200"
-                  />
-                </FormControl>
-                <FormControl>
-                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                    When was property bought
-                  </FormLabel>
-                  <Input
-                    type="date"
-                    h="50px"
-                    rounded="40px"
-                    border="1px solid"
-                    borderColor="border.200"
-                  />
-                </FormControl>
-              </Flex>
-              <Flex
-                alignItems="center"
-                gap="16px"
-                flexWrap={['wrap', 'nowrap']}
-              >
-                <FormControl>
-                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                    Amount Purchased
-                  </FormLabel>
-                  <Input
-                    type="number"
-                    h="50px"
-                    rounded="40px"
-                    border="1px solid"
-                    borderColor="border.200"
-                  />
-                </FormControl>
-                <FormControl>
-                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                    Payment Status
-                  </FormLabel>
-                  <Select
-                    h="50px"
-                    rounded="40px"
-                    border="1px solid"
-                    borderColor="border.200"
-                  >
-                    <option value="completed">Completed</option>
-                    <option value="completed">Pending</option>
-                    <option value="completed">Ongoing</option>
-                    <option value="completed">Completed</option>
-                  </Select>
-                </FormControl>
-              </Flex>
-            </Box>
-          ) : (
-            <Box>
-              <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
-                <AssetDetailsItem
-                  label="Amount Purchased"
-                  labelValue={FormatAmount(
-                    propertyDetails?.property_cost || 0.0
-                  )}
+          <Box>
+            <Flex
+              alignItems="center"
+              gap="16px"
+              flexWrap={['wrap', 'nowrap']}
+              mb="16px"
+            >
+              <FormControl>
+                <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                  Property Size
+                </FormLabel>
+                <Input
+                  type="text"
+                  h="50px"
+                  rounded="40px"
+                  border="1px solid"
+                  borderColor="border.200"
                 />
-                <AssetDetailsItem
-                  label="When was property bought?"
-                  labelValue={
-                    propertyDetails?.bought_date
-                      ? moment(propertyDetails?.bought_date).format(
-                          'ddd, Do MMMM YYYY'
-                        )
-                      : 'N/A'
-                  }
+              </FormControl>
+              <FormControl>
+                <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                  When was property bought
+                </FormLabel>
+                <Input
+                  type="date"
+                  h="50px"
+                  rounded="40px"
+                  border="1px solid"
+                  borderColor="border.200"
                 />
-                <AssetDetailsItem
-                  label="Payment Status:"
-                  labelValue={
-                    propertyDetails?.asset_type === 'instalment'
-                      ? 'Ongoing'
-                      : propertyDetails?.asset_type === 'owned'
-                        ? 'Completed'
-                        : 'Completed'
-                  }
+              </FormControl>
+            </Flex>
+            <Flex alignItems="center" gap="16px" flexWrap={['wrap', 'nowrap']}>
+              <FormControl>
+                <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                  Amount Purchased
+                </FormLabel>
+                <Input
+                  type="number"
+                  h="50px"
+                  rounded="40px"
+                  border="1px solid"
+                  borderColor="border.200"
                 />
-              </Flex>
-            </Box>
-          )}
+              </FormControl>
+              <FormControl>
+                <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                  Payment Status
+                </FormLabel>
+                <Select
+                  h="50px"
+                  rounded="40px"
+                  border="1px solid"
+                  borderColor="border.200"
+                >
+                  <option value="completed">Completed</option>
+                  <option value="completed">Pending</option>
+                  <option value="completed">Ongoing</option>
+                  <option value="completed">Completed</option>
+                </Select>
+              </FormControl>
+            </Flex>
+          </Box>
         </Box>
 
         {/* Cashflow details */}
@@ -189,46 +144,8 @@ const AssetDetails = ({
             >
               Cashflow Details
             </Heading>
-            {updateAssetDetails ? (
-              <Box></Box>
-            ) : (
-              <Box>
-                <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
-                  <AssetDetailsItem
-                    label="Cashflow Source"
-                    labelValue={propertyDetails?.cashflow_source || 'N/A'}
-                  />
-                  <AssetDetailsItem
-                    label="Property Currently Occupied?"
-                    labelValue={propertyDetails?.is_occupied ? 'Yes' : 'No'}
-                  />
-                  <AssetDetailsItem
-                    label="Last Cashflow Payment"
-                    labelValue={
-                      propertyDetails?.last_cashflow_date
-                        ? moment(propertyDetails?.last_cashflow_date).format(
-                            'ddd, Do MMMM YYYY'
-                          )
-                        : 'Never Collected'
-                    }
-                  />
-                  <AssetDetailsItem
-                    label="Cashflow Duration"
-                    labelValue={propertyDetails?.cashflow_duration || 'N/A'}
-                  />
-                  <AssetDetailsItem
-                    label="Cashflow Amount"
-                    labelValue={FormatAmount(
-                      propertyDetails?.cashflow_amount || 0.0
-                    )}
-                  />
-                  <AssetDetailsItem
-                    label="Equity Ownership"
-                    labelValue={`${propertyDetails?.equity_ownership || 0}%`}
-                  />
-                </Flex>
-              </Box>
-            )}
+
+            <Box></Box>
           </Box>
         )}
 
@@ -322,72 +239,54 @@ const AssetDetails = ({
           >
             Realtor Details
           </Heading>
-          {updateAssetDetails ? (
-            <Box>
-              <Flex
-                alignItems="center"
-                gap="16px"
-                flexWrap={['wrap', 'nowrap']}
-              >
-                <FormControl w={['100%', '50%']}>
-                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                    Realtor Name
-                  </FormLabel>
-                  <Input
-                    type="text"
-                    h="50px"
-                    rounded="40px"
-                    border="1px solid"
-                    borderColor="border.200"
-                  />
-                </FormControl>
-                <FormControl w={['100%', '50%']}>
-                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                    Phone Number
-                  </FormLabel>
-                  <PhoneInput
-                    // value={formik.values.phone}
-                    // onChange={(value: string) =>
-                    //   formik.setFieldValue('phone', value)
-                    // }
-                    // onBlur={() => formik.setFieldTouched('phone', true)}
-                    containerStyle={{
-                      border: '1px solid #C0C0C0',
-                      backgroundColor: '#FBFBFB',
-                      padding: '5px 14px 5px 14px',
-                      borderRadius: '24px',
-                      height: '50px',
-                      width: '100%',
-                    }}
-                    inputStyle={{
-                      border: 'none',
-                      paddingLeft: '50px',
-                      paddingTop: '5px',
-                      backgroundColor: '#FBFBFB',
-                      width: '100%',
-                    }}
-                    buttonStyle={{
-                      border: 'none',
-                      background: 'transparent',
-                    }}
-                  />
-                </FormControl>
-              </Flex>
-            </Box>
-          ) : (
-            <Box>
-              <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
-                <AssetDetailsItem
-                  label="Realtor Name"
-                  labelValue="Mr Samson Ajangbadi"
+
+          <Box>
+            <Flex alignItems="center" gap="16px" flexWrap={['wrap', 'nowrap']}>
+              <FormControl w={['100%', '50%']}>
+                <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                  Realtor Name
+                </FormLabel>
+                <Input
+                  type="text"
+                  h="50px"
+                  rounded="40px"
+                  border="1px solid"
+                  borderColor="border.200"
                 />
-                <AssetDetailsItem
-                  label="Phone Number"
-                  labelValue="08127671686"
+              </FormControl>
+              <FormControl w={['100%', '50%']}>
+                <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                  Phone Number
+                </FormLabel>
+                <PhoneInput
+                  // value={formik.values.phone}
+                  // onChange={(value: string) =>
+                  //   formik.setFieldValue('phone', value)
+                  // }
+                  // onBlur={() => formik.setFieldTouched('phone', true)}
+                  containerStyle={{
+                    border: '1px solid #C0C0C0',
+                    backgroundColor: '#FBFBFB',
+                    padding: '5px 14px 5px 14px',
+                    borderRadius: '24px',
+                    height: '50px',
+                    width: '100%',
+                  }}
+                  inputStyle={{
+                    border: 'none',
+                    paddingLeft: '50px',
+                    paddingTop: '5px',
+                    backgroundColor: '#FBFBFB',
+                    width: '100%',
+                  }}
+                  buttonStyle={{
+                    border: 'none',
+                    background: 'transparent',
+                  }}
                 />
-              </Flex>
-            </Box>
-          )}
+              </FormControl>
+            </Flex>
+          </Box>
         </Box>
 
         {/* Delivery details */}
@@ -408,132 +307,81 @@ const AssetDetails = ({
           >
             Delivery Status
           </Heading>
-          {updateAssetDetails ? (
-            <Box>
-              <Flex
-                alignItems="center"
-                gap="16px"
-                flexWrap={['wrap', 'nowrap']}
-                mb="16px"
-              >
-                <FormControl>
-                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                    Payment Status
-                  </FormLabel>
-                  <Select
-                    h="50px"
-                    rounded="40px"
-                    border="1px solid"
-                    borderColor="border.200"
-                  >
-                    <option value="completed">Completed</option>
-                    <option value="completed">Pending</option>
-                    <option value="completed">Ongoing</option>
-                    <option value="completed">Completed</option>
-                  </Select>
-                </FormControl>
-                <FormControl>
-                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                    Allocation Status
-                  </FormLabel>
-                  <Select
-                    h="50px"
-                    rounded="40px"
-                    border="1px solid"
-                    borderColor="border.200"
-                  >
-                    <option value="completed">Completed</option>
-                    <option value="completed">Pending</option>
-                    <option value="completed">Ongoing</option>
-                    <option value="completed">Completed</option>
-                  </Select>
-                </FormControl>
-              </Flex>
-              <Flex
-                alignItems="center"
-                gap="16px"
-                flexWrap={['wrap', 'nowrap']}
-              >
-                <FormControl>
-                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                    Documentation Status
-                  </FormLabel>
-                  <Select
-                    h="50px"
-                    rounded="40px"
-                    border="1px solid"
-                    borderColor="border.200"
-                  >
-                    <option value="completed">Completed</option>
-                    <option value="completed">Pending</option>
-                    <option value="completed">Ongoing</option>
-                    <option value="completed">Completed</option>
-                  </Select>
-                </FormControl>
-                <FormControl>
-                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                    Handover Status
-                  </FormLabel>
-                  <Select
-                    h="50px"
-                    rounded="40px"
-                    border="1px solid"
-                    borderColor="border.200"
-                  >
-                    <option value="completed">Completed</option>
-                    <option value="completed">Pending</option>
-                    <option value="completed">Ongoing</option>
-                    <option value="completed">Completed</option>
-                  </Select>
-                </FormControl>
-              </Flex>
-            </Box>
-          ) : (
-            <Box>
-              <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
-                <AssetDetailsItem
-                  label="Payment Status"
-                  labelValue={
-                    propertyDetails?.asset_type === 'instalment'
-                      ? 'Ongoing'
-                      : propertyDetails?.asset_type === 'owned'
-                        ? 'Completed'
-                        : 'Completed'
-                  }
-                />
-                <AssetDetailsItem
-                  label="Allocation Status"
-                  labelValue={
-                    propertyDetails?.allocation_status
-                      ? propertyDetails?.allocation_status
-                      : propertyDetails?.asset_type === 'cashflow'
-                        ? 'Completed'
-                        : 'N/A'
-                  }
-                />
-                <AssetDetailsItem
-                  label="Documentation Status"
-                  labelValue={
-                    propertyDetails?.documentation_status
-                      ? propertyDetails?.documentation_status
-                      : propertyDetails?.asset_type === 'cashflow'
-                        ? 'Completed'
-                        : 'N/A'
-                  }
-                />
-                <AssetDetailsItem
-                  label="Handover Status"
-                  labelValue={
-                    propertyDetails?.handover_status
-                      ? propertyDetails?.handover_status
-                      : propertyDetails?.asset_type === 'cashflow'
-                        ? 'Completed'
-                        : 'N/A'
-                  }
-                />
-              </Flex>
-            </Box>
-          )}
+          <Box>
+            <Flex
+              alignItems="center"
+              gap="16px"
+              flexWrap={['wrap', 'nowrap']}
+              mb="16px"
+            >
+              <FormControl>
+                <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                  Payment Status
+                </FormLabel>
+                <Select
+                  h="50px"
+                  rounded="40px"
+                  border="1px solid"
+                  borderColor="border.200"
+                >
+                  <option value="completed">Completed</option>
+                  <option value="completed">Pending</option>
+                  <option value="completed">Ongoing</option>
+                  <option value="completed">Completed</option>
+                </Select>
+              </FormControl>
+              <FormControl>
+                <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                  Allocation Status
+                </FormLabel>
+                <Select
+                  h="50px"
+                  rounded="40px"
+                  border="1px solid"
+                  borderColor="border.200"
+                >
+                  <option value="completed">Completed</option>
+                  <option value="completed">Pending</option>
+                  <option value="completed">Ongoing</option>
+                  <option value="completed">Completed</option>
+                </Select>
+              </FormControl>
+            </Flex>
+            <Flex alignItems="center" gap="16px" flexWrap={['wrap', 'nowrap']}>
+              <FormControl>
+                <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                  Documentation Status
+                </FormLabel>
+                <Select
+                  h="50px"
+                  rounded="40px"
+                  border="1px solid"
+                  borderColor="border.200"
+                >
+                  <option value="completed">Completed</option>
+                  <option value="completed">Pending</option>
+                  <option value="completed">Ongoing</option>
+                  <option value="completed">Completed</option>
+                </Select>
+              </FormControl>
+              <FormControl>
+                <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                  Handover Status
+                </FormLabel>
+                <Select
+                  h="50px"
+                  rounded="40px"
+                  border="1px solid"
+                  borderColor="border.200"
+                >
+                  <option value="completed">Completed</option>
+                  <option value="completed">Pending</option>
+                  <option value="completed">Ongoing</option>
+                  <option value="completed">Completed</option>
+                </Select>
+              </FormControl>
+            </Flex>
+          </Box>
         </Box>
       </Stack>
     </Box>
