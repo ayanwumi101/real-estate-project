@@ -145,12 +145,130 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
               Cashflow Details
             </Heading>
 
-            <Box></Box>
+            <Box>
+              <Flex
+                alignItems="center"
+                gap="16px"
+                flexWrap={['wrap', 'nowrap']}
+                mb="16px"
+              >
+                <FormControl>
+                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                    Cashflow Source
+                  </FormLabel>
+                  <Select
+                    h="50px"
+                    rounded="40px"
+                    border="1px solid"
+                    borderColor="border.200"
+                  >
+                    <option value="completed">Rent</option>
+                    <option value="completed">Lease</option>
+                    <option value="completed">Ongoing</option>
+                    <option value="completed">Completed</option>
+                  </Select>
+                </FormControl>
+                <FormControl>
+                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                    Property Currently Occupied?
+                  </FormLabel>
+                  <Select
+                    h="50px"
+                    rounded="40px"
+                    border="1px solid"
+                    borderColor="border.200"
+                  >
+                    <option value="completed">Completed</option>
+                    <option value="completed">Pending</option>
+                    <option value="completed">Ongoing</option>
+                    <option value="completed">Completed</option>
+                  </Select>
+                </FormControl>
+              </Flex>
+              <Flex
+                alignItems="center"
+                gap="16px"
+                flexWrap={['wrap', 'nowrap']}
+                mb="16px"
+              >
+                <FormControl>
+                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                    Remittance Value
+                  </FormLabel>
+                  <Select
+                    h="50px"
+                    rounded="40px"
+                    border="1px solid"
+                    borderColor="border.200"
+                  >
+                    <option value="completed">Rent</option>
+                    <option value="completed">Lease</option>
+                    <option value="completed">Ongoing</option>
+                    <option value="completed">Completed</option>
+                  </Select>
+                </FormControl>
+                <FormControl>
+                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                    Duration of Yield
+                  </FormLabel>
+                  <Select
+                    h="50px"
+                    rounded="40px"
+                    border="1px solid"
+                    borderColor="border.200"
+                  >
+                    <option value="completed">Completed</option>
+                    <option value="completed">Pending</option>
+                    <option value="completed">Ongoing</option>
+                    <option value="completed">Completed</option>
+                  </Select>
+                </FormControl>
+              </Flex>
+              <Flex
+                alignItems="center"
+                gap="16px"
+                flexWrap={['wrap', 'nowrap']}
+                mb="16px"
+              >
+                <FormControl>
+                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                    Last Remittance Payment
+                  </FormLabel>
+                  <Select
+                    h="50px"
+                    rounded="40px"
+                    border="1px solid"
+                    borderColor="border.200"
+                  >
+                    <option value="completed">Rent</option>
+                    <option value="completed">Lease</option>
+                    <option value="completed">Ongoing</option>
+                    <option value="completed">Completed</option>
+                  </Select>
+                </FormControl>
+                <FormControl>
+                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                    Equity Ownership
+                  </FormLabel>
+                  <Select
+                    h="50px"
+                    rounded="40px"
+                    border="1px solid"
+                    borderColor="border.200"
+                  >
+                    <option value="completed">Completed</option>
+                    <option value="completed">Pending</option>
+                    <option value="completed">Ongoing</option>
+                    <option value="completed">Completed</option>
+                  </Select>
+                </FormControl>
+              </Flex>
+            </Box>
           </Box>
         )}
 
         {/* Payment Details */}
-        {propertyDetails?.asset_type === 'instalment' && (
+        {/* {propertyDetails?.asset_type === 'instalment' && (
           <Box
             border="1px solid"
             borderColor="border.100"
@@ -219,7 +337,7 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
               </Flex>
             </Box>
           </Box>
-        )}
+        )} */}
 
         {/* Realtor Details */}
         <Box
