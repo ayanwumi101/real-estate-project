@@ -45,7 +45,6 @@ const OwnedAssets = ({
   const deleteAsset = async (id: string) => {
     try {
       const res = await DeleteAsset(id);
-      console.log(res);
       if (res.status) {
         const res = await GetUserAssets();
         setAssets(res.data);
