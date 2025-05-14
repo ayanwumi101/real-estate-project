@@ -17,8 +17,10 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  useToast,
 } from '@chakra-ui/react';
 import React from 'react';
+import { DeleteAsset, GetUserAssets } from '~/lib/api/services/assetsService';
 import {
   LocationIcon,
   ProfitIcon,
@@ -27,11 +29,47 @@ import {
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
 
-const OwnedAssets = ({ assets }: { assets: any[] }) => {
+const OwnedAssets = ({
+  assets,
+  setAssets,
+}: {
+  assets: any[];
+  setAssets: any;
+}) => {
+  const toast = useToast();
   const navigate = useNavigate();
   const totalValuation = assets?.reduce((acc, asset) => {
     return acc + Number(asset?.property_cost);
   }, 0);
+
+  const deleteAsset = async (id: string) => {
+    try {
+      const res = await DeleteAsset(id);
+      console.log(res);
+      if (res.status) {
+        const res = await GetUserAssets();
+        setAssets(res.data);
+        toast({
+          title: 'Asset Deleted',
+          description: 'Asset has been deleted successfully',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        });
+      }
+    } catch (error) {
+      console.error('Error deleting asset:', error);
+      toast({
+        title: 'Error Deleting Asset',
+        description: 'An error occurred while deleting the asset',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      });
+    }
+  };
   return (
     <Box>
       {assets?.length < 1 ? (
@@ -164,6 +202,7 @@ const OwnedAssets = ({ assets }: { assets: any[] }) => {
                             fontSize={14}
                             color="color.100"
                             fontWeight={500}
+                            onClick={() => deleteAsset(asset?.id)}
                           >
                             Delete asset
                           </MenuItem>
