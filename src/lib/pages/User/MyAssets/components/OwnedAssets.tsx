@@ -25,6 +25,8 @@ import {
   LocationIcon,
   ProfitIcon,
   VerticalEllipsisIcon,
+  NextPageIcon,
+  PreviousPageIcon,
 } from '~/lib/components/Icons/Icons';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
@@ -38,6 +40,8 @@ const OwnedAssets = ({
 }) => {
   const toast = useToast();
   const navigate = useNavigate();
+  const [page, setPage] = React.useState(1);
+  const [limit, setLimit] = React.useState(10);
   const totalValuation = assets?.reduce((acc, asset) => {
     return acc + Number(asset?.property_cost);
   }, 0);
@@ -135,7 +139,7 @@ const OwnedAssets = ({
               </Tr>
             </Thead>
             <Tbody color="#222222" maxH="450px" overflow="auto">
-              {assets?.map((asset) => {
+              {assets?.slice((page - 1) * limit, page * limit)?.map((asset) => {
                 return (
                   <Tr key={asset?.id} border="none" cursor="pointer">
                     <Td fontSize={15} color="#222222" fontWeight={600}>
@@ -211,18 +215,40 @@ const OwnedAssets = ({
                   </Tr>
                 );
               })}
-              <Tr borderBlock="1px solid #C0C0C0">
-                <Td color="brand.300" fontWeight={600}>
-                  Total Valuation
-                </Td>
-                <Td></Td>
-                <Td color="brand.400" fontWeight={500}>
-                  {FormatAmount(Number(totalValuation))}
-                </Td>
-              </Tr>
             </Tbody>
           </Table>
         </TableContainer>
+      )}
+      {assets?.length > 0 && (
+        <Box w="full" bg="white" py="20px" borderY="1px solid #E4E7EC">
+          <Flex alignItems="center" justifyContent="center" gap="13px">
+            <Button
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              isDisabled={page === 1}
+              border="1px solid #E4E4E4"
+              rounded="6px"
+              variant="outline"
+            >
+              <PreviousPageIcon />
+            </Button>
+            <Text fontWeight={600} fontSize={17}>
+              {page}
+            </Text>
+            <Button
+              border="1px solid #E4E4E4"
+              rounded="6px"
+              variant="outline"
+              onClick={() =>
+                setPage((prev) =>
+                  prev < Math.ceil(assets.length / limit) ? prev + 1 : prev
+                )
+              }
+              isDisabled={page >= Math.ceil(assets.length / limit)}
+            >
+              <NextPageIcon />
+            </Button>
+          </Flex>
+        </Box>
       )}
     </Box>
   );

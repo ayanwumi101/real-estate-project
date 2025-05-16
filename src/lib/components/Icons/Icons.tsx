@@ -1696,3 +1696,42 @@ export const SaveAssetDetailsIcon = () => {
     </svg>
   );
 }
+
+
+export const PreviousPageIcon = () => { 
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12.1426 14.2858L7.85693 10.0001L12.1426 5.71436"
+        stroke="#8295AA"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export const NextPageIcon = () => { 
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M7.85693 14.2858L12.1426 10.0001L7.85693 5.71436"
+        stroke="#8295AA"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}

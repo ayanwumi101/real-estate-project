@@ -11,25 +11,70 @@ import {
   Td,
   TableContainer,
   Stack,
-  Heading, Image
+  Heading,
+  Image,
+  useToast,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 } from '@chakra-ui/react';
 import moment from 'moment';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import { LocationIcon, ProfitIcon } from '~/lib/components/Icons/Icons';
+import { DeleteAsset, GetUserAssets } from '~/lib/api/services/assetsService';
+import {
+  LocationIcon,
+  ProfitIcon,
+  VerticalEllipsisIcon,
+  PreviousPageIcon,
+  NextPageIcon,
+} from '~/lib/components/Icons/Icons';
 import { FormatAmount } from '~/lib/utils/formatAmount';
+import useNavigate from '~/lib/utils/useNavigate';
 
-
-
-const Cashflow = ({ assets }: { assets: any[] }) => {
+const Cashflow = ({ assets, setAssets }: { assets: any[]; setAssets: any }) => {
   const router = useRouter();
+  const toast = useToast();
+  const [page, setPage] = React.useState(1);
+  const [limit, setLimit] = React.useState(10);
+  const navigate = useNavigate();
   const totalValuation = assets?.reduce((acc, asset) => {
     return acc + Number(asset?.property_cost);
   }, 0);
   const totalRemittance = assets?.reduce((acc, asset) => {
     return acc + Number(asset?.cashflow_amount);
   }, 0);
+
+  const deleteAsset = async (id: string) => {
+    try {
+      const res = await DeleteAsset(id);
+      if (res.status) {
+        const res = await GetUserAssets();
+        setAssets(res.data);
+        toast({
+          title: 'Asset Deleted',
+          description: 'Asset has been deleted successfully',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        });
+      }
+    } catch (error) {
+      console.error('Error deleting asset:', error);
+      toast({
+        title: 'Error Deleting Asset',
+        description: 'An error occurred while deleting the asset',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      });
+    }
+  };
+
   return (
     <Box>
       {assets?.length < 1 ? (
@@ -85,7 +130,7 @@ const Cashflow = ({ assets }: { assets: any[] }) => {
                   fontSize={14}
                   textTransform="capitalize"
                 >
-                  Payment Status
+                  Status
                 </Th>
                 <Th
                   color="#222222"
@@ -94,6 +139,14 @@ const Cashflow = ({ assets }: { assets: any[] }) => {
                   textTransform="capitalize"
                 >
                   Remittance amount
+                </Th>
+                <Th
+                  color="#222222"
+                  fontWeight={500}
+                  fontSize={14}
+                  textTransform="capitalize"
+                >
+                  No of Payments
                 </Th>
                 <Th
                   color="#222222"
@@ -152,41 +205,101 @@ const Cashflow = ({ assets }: { assets: any[] }) => {
                         : 'N/A'}
                     </Td>
                     <Td>
-                      <Link href={`/user/my-assets/${asset?.id}`}>
-                        <Button
-                          bg="#EDEDFF"
-                          color="#000080"
-                          fontSize={12}
-                          py="3px"
-                          px="12px"
-                          textAlign="center"
-                          borderRadius="50px"
-                          _hover={{ bg: '#EDEDFF' }}
-                        >
-                          {' '}
-                          View Asset
-                        </Button>
-                      </Link>
+                      <Menu>
+                        <MenuButton as={Button} rounded="5px" bg="bg.200">
+                          <VerticalEllipsisIcon />
+                        </MenuButton>
+                        <MenuList py="0px">
+                          <MenuItem
+                            py="12px"
+                            px="16px"
+                            _hover={{ bg: 'border.100' }}
+                            fontSize={14}
+                            color="color.100"
+                            fontWeight={500}
+                            onClick={() =>
+                              navigate(`/user/my-assets/${asset?.id}`)
+                            }
+                          >
+                            View asset
+                          </MenuItem>
+                          <MenuItem
+                            py="12px"
+                            px="16px"
+                            _hover={{ bg: 'border.100' }}
+                            fontSize={14}
+                            color="color.100"
+                            fontWeight={500}
+                            onClick={() =>
+                              navigate(
+                                `/user/my-assets/${asset?.id}/update-details`
+                              )
+                            }
+                          >
+                            Update asset details
+                          </MenuItem>
+                          <MenuItem
+                            py="12px"
+                            px="16px"
+                            _hover={{ bg: 'border.100' }}
+                            fontSize={14}
+                            color="color.100"
+                            fontWeight={500}
+                            onClick={() => deleteAsset(asset?.id)}
+                          >
+                            View payments
+                          </MenuItem>
+                          <MenuItem
+                            py="12px"
+                            px="16px"
+                            _hover={{ bg: 'border.100' }}
+                            fontSize={14}
+                            color="color.100"
+                            fontWeight={500}
+                            onClick={() => deleteAsset(asset?.id)}
+                          >
+                            Delete asset
+                          </MenuItem>
+                        </MenuList>
+                      </Menu>
                     </Td>
                   </Tr>
                 );
               })}
-              <Tr borderBlock="1px solid #C0C0C0">
-                <Td color="brand.300" fontWeight={600}>
-                  Total Valuation
-                </Td>
-                <Td></Td>
-                <Td color="brand.400" fontWeight={500}>
-                  {FormatAmount(Number(totalValuation))}
-                </Td>
-                <Td></Td>
-                <Td color="brand.400" fontWeight={500}>
-                  {FormatAmount(Number(totalRemittance))}
-                </Td>
-              </Tr>
             </Tbody>
           </Table>
         </TableContainer>
+      )}
+      {assets?.length > 0 && (
+        <Box w="full" bg="white" py="20px" borderY="1px solid #E4E7EC">
+          <Flex alignItems="center" justifyContent="center" gap="13px">
+            <Button
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              isDisabled={page === 1}
+              border="1px solid #E4E4E4"
+              rounded="6px"
+              variant="outline"
+            >
+              <PreviousPageIcon />
+            </Button>
+            <Text fontWeight={600} fontSize={17}>
+              {page}
+            </Text>
+            <Button
+              border="1px solid #E4E4E4"
+              rounded="6px"
+              variant="outline"
+              onClick={() =>
+                setPage((prev) =>
+                  prev < Math.ceil(assets.length / limit) ? prev + 1 : prev
+                )
+              }
+              isDisabled={page >= Math.ceil(assets.length / limit)}
+            >
+              <NextPageIcon />
+            </Button>
+          </Flex>
+        </Box>
       )}
     </Box>
   );

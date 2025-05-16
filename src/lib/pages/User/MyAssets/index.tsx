@@ -76,11 +76,15 @@ const index = () => {
           </Flex>
         </Box>
         <Box px={['10px', '20px']}>
-          {activeTab === 'Owned' && <OwnedAssets assets={ownedAssets} setAssets={setAssets} />}
+          {activeTab === 'Owned' && (
+            <OwnedAssets assets={ownedAssets} setAssets={setAssets} />
+          )}
           {activeTab === 'Installment' && (
             <Installment assets={installmentAssets} />
           )}
-          {activeTab === 'Cashflow' && <Cashflow assets={cashflowAssets} />}
+          {activeTab === 'Cashflow' && (
+            <Cashflow assets={cashflowAssets} setAssets={setAssets} />
+          )}
         </Box>
       </Stack>
     </Box>
