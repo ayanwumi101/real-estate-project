@@ -4,15 +4,19 @@ import React, { useEffect, createContext } from 'react';
 import Notes from './components/Notes';
 import AssetDetails from './components/AssetDetails';
 import Header from './components/Header';
-import { Box, Stack, Flex } from '@chakra-ui/react';
-import { GetAssetDetails } from '~/lib/api/services/assetsService';
+import { Box, Stack, Flex, useToast } from '@chakra-ui/react';
+import {
+  GetAssetDetails,
+  UpdateAssetDetails,
+} from '~/lib/api/services/assetsService';
 import { useParams } from 'next/navigation';
 
 export const AssetDetailsContext = createContext<any>({});
 
 const index = () => {
-  const [propertyDetails, setPropertyDetails] = React.useState<any>([]);
+  const toast = useToast();
   const { id } = useParams();
+  const [propertyDetails, setPropertyDetails] = React.useState<any>([]);
   const [propertySize, setPropertySize] = React.useState<string>('');
   const [boughtDate, setBoughtDate] = React.useState<string>('');
   const [propertyCost, setPropertyCost] = React.useState<string>('');
@@ -46,6 +50,61 @@ const index = () => {
     getAssetDetails();
   }, [id]);
 
+  const UpdateAsset = async () => {
+    setIsLoading(true);
+    const formData = {
+      size: propertySize,
+      bought_date: boughtDate,
+      property_name: propertyDetails?.property_name,
+      property_type: propertyDetails?.property_type,
+      house_number: propertyDetails?.house_number,
+      street_name: propertyDetails?.street_name,
+      state_id: propertyDetails?.state_id,
+      asset_type: propertyDetails?.asset_type,
+      city_name: propertyDetails?.city_name,
+      property_cost: propertyCost,
+      payment_status: paymentStatus,
+      cashflow_source: cashflowSource,
+      is_occupied: isPropertyOccupied,
+      cashflow_amount: remittanceAmount,
+      cashflow_duration: cashflowDuration,
+      last_cashflow_date: lastRemittanceDate,
+      equity_ownership: equityOwnership,
+      realtor_name: realtorName,
+      phone: realtorPhone,
+      allocation_status: allocationStatus,
+      documentation_status: documentationStatus,
+      handover_status: handoverStatus,
+    };
+    console.log(formData);
+    try {
+      const res = await UpdateAssetDetails(id, formData);
+      if (res.status) {
+        getAssetDetails();
+        toast({
+          title: 'Asset Updated',
+          description: 'Asset has been updated successfully',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        });
+      }
+    } catch (error) {
+      toast({
+        title: 'Error Updating Asset',
+        description: 'An error occurred while updating the asset',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      });
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (propertyDetails?.id) {
       setPropertySize(propertyDetails?.size);
@@ -59,15 +118,14 @@ const index = () => {
       setLastRemittanceDate(propertyDetails?.last_cashflow_date);
       setEquityOwnership(propertyDetails?.equity_ownership);
       setRealtorName(propertyDetails?.realtor_name);
-      setRealtorPhone(propertyDetails?.phone);
+      setRealtorPhone(propertyDetails?.realtor_phone);
       setAllocationStatus(propertyDetails?.allocation_status);
       setDocumentationStatus(propertyDetails?.documentation_status);
       setHandoverStatus(propertyDetails?.handover_status);
     }
   }, [propertyDetails]);
-
-  const EditAssetDetails = async () => {};
-
+  // console.log(propertyDetails);
+  
   return (
     <AssetDetailsContext.Provider
       value={{
@@ -106,8 +164,8 @@ const index = () => {
       <Box>
         <Stack>
           <Header
+            updateAsset={UpdateAsset}
             loading={isLoading}
-            editAssetDetails={EditAssetDetails}
             propertyName={propertyDetails?.property_name}
             location={`${propertyDetails?.house_number || ''}, ${propertyDetails?.street_name || ''}, ${propertyDetails?.state_id || ''} state`}
           />

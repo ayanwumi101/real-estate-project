@@ -72,8 +72,6 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
     handoverStatus,
     setHandoverStatus,
   } = useContext(AssetDetailsContext);
-  // console.log(propertyDetails);
-
   return (
     <Box>
       <Stack spacing="32px">
@@ -157,6 +155,7 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                   borderColor="border.200"
                   value={paymentStatus}
                   onChange={(e) => setPaymentStatus(e.target.value)}
+                  placeholder='Select payment status'
                 >
                   <option value="Completed">Completed</option>
                   <option value="Pending">Pending</option>
@@ -276,7 +275,7 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                     rounded="40px"
                     border="1px solid"
                     borderColor="border.200"
-                    value={lastRemittanceDate.split(' ')[0]}
+                    value={lastRemittanceDate?.split(' ')[0]}
                     onChange={(e) => setLastRemittanceDate(e.target.value)}
                   />
                 </FormControl>
@@ -290,7 +289,7 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                     rounded="40px"
                     border="1px solid"
                     borderColor="border.200"
-                    value={equityOwnership}
+                    value={equityOwnership || 0}
                     onChange={(e) => setEquityOwnership(e.target.value)}
                   />
                 </FormControl>
@@ -410,14 +409,10 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                 <FormLabel fontWeight={600} fontSize={15} color="brand.300">
                   Phone Number
                 </FormLabel>
+                {/* {realtorPhone?.startsWith('234') ? ( */}
                 <PhoneInput
                   value={realtorPhone}
                   onChange={(value: string) => setRealtorPhone(value)}
-                  // value={formik.values.phone}
-                  // onChange={(value: string) =>
-                  //   formik.setFieldValue('phone', value)
-                  // }
-                  // onBlur={() => formik.setFieldTouched('phone', true)}
                   containerStyle={{
                     border: '1px solid #C0C0C0',
                     backgroundColor: '#FBFBFB',
@@ -438,6 +433,13 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                     background: 'transparent',
                   }}
                 />
+                {/* // ) : (
+                //   <Input
+                //     type="tel"
+                //     value={realtorPhone}
+                //     onChange={(e) => setRealtorPhone(e.target.value)}
+                //   />
+                // )} */}
               </FormControl>
             </Flex>
           </Box>
@@ -479,6 +481,7 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                   borderColor="border.200"
                   value={paymentStatus}
                   onChange={(e) => setPaymentStatus(e.target.value)}
+                  placeholder='Select payment status'
                 >
                   <option value="Completed">Completed</option>
                   <option value="Pending">Pending</option>
@@ -496,6 +499,7 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                   borderColor="border.200"
                   value={allocationStatus}
                   onChange={(e) => setAllocationStatus(e.target.value)}
+                  placeholder="Select allocation status"
                 >
                   <option value="Completed">Completed</option>
                   <option value="Pending">Pending</option>
@@ -515,6 +519,7 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                   borderColor="border.200"
                   value={documentationStatus}
                   onChange={(e) => setDocumentationStatus(e.target.value)}
+                  placeholder="Select documentation status"
                 >
                   <option value="Completed">Completed</option>
                   <option value="Pending">Pending</option>
@@ -532,6 +537,7 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                   borderColor="border.200"
                   value={handoverStatus}
                   onChange={(e) => setHandoverStatus(e.target.value)}
+                  placeholder="Select handover status"
                 >
                   <option value="Completed">Completed</option>
                   <option value="Pending">Pending</option>

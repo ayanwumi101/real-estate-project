@@ -16,12 +16,17 @@ const index = () => {
   const [activeTab, setActiveTab] = useState<string>('Owned');
   const [assets, setAssets] = useState<any[]>([]);
   const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const GetAssets = async () => {
+    setLoading(true);
     try {
       const res = await GetUserAssets();
       setAssets(res.data);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
+      setAssets([]);
       console.log(error);
     }
   };
@@ -87,13 +92,17 @@ const index = () => {
         </Box>
         <Box px={['10px', '20px']}>
           {activeTab === 'Owned' && (
-            <OwnedAssets assets={ownedAssets} setAssets={setAssets} />
+            <OwnedAssets
+              assets={ownedAssets}
+              setAssets={setAssets}
+              loading={loading}
+            />
           )}
           {activeTab === 'Installment' && (
-            <Installment assets={installmentAssets} setAssets={setAssets} />
+            <Installment assets={installmentAssets} setAssets={setAssets} loading={loading} />
           )}
           {activeTab === 'Cashflow' && (
-            <Cashflow assets={cashflowAssets} setAssets={setAssets} />
+            <Cashflow assets={cashflowAssets} setAssets={setAssets} loading={loading} />
           )}
         </Box>
       </Stack>

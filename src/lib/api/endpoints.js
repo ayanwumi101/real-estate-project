@@ -33,6 +33,7 @@ const API_ROUTES = {
   ADD_ASSET_IMAGES: '/user/asset/add-images',
   ADD_NEXT_OF_KIN_TO_ASSET: '/user/asset/attach_noks',
   DELETE_ASSET: '/user/asset/delete',
+  UPDATE_ASSET_DETAILS: '/user/asset/update',
 
   //location endpoints
   GET_ALL_COUNTRIES: '/countries',
