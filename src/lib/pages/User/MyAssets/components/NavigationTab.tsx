@@ -14,6 +14,8 @@ const NavigationTab = ({
   cashflowAssetsCount,
   installmentAssetsCount,
   totalOwnedValuation,
+  totalCashflowValuation,
+  totalInstallmentValuation,
 }: {
   tabs: string[];
   activeTab: string;
@@ -22,11 +24,13 @@ const NavigationTab = ({
   cashflowAssetsCount: number;
   installmentAssetsCount: number;
   totalOwnedValuation: number;
+  totalCashflowValuation: number;
+  totalInstallmentValuation: number;
 }) => {
   return (
     <Box py="35px" w="full">
       <Flex
-        borderBottom={['none',"1px solid #E4E4E4"]}
+        borderBottom={['none', '1px solid #E4E4E4']}
         alignItems="center"
         justifyContent="space-between"
         flexWrap={['wrap', 'nowrap']}
@@ -64,10 +68,18 @@ const NavigationTab = ({
               >
                 <Stack>
                   <Text fontWeight={500} fontSize={13} color="brand.400">
-                    Total Owned Valuation
+                    {activeTab === 'Owned'
+                      ? 'Total Owned Valuation'
+                      : activeTab === 'Cashflow'
+                        ? 'Total Cashflow Valuation'
+                        : 'Total Installment Valuation'}
                   </Text>
                   <Heading fontWeight={600} fontSize={16} color="brand.300">
-                    {formatCurrency(totalOwnedValuation.toString())}
+                    {activeTab === 'Owned'
+                      ? formatCurrency(totalOwnedValuation.toString())
+                      : activeTab === 'Cashflow'
+                        ? formatCurrency(totalCashflowValuation.toString())
+                        : formatCurrency(totalInstallmentValuation.toString())}
                   </Heading>
                 </Stack>
               </Box>

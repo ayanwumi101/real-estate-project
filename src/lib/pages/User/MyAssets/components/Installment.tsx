@@ -13,23 +13,68 @@ import {
   Stack,
   Heading,
   Image,
+  Menu,
+  MenuItem,
+  MenuList,
+  MenuButton,
+  useToast,
 } from '@chakra-ui/react';
+import { Form } from 'formik';
 import moment from 'moment';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import { LocationIcon, ProfitIcon } from '~/lib/components/Icons/Icons';
+import { DeleteAsset, GetUserAssets } from '~/lib/api/services/assetsService';
+import {
+  LocationIcon,
+  NextPageIcon,
+  PreviousPageIcon,
+  ProfitIcon,
+  VerticalEllipsisIcon,
+} from '~/lib/components/Icons/Icons';
 import { FormatAmount } from '~/lib/utils/formatAmount';
+import useNavigate from '~/lib/utils/useNavigate';
 
-const Installment = ({ assets }: { assets: any[] }) => {
-  const router = useRouter();
-  const totalAmountpaid = assets?.reduce((acc, asset) => {
-    return acc + Number(asset?.amount_paid);
-  }, 0);
+const Installment = ({
+  assets,
+  setAssets,
+}: {
+  assets: any[];
+  setAssets: any;
+}) => {
+  const toast = useToast();
+  const navigate = useNavigate();
+  const [page, setPage] = React.useState(1);
+  const [limit, setLimit] = React.useState(5);
 
-  const totalAmountLeft = assets?.reduce((acc, asset) => {
-    return acc + Number(asset?.amount_left);
-  }, 0);
+  const deleteAsset = async (id: string) => {
+    try {
+      const res = await DeleteAsset(id);
+      if (res.status) {
+        const res = await GetUserAssets();
+        setAssets(res.data);
+        toast({
+          title: 'Asset Deleted',
+          description: 'Asset has been deleted successfully',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        });
+      }
+    } catch (error) {
+      console.error('Error deleting asset:', error);
+      toast({
+        title: 'Error Deleting Asset',
+        description: 'An error occurred while deleting the asset',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      });
+    }
+  };
+
   return (
     <Box>
       {assets?.length < 1 ? (
@@ -77,6 +122,14 @@ const Installment = ({ assets }: { assets: any[] }) => {
                   fontSize={14}
                   textTransform="capitalize"
                 >
+                  Amount Purchased
+                </Th>
+                <Th
+                  color="#222222"
+                  fontWeight={500}
+                  fontSize={14}
+                  textTransform="capitalize"
+                >
                   Amount Paid
                 </Th>
                 <Th
@@ -93,23 +146,15 @@ const Installment = ({ assets }: { assets: any[] }) => {
                   fontSize={14}
                   textTransform="capitalize"
                 >
-                  Next Payment
+                  No of Payments
                 </Th>
-                {/* <Th
-                  color="#222222"
-                  fontWeight={500}
-                  fontSize={14}
-                  textTransform="capitalize"
-                >
-                  Realtor
-                </Th> */}
                 <Th
                   color="#222222"
                   fontWeight={500}
                   fontSize={14}
                   textTransform="capitalize"
                 >
-                  Delivery Status
+                  Next Payment
                 </Th>
                 <Th
                   color="#222222"
@@ -119,8 +164,8 @@ const Installment = ({ assets }: { assets: any[] }) => {
                 ></Th>
               </Tr>
             </Thead>
-            <Tbody color="#222222">
-              {assets?.map((asset: any) => {
+            <Tbody color="#222222" w="full">
+              {assets?.slice((page - 1) * limit, page * limit)?.map((asset) => {
                 return (
                   <Tr border="none" _hover={{ bg: '#f5f5f5' }} cursor="pointer">
                     <Td fontSize={15} color="#222222" fontWeight={600}>
@@ -140,58 +185,120 @@ const Installment = ({ assets }: { assets: any[] }) => {
                       {asset?.property_type}
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
+                      {FormatAmount(Number(asset?.property_cost))}
+                    </Td>
+                    <Td fontWeight={500} fontSize={14} color="#8295AA">
                       {FormatAmount(Number(asset?.amount_paid))}
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
                       {FormatAmount(Number(asset?.amount_left))}
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
+                      {asset?.payment_count ? asset?.payment_count : 0}
+                    </Td>
+                    <Td fontWeight={500} fontSize={14} color="#8295AA">
                       {asset?.due_date
                         ? moment(asset?.due_date).format('ddd, Do MMMM YYYY')
                         : 'N/A'}
                     </Td>
-                    {/* <Td fontWeight={500} fontSize={14} color="#8295AA">
-                      {asset?.realtor_name}
-                    </Td> */}
-                    <Td fontWeight={500} fontSize={14} color="#8295AA">
-                      Ongoing
-                    </Td>
                     <Td>
-                      <Link href={`/user/my-assets/${asset?.id}`}>
-                        <Button
-                          bg="#EDEDFF"
-                          color="#000080"
-                          fontSize={12}
-                          py="3px"
-                          px="12px"
-                          textAlign="center"
-                          borderRadius="50px"
-                          _hover={{ bg: '#EDEDFF' }}
-                        >
-                          View Asset
-                        </Button>
-                      </Link>
+                      <Menu>
+                        <MenuButton as={Button} rounded="5px" bg="bg.200">
+                          <VerticalEllipsisIcon />
+                        </MenuButton>
+                        <MenuList py="0px">
+                          <MenuItem
+                            py="12px"
+                            px="16px"
+                            _hover={{ bg: 'border.100' }}
+                            fontSize={14}
+                            color="color.100"
+                            fontWeight={500}
+                            onClick={() =>
+                              navigate(`/user/my-assets/${asset?.id}`)
+                            }
+                          >
+                            View asset
+                          </MenuItem>
+                          <MenuItem
+                            py="12px"
+                            px="16px"
+                            _hover={{ bg: 'border.100' }}
+                            fontSize={14}
+                            color="color.100"
+                            fontWeight={500}
+                            onClick={() =>
+                              navigate(
+                                `/user/my-assets/${asset?.id}/update-details`
+                              )
+                            }
+                          >
+                            Update asset details
+                          </MenuItem>
+                          <MenuItem
+                            py="12px"
+                            px="16px"
+                            _hover={{ bg: 'border.100' }}
+                            fontSize={14}
+                            color="color.100"
+                            fontWeight={500}
+                            onClick={() =>
+                              navigate(`/user/my-assets/${asset?.id}`)
+                            }
+                          >
+                            View payments
+                          </MenuItem>
+                          <MenuItem
+                            py="12px"
+                            px="16px"
+                            _hover={{ bg: 'border.100' }}
+                            fontSize={14}
+                            color="color.100"
+                            fontWeight={500}
+                            onClick={() => deleteAsset(asset?.id)}
+                          >
+                            Delete asset
+                          </MenuItem>
+                        </MenuList>
+                      </Menu>
                     </Td>
                   </Tr>
                 );
               })}
-              <Tr borderBlock="1px solid #C0C0C0">
-                <Td color="brand.300" fontWeight={600}>
-                  Total Valuation
-                </Td>
-                <Td></Td>
-                <Td color="brand.400" fontWeight={500}>
-                  {FormatAmount(Number(totalAmountpaid))}
-                </Td>
-                <Td color="brand.400" fontWeight={500}>
-                  {FormatAmount(
-                  Number(totalAmountLeft) || 0.0
-                  )}
-                </Td>
-              </Tr>
             </Tbody>
           </Table>
         </TableContainer>
+      )}
+      {assets?.length > 0 && (
+        <Box w="full" bg="white" py="20px" borderY="1px solid #E4E7EC">
+          <Flex alignItems="center" justifyContent="center" gap="13px">
+            <Button
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              isDisabled={page === 1}
+              border="1px solid #E4E4E4"
+              rounded="6px"
+              variant="outline"
+            >
+              <PreviousPageIcon />
+            </Button>
+            <Text fontWeight={600} fontSize={17}>
+              {page}
+            </Text>
+            <Button
+              border="1px solid #E4E4E4"
+              rounded="6px"
+              variant="outline"
+              onClick={() =>
+                setPage((prev) =>
+                  prev < Math.ceil(assets.length / limit) ? prev + 1 : prev
+                )
+              }
+              isDisabled={page >= Math.ceil(assets.length / limit)}
+            >
+              <NextPageIcon />
+            </Button>
+          </Flex>
+        </Box>
       )}
     </Box>
   );

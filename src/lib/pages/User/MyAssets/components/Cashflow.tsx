@@ -35,17 +35,10 @@ import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
 
 const Cashflow = ({ assets, setAssets }: { assets: any[]; setAssets: any }) => {
-  const router = useRouter();
   const toast = useToast();
   const [page, setPage] = React.useState(1);
-  const [limit, setLimit] = React.useState(10);
+  const [limit, setLimit] = React.useState(5);
   const navigate = useNavigate();
-  const totalValuation = assets?.reduce((acc, asset) => {
-    return acc + Number(asset?.property_cost);
-  }, 0);
-  const totalRemittance = assets?.reduce((acc, asset) => {
-    return acc + Number(asset?.cashflow_amount);
-  }, 0);
 
   const deleteAsset = async (id: string) => {
     try {
@@ -165,7 +158,7 @@ const Cashflow = ({ assets, setAssets }: { assets: any[]; setAssets: any }) => {
               </Tr>
             </Thead>
             <Tbody color="#222222" maxH="250px" overflow="auto">
-              {assets?.map((asset: any) => {
+              {assets?.slice((page - 1) * limit, page * limit)?.map((asset) => {
                 return (
                   <Tr border="none" _hover={{ bg: '#f5f5f5' }} cursor="pointer">
                     <Td fontSize={15} color="#222222" fontWeight={600}>
@@ -196,6 +189,9 @@ const Cashflow = ({ assets, setAssets }: { assets: any[]; setAssets: any }) => {
                       {asset?.cashflow_amount
                         ? `${FormatAmount(Number(asset?.cashflow_amount))}`
                         : 'N/A'}
+                    </Td>
+                    <Td fontWeight={500} fontSize={14} color="#8295AA">
+                      {asset?.payment_count ? asset?.payment_count : 0}
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
                       {asset?.cashflow_payment_due

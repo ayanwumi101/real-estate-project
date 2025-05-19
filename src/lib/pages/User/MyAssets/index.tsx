@@ -50,6 +50,14 @@ const index = () => {
     return acc + Number(asset?.property_cost);
   }, 0);
 
+  const totalCashflowValuation = cashflowAssets?.reduce((acc, asset) => {
+    return acc + Number(asset?.property_cost);
+  }, 0);
+
+  const totalInstallmentValuation = installmentAssets?.reduce((acc, asset) => {
+    return acc + Number(asset?.property_cost);
+  }, 0);
+
   return (
     <Box pb="40px" overflow="auto">
       <Stack w="100%">
@@ -72,6 +80,8 @@ const index = () => {
               cashflowAssetsCount={cashflowAssets?.length}
               installmentAssetsCount={installmentAssets?.length}
               totalOwnedValuation={totalOwnedValuation}
+              totalCashflowValuation={totalCashflowValuation}
+              totalInstallmentValuation={totalInstallmentValuation}
             />
           </Flex>
         </Box>
@@ -80,7 +90,7 @@ const index = () => {
             <OwnedAssets assets={ownedAssets} setAssets={setAssets} />
           )}
           {activeTab === 'Installment' && (
-            <Installment assets={installmentAssets} />
+            <Installment assets={installmentAssets} setAssets={setAssets} />
           )}
           {activeTab === 'Cashflow' && (
             <Cashflow assets={cashflowAssets} setAssets={setAssets} />

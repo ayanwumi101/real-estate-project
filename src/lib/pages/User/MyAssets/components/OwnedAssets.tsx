@@ -41,10 +41,7 @@ const OwnedAssets = ({
   const toast = useToast();
   const navigate = useNavigate();
   const [page, setPage] = React.useState(1);
-  const [limit, setLimit] = React.useState(10);
-  const totalValuation = assets?.reduce((acc, asset) => {
-    return acc + Number(asset?.property_cost);
-  }, 0);
+  const [limit, setLimit] = React.useState(5);
 
   const deleteAsset = async (id: string) => {
     try {
