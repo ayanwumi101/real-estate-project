@@ -39,7 +39,9 @@ const index = () => {
             flexWrap={['wrap', 'nowrap']}
             gap="40px"
           >
-            <AssetDetails propertyDetails={propertyDetails}  />
+            <AssetDetails
+              propertyDetails={propertyDetails}
+            />
             {/* <Notes notes={propertyDetails?.comment} /> */}
           </Flex>
         </Box>

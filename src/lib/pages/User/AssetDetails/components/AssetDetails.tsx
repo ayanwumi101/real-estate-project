@@ -1,4 +1,16 @@
-import { Box, Stack, Text, Heading, Flex } from '@chakra-ui/react';
+import {
+  Box,
+  Stack,
+  Text,
+  Heading,
+  Flex,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  FormControl,
+  FormLabel,
+  Select,
+} from '@chakra-ui/react';
 import moment from 'moment';
 import React from 'react';
 import { FormatAmount } from '~/lib/utils/formatAmount';
@@ -24,7 +36,7 @@ const AssetDetailsItem = ({
   );
 };
 
-const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {  
+const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
   return (
     <Box>
       <Stack spacing="32px">
@@ -46,6 +58,7 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
           >
             Basic Details
           </Heading>
+
           <Box>
             <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
               <AssetDetailsItem
@@ -95,6 +108,7 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
             >
               Cashflow Details
             </Heading>
+
             <Box>
               <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
                 <AssetDetailsItem
@@ -207,7 +221,7 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
         )}
 
         {/* Realtor Details */}
-        {/* <Box
+        <Box
           border="1px solid"
           borderColor="border.100"
           p="32px"
@@ -224,6 +238,7 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
           >
             Realtor Details
           </Heading>
+
           <Box>
             <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
               <AssetDetailsItem
@@ -233,7 +248,7 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
               <AssetDetailsItem label="Phone Number" labelValue="08127671686" />
             </Flex>
           </Box>
-        </Box> */}
+        </Box>
 
         {/* Delivery details */}
         <Box
@@ -253,6 +268,7 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
           >
             Delivery Status
           </Heading>
+
           <Box>
             <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
               <AssetDetailsItem

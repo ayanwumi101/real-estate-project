@@ -39,9 +39,6 @@ const LoginForm = () => {
   const rawUser = Cookie.get('vestier-user');
   const user = rawUser ? JSON.parse(rawUser) : null;
 
-  console.log(user);
-  
-
   const formik = useFormik({
     initialValues: {
       otp: '',

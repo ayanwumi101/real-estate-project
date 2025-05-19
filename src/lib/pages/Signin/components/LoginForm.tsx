@@ -1,8 +1,30 @@
-'use client'
+'use client';
 
-import { Box, Input, Button, Text, Heading, FormLabel, FormControl, Image, Flex, HStack, Icon, Stack, InputGroup, InputRightElement, Spinner, useToast, useMediaQuery } from '@chakra-ui/react'
-import React, { useState } from 'react'
-import { GoogleIcon, AppleIcon, MicrosoftIcon } from '~/lib/components/Icons/Icons'
+import {
+  Box,
+  Input,
+  Button,
+  Text,
+  Heading,
+  FormLabel,
+  FormControl,
+  Image,
+  Flex,
+  HStack,
+  Icon,
+  Stack,
+  InputGroup,
+  InputRightElement,
+  Spinner,
+  useToast,
+  useMediaQuery,
+} from '@chakra-ui/react';
+import React, { useState } from 'react';
+import {
+  GoogleIcon,
+  AppleIcon,
+  MicrosoftIcon,
+} from '~/lib/components/Icons/Icons';
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 import Link from 'next/link';
 import { loginUser } from '~/lib/api/services/userService';
@@ -11,75 +33,99 @@ import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 
-
-
-export const SocialLoginButton = ({label, Icon} : {label: string, Icon: any}) => {
+export const SocialLoginButton = ({
+  label,
+  Icon,
+}: {
+  label: string;
+  Icon: any;
+}) => {
   const [isMobile] = useMediaQuery('(max-width: 768px)');
-    return (
-      <Button border="1px solid #8295AA" bg="#FBFBFB" w={['100%','200px']} py='25px'>
-        <Flex alignItems="center" gap="12px">
-          <Icon as={Icon} />
-          <Text fontWeight={700} color="#222222">
-            {label}
-          </Text>
-        </Flex>
-      </Button>
-    );
-}
-
+  return (
+    <Button
+      border="1px solid #8295AA"
+      bg="#FBFBFB"
+      w={['100%', '200px']}
+      py="25px"
+    >
+      <Flex alignItems="center" gap="12px">
+        <Icon as={Icon} />
+        <Text fontWeight={700} color="#222222">
+          {label}
+        </Text>
+      </Flex>
+    </Button>
+  );
+};
 
 const LoginForm = () => {
-    const [showPassword, setShowPassword] = useState<boolean>(false);
-    const [loading, setLoading] = useState<boolean>(false);
-    const toast = useToast();
-    const router = useRouter();
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const router = useRouter();
 
-    const formik = useFormik({
-      initialValues: {
-        email: '',
-        password: '',
-      },
-      validationSchema: Yup.object({
-        email: Yup.string()
-          .email('Invalid email address')
-          .required('Email is required'),
-        password: Yup.string().required('Password is required'),
-      }),
-      
-      onSubmit: async (values, { resetForm }) => {
-        setLoading(true);
-        try {
-          const response = await loginUser({email: values.email, password: values.password});
-          if(response.status === true){
-            toast({
-              title: response.message as string,
-              description: 'Login successful',
-              duration: 3000,
-              position: 'top-right',
-              isClosable: true,
-              status: 'success',
-            });       
-            Cookies.set('vestier-token', JSON.stringify(response.data.token));
-            Cookies.set('vestier-user', JSON.stringify(response.data.user));
-            router.push('/user/dashboard');
-            resetForm();
-          }
-        } catch (error: any) {
-          setLoading(false);
-          console.log(error);
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .email('Invalid email address')
+        .required('Email is required'),
+      password: Yup.string().required('Password is required'),
+    }),
+
+    onSubmit: async (values, { resetForm }) => {
+      setLoading(true);
+      try {
+        const response = await loginUser({
+          email: values.email,
+          password: values.password,
+        });
+        if (
+          response.status === true &&
+          response.data.user.email_verified_at !== null
+        ) {
           toast({
-            title: error.response.data.message as string,
-            description: 'Login unsuccessful',
+            title: response.message as string,
+            description: 'Login successful',
+            duration: 3000,
+            position: 'top-right',
+            isClosable: true,
+            status: 'success',
+          });
+          Cookies.set('vestier-token', JSON.stringify(response.data.token));
+          Cookies.set('vestier-user', JSON.stringify(response.data.user));
+          router.push('/user/dashboard');
+          resetForm();
+        } else {
+          toast({
+            title: 'Email not verified',
+            description: 'Please verify your email to continue',
             duration: 3000,
             position: 'top-right',
             isClosable: true,
             status: 'error',
-          })
-        } finally {
-          setLoading(false);
+          });
+          router.push('/signup/verify-email');
         }
-      },
-    });
+      } catch (error: any) {
+        setLoading(false);
+        console.log(error);
+        toast({
+          title: error.response.data.message as string,
+          description: 'Login unsuccessful',
+          duration: 3000,
+          position: 'top-right',
+          isClosable: true,
+          status: 'error',
+        });
+      } finally {
+        setLoading(false);
+      }
+    },
+  });
 
   return (
     <Box px={['24px', '44px']} pb="60px" pt="30px">
@@ -225,6 +271,6 @@ const LoginForm = () => {
       </Box>
     </Box>
   );
-}
+};
 
-export default LoginForm
+export default LoginForm;

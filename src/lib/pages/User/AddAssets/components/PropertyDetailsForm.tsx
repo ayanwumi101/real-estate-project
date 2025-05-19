@@ -28,6 +28,8 @@ import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import Cookie from 'js-cookie';
 import { CreateAssetContext } from '..';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 
 
@@ -72,7 +74,7 @@ const PropertyDetailsForm = ({
     realtorDetails: {
       name: assetData?.realtorDetails?.name || '',
     },
-    phoneNumber: assetData?.phoneNumber || '',
+    phoneNumber: assetData?.phoneNumber || '234',
     assetType: assetData?.assetType || 'cashflow',
   };
 
@@ -90,7 +92,9 @@ const PropertyDetailsForm = ({
     realtorDetails: Yup.object({
       name: Yup.string().required('Realtor name is required'),
     }),
-    phoneNumber: Yup.string().required('Phone number is required'),
+    phoneNumber: Yup.string()
+      .required('Phone number is required')
+      .min(7, 'Phone number must be at least 7 digits'),
     assetType: Yup.string().required('Asset type is required'),
   });
 
@@ -120,7 +124,7 @@ const PropertyDetailsForm = ({
       onSubmit={handleSubmit}
       enableReinitialize
     >
-      {({ errors, touched, setFieldValue, values }) => {
+      {({ errors, touched, setFieldValue, values, setFieldTouched }) => {
         // Fetch lgas when state changes
         useEffect(() => {
           if (values?.propertyAddress?.state) {
@@ -172,7 +176,9 @@ const PropertyDetailsForm = ({
                     _placeholder={{ color: '#8295AA', fontWeight: 500 }}
                   />
                   <FormErrorMessage>
-                    {typeof errors.propertyName === 'string' ? errors.propertyName : null}
+                    {typeof errors.propertyName === 'string'
+                      ? errors.propertyName
+                      : null}
                   </FormErrorMessage>
                 </FormControl>
 
@@ -196,7 +202,9 @@ const PropertyDetailsForm = ({
                     </Stack>
                   </RadioGroup>
                   <FormErrorMessage>
-                    {typeof errors.propertyType === 'string' ? errors.propertyType : null}
+                    {typeof errors.propertyType === 'string'
+                      ? errors.propertyType
+                      : null}
                   </FormErrorMessage>
                 </FormControl>
 
@@ -221,7 +229,9 @@ const PropertyDetailsForm = ({
                     _placeholder={{ color: '#8295AA', fontWeight: 500 }}
                   />
                   <FormErrorMessage>
-                    {typeof errors.propertySize === 'string' ? errors.propertySize : null}
+                    {typeof errors.propertySize === 'string'
+                      ? errors.propertySize
+                      : null}
                   </FormErrorMessage>
                 </FormControl>
                 <FormControl>
@@ -331,7 +341,9 @@ const PropertyDetailsForm = ({
                         ))}
                       </Field>
                       <FormErrorMessage>
-                        {typeof errors.propertyAddress?.state === 'string' ? errors.propertyAddress?.state : null}
+                        {typeof errors.propertyAddress?.state === 'string'
+                          ? errors.propertyAddress?.state
+                          : null}
                       </FormErrorMessage>
                     </FormControl>
                     <FormControl
@@ -358,7 +370,9 @@ const PropertyDetailsForm = ({
                         ))}
                       </Field>
                       <FormErrorMessage>
-                        {typeof errors.propertyAddress?.lga === 'string' ? errors.propertyAddress?.lga : null}
+                        {typeof errors.propertyAddress?.lga === 'string'
+                          ? errors.propertyAddress?.lga
+                          : null}
                       </FormErrorMessage>
                     </FormControl>
                   </Flex>
@@ -384,7 +398,9 @@ const PropertyDetailsForm = ({
                       name="realtorDetails.name"
                     />
                     <FormErrorMessage>
-                      {typeof errors.realtorDetails?.name === 'string' ? errors.realtorDetails?.name : null}
+                      {typeof errors.realtorDetails?.name === 'string'
+                        ? errors.realtorDetails?.name
+                        : null}
                     </FormErrorMessage>
                   </FormControl>
                 </FormControl>
@@ -394,7 +410,7 @@ const PropertyDetailsForm = ({
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     Enter Realtor’s Phone number
                   </FormLabel>
-                  <Field
+                  {/* <Field
                     as={Input}
                     bg="#FBFBFB"
                     h="50px"
@@ -404,9 +420,35 @@ const PropertyDetailsForm = ({
                     name="phoneNumber"
                     border="1px solid #C0C0C0"
                     borderRadius="50px"
+                  /> */}
+                  <PhoneInput
+                    value={values.phoneNumber}
+                    onChange={(value: string) =>
+                      setFieldValue('phoneNumber', value)
+                    }
+                    onBlur={() => setFieldTouched('phoneNumber', true)}
+                    containerStyle={{
+                      border: '1px solid #C0C0C0',
+                      backgroundColor: '#FBFBFB',
+                      padding: '5px 14px 5px 14px',
+                      borderRadius: '24px',
+                      height: '50px',
+                    }}
+                    inputStyle={{
+                      border: 'none',
+                      paddingLeft: '50px',
+                      paddingTop: '5px',
+                      backgroundColor: '#FBFBFB',
+                    }}
+                    buttonStyle={{
+                      border: 'none',
+                      background: 'none',
+                    }}
                   />
                   <FormErrorMessage>
-                    {typeof errors?.phoneNumber === 'string' ? errors.phoneNumber : null}
+                    {typeof errors?.phoneNumber === 'string'
+                      ? errors.phoneNumber
+                      : null}
                   </FormErrorMessage>
                 </FormControl>
                 <FormControl
@@ -520,7 +562,9 @@ const PropertyDetailsForm = ({
                     </Stack>
                   </RadioGroup>
                   <FormErrorMessage>
-                    {typeof errors.assetType === 'string' ? errors.assetType : null}
+                    {typeof errors.assetType === 'string'
+                      ? errors.assetType
+                      : null}
                   </FormErrorMessage>
                 </FormControl>
                 <Flex justifyContent="flex-end">

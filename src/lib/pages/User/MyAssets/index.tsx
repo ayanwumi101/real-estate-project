@@ -16,12 +16,17 @@ const index = () => {
   const [activeTab, setActiveTab] = useState<string>('Owned');
   const [assets, setAssets] = useState<any[]>([]);
   const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const GetAssets = async () => {
+    setLoading(true);
     try {
       const res = await GetUserAssets();
       setAssets(res.data);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
+      setAssets([]);
       console.log(error);
     }
   };
@@ -46,6 +51,18 @@ const index = () => {
     return acc + Number(asset?.cashflow_amount);
   }, 0);
 
+  const totalOwnedValuation = ownedAssets?.reduce((acc, asset) => {
+    return acc + Number(asset?.property_cost);
+  }, 0);
+
+  const totalCashflowValuation = cashflowAssets?.reduce((acc, asset) => {
+    return acc + Number(asset?.property_cost);
+  }, 0);
+
+  const totalInstallmentValuation = installmentAssets?.reduce((acc, asset) => {
+    return acc + Number(asset?.property_cost);
+  }, 0);
+
   return (
     <Box pb="40px" overflow="auto">
       <Stack w="100%">
@@ -64,30 +81,29 @@ const index = () => {
               tabs={['Owned', 'Cashflow', 'Installment']}
               activeTab={activeTab}
               setActiveTab={setActiveTab}
+              ownedAssetsCount={ownedAssets?.length}
+              cashflowAssetsCount={cashflowAssets?.length}
+              installmentAssetsCount={installmentAssets?.length}
+              totalOwnedValuation={totalOwnedValuation}
+              totalCashflowValuation={totalCashflowValuation}
+              totalInstallmentValuation={totalInstallmentValuation}
             />
-            <Link href="/user/my-assets/add-assets">
-              <Button
-                bg="#000080"
-                fontSize={14}
-                color="#ffffff"
-                fontWeight={500}
-                _hover={{ bg: 'brand.100' }}
-                // onClick={() => router.push('/user/my-assets/add-assets')}
-              >
-                <Flex alignItems="center" gap="10px">
-                  <Text>Add new asset</Text>
-                  <HiPlus color="white" fontSize={20} fontWeight={700} />
-                </Flex>
-              </Button>
-            </Link>
           </Flex>
         </Box>
         <Box px={['10px', '20px']}>
-          {activeTab === 'Owned' && <OwnedAssets assets={ownedAssets} />}
-          {activeTab === 'Installment' && (
-            <Installment assets={installmentAssets} />
+          {activeTab === 'Owned' && (
+            <OwnedAssets
+              assets={ownedAssets}
+              setAssets={setAssets}
+              loading={loading}
+            />
           )}
-          {activeTab === 'Cashflow' && <Cashflow assets={cashflowAssets} />}
+          {activeTab === 'Installment' && (
+            <Installment assets={installmentAssets} setAssets={setAssets} loading={loading} />
+          )}
+          {activeTab === 'Cashflow' && (
+            <Cashflow assets={cashflowAssets} setAssets={setAssets} loading={loading} />
+          )}
         </Box>
       </Stack>
     </Box>

@@ -4,11 +4,13 @@ import { Box, Heading, Text, Stack, Flex, Button } from '@chakra-ui/react';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
 import React, { Fragment, useContext, useState } from 'react';
+import { FiEye } from 'react-icons/fi';
 import { HiOutlineEye } from 'react-icons/hi2';
 import { PortfolioStatCard } from '~/lib/components/Cards';
 import { DashboardCautionIcon } from '~/lib/components/Icons/Icons';
 import { AppContext } from '~/lib/layout';
 import { FormatAmount } from '~/lib/utils/formatAmount';
+
 
 
 const AccountBalance = ({ totalInvestment, totalAssets }: { totalInvestment: number, totalAssets: number }) => {
@@ -19,7 +21,7 @@ const AccountBalance = ({ totalInvestment, totalAssets }: { totalInvestment: num
   return (
     <Box>
       {/* banner that shows user name and profile setup */}
-      <Box w="100%" px={['20px', '40px']} pt='20px'>
+      <Box w="100%" px={['20px', '40px']} pt="20px">
         <Box
           w="100%"
           borderRadius="5px"
@@ -89,9 +91,51 @@ const AccountBalance = ({ totalInvestment, totalAssets }: { totalInvestment: num
         py="30px"
         borderBottom="1px solid #E4E4E4"
         overflow="auto"
+       
       >
-        <Flex alignItems="ceter" gap="20px" w="100%" overflow="auto">
-          <PortfolioStatCard
+        <Flex alignItems="ceter" gap="16px" w="100%" pb='3' overflow="auto">
+          <Box
+            minW={['300px', '49%']}
+            borderRadius="5px"
+            py="32px"
+            px="20px"
+            border="1px solid #E4E4E4"
+            boxShadow="md"
+            h="140px"
+          >
+            <Stack spacing="16px" w="100%">
+              <Text color="brand.300" fontWeight={500}>
+                Total Asset Registered
+              </Text>
+              <Flex alignItems="center" gap="16px" w="100%">
+                <Heading fontSize={24} fontWeight={500} color="#222222">
+                  {totalAssets || 0}
+                </Heading>
+              </Flex>
+            </Stack>
+          </Box>
+          <Box
+            minW={['300px', '49%']}
+            borderRadius="5px"
+            py="32px"
+            px="20px"
+            border="1px solid #E4E4E4"
+            boxShadow="md"
+            h="140px"
+          >
+            <Stack spacing="16px" w="100%">
+              <Text color="brand.300" fontWeight={500}>
+                Total Assets Valuation (Naira)
+              </Text>
+              <Flex alignItems="center" gap="16px" w="100%">
+                <Heading fontSize={24} fontWeight={500} color="#222222">
+                  {FormatAmount(Number(totalInvestment) || 0)}
+                </Heading>
+                <FiEye color="#2E353F" fontSize={20} />
+              </Flex>
+            </Stack>
+          </Box>
+          {/* <PortfolioStatCard
             label="Total Asset Registered"
             balance={totalAssets || 0}
             showHideIcon={false}
@@ -100,7 +144,7 @@ const AccountBalance = ({ totalInvestment, totalAssets }: { totalInvestment: num
             label="Total Assets Valuation (Naira)"
             balance={FormatAmount(Number(totalInvestment) || 0)}
             showHideIcon={true}
-          />
+          /> */}
         </Flex>
         {/* <Box
           borderRadius="5px"

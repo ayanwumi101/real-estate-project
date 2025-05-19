@@ -271,6 +271,7 @@ const SignupForm = () => {
                   border: 'none',
                   paddingLeft: '50px',
                   paddingTop: '5px',
+                  backgroundColor: '#FBFBFB',
                 }}
                 buttonStyle={{
                   border: 'none',
