@@ -90,10 +90,10 @@ const index = () => {
           position: 'top-right',
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       toast({
         title: 'Error Updating Asset',
-        description: 'An error occurred while updating the asset',
+        description: error?.response?.data?.message,
         status: 'error',
         duration: 3000,
         isClosable: true,

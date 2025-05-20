@@ -71,7 +71,7 @@ const index = () => {
             w="100%"
             mb="10px"
             bg="#EDEDFF"
-            color="#000080"
+            color="white"
             _hover={{ bg: '#000080' }}
             h="55px"
             borderRadius="50px"

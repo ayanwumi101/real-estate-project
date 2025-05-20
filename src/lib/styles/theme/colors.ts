@@ -21,13 +21,15 @@ const extendedColors: DeepPartial<
     300: '#D8D8FF66',
     400: '#1D2739',
     500: '#F5F5F5',
+    600: '#FFEDE9',
   },
   border: {
     100: '#E4E4E4',
     200: '#C0C0C0',
   },
   color: {
-    100: '#1A1C1D'
+    100: '#1A1C1D',
+    200: '#FE3839',
   }
 };
 

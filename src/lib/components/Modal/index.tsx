@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react'
 import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from '@chakra-ui/react'
 
-const CustomModal = ({isOpen, onClose, children,}: {isOpen: boolean, onClose: () => void, children: ReactNode,}) => {
+const CustomModal = ({isOpen, onClose, children, size}: {isOpen: boolean, onClose: () => void, children: ReactNode, size?: string}) => {
   return (
-    <Modal blockScrollOnMount={true} size='2xl' isOpen={isOpen} onClose={onClose} isCentered={true}>
+    <Modal blockScrollOnMount={true} size={size || '2xl'} isOpen={isOpen} onClose={onClose} isCentered={true}>
       <ModalOverlay backdropFilter="blur(8px)" />
       <ModalContent
         bg="white"

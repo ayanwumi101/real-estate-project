@@ -34,6 +34,8 @@ import {
 import SkeletonLoader from '~/lib/components/SkeletonLoader';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
+import DeleteAssetConfirmationModal from '../Modals/DeleteAssetConfirmationModal';
+
 
 const Cashflow = ({
   assets,
@@ -45,37 +47,44 @@ const Cashflow = ({
   loading: boolean;
 }) => {
   const toast = useToast();
-  const [page, setPage] = React.useState(1);
-  const [limit, setLimit] = React.useState(5);
   const navigate = useNavigate();
+  const [page, setPage] = React.useState(1);
+  const [limit, setLimit] = React.useState(20);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [selectedAssetId, setSelectedAssetId] = React.useState<string>('');
 
-  const deleteAsset = async (id: string) => {
-    try {
-      const res = await DeleteAsset(id);
-      if (res.status) {
-        const res = await GetUserAssets();
-        setAssets(res.data);
-        toast({
-          title: 'Asset Deleted',
-          description: 'Asset has been deleted successfully',
-          status: 'success',
-          duration: 3000,
-          isClosable: true,
-          position: 'top-right',
-        });
-      }
-    } catch (error) {
-      console.error('Error deleting asset:', error);
-      toast({
-        title: 'Error Deleting Asset',
-        description: 'An error occurred while deleting the asset',
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-        position: 'top-right',
-      });
-    }
-  };
+   const deleteAsset = async () => {
+     setIsLoading(true);
+     try {
+       const res = await DeleteAsset(selectedAssetId);
+       if (res.status) {
+         const res = await GetUserAssets();
+         setAssets(res.data);
+         setIsLoading(false);
+         setIsOpen(false);
+         toast({
+           title: 'Asset Deleted',
+           description: 'Asset has been deleted successfully',
+           status: 'success',
+           duration: 3000,
+           isClosable: true,
+           position: 'top-right',
+         });
+       }
+     } catch (error: any) {
+       console.error('Error deleting asset:', error);
+       setIsLoading(false);
+       toast({
+         title: 'Error Deleting Asset',
+         description: error?.response?.data?.message,
+         status: 'error',
+         duration: 3000,
+         isClosable: true,
+         position: 'top-right',
+       });
+     }
+   };
 
   return (
     <Box>
@@ -264,7 +273,10 @@ const Cashflow = ({
                                   fontSize={14}
                                   color="color.100"
                                   fontWeight={500}
-                                  onClick={() => deleteAsset(asset?.id)}
+                                  onClick={() => {
+                                    setIsOpen(true);
+                                    setSelectedAssetId(asset?.id);
+                                  }}
                                 >
                                   View payments
                                 </MenuItem>
@@ -275,7 +287,10 @@ const Cashflow = ({
                                   fontSize={14}
                                   color="color.100"
                                   fontWeight={500}
-                                  onClick={() => deleteAsset(asset?.id)}
+                                  onClick={() => {
+                                    setIsOpen(true);
+                                    setSelectedAssetId(asset?.id);
+                                  }}
                                 >
                                   Delete asset
                                 </MenuItem>
@@ -322,6 +337,12 @@ const Cashflow = ({
           )}
         </Fragment>
       )}
+      <DeleteAssetConfirmationModal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        loading={isLoading}
+        deleteAsset={deleteAsset}
+      />
     </Box>
   );
 };
