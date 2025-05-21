@@ -273,10 +273,11 @@ const Cashflow = ({
                                   fontSize={14}
                                   color="color.100"
                                   fontWeight={500}
-                                  onClick={() => {
-                                    setIsOpen(true);
-                                    setSelectedAssetId(asset?.id);
-                                  }}
+                                  onClick={() =>
+                                    navigate(
+                                      `/user/my-assets/${asset?.id}/payments`
+                                    )
+                                  }
                                 >
                                   View payments
                                 </MenuItem>

@@ -15,6 +15,23 @@ import React from 'react';
 import { IoChevronForward, IoArrowForward } from 'react-icons/io5';
 
 const Faqs = () => {
+  const faqs = [
+    {
+      question: 'What is Vestiers about?',
+      answer:
+        'We are a digital real estate ecosystem, that brings together investors, agents, developers, financiers, property managers all on a single platform, with the sole aim of each party tracking and monitoring their assets.',
+    },
+    {
+      question: 'What do I benefit as an Investor?',
+      answer:
+        'We provide a dashboard that allows you monitor, manage and track your assets anywhere in Nigeria. You can track the appreciation of your property, cashflow, valuation and maturity if it is right time to sell.',
+    },
+    {
+      question: 'How do you update my property details?',
+      answer:
+        'Our ecosystem includes agents and property managers, so you can set roles and permission. If you permit an agent, he/she can update or upload your payments and remittance, which will automatically reflect on your dashboard. Your manager after collecting rent or shortlet, can also update your remittance record from their dashboard, and it will reflect in yours.',
+    },
+  ];
   return (
     <Box maxW="1200px" mx="auto" py="60px" px={['24px', 0]} id="faqs">
       <Flex
@@ -62,9 +79,9 @@ const Faqs = () => {
             flexDir="column"
             gap="20px"
           >
-            {[1, 2, 3, 4].map(() => {
+            {faqs.map(({ question, answer }, idx) => {
               return (
-                <AccordionItem border="1px solid #3232470F" borderRadius="5px">
+                <AccordionItem key={idx} border="1px solid #3232470F" borderRadius="5px">
                   <h2>
                     <AccordionButton>
                       <Box
@@ -74,15 +91,13 @@ const Faqs = () => {
                         color="#2E353F"
                         fontWeight={600}
                       >
-                        What types of projects are listed on the platform?
+                        {question}
                       </Box>
                       <AccordionIcon color="#2E353F" />
                     </AccordionButton>
                   </h2>
                   <AccordionPanel pb={4} color="#2E353F" fontWeight={500}>
-                    Yes, you can access your personalized dashboard to view and
-                    manage your investments. You’ll see detailed information
-                    about ownership percentages, returns, and maturity status.
+                    {answer}
                   </AccordionPanel>
                 </AccordionItem>
               );

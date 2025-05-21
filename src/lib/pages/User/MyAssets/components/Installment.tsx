@@ -270,7 +270,7 @@ const Installment = ({
                                   color="color.100"
                                   fontWeight={500}
                                   onClick={() =>
-                                    navigate(`/user/my-assets/${asset?.id}`)
+                                    navigate(`/user/my-assets/${asset?.id}/payments`)
                                   }
                                 >
                                   View payments
