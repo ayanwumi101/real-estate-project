@@ -10,12 +10,15 @@ import {
   UpdateAssetDetails,
 } from '~/lib/api/services/assetsService';
 import { useParams } from 'next/navigation';
+import useNavigate from '~/lib/utils/useNavigate';
+
 
 export const AssetDetailsContext = createContext<any>({});
 
 const index = () => {
   const toast = useToast();
   const { id } = useParams();
+  const navigate = useNavigate();
   const [propertyDetails, setPropertyDetails] = React.useState<any>([]);
   const [propertySize, setPropertySize] = React.useState<string>('');
   const [boughtDate, setBoughtDate] = React.useState<string>('');
@@ -35,6 +38,7 @@ const index = () => {
     React.useState<string>('');
   const [handoverStatus, setHandoverStatus] = React.useState<string>('');
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [comment, setComment] = React.useState<string>('');
 
   const getAssetDetails = async () => {
     try {
@@ -75,8 +79,8 @@ const index = () => {
       allocation_status: allocationStatus,
       documentation_status: documentationStatus,
       handover_status: handoverStatus,
+      comment: comment,
     };
-    console.log(formData);
     try {
       const res = await UpdateAssetDetails(id, formData);
       if (res.status) {
@@ -89,6 +93,7 @@ const index = () => {
           isClosable: true,
           position: 'top-right',
         });
+        navigate(`/user/my-assets/${id}`)
       }
     } catch (error: any) {
       toast({
@@ -122,6 +127,7 @@ const index = () => {
       setAllocationStatus(propertyDetails?.allocation_status);
       setDocumentationStatus(propertyDetails?.documentation_status);
       setHandoverStatus(propertyDetails?.handover_status);
+      setComment(propertyDetails?.comment);
     }
   }, [propertyDetails]);
   // console.log(propertyDetails);
@@ -159,6 +165,8 @@ const index = () => {
         setDocumentationStatus,
         handoverStatus,
         setHandoverStatus,
+        comment,
+        setComment,
       }}
     >
       <Box>
@@ -176,7 +184,7 @@ const index = () => {
               gap="40px"
             >
               <AssetDetails propertyDetails={propertyDetails} />
-              {/* <Notes notes={propertyDetails?.comment} /> */}
+              <Notes />
             </Flex>
           </Box>
         </Stack>

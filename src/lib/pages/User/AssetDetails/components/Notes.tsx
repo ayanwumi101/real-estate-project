@@ -3,7 +3,7 @@ import React from 'react';
 import { EditCommentIcon } from '~/lib/components/Icons/Icons';
 
 
-const Notes = ({notes}:{notes: string}) => {
+const Notes = ({ notes, editComment }: { notes: string;  editComment: () => void}) => {
   return (
     <Box
       w={['100%',"335px"]}
@@ -12,12 +12,12 @@ const Notes = ({notes}:{notes: string}) => {
       p="30px"
       border="1px solid"
       borderColor="border.100"
-      borderRadius="5px"
+      borderRadius="8px"
     >
       <Stack spacing="24px">
         <Flex alignItems='center' justifyContent='space-between'>
             <Heading fontSize={16} color='brand.400'>Notes</Heading>
-            <Button bg='none' p='0'><EditCommentIcon /></Button>
+            <Button bg='none' p='0' onClick={editComment}><EditCommentIcon /></Button>
         </Flex>
         <Text color='brand.400' fontWeight={500}>
           {notes || 'No comment available'}

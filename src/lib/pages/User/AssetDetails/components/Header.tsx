@@ -23,7 +23,7 @@ const Header = ({ propertyName, location }: Headerprops) => {
     <Box py="30px" px={['20px', '40px']} borderY="1px solid #E4E4E4">
       <Stack spacing="30px" alignItems="flex-start" w="full">
         <Button
-          onClick={() => router.back()}
+          onClick={() => navigate('/user/my-assets')}
           variant="ghost"
           leftIcon={<ChevronLeftIcon />}
           p="0"

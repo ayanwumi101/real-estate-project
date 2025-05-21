@@ -243,9 +243,16 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
             <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
               <AssetDetailsItem
                 label="Realtor Name"
-                labelValue="Mr Samson Ajangbadi"
+                labelValue={propertyDetails?.realtor_name || 'N/A'}
               />
-              <AssetDetailsItem label="Phone Number" labelValue="08127671686" />
+              <AssetDetailsItem
+                label="Phone Number"
+                labelValue={
+                  propertyDetails?.realtor_phone?.startsWith('234')
+                    ? `+${propertyDetails?.realtor_phone}`
+                    : propertyDetails?.realtor_phone
+                }
+              />
             </Flex>
           </Box>
         </Box>

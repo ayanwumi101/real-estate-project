@@ -7,10 +7,12 @@ import Header from './components/Header';
 import { Box, Stack, Flex } from '@chakra-ui/react';
 import { GetAssetDetails } from '~/lib/api/services/assetsService';
 import { useParams } from 'next/navigation';
+import useNavigate from '~/lib/utils/useNavigate';
 
 const index = () => {
-  const [propertyDetails, setPropertyDetails] = React.useState<any>([]);
   const { id } = useParams();
+  const navigate = useNavigate();
+  const [propertyDetails, setPropertyDetails] = React.useState<any>([]);
 
   const getAssetDetails = async () => {
     try {
@@ -26,6 +28,10 @@ const index = () => {
     getAssetDetails();
   }, [id]);
 
+  const editComment = () => {
+    navigate(`/user/my-assets/${id}/update-details`);
+  };
+
   return (
     <Box>
       <Stack>
@@ -39,10 +45,8 @@ const index = () => {
             flexWrap={['wrap', 'nowrap']}
             gap="40px"
           >
-            <AssetDetails
-              propertyDetails={propertyDetails}
-            />
-            {/* <Notes notes={propertyDetails?.comment} /> */}
+            <AssetDetails propertyDetails={propertyDetails} />
+            <Notes notes={propertyDetails?.comment} editComment={editComment} />
           </Flex>
         </Box>
       </Stack>
