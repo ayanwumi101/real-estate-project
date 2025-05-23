@@ -114,7 +114,7 @@ const index = () => {
     } catch (error: any) {
       toast({
         title: 'Error Updating Asset',
-        description: error?.response?.data?.message,
+        description: error?.response?.data?.message || error.message,
         status: 'error',
         duration: 3000,
         isClosable: true,
