@@ -12,7 +12,6 @@ import {
 import { useParams } from 'next/navigation';
 import useNavigate from '~/lib/utils/useNavigate';
 
-
 export const AssetDetailsContext = createContext<any>({});
 
 const index = () => {
@@ -54,62 +53,6 @@ const index = () => {
     getAssetDetails();
   }, [id]);
 
-  const UpdateAsset = async () => {
-    setIsLoading(true);
-    const formData = {
-      size: propertySize,
-      bought_date: boughtDate,
-      property_name: propertyDetails?.property_name,
-      property_type: propertyDetails?.property_type,
-      house_number: propertyDetails?.house_number,
-      street_name: propertyDetails?.street_name,
-      state_id: propertyDetails?.state_id,
-      asset_type: propertyDetails?.asset_type,
-      city_name: propertyDetails?.city_name,
-      property_cost: propertyCost,
-      payment_status: paymentStatus,
-      cashflow_source: cashflowSource,
-      is_occupied: isPropertyOccupied,
-      cashflow_amount: remittanceAmount,
-      cashflow_duration: cashflowDuration,
-      last_cashflow_date: lastRemittanceDate,
-      equity_ownership: equityOwnership,
-      realtor_name: realtorName,
-      phone: realtorPhone,
-      allocation_status: allocationStatus,
-      documentation_status: documentationStatus,
-      handover_status: handoverStatus,
-      comment: comment,
-    };
-    try {
-      const res = await UpdateAssetDetails(id, formData);
-      if (res.status) {
-        getAssetDetails();
-        toast({
-          title: 'Asset Updated',
-          description: 'Asset has been updated successfully',
-          status: 'success',
-          duration: 3000,
-          isClosable: true,
-          position: 'top-right',
-        });
-        navigate(`/user/my-assets/${id}`)
-      }
-    } catch (error: any) {
-      toast({
-        title: 'Error Updating Asset',
-        description: error?.response?.data?.message,
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-        position: 'top-right',
-      });
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
     if (propertyDetails?.id) {
       setPropertySize(propertyDetails?.size);
@@ -130,8 +73,60 @@ const index = () => {
       setComment(propertyDetails?.comment);
     }
   }, [propertyDetails]);
+
+  const UpdateAsset = async () => {
+    setIsLoading(true);
+    const data = {
+      size: propertySize,
+      bought_date: boughtDate,
+      house_number: propertyDetails?.house_number,
+      street_name: propertyDetails?.street_name,
+      asset_type: propertyDetails?.asset_type,
+      property_cost: propertyCost,
+      payment_status: paymentStatus,
+      cashflow_source: cashflowSource,
+      is_occupied: isPropertyOccupied,
+      cashflow_amount: remittanceAmount,
+      cashflow_duration: cashflowDuration,
+      last_cashflow_date: lastRemittanceDate,
+      equity_ownership: equityOwnership,
+      realtor_name: realtorName,
+      phone: realtorPhone,
+      allocation_status: allocationStatus,
+      documentation_status: documentationStatus,
+      handover_status: handoverStatus,
+      comment: comment,
+    };
+    try {
+      const res = await UpdateAssetDetails(id, data);
+      if (res.status) {
+        getAssetDetails();
+        toast({
+          title: 'Asset Updated',
+          description: 'Asset has been updated successfully',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        });
+        navigate(`/user/my-assets/${id}`);
+      }
+    } catch (error: any) {
+      toast({
+        title: 'Error Updating Asset',
+        description: error?.response?.data?.message,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      });
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   // console.log(propertyDetails);
-  
+
   return (
     <AssetDetailsContext.Provider
       value={{

@@ -21,6 +21,7 @@ import {
 import React, { useContext, useEffect, useState } from 'react';
 import { AddAssetDetails } from '~/lib/api/services/assetsService';
 import {
+  GetAllCountries,
   GetCountryStates,
   GetStateLgas,
 } from '~/lib/api/services/locationService';
@@ -31,8 +32,6 @@ import { CreateAssetContext } from '..';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 
-
-
 const PropertyDetailsForm = ({
   step,
   setStep,
@@ -42,23 +41,39 @@ const PropertyDetailsForm = ({
 }) => {
   const [states, setStates] = useState<[]>([]);
   const [lgas, setLgas] = useState<[]>([]);
+  const [countries, setCountries] = useState<any>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const { setAssetType, assetType, assetData, setAssetData } =
     useContext<any>(CreateAssetContext);
 
+  // fetch all countries
   useEffect(() => {
-    const GetStates = async () => {
+    const GetCountries = async () => {
       try {
-        const res = await GetCountryStates(
-          'da4e88a4-4c55-4724-8727-098b50731b96'
-          // '3646b5dc-8c00-4f70-87ca-f4840b83b9b3'
-        );
-        setStates(res?.data || []);
+        const res = await GetAllCountries();
+        setCountries(res?.data || []);
       } catch (error) {
         console.log(error);
       }
     };
-    GetStates();
+    GetCountries();
   }, []);
+
+  // Fetch states when countries change
+  useEffect(() => {
+    const GetStates = async () => {
+      setLoading(true);
+      ``;
+      try {
+        const res = await GetCountryStates(countries[0]?.id);
+        setStates(res?.data || []);
+      } catch (error) {
+        console.log(error);
+      }
+      setLoading(false);
+    };
+    GetStates();
+  }, [countries]);
 
   const initialValues = {
     propertyName: assetData?.propertyName || '',
@@ -263,7 +278,10 @@ const PropertyDetailsForm = ({
                         w="100%"
                       />
                       <FormErrorMessage>
-                        {typeof errors?.propertyAddress?.houseNumber === 'string' ? errors.propertyAddress.houseNumber : null}
+                        {typeof errors?.propertyAddress?.houseNumber ===
+                        'string'
+                          ? errors.propertyAddress.houseNumber
+                          : null}
                       </FormErrorMessage>
                     </FormControl>
 
@@ -285,7 +303,9 @@ const PropertyDetailsForm = ({
                         w="100%"
                       />
                       <FormErrorMessage>
-                        {typeof errors.propertyAddress?.streetName === 'string' ? errors.propertyAddress?.streetName : null}
+                        {typeof errors.propertyAddress?.streetName === 'string'
+                          ? errors.propertyAddress?.streetName
+                          : null}
                       </FormErrorMessage>
                     </FormControl>
                     <FormControl
@@ -306,7 +326,9 @@ const PropertyDetailsForm = ({
                         w="100%"
                       />
                       <FormErrorMessage>
-                        {typeof errors.propertyAddress?.city === 'string' ? errors.propertyAddress?.city : null}
+                        {typeof errors.propertyAddress?.city === 'string'
+                          ? errors.propertyAddress?.city
+                          : null}
                       </FormErrorMessage>
                     </FormControl>
                   </Flex>
@@ -334,11 +356,19 @@ const PropertyDetailsForm = ({
                         _placeholder={{ color: '#8295AA', fontWeight: 500 }}
                         w="100%"
                       >
-                        {states.map((state: any) => (
-                          <option key={state.id} value={state.id}>
-                            {state.name}
+                        {loading ? (
+                          <option disabled value="">
+                            Loading states ...
                           </option>
-                        ))}
+                        ) : (
+                          <>
+                            {states.map((state: any) => (
+                              <option key={state.id} value={state.id}>
+                                {state.name}
+                              </option>
+                            ))}
+                          </>
+                        )}
                       </Field>
                       <FormErrorMessage>
                         {typeof errors.propertyAddress?.state === 'string'
@@ -363,11 +393,19 @@ const PropertyDetailsForm = ({
                         _placeholder={{ color: '#8295AA', fontWeight: 500 }}
                         w="100%"
                       >
-                        {lgas.map((lga: any) => (
-                          <option key={lga.id} value={lga.id}>
-                            {lga.name}
+                        {lgas?.length < 1 ? (
+                          <option disabled value="">
+                            Select state first
                           </option>
-                        ))}
+                        ) : (
+                          <>
+                            {lgas.map((lga: any) => (
+                              <option key={lga.id} value={lga.id}>
+                                {lga.name}
+                              </option>
+                            ))}
+                          </>
+                        )}
                       </Field>
                       <FormErrorMessage>
                         {typeof errors.propertyAddress?.lga === 'string'

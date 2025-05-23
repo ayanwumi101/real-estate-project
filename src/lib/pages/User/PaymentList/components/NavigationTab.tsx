@@ -19,7 +19,7 @@ const NavigationTab = ({
   assetType: string;
 }) => {
   return (
-    <Box py="35px" w="full">
+    <Box py="15px" w="full">
       <Flex
         borderBottom={['none', '1px solid #E4E4E4']}
         alignItems="center"
@@ -40,6 +40,7 @@ const NavigationTab = ({
               px={[5, '7']}
               fontWeight={500}
               onClick={() => setActiveTab(tab)}
+              textTransform="capitalize"
             >
               {tab}
             </Button>
@@ -56,22 +57,13 @@ const NavigationTab = ({
             >
               <Stack>
                 <Text fontWeight={500} fontSize={13} color="brand.400">
-                  {activeTab === 'Owned'
-                    ? 'Total Owned Valuation'
-                    : activeTab === 'Cashflow'
-                      ? 'Total Cashflow Valuation'
-                      : 'Total Installment Valuation'}
+                  Total Installment Paid
                 </Text>
                 <Heading fontWeight={600} fontSize={16} color="brand.300">
-                  {/* {activeTab === 'Owned'
-                    ? formatCurrency(totalOwnedValuation.toString())
-                    : activeTab === 'Cashflow'
-                      ? formatCurrency(totalCashflowValuation.toString())
-                      : formatCurrency(totalInstallmentValuation.toString())} */}
+                  ₦25,005,900
                 </Heading>
               </Stack>
             </Box>
-
             <Link href="/user/my-assets/add-assets">
               <Button
                 bg="#000080"
@@ -81,8 +73,8 @@ const NavigationTab = ({
                 _hover={{ bg: 'brand.100' }}
               >
                 <Flex alignItems="center" gap="10px">
-                  <Text>Add new asset</Text>
                   <HiPlus color="white" fontSize={20} fontWeight={700} />
+                  <Text>Add new payment</Text>
                 </Flex>
               </Button>
             </Link>

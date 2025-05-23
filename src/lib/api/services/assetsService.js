@@ -79,13 +79,6 @@ export const DeleteAsset = async (propertyId) => {
 
 
 export const UpdateAssetDetails = async (propertyId, data) => {
-  const response = await axiosInstance.put(
-    `${API_ROUTES.UPDATE_ASSET_DETAILS}/${propertyId}`,
-    data, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    }
-  );
+  const response = await axiosInstance.put(`${API_ROUTES.UPDATE_ASSET_DETAILS}/${propertyId}`, data);
   return response.data;
 }
