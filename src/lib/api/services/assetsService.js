@@ -82,3 +82,9 @@ export const UpdateAssetDetails = async (propertyId, data) => {
   const response = await axiosInstance.put(`${API_ROUTES.UPDATE_ASSET_DETAILS}/${propertyId}`, data);
   return response.data;
 }
+
+
+export const GetAssetRemittances = async (propertyId) => {
+  const response = await axiosInstance.get(`${API_ROUTES.GET_ASSET_REMITTANCES}/${propertyId}`);
+  return response.data;
+}

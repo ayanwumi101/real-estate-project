@@ -4,13 +4,14 @@ import { Box, Flex, Text, Button, Stack, Heading } from '@chakra-ui/react';
 import Link from 'next/link';
 import React from 'react';
 import { HiPlus } from 'react-icons/hi2';
-import { formatCurrency } from '~/lib/utils/formatAmount';
+import { FormatAmount, formatCurrency } from '~/lib/utils/formatAmount';
 
 const NavigationTab = ({
   tabs,
   activeTab,
   setActiveTab,
   assetType,
+  totalAmountReceived,
 }: {
   tabs: string[];
   activeTab: string;
@@ -27,7 +28,7 @@ const NavigationTab = ({
         flexWrap={['wrap', 'nowrap']}
         gap={['24px', '0']}
       >
-        <Flex alignItems="center">
+        <Flex alignItems="center" h='full'>
           {' '}
           {tabs.map((tab, index) => (
             <Button
@@ -57,10 +58,10 @@ const NavigationTab = ({
             >
               <Stack>
                 <Text fontWeight={500} fontSize={13} color="brand.400">
-                  Total Installment Paid
+                  Total {assetType} Paid
                 </Text>
                 <Heading fontWeight={600} fontSize={16} color="brand.300">
-                  ₦25,005,900
+                  {FormatAmount(Number(totalAmountReceived) || 0)}
                 </Heading>
               </Stack>
             </Box>

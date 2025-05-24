@@ -34,6 +34,7 @@ const API_ROUTES = {
   ADD_NEXT_OF_KIN_TO_ASSET: '/user/asset/attach_noks',
   DELETE_ASSET: '/user/asset/delete',
   UPDATE_ASSET_DETAILS: '/user/asset/update',
+  GET_ASSET_REMITTANCES: '/user/asset/remittance',
 
   //location endpoints
   GET_ALL_COUNTRIES: '/countries',
