@@ -7,11 +7,12 @@ import Profile from './components/Profile'
 import Notifications from './components/Notifications'
 import Privacy from './components/Privacy'
 import Security from './components/Security'
+import NextOfKins from './components/NextOfKins'
 
 
 const index = () => {
   const [activeTab, setActiveTab] = useState('Profile')
-  const tabs = ['Profile', 'Notifications', 'Privacy', 'Security']
+  const tabs = ['Profile', 'Next of Kins', 'Notifications', 'Privacy', 'Security']
   return (
     <Box>
       <NavigationTab
@@ -21,6 +22,7 @@ const index = () => {
       />
       <Box>
         {activeTab === 'Profile' && <Profile />}
+        {activeTab === 'Next of Kins' && <NextOfKins />}
         {activeTab === 'Notifications' && <Notifications />}
         {activeTab === 'Privacy' && <Privacy />}
         {activeTab === 'Security' && <Security />}

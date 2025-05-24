@@ -30,6 +30,7 @@ const extendedColors: DeepPartial<
   color: {
     100: '#1A1C1D',
     200: '#FE3839',
+    300: '#FFEDE9',
   }
 };
 

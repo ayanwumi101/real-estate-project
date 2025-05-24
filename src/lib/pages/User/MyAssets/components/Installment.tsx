@@ -54,37 +54,37 @@ const Installment = ({
   const [isOpen, setIsOpen] = React.useState(false);
   const [selectedAssetId, setSelectedAssetId] = React.useState<string>('');
 
-   const deleteAsset = async () => {
-     setIsLoading(true);
-     try {
-       const res = await DeleteAsset(selectedAssetId);
-       if (res.status) {
-         const res = await GetUserAssets();
-         setAssets(res.data);
-         setIsLoading(false);
-         setIsOpen(false);
-         toast({
-           title: 'Asset Deleted',
-           description: 'Asset has been deleted successfully',
-           status: 'success',
-           duration: 3000,
-           isClosable: true,
-           position: 'top-right',
-         });
-       }
-     } catch (error: any) {
-       console.error('Error deleting asset:', error);
-       setIsLoading(false);
-       toast({
-         title: 'Error Deleting Asset',
-         description: error?.response?.data?.message,
-         status: 'error',
-         duration: 3000,
-         isClosable: true,
-         position: 'top-right',
-       });
-     }
-   };
+  const deleteAsset = async () => {
+    setIsLoading(true);
+    try {
+      const res = await DeleteAsset(selectedAssetId);
+      if (res.status) {
+        const res = await GetUserAssets();
+        setAssets(res.data);
+        setIsLoading(false);
+        setIsOpen(false);
+        toast({
+          title: 'Asset Deleted',
+          description: 'Asset has been deleted successfully',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        });
+      }
+    } catch (error: any) {
+      console.error('Error deleting asset:', error);
+      setIsLoading(false);
+      toast({
+        title: 'Error Deleting Asset',
+        description: error?.response?.data?.message,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      });
+    }
+  };
 
   return (
     <Box>
@@ -269,8 +269,24 @@ const Installment = ({
                                   fontSize={14}
                                   color="color.100"
                                   fontWeight={500}
+                                  // onClick={() => {
+                                  //   setIsOpen(true);
+                                  //   setSelectedAssetId(asset?.id);
+                                  // }}
+                                >
+                                  Change asset status
+                                </MenuItem>
+                                <MenuItem
+                                  py="12px"
+                                  px="16px"
+                                  _hover={{ bg: 'border.100' }}
+                                  fontSize={14}
+                                  color="color.100"
+                                  fontWeight={500}
                                   onClick={() =>
-                                    navigate(`/user/my-assets/${asset?.id}/payments`)
+                                    navigate(
+                                      `/user/my-assets/${asset?.id}/payments`
+                                    )
                                   }
                                 >
                                   View payments

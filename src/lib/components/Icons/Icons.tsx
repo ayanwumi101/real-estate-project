@@ -1774,3 +1774,23 @@ export const EmptyPaymentsIcon = () => {
     </svg>
   );
 }
+
+
+export const IncompleteProfileIcon = () => { 
+  return (
+    <svg
+      width="28"
+      height="28"
+      viewBox="0 0 28 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M20 8L8 20M8 8L20 20"
+        stroke="#FE3839"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}

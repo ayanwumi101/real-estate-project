@@ -12,7 +12,7 @@ import {
   Box,
   Flex,
   Stack,
-  FormLabel,
+  Badge,
 } from '@chakra-ui/react';
 import React, { Fragment, useContext } from 'react';
 import { FiEdit } from 'react-icons/fi';
@@ -21,18 +21,16 @@ import {
   SingleNextOfKinCard,
 } from '~/lib/components/Cards';
 import {
-  VerifiedIcon,
   BankIcon,
   TelephoneIcon,
   LocationIcon,
   EmailIcon,
+  IncompleteProfileIcon,
 } from '~/lib/components/Icons/Icons';
 import { AppContext } from '~/lib/layout';
 import AddNextOfKinModal from '../../AddNextOfKin';
 import EditPersonalInfoModal from '../../EditProfile/EditPersonalInfo';
 import EditProfileModal from '../../EditProfile/EditProfile';
-
-
 
 // const CustomerInformation = () => {
 //   return (
@@ -81,101 +79,60 @@ import EditProfileModal from '../../EditProfile/EditProfile';
 //   );
 // };
 
-// const BankAccountDetails = () => {
-//   return (
-//     <Box border="1px solid #E4E4E4" borderRadius="5px" px="24px" py="14px">
-//       <Stack spacing="20px">
-//         <Heading fontSize={14} fontWeight={700} color="#2E353F">
-//           Bank Account
-//         </Heading>
-//         <Box>
-//           <Flex alignItems="center" gap="20px">
-//             <BankIcon />
-//             <Text>First City Monument Bank | *** ***1234</Text>
-//             <FiEdit />
-//           </Flex>
-//         </Box>
-//         <Button bg="#EDEDFF" color="#4040A0" fontWeight={500} w="160px">
-//           Add new Account
-//         </Button>
-//       </Stack>
-//     </Box>
-//   );
-// };
-
-
-const NextOfKins = () => {
-  const [openModal, setOpenModal] = React.useState<boolean>(false);
-  const {nextOfKins, setNextOfKins} = useContext<any>(AppContext);
+const BankAccountDetails = () => {
   return (
-    <Fragment>
-      <Box border="1px solid #E4E4E4" borderRadius="5px" px="24px" py="14px">
-        <Stack spacing="20px">
-          <Flex alignItems="center" justifyContent="space-between" flexWrap={['wrap', 'nowrap']} gap={['20px', '0']}>
-            <Box w={['100%', '50%']}>
-              <Heading fontSize={14} mb="12px" fontWeight={700} color="#2E353F">
-                Next Of Kins
-              </Heading>
-              <Text color="#2E353F" fontSize={14} fontWeight={500}>
-                They will be able to take care of your assets if anything
-                happens to you. You can add a next of kin here and associate it
-                with your already created asset.
-              </Text>
-            </Box>
-            <Button
-              onClick={() => setOpenModal(true)}
-              bg="brand.100"
-              color="brand.200"
-              fontWeight={500}
-              w="150px"
-            >
-              Add Next of Kin
-            </Button>
+    <Box border="1px solid #E4E4E4" borderRadius="5px" px="24px" py="14px">
+      <Stack spacing="20px">
+        <Heading fontSize={14} fontWeight={700} color="#2E353F">
+          Bank Account
+        </Heading>
+        <Box>
+          <Flex alignItems="center" gap="20px">
+            <BankIcon />
+            <Text>First City Monument Bank | *** ***1234</Text>
+            <FiEdit />
           </Flex>
-          <Stack spacing='20px'>
-            {nextOfKins?.map((nextOfKin: any) => (
-              <SingleNextOfKinCard
-                name={nextOfKin?.fullname}
-                relationship={nextOfKin?.relationship}
-                phoneNumber={nextOfKin?.phone}
-                email={nextOfKin?.email}
-                key={nextOfKin?.id}
-              />
-            ))}
-          </Stack>
-        </Stack>
-      </Box>
-      <AddNextOfKinModal
-        isOpen={openModal}
-        onClose={() => setOpenModal(false)}
-        setNextOfKins={setNextOfKins}
-      />
-    </Fragment>
+        </Box>
+        <Button bg="#EDEDFF" color="#4040A0" fontWeight={500} w="160px">
+          Add new Account
+        </Button>
+      </Stack>
+    </Box>
   );
 };
-
 
 const PersonalInformation = () => {
   const { userDetails } = useContext(AppContext);
   const [openModal, setOpenModal] = React.useState<boolean>(false);
   return (
     <Fragment>
-      <Box border="1px solid #E4E4E4" borderRadius="5px" px="24px" py="14px">
-        <Stack spacing="12px">
-          <Flex alignItems="center" justify="space-between">
-            <Heading fontSize={14} color="brand.300">
+      <Box border="1px solid #E4E4E4" borderRadius="5px" px="24px" py="20px">
+        <Stack spacing="20px">
+          <Stack alignItems="flex-start" spacing="12px">
+            <Heading fontSize={15} color="brand.300">
               Customer Information
             </Heading>
-            <Button bg="brand.100" color="brand.200" onClick={() => setOpenModal(true)} fontWeight={500}>
-              Edit Profile
-            </Button>
-          </Flex>
-          <Box
-            border={['none', '1px solid #E4E4E4']}
-            borderRadius="5px"
-            px={[0, '24px']}
-            py="14px"
-          >
+            <Text>
+              We collect your information to protect you from fraud as well as
+              to comply with local laws and regulations.
+            </Text>
+            <Badge
+              rounded="50px"
+              py="8px"
+              px="22px"
+              fontSize={14}
+              fontWeight={600}
+              textTransform="capitalize"
+              color="color.200"
+              bg="color.300"
+            >
+              <Flex alignItems="center" gap="10px">
+                <IncompleteProfileIcon />
+                <Text>Not Completed</Text>
+              </Flex>
+            </Badge>
+          </Stack>
+          <Box py="14px">
             <Stack spacing="25px">
               <Flex
                 alignItems="center"
@@ -350,7 +307,6 @@ const PersonalInformation = () => {
   );
 };
 
-
 const ProfileHeader = () => {
   const { userDetails } = useContext(AppContext);
   const [openModal, setOpenModal] = React.useState<boolean>(false);
@@ -387,7 +343,13 @@ const ProfileHeader = () => {
               </Box>
             </Flex>
           </Box>
-          <Button bg="brand.100" onClick={() => setOpenModal(true)} color="brand.200" fontWeight={500} px="24px">
+          <Button
+            bg="brand.100"
+            onClick={() => setOpenModal(true)}
+            color="brand.200"
+            fontWeight={500}
+            px="24px"
+          >
             Update Profile
           </Button>
         </Flex>
@@ -403,14 +365,14 @@ const ProfileHeader = () => {
 const Profile = () => {
   return (
     <Box pb="50px">
-      <Stack spacing="40px">
-        <ProfileHeader />
+      <Stack spacing="30px">
+        <Box px={['20px', '40px']}>
+          <ProfileHeader />
+        </Box>
         <Box px={['20px', '40px']}>
           <Stack spacing="26px">
             <PersonalInformation />
-            <NextOfKins />
-            {/* <BankAccountDetails />
-            <CustomerInformation /> */}
+            <BankAccountDetails />
           </Stack>
         </Box>
       </Stack>

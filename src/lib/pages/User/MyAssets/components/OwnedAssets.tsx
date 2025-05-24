@@ -223,6 +223,20 @@ const OwnedAssets = ({
                                   fontSize={14}
                                   color="color.100"
                                   fontWeight={500}
+                                  // onClick={() => {
+                                  //   setIsOpen(true);
+                                  //   setSelectedAssetId(asset?.id);
+                                  // }}
+                                >
+                                  Change asset status
+                                </MenuItem>
+                                <MenuItem
+                                  py="12px"
+                                  px="16px"
+                                  _hover={{ bg: 'border.100' }}
+                                  fontSize={14}
+                                  color="color.100"
+                                  fontWeight={500}
                                   onClick={() => {
                                     setIsOpen(true);
                                     setSelectedAssetId(asset?.id);
