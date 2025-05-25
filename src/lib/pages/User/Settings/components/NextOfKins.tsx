@@ -26,13 +26,16 @@ import { AppContext } from '~/lib/layout';
 import useNavigate from '~/lib/utils/useNavigate';
 import DeleteNokConfirmationModal from '../Modals/DeleteNokConfirmationModal';
 import { DeleteNextOfKin } from '~/lib/api/services/nokService';
+import EditNokDetails from '../Modals/EditNokDetails';
 
 const NextOfKins = () => {
   const toast = useToast();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = React.useState(false);
+  const [openEditNokModal, setOpenEditNokModal] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [selectedNokId, setSelectedNokId] = React.useState<string | null>(null);
+  const [selectedNextOfKin, setSelectedNextOfKin] = React.useState<any>(null);
   const { nextOfKins, setNextOfKins } = useContext<any>(AppContext);
 
   const deleteNok = async () => {
@@ -222,11 +225,10 @@ const NextOfKins = () => {
                                 fontSize={14}
                                 color="color.100"
                                 fontWeight={500}
-                                // onClick={() =>
-                                //   navigate(
-                                //     `/user/my-assets/${asset?.id}/update-details`
-                                //   )
-                                // }
+                                onClick={() => {
+                                  setOpenEditNokModal(true);
+                                  setSelectedNextOfKin(nok);
+                                }}
                               >
                                 Edit Details
                               </MenuItem>
@@ -286,6 +288,12 @@ const NextOfKins = () => {
         onClose={() => setIsOpen(false)}
         deleteNok={deleteNok}
         loading={loading}
+      />
+      <EditNokDetails
+        isOpen={openEditNokModal}
+        onClose={() => setOpenEditNokModal(false)}
+        selectedNextOfKin={selectedNextOfKin}
+        setNextOfKins={setNextOfKins}
       />
     </Box>
   );

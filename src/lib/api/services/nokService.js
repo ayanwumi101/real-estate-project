@@ -6,7 +6,7 @@ export const AddNextOfKinDetails = async (data) => {
   return response.data;
 }
 
-export const UpdateNextOfKinDetails = async (data) => {
+export const UpdateNextOfKinDetails = async (nokId, data) => {
   const response = await axiosInstance.put(`${API_ROUTES.UPDATE_NEXT_OF_KIN_DETAILS}/${nokId}`, data);
   return response.data;
 }
