@@ -26,6 +26,7 @@ import {
   LocationIcon,
   EmailIcon,
   IncompleteProfileIcon,
+  CompleteProfileIcon,
 } from '~/lib/components/Icons/Icons';
 import { AppContext } from '~/lib/layout';
 import AddNextOfKinModal from '../../AddNextOfKin';
@@ -94,7 +95,7 @@ const BankAccountDetails = () => {
           </Flex>
         </Box>
         <Button bg="#EDEDFF" color="#4040A0" fontWeight={500} w="160px">
-          Add new Account
+          Change Account
         </Button>
       </Stack>
     </Box>
@@ -104,6 +105,10 @@ const BankAccountDetails = () => {
 const PersonalInformation = () => {
   const { userDetails } = useContext(AppContext);
   const [openModal, setOpenModal] = React.useState<boolean>(false);
+
+  const isProfileComplete =
+    userDetails?.personal_check;
+
   return (
     <Fragment>
       <Box border="1px solid #E4E4E4" borderRadius="5px" px="24px" py="20px">
@@ -116,21 +121,39 @@ const PersonalInformation = () => {
               We collect your information to protect you from fraud as well as
               to comply with local laws and regulations.
             </Text>
-            <Badge
-              rounded="50px"
-              py="8px"
-              px="22px"
-              fontSize={14}
-              fontWeight={600}
-              textTransform="capitalize"
-              color="color.200"
-              bg="color.300"
-            >
-              <Flex alignItems="center" gap="10px">
-                <IncompleteProfileIcon />
-                <Text>Not Completed</Text>
-              </Flex>
-            </Badge>
+            {isProfileComplete ? (
+              <Badge
+                rounded="50px"
+                py="8px"
+                px="22px"
+                fontSize={14}
+                fontWeight={600}
+                textTransform="capitalize"
+                color="#1BD155"
+                bg="#E0FFEA"
+              >
+                <Flex alignItems="center" gap="10px">
+                  <CompleteProfileIcon />
+                  <Text>Completed</Text>
+                </Flex>
+              </Badge>
+            ) : (
+              <Badge
+                rounded="50px"
+                py="8px"
+                px="22px"
+                fontSize={14}
+                fontWeight={600}
+                textTransform="capitalize"
+                color="color.200"
+                bg="color.300"
+              >
+                <Flex alignItems="center" gap="10px">
+                  <IncompleteProfileIcon />
+                  <Text>Not Completed</Text>
+                </Flex>
+              </Badge>
+            )}
           </Stack>
           <Box py="14px">
             <Stack spacing="25px">
@@ -164,138 +187,21 @@ const PersonalInformation = () => {
                 <Box w={['100%', '50%']}>
                   <CustomerInformationItem
                     Icon={LocationIcon}
-                    label="Address"
-                    labelValue={userDetails?.street_name as string}
+                    label="Gender"
+                    labelValue={userDetails?.gender as string}
                   />
                 </Box>
                 <Box w={['100%', '50%']}>
                   <CustomerInformationItem
-                    Icon={BankIcon}
-                    label="Bank Account"
+                    Icon={LocationIcon}
+                    label="Address"
                     labelValue={
-                      `${userDetails?.account_name} | ${userDetails?.bank_name}` ||
-                      ('No Account Registered' as string)
+                      `${userDetails?.street_name}, ${userDetails?.street_name}`
                     }
                   />
                 </Box>
               </Flex>
             </Stack>
-            {/* <Box>
-            <Flex alignItems="center" gap="15px" flexWrap={['wrap', 'nowrap']}>
-              <Box w={['100%', '50%']}>
-                <FormLabel
-                  mb="13px"
-                  color="#222222"
-                  fontWeight={600}
-                  fontSize={15}
-                >
-                  Email
-                </FormLabel>
-                <InputGroup>
-                  <Input
-                    border="1px solid #C0C0C0"
-                    type="email"
-                    // placeholder="jayforeal@gmail.com"
-                    value={userDetails?.email}
-                    borderRadius="50px"
-                    height="50px"
-                    px="20px"
-                    color="#2E353F"
-                    fontWeight={500}
-                    readOnly={true}
-                  />
-                  <InputRightElement pointerEvents="none" mt="1" mr="2">
-                    <VerifiedIcon />
-                  </InputRightElement>
-                </InputGroup>
-              </Box>
-              <Box w={['100%', '50%']}>
-                <FormLabel
-                  mb="13px"
-                  color="#222222"
-                  fontWeight={600}
-                  fontSize={15}
-                >
-                  Phone Number
-                </FormLabel>
-                <InputGroup>
-                  <Input
-                    border="1px solid #C0C0C0"
-                    type="email"
-                    // placeholder="+49 17687934521"
-                    value={userDetails?.phone}
-                    borderRadius="50px"
-                    height="50px"
-                    px="20px"
-                    color="#2E353F"
-                    fontWeight={500}
-                    readOnly={true}
-                  />
-                  <InputRightElement pointerEvents="none" mt="1" mr="2">
-                    <VerifiedIcon />
-                  </InputRightElement>
-                </InputGroup>
-              </Box>
-            </Flex>
-          </Box>
-          <Box>
-            <Flex alignItems="center" gap="15px" flexWrap={['wrap', 'nowrap']}>
-              <Box w={['100%', '50%']}>
-                <FormLabel
-                  mb="13px"
-                  color="#222222"
-                  fontWeight={600}
-                  fontSize={15}
-                >
-                  Gender
-                </FormLabel>
-                <InputGroup>
-                  <Input
-                    border="1px solid #C0C0C0"
-                    type="email"
-                    // placeholder="Male"
-                    value={userDetails?.gender}
-                    borderRadius="50px"
-                    height="50px"
-                    px="20px"
-                    color="#2E353F"
-                    fontWeight={500}
-                    readOnly={true}
-                  />
-                  <InputRightElement pointerEvents="none" mt="1" mr="2">
-                    <VerifiedIcon />
-                  </InputRightElement>
-                </InputGroup>
-              </Box>
-              <Box w={['100%', '50%']}>
-                <FormLabel
-                  mb="13px"
-                  color="#222222"
-                  fontWeight={600}
-                  fontSize={15}
-                >
-                  Address
-                </FormLabel>
-                <InputGroup>
-                  <Input
-                    border="1px solid #C0C0C0"
-                    type="email"
-                    // placeholder="64 Royal Ln. Mesa, New Jersey 45463"
-                    value={userDetails?.street_name}
-                    borderRadius="50px"
-                    height="50px"
-                    px="20px"
-                    color="#2E353F"
-                    fontWeight={500}
-                    readOnly={true}
-                  />
-                  <InputRightElement pointerEvents="none" mt="1" mr="2">
-                    <VerifiedIcon />
-                  </InputRightElement>
-                </InputGroup>
-              </Box>
-            </Flex>
-          </Box> */}
           </Box>
         </Stack>
       </Box>

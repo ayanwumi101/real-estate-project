@@ -14,21 +14,22 @@ import {
   Spinner,
   FormErrorMessage,
   Flex,
-  InputGroup, InputLeftElement, Text
+  InputGroup,
+  InputLeftElement,
+  Text,
 } from '@chakra-ui/react';
 import { Formik, Form, Field } from 'formik';
 import React, { useContext, useState } from 'react';
 import CustomModal from '~/lib/components/Modal';
 import * as Yup from 'yup';
-import { SaveUserDetails, GetUserProfileDetails } from '~/lib/api/services/profileService';
+import {
+  SaveUserDetails,
+  GetUserProfileDetails,
+} from '~/lib/api/services/profileService';
 import { AppContext } from '~/lib/layout';
 import { BsImageFill } from 'react-icons/bs';
 import { GoTrash } from 'react-icons/go';
 import { FileUploadIcon, SelectGenderIcon } from '~/lib/components/Icons/Icons';
-
-
-
-
 
 const EditPersonalInfoModal = ({
   isOpen,
@@ -45,52 +46,65 @@ const EditPersonalInfoModal = ({
     profilePicture: null,
     dateOfBirth: userDetails?.dateofbirth,
     gender: userDetails?.gender,
+    phone: userDetails?.phone || '',
+    email: userDetails?.email || '',
+    address: userDetails?.address || '',
   };
 
   const validationSchema = Yup.object().shape({
-    profilePicture: Yup.mixed().required('Profile picture is required'),
+    profilePicture: Yup.mixed()
+      .required('Profile picture is required')
+      .test('fileSize', 'File size is too large (max 3MB)', (value) => {
+        if (!value) return false;
+        if (typeof value === 'string') return true;
+        if (value instanceof File) {
+          return value.size <= 3 * 1024 * 1024;
+        }
+        return false;
+      }),
     dateOfBirth: Yup.date()
       .max(new Date(), 'Date of birth cannot be in the future')
       .required('Date of birth is required'),
     gender: Yup.string().required('Gender is required'),
+    phone: Yup.string().required('Phone number is required'),
+    email: Yup.string().email('Invalid email').required('Email is required'),
+    address: Yup.string().required('Address is required'),
   });
 
-
-   const handleSubmit = async (values: any) => {
-      const formData = {
-        profile_image: values.profilePicture,
-        dateofbirth: values.dateOfBirth,
-        gender: values.gender,
-      };
-      setLoading(true);
-      try {
-        const response = await SaveUserDetails(formData);
-        if (response.status === true) {
-          const newData = await GetUserProfileDetails();
-          setUserDetails(newData.data);
-          toast({
-            title: response.message as string,
-            description: 'Personal details saved',
-            duration: 3000,
-            position: 'top-right',
-            isClosable: true,
-            status: 'success',
-          });
-          onClose();
-        }
-      } catch (error: any) {
-        setLoading(false);
+  const handleSubmit = async (values: any) => {
+    const formData = {
+      profile_image: values.profilePicture,
+      dateofbirth: values.dateOfBirth,
+      gender: values.gender,
+    };
+    setLoading(true);
+    try {
+      const response = await SaveUserDetails(formData);
+      if (response.status === true) {
+        const newData = await GetUserProfileDetails();
+        setUserDetails(newData.data);
         toast({
-          title: error.response.data.message,
-          description: 'An error occurred',
+          title: response.message as string,
+          description: 'Personal details saved',
           duration: 3000,
           position: 'top-right',
           isClosable: true,
-          status: 'error',
+          status: 'success',
         });
+        onClose();
       }
-    };
-
+    } catch (error: any) {
+      setLoading(false);
+      toast({
+        title: error.response.data.message,
+        description: 'An error occurred',
+        duration: 3000,
+        position: 'top-right',
+        isClosable: true,
+        status: 'error',
+      });
+    }
+  };
 
   return (
     <Box>
@@ -103,9 +117,11 @@ const EditPersonalInfoModal = ({
           {({ errors, touched, values, setFieldValue }) => {
             return (
               <Form>
-                <Box w='auto'>
+                <Box w="auto">
                   <Stack spacing="20px" w="100%">
-                    <Heading fontSize={24} color='brand.100'>Edit Personal Infomation</Heading>
+                    <Heading fontSize={24} color="brand.100">
+                      Edit Personal Infomation
+                    </Heading>
                     {/* Profile Picture */}
                     <FormControl
                       w="100%"
@@ -178,6 +194,7 @@ const EditPersonalInfoModal = ({
                             type="file"
                             id="upload"
                             display="none"
+                            accept="image/*"
                             onChange={(event) => {
                               setFieldValue(
                                 'profilePicture',
@@ -226,11 +243,17 @@ const EditPersonalInfoModal = ({
                         borderRadius="40px"
                         _placeholder={{ color: '#8295AA', fontWeight: 500 }}
                       />
-                      <FormErrorMessage>{typeof errors.dateOfBirth === 'string' ? errors.dateOfBirth : ''}</FormErrorMessage>
+                      <FormErrorMessage>
+                        {typeof errors.dateOfBirth === 'string'
+                          ? errors.dateOfBirth
+                          : ''}
+                      </FormErrorMessage>
                     </FormControl>
 
                     {/* Gender */}
-                    <FormControl isInvalid={!!errors.gender && !!touched.gender}>
+                    <FormControl
+                      isInvalid={!!errors.gender && !!touched.gender}
+                    >
                       <FormLabel fontWeight={600} fontSize={16} color="#222222">
                         Select your Gender
                       </FormLabel>
@@ -267,7 +290,68 @@ const EditPersonalInfoModal = ({
                           <option value="Female">Female</option>
                         </Field>
                       </InputGroup>
-                      <FormErrorMessage>{typeof errors.gender === 'string' ? errors.gender : ''}</FormErrorMessage>
+                      <FormErrorMessage>
+                        {typeof errors.gender === 'string' ? errors.gender : ''}
+                      </FormErrorMessage>
+                    </FormControl>
+                    {/* Phone Number */}
+                    <FormControl isInvalid={!!errors.phone && !!touched.phone}>
+                      <FormLabel fontWeight={600} fontSize={16} color="#222222">
+                        Phone Number
+                      </FormLabel>
+                      <Field
+                        as={Input}
+                        name="phone"
+                        type="text"
+                        placeholder="Enter your phone number"
+                        h="50px"
+                        border="1px solid #C0C0C0"
+                        borderRadius="40px"
+                      />
+                      <FormErrorMessage>
+                        {typeof errors.phone === 'string' ? errors.phone : ''}
+                      </FormErrorMessage>
+                    </FormControl>
+                    {/* Email Address */}
+                    <FormControl isInvalid={!!errors.email && !!touched.email}>
+                      <FormLabel fontWeight={600} fontSize={16} color="#222222">
+                        Email Address
+                      </FormLabel>
+                      <Field
+                        as={Input}
+                        name="email"
+                        type="email"
+                        placeholder="Enter your email address"
+                        h="50px"
+                        border="1px solid #C0C0C0"
+                        borderRadius="40px"
+                        readOnly
+                      />
+                      <FormErrorMessage>
+                        {typeof errors.email === 'string' ? errors.email : ''}
+                      </FormErrorMessage>
+                    </FormControl>
+                    {/* Address */}
+                    <FormControl
+                      isInvalid={!!errors.address && !!touched.address}
+                    >
+                      <FormLabel fontWeight={600} fontSize={16} color="#222222">
+                        Address
+                      </FormLabel>
+                      <Field
+                        as={Input}
+                        name="address"
+                        type="text"
+                        placeholder="Enter your address"
+                        h="50px"
+                        border="1px solid #C0C0C0"
+                        borderRadius="40px"
+                      />
+                      <FormErrorMessage>
+                        {typeof errors.address === 'string'
+                          ? errors.address
+                          : ''}
+                      </FormErrorMessage>
                     </FormControl>
 
                     {/* Submit Button */}
@@ -281,7 +365,7 @@ const EditPersonalInfoModal = ({
                         fontWeight={600}
                         fontSize={16}
                         _hover={{ bg: '#000080' }}
-                        minW={['100%',"200px"]}
+                        minW={['100%', '200px']}
                       >
                         {loading ? <Spinner /> : 'Update Info'}
                       </Button>

@@ -43,7 +43,9 @@ const API_ROUTES = {
   GET_STATE_CITIES: 'city-state',
   GET_CITY_LGAS: 'lgas',
 
-  //social auth endpoints
+  //next of kin endpoints
+  EDIT_NEXT_OF_KIN_DETAILS: '/user/next-of-kin',
+  DELETE_NEXT_OF_KIN: '/user/next-of-kin',
 
 };
 

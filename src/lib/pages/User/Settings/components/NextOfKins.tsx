@@ -13,6 +13,7 @@ import {
   MenuItem,
   MenuList,
   MenuButton,
+  useToast,
 } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import {
@@ -23,10 +24,42 @@ import {
 } from '~/lib/components/Icons/Icons';
 import { AppContext } from '~/lib/layout';
 import useNavigate from '~/lib/utils/useNavigate';
+import DeleteNokConfirmationModal from '../Modals/DeleteNokConfirmationModal';
+import { DeleteNextOfKin } from '~/lib/api/services/nokService';
 
 const NextOfKins = () => {
+  const toast = useToast();
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const [selectedNokId, setSelectedNokId] = React.useState<string | null>(null);
   const { nextOfKins, setNextOfKins } = useContext<any>(AppContext);
+
+  const deleteNok = async () => {
+    setLoading(true);
+    try {
+      const res = await DeleteNextOfKin(selectedNokId);
+      if (res.status) {
+        const updatedNextOfKins = nextOfKins.filter(
+          (nok: any) => nok.id !== selectedNokId
+        );
+        setNextOfKins(updatedNextOfKins);
+        setIsOpen(false);
+        setSelectedNokId(null);
+        toast({
+          title: 'Next of Kin deleted successfully',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        });
+      }
+    } catch (error) {
+      console.error('Error deleting next of kin:', error);
+    }
+    setLoading(false);
+  };
+
   return (
     <Box w="full" px="40px" pb="50px">
       {nextOfKins.length < 1 ? (
@@ -204,10 +237,10 @@ const NextOfKins = () => {
                                 fontSize={14}
                                 color="color.100"
                                 fontWeight={500}
-                                // onClick={() => {
-                                //   setIsOpen(true);
-                                //   setSelectedAssetId(asset?.id);
-                                // }}
+                                onClick={() => {
+                                  setIsOpen(true);
+                                  setSelectedNokId(nok.id);
+                                }}
                               >
                                 Delete
                               </MenuItem>
@@ -248,6 +281,12 @@ const NextOfKins = () => {
           </Stack>
         </Box>
       )}
+      <DeleteNokConfirmationModal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        deleteNok={deleteNok}
+        loading={loading}
+      />
     </Box>
   );
 };
