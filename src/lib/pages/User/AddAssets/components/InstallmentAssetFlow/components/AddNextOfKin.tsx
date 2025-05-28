@@ -12,7 +12,7 @@ import {
   useToast,
   Heading,
 } from '@chakra-ui/react';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { EmptyStateIcon, InputSearchIcon } from '~/lib/components/Icons/Icons';
 import { AppContext } from '~/lib/layout';
 import {
@@ -60,6 +60,12 @@ const AddNextOfKin = ({
       );
     }
   };
+
+    useEffect(() => {
+      if (nextOfKins) {
+        setFilteredNextOfKins(nextOfKins);
+      }
+    }, [nextOfKins]);
 
   const handleSubmit = async () => {
     const formData = {
@@ -228,7 +234,7 @@ const AddNextOfKin = ({
       <AddNextOfKinModal
         isOpen={openModal}
         onClose={() => setOpenModal(false)}
-        setNextOfKins={setNextOfKins}
+        // setNextOfKins={setNextOfKins}
       />
     </Box>
   );

@@ -106,7 +106,7 @@ export const Header = () => {
           </Box>
           <Box display={['block', 'none']}>
             <Flex alignItems="center" gap="10px">
-              <Link href="/signin">
+              {/* <Link href="/signin">
                 <Button
                   bg="brand.100"
                   _hover={{ bg: 'brand.100' }}
@@ -118,8 +118,8 @@ export const Header = () => {
                 >
                   Get Started
                 </Button>
-              </Link>
-              <Button onClick={() => setOpenSideNav(true)}>
+              </Link> */}
+              <Button variant='ghost' _hover={{bg: 'none'}} onClick={() => setOpenSideNav(true)}>
                 <HiBars3BottomRight size={30} />
               </Button>
             </Flex>

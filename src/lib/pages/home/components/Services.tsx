@@ -28,15 +28,16 @@ const Services = () => {
           gap="60px"
           justifyContent="center"
           flexWrap={['wrap', 'nowrap']}
+          h={['auto', '550px']}
         >
           <Image
             src="/assets/images/service-image.png"
             w="400px"
-            h="100%"
+            h={['420px',"100%"]}
             objectFit="cover"
           />
           <Box h="100%">
-            <Flex flexWrap="wrap" rowGap="24px" gap="20px">
+            <Flex flexWrap="wrap" h='100%' rowGap="24px" gap="20px">
               <FeatureCard
                 Icon={PortfolioManagementIcon}
                 heading="Portfolio Management"

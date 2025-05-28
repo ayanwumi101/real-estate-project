@@ -16,23 +16,25 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import { Formik, Form, Field } from 'formik';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import CustomModal from '~/lib/components/Modal';
 import * as Yup from 'yup';
 import { AddNextOfKin, GetNextOfKins } from '~/lib/api/services/userService';
+import { AppContext } from '~/lib/layout';
+
 
 
 const AddNextOfKinModal = ({
   isOpen,
   onClose,
-    setNextOfKins,
 }: {
   isOpen: boolean;
   onClose: () => void;
-  setNextOfKins: any;
 }) => {
   const toast = useToast();
   const [loading, setLoading] = useState<boolean>(false);
+  const { nextOfKins, setNextOfKins } = useContext<any>(AppContext);
+
   const initialValues = {
     email: '',
     phone: '',

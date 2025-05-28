@@ -5,12 +5,15 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import { VscClose } from 'react-icons/vsc';
 import { scrollToSection } from '~/lib/utils/scrollToSection';
+import useNavigate from '~/lib/utils/useNavigate';
+
 
 const MobileSidenav = ({
   setOpenSideNav,
 }: {
   setOpenSideNav: (value: boolean) => void;
-}) => {
+  }) => {
+  const navigate = useNavigate();
   const router = useRouter();
   const links = [
     {
@@ -27,7 +30,7 @@ const MobileSidenav = ({
     },
   ];
   const handleClick = (link: string) => {
-    router.push(link);
+    navigate(link);
     setOpenSideNav(false);
   };
   return (
@@ -92,23 +95,25 @@ const MobileSidenav = ({
         </Box>
 
         <Flex flexDir="column">
-          <VStack color="black" spacing="20px">
+          <VStack alignItems="flex-start" color="#4B4B4B" spacing={0}>
             {links.map((link) => (
-              <Button
-                bg="none"
-                p="0"
-                _hover={{ bg: 'none', p: 0 }}
+              <Box
                 onClick={() => {
                   if (link.link === 'how-it-works') {
                     setOpenSideNav(false);
-                    router.push('/');
+                    navigate('/');
                     scrollToSection('howItWorks');
                   } else {
-                    router.push(link.link);
+                    navigate(link.link);
                     setOpenSideNav(false);
                   }
                 }}
                 key={link.name}
+                borderBottom="1px solid #E4E4E4"
+                w="full"
+                textAlign="left"
+                py="16px"
+                px="12px"
               >
                 <Text
                   onClick={() => setOpenSideNav(false)}
@@ -118,20 +123,57 @@ const MobileSidenav = ({
                 >
                   {link.name}
                 </Text>
-              </Button>
+              </Box>
             ))}
-            <Button
-              fontWeight={500}
-              bg="#4040A0"
-              color="white"
-              borderRadius="49px"
-              py="8px"
-              px="20px"
-              onClick={() => handleClick('/signin')}
-              minW="150px"
+            <Box
+              borderBottom="1px solid #E4E4E4"
+              w="full"
+              textAlign="left"
+              py="16px"
             >
-              Sign in
-            </Button>
+              {' '}
+              <Button
+                fontWeight={500}
+                bg="brand.100"
+                color="white"
+                borderRadius="49px"
+                py="8px"
+                px="20px"
+                onClick={() => {
+                  navigate('/signup');
+                  setOpenSideNav(false);
+                }}
+                w="127px"
+              >
+                Get Started
+              </Button>
+            </Box>
+            <Box
+              borderBottom="1px solid #E4E4E4"
+              w="full"
+              textAlign="left"
+              py="16px"
+            >
+              {' '}
+              <Button
+                fontWeight={500}
+                variant="outline"
+                color="brand.100"
+                border="1px solid"
+                borderColor="brand.100"
+                borderRadius="49px"
+                py="8px"
+                px="20px"
+                onClick={() => {
+                  navigate('/signin');
+                  setOpenSideNav(false);
+                }}
+                w="127px"
+                _hover={{ bg: 'none' }}
+              >
+                Sign in
+              </Button>
+            </Box>
           </VStack>
         </Flex>
       </motion.div>

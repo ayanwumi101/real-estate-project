@@ -36,7 +36,7 @@ const NavigationTab = ({
         flexWrap={['wrap', 'nowrap']}
         gap={['24px', '0']}
       >
-        <Flex alignItems="center">
+        <Flex alignItems="center" borderBottom={['1px solid #E4E4E4', 'none']}>
           {' '}
           {tabs.map((tab, index) => (
             <Button
@@ -56,8 +56,13 @@ const NavigationTab = ({
             </Button>
           ))}
         </Flex>
-        <Box>
-          <Flex alignItems="center" gap="20px">
+        <Box w={['full',"auto"]}>
+          <Flex
+            alignItems={['flex-start',"center"]}
+            w="full"
+            gap="20px"
+            flexDir={['column', 'row']}
+          >
             {ownedAssetsCount > 0 && (
               <Box
                 borderLeft="1px solid"
@@ -65,6 +70,7 @@ const NavigationTab = ({
                 px="20px"
                 py="10px"
                 bg="bg.500"
+                w={['100%', 'auto']}
               >
                 <Stack>
                   <Text fontWeight={500} fontSize={13} color="brand.400">

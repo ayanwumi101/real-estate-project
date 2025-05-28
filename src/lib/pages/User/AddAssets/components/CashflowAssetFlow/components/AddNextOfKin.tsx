@@ -12,21 +12,26 @@ import {
   useToast,
   Heading,
 } from '@chakra-ui/react';
-import React, { useContext } from 'react';
-import { EmptyStateIcon, InputSearchIcon, NextOfKinEmptyStateIcon, ArrowBackIcon } from '~/lib/components/Icons/Icons';
+import React, { useContext, useEffect } from 'react';
+import {
+  EmptyStateIcon,
+  InputSearchIcon,
+  NextOfKinEmptyStateIcon,
+  ArrowBackIcon,
+} from '~/lib/components/Icons/Icons';
 import { AppContext } from '~/lib/layout';
 import {
   AddAssetNextOfKinCard,
   SingleNextOfKinCard,
 } from '~/lib/components/Cards';
 import Cookie from 'js-cookie';
-import { AddAsset, AddNextOfKinToAsset } from '~/lib/api/services/assetsService';
+import {
+  AddAsset,
+  AddNextOfKinToAsset,
+} from '~/lib/api/services/assetsService';
 import { useRouter } from 'next/navigation';
 import AddNextOfKinModal from '~/lib/pages/User/AddNextOfKin';
 import { CreateAssetContext } from '../../..';
-import { GetNextOfKins } from '~/lib/api/services/userService';
-
-
 
 const AddNextOfKin = ({
   step,
@@ -45,11 +50,7 @@ const AddNextOfKin = ({
   const [searchTerm, setSearchTerm] = React.useState<string>('');
   const [filteredNextOfKins, setFilteredNextOfKins] =
     React.useState<any>(nextOfKins);
-     const {
-        assetData,
-        setAssetData,
-     } = useContext<any>(CreateAssetContext);
-  
+  const { assetData, setAssetData } = useContext<any>(CreateAssetContext);
 
   const handleChange = (searchValue: string) => {
     setSearchTerm(searchValue);
@@ -64,6 +65,11 @@ const AddNextOfKin = ({
     }
   };
 
+  useEffect(() => {
+    if (nextOfKins) {
+      setFilteredNextOfKins(nextOfKins);
+    }
+  }, [nextOfKins]);
 
   const handleSubmit = async () => {
     const formData = {
@@ -248,7 +254,7 @@ const AddNextOfKin = ({
       <AddNextOfKinModal
         isOpen={openModal}
         onClose={() => setOpenModal(false)}
-        setNextOfKins={setNextOfKins}
+        // setNextOfKins={setNextOfKins}
       />
     </Box>
   );

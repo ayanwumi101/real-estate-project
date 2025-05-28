@@ -142,17 +142,17 @@ export const FeatureCard = ({
   return (
     <Box
       w="360px"
-      borderTop="1px solid #C0C0C0"
-      borderBottom="1px solid #C0C0C0"
-      py="10px"
+      border="1px solid #C0C0C0"
+      p="20px"
+      rounded='10px'
     >
       <Stack spacing="24px">
         <Icon />
         <Box>
-          <Heading fontSize={18} color="#222222" fontWeight={700} mb="12px">
+          <Heading fontSize={19} color="#222222" fontWeight={700} mb="16px">
             {heading}
           </Heading>
-          <Text color="#2E353F" fontWeight={400}>
+          <Text color="#2E353F" fontWeight={400} fontSize={15} letterSpacing='0.5px'>
             {description}
           </Text>
         </Box>

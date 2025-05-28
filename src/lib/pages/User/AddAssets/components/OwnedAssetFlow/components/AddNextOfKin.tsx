@@ -12,20 +12,25 @@ import {
   useToast,
   Heading,
 } from '@chakra-ui/react';
-import React, { useContext } from 'react';
-import { EmptyStateIcon, InputSearchIcon } from '~/lib/components/Icons/Icons';
+import React, { useContext, useEffect } from 'react';
+import {
+  EmptyStateIcon,
+  InputSearchIcon,
+  AddIcon,
+} from '~/lib/components/Icons/Icons';
 import { AppContext } from '~/lib/layout';
 import {
   AddAssetNextOfKinCard,
   SingleNextOfKinCard,
 } from '~/lib/components/Cards';
 import Cookie from 'js-cookie';
-import { AddAsset, AddNextOfKinToAsset } from '~/lib/api/services/assetsService';
+import {
+  AddAsset,
+  AddNextOfKinToAsset,
+} from '~/lib/api/services/assetsService';
 import { useRouter } from 'next/navigation';
 import AddNextOfKinModal from '~/lib/pages/User/AddNextOfKin';
 import { CreateAssetContext } from '../../..';
-
-
 
 const AddNextOfKin = ({
   step,
@@ -45,7 +50,6 @@ const AddNextOfKin = ({
     React.useState<any>(nextOfKins);
   const { assetData, setAssetData } = useContext<any>(CreateAssetContext);
 
-
   const handleChange = (searchValue: string) => {
     setSearchTerm(searchValue);
     if (searchTerm === '') {
@@ -59,26 +63,32 @@ const AddNextOfKin = ({
     }
   };
 
+  useEffect(() => {
+    if (nextOfKins) {
+      setFilteredNextOfKins(nextOfKins);
+    }
+  }, [nextOfKins]);
+
   const handleSubmit = async () => {
-     const formData = {
-       property_name: assetData?.propertyName,
-       property_type: assetData?.propertyType,
-       size: assetData?.propertySize,
-       house_number: assetData?.propertyAddress?.houseNumber,
-       street_name: assetData?.propertyAddress?.streetName,
-       city_name: assetData?.propertyAddress?.city,
-       state_id: assetData?.propertyAddress?.state,
-       realtor_name: assetData?.realtorDetails?.name,
-       phone: assetData?.phoneNumber,
-       lga_id: assetData?.propertyAddress?.lga,
-       asset_type: assetData?.assetType,
-       property_cost: assetData?.propertyCost,
-       bought_date: assetData?.dateOfPurchase,
-       documentation_status: assetData?.documentationStatus,
-       handover_status: assetData?.handoverStatus,
-       allocation_status: assetData?.allocationStatus,
-       nok_ids: [selectedNextOfKin],
-     };
+    const formData = {
+      property_name: assetData?.propertyName,
+      property_type: assetData?.propertyType,
+      size: assetData?.propertySize,
+      house_number: assetData?.propertyAddress?.houseNumber,
+      street_name: assetData?.propertyAddress?.streetName,
+      city_name: assetData?.propertyAddress?.city,
+      state_id: assetData?.propertyAddress?.state,
+      realtor_name: assetData?.realtorDetails?.name,
+      phone: assetData?.phoneNumber,
+      lga_id: assetData?.propertyAddress?.lga,
+      asset_type: assetData?.assetType,
+      property_cost: assetData?.propertyCost,
+      bought_date: assetData?.dateOfPurchase,
+      documentation_status: assetData?.documentationStatus,
+      handover_status: assetData?.handoverStatus,
+      allocation_status: assetData?.allocationStatus,
+      nok_ids: [selectedNextOfKin],
+    };
     try {
       if (selectedNextOfKin) {
         setLoading(true);
@@ -139,6 +149,24 @@ const AddNextOfKin = ({
             onChange={(e) => handleChange(e.target.value)}
           />
         </InputGroup>
+        <Box w="full">
+          <Flex alignItems="center" justifyContent="space-between">
+            <Text color="brand.300">
+              Select a next of kin to associated with this property
+            </Text>
+            <Button
+              bg="brand.500"
+              color="brand.100"
+              fontWeight={500}
+              // leftIcon={<AddIcon />}
+              _hover={{ bg: 'brand.500' }}
+              h="45px"
+              onClick={() => setOpenModal(true)}
+            >
+              Add new next of kin
+            </Button>
+          </Flex>
+        </Box>
         <Box>
           {filteredNextOfKins?.length < 1 ? (
             <Box maxW="460px" mx="auto">
@@ -216,7 +244,8 @@ const AddNextOfKin = ({
       <AddNextOfKinModal
         isOpen={openModal}
         onClose={() => setOpenModal(false)}
-        setNextOfKins={setNextOfKins}
+
+        // setNextOfKins={setNextOfKins}
       />
     </Box>
   );

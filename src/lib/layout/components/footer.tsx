@@ -58,8 +58,13 @@ export const Footer = () => {
                 justifyContent={['center', 'space-between']}
                 flexWrap="wrap"
               >
-                <Box w={['100%', '530px']} px={['16px', 0]} color="white" mb={['40px', 0]}>
-                  <Heading fontSize={[32,40]} fontWeight={700} mb="16px">
+                <Box
+                  w={['100%', '530px']}
+                  px={['16px', 0]}
+                  color="white"
+                  mb={['40px', 0]}
+                >
+                  <Heading fontSize={[32, 40]} fontWeight={700} mb="16px">
                     Stay Updated
                   </Heading>
                   <Text
@@ -137,7 +142,7 @@ export const Footer = () => {
               <Stack spacing="24px">
                 <Image src="/assets/svgs/vestier-logo.svg" w="135px" h="40px" />
                 <Text color="#C0C0C0" fontStyle="italic">
-                  Invest wisely. Invest with confidence.
+                  Smarter Property Management, Bigger Returns.
                 </Text>
               </Stack>
             </Box>
