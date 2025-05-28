@@ -33,7 +33,7 @@ import useNavigate from '~/lib/utils/useNavigate';
 const UpcomingPayments = ({ assets }: { assets: any[] }) => {
   const navigate = useNavigate();
   return (
-    <Box py="40px" px="40px">
+    <Box py="40px" px={['15px',"40px"]}>
       <Stack spacing="30px">
         <Heading fontSize={20} color="brand.300">
           Upcoming Payments
