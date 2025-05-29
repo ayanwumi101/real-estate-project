@@ -13,7 +13,11 @@ import {
   Heading,
 } from '@chakra-ui/react';
 import React, { useContext, useEffect } from 'react';
-import { EmptyStateIcon, InputSearchIcon } from '~/lib/components/Icons/Icons';
+import {
+  EmptyStateIcon,
+  InputSearchIcon,
+  ChevronLeftIcon,
+} from '~/lib/components/Icons/Icons';
 import { AppContext } from '~/lib/layout';
 import {
   AddAssetNextOfKinCard,
@@ -27,8 +31,6 @@ import {
 import { useRouter } from 'next/navigation';
 import AddNextOfKinModal from '~/lib/pages/User/AddNextOfKin';
 import { CreateAssetContext } from '../../..';
-
-
 
 const AddNextOfKin = ({
   step,
@@ -61,11 +63,11 @@ const AddNextOfKin = ({
     }
   };
 
-    useEffect(() => {
-      if (nextOfKins) {
-        setFilteredNextOfKins(nextOfKins);
-      }
-    }, [nextOfKins]);
+  useEffect(() => {
+    if (nextOfKins) {
+      setFilteredNextOfKins(nextOfKins);
+    }
+  }, [nextOfKins]);
 
   const handleSubmit = async () => {
     const formData = {
@@ -202,17 +204,14 @@ const AddNextOfKin = ({
             </Box>
           )}
         </Box>
-        <Flex justifyContent="flex-end" gap="10px">
+        <Flex alignItems="center" justifyContent="space-between">
           <Button
-            color="#000080"
-            bg="#EDEDFF"
-            h="48px"
-            borderRadius="30px"
-            fontWeight={500}
-            fontSize={16}
-            _hover={{ bg: '#000080' }}
+            leftIcon={<ChevronLeftIcon />}
+            color="brand.100"
+            fontWeight={600}
+            variant="ghost"
+            _hover={{ bg: 'none' }}
             onClick={() => setStep(step - 1)}
-            minW="100px"
           >
             Back
           </Button>

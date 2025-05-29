@@ -13,6 +13,9 @@ import {
   SettingsIcon,
   LogoutIcon,
 } from '~/lib/components/Icons/Icons';
+import useNavigate from '~/lib/utils/useNavigate';
+
+
 
 export const SideBarItem = ({
   label,
@@ -51,9 +54,10 @@ const DashboardSidebar = () => {
   const pathname = usePathname();
   const router = useRouter();
   const toast = useToast();
+  const navigate = useNavigate();
 
   const LogoutUser = () => {
-    router.push('/signin');
+    navigate('/signin');
     Cookies.remove('vestier-token');
     Cookies.remove('vestier-user');
     toast({

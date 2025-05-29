@@ -32,6 +32,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
+import useNavigate from '~/lib/utils/useNavigate';
 
 export const SocialLoginButton = ({
   label,
@@ -63,6 +64,7 @@ const LoginForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
   const router = useRouter();
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -97,7 +99,7 @@ const LoginForm = () => {
           });
           Cookies.set('vestier-token', JSON.stringify(response.data.token));
           Cookies.set('vestier-user', JSON.stringify(response.data.user));
-          router.push('/user/dashboard');
+          navigate('/user/dashboard');
           resetForm();
         } else {
           toast({
@@ -108,7 +110,7 @@ const LoginForm = () => {
             isClosable: true,
             status: 'error',
           });
-          router.push('/signup/verify-email');
+          navigate('/signup/verify-email');
         }
       } catch (error: any) {
         setLoading(false);

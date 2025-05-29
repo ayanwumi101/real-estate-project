@@ -15,7 +15,7 @@ import {
   Tr,
   Td,
   Tbody,
-  useMediaQuery
+  useMediaQuery,
 } from '@chakra-ui/react';
 import {
   createContext,
@@ -39,9 +39,7 @@ import {
 } from '../components/Icons/Icons';
 import { GetUserProfileDetails } from '../api/services/profileService';
 import { GetNextOfKins } from '../api/services/userService';
-import styles from './styles.module.css'
-
-
+import styles from './styles.module.css';
 
 export const AppContext = createContext<any>({});
 
@@ -177,12 +175,16 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
   const [userDetails, setUserDetails] = useState<any>([]);
   const [nextOfKins, setNextOfKins] = useState<any>([]);
   const [isMobile] = useMediaQuery('(max-width: 768px)');
+  const [isUserDetailsLoading, setIsUserDetailsLoading] =
+    useState<boolean>(true);
+  const [isNextOfKinsLoading, setIsNextOfKinsLoading] = useState<boolean>(true);
 
   const handleChange = () => {
     setShowSearchBar(true);
   };
 
   const GetUserDetails = async () => {
+    setIsUserDetailsLoading(true);
     try {
       const res = await GetUserProfileDetails();
       const data = await res.data;
@@ -190,25 +192,37 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
     } catch (error) {
       console.log(error);
     }
+    setIsUserDetailsLoading(false);
   };
 
-   const GetUserNextOfKins = async () => {
-     try {
-       const res = await GetNextOfKins();
-       const data = await res.data;
-       setNextOfKins(data);
-     } catch (error) {
-       console.log(error);
-     }
-   };
+  const GetUserNextOfKins = async () => {
+    setIsNextOfKinsLoading(true);
+    try {
+      const res = await GetNextOfKins();
+      const data = await res.data;
+      setNextOfKins(data);
+    } catch (error) {
+      console.log(error);
+    }
+    setIsNextOfKinsLoading(false);
+  };
 
   useEffect(() => {
     GetUserDetails();
     GetUserNextOfKins();
   }, []);
-  
+
   return (
-    <AppContext.Provider value={{ userDetails, setUserDetails, nextOfKins, setNextOfKins }}>
+    <AppContext.Provider
+      value={{
+        userDetails,
+        setUserDetails,
+        nextOfKins,
+        setNextOfKins,
+        isNextOfKinsLoading,
+        isUserDetailsLoading,
+      }}
+    >
       <Box
         w="100%"
         mx="auto"

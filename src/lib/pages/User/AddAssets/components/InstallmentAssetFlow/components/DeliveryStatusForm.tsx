@@ -18,6 +18,7 @@ import { UpdateAssetDeliveryStatus } from '~/lib/api/services/assetsService';
 import Cookie from 'js-cookie';
 import { CreateAssetContext } from '../../..';
 import { formatCurrency } from '~/lib/utils/formatAmount';
+import { ChevronLeftIcon } from '~/lib/components/Icons/Icons';
 
 
 
@@ -210,17 +211,14 @@ const DeliveryStatusForm = ({
                   </Field>
                   <FormErrorMessage>{errors.handoverStatus}</FormErrorMessage>
                 </FormControl>
-                <Flex justifyContent="flex-end" gap="20px">
+                <Flex alignItems='center' justifyContent="space-between">
                   <Button
-                    color="#000080"
-                    bg="#EDEDFF"
-                    h="48px"
-                    borderRadius="30px"
+                    leftIcon={<ChevronLeftIcon />}
+                    color="brand.100"
                     fontWeight={600}
-                    fontSize={16}
-                    _hover={{ bg: '#000080' }}
+                    variant="ghost"
+                    _hover={{ bg: 'none' }}
                     onClick={() => setParentStep(parentStep - 1)}
-                    minW="100px"
                   >
                     Back
                   </Button>

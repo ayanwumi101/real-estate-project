@@ -31,6 +31,7 @@ import Cookie from 'js-cookie';
 import { CreateAssetContext } from '..';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
+import { ChevronLeftIcon } from '~/lib/components/Icons/Icons';
 
 const PropertyDetailsForm = ({
   step,
@@ -605,7 +606,17 @@ const PropertyDetailsForm = ({
                       : null}
                   </FormErrorMessage>
                 </FormControl>
-                <Flex justifyContent="flex-end">
+                <Flex justifyContent="space-between" alignItems="center">
+                  <Button
+                    leftIcon={<ChevronLeftIcon />}
+                    color="brand.100"
+                    fontWeight={600}
+                    variant="ghost"
+                    _hover={{ bg: 'none' }}
+                    isDisabled={true}
+                  >
+                    Back
+                  </Button>
                   <Button
                     bg="#000080"
                     color="white"

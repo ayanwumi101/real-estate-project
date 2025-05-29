@@ -21,6 +21,7 @@ import { UpdateAssetCashflowDetails } from '~/lib/api/services/assetsService';
 import Cookie from 'js-cookie';
 import { CreateAssetContext } from '../../..';
 import { formatCurrency } from '~/lib/utils/formatAmount';
+import { ChevronLeftIcon } from '~/lib/components/Icons/Icons';
 
 const CashflowDetails = ({
   step,
@@ -334,18 +335,16 @@ const CashflowDetails = ({
                 </FormControl>
                 <Flex justifyContent="flex-end" gap="10px">
                   <Button
-                    color="#000080"
-                    bg="#EDEDFF"
-                    h="48px"
-                    borderRadius="30px"
+                    leftIcon={<ChevronLeftIcon />}
+                    color="brand.100"
                     fontWeight={600}
-                    fontSize={16}
-                    _hover={{ bg: '#000080' }}
+                    variant="ghost"
+                    _hover={{ bg: 'none' }}
                     onClick={() => setStep(step - 1)}
-                    minW="100px"
                   >
                     Back
                   </Button>
+
                   <Button
                     bg="#000080"
                     color="white"

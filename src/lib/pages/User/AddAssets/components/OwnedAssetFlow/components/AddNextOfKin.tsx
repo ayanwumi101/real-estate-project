@@ -17,6 +17,7 @@ import {
   EmptyStateIcon,
   InputSearchIcon,
   AddIcon,
+  ChevronLeftIcon,
 } from '~/lib/components/Icons/Icons';
 import { AppContext } from '~/lib/layout';
 import {
@@ -212,20 +213,18 @@ const AddNextOfKin = ({
             </Box>
           )}
         </Box>
-        <Flex justifyContent="flex-end" gap="10px">
+        <Flex alignItems='center' justifyContent="space-between">
           <Button
-            color="#000080"
-            bg="#EDEDFF"
-            h="48px"
-            borderRadius="30px"
-            fontWeight={500}
-            fontSize={16}
-            _hover={{ bg: '#EDEDFF' }}
+            leftIcon={<ChevronLeftIcon />}
+            color="brand.100"
+            fontWeight={600}
+            variant="ghost"
+            _hover={{ bg: 'none' }}
             onClick={() => setStep(step - 1)}
-            minW="100px"
           >
             Back
           </Button>
+
           <Button
             bg="#000080"
             color="white"

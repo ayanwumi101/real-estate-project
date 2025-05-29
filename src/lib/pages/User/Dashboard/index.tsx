@@ -10,13 +10,17 @@ import UpcomingPayments from './components/UpcomingPayments';
 
 const index = () => {
   const [assets, setAssets] = React.useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
   const GetAssets = async () => {
+    setLoading(true);
     try {
       const res = await GetUserAssets();
       setAssets(res.data);
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   React.useEffect(() => {
@@ -36,8 +40,9 @@ const index = () => {
       <AccountBalance
         totalAssets={assets?.length}
         totalInvestment={totalInvestment}
+        assetsLoading={loading}
       />
-      <UpcomingPayments assets={upcomingPaymentsAssets} />
+      <UpcomingPayments loading={loading} assets={upcomingPaymentsAssets} />
       {/* <DashboardInfo /> */}
       {/* <Investments />
         <MarketUpdates /> */}
