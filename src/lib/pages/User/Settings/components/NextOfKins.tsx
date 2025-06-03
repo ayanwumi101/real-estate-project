@@ -27,6 +27,7 @@ import useNavigate from '~/lib/utils/useNavigate';
 import DeleteNokConfirmationModal from '../Modals/DeleteNokConfirmationModal';
 import { DeleteNextOfKin } from '~/lib/api/services/nokService';
 import EditNokDetails from '../Modals/EditNokDetails';
+import AssociatedPropertiesModal from '../Modals/AssociatedPropertiesModal';
 
 const NextOfKins = () => {
   const toast = useToast();
@@ -37,6 +38,8 @@ const NextOfKins = () => {
   const [selectedNokId, setSelectedNokId] = React.useState<string | null>(null);
   const [selectedNextOfKin, setSelectedNextOfKin] = React.useState<any>(null);
   const { nextOfKins, setNextOfKins } = useContext<any>(AppContext);
+  const [openNokAssociatedProperties, setOpenNokAssociatedProperties] =
+    React.useState<boolean>(false);
 
   const deleteNok = async () => {
     setLoading(true);
@@ -212,9 +215,10 @@ const NextOfKins = () => {
                                 fontSize={14}
                                 color="color.100"
                                 fontWeight={500}
-                                // onClick={() =>
-                                //   navigate(`/user/my-assets/${asset?.id}`)
-                                // }
+                                onClick={() => {
+                                  setSelectedNextOfKin(nok);
+                                  setOpenNokAssociatedProperties(true);
+                                }}
                               >
                                 Associated properties
                               </MenuItem>
@@ -294,6 +298,11 @@ const NextOfKins = () => {
         onClose={() => setOpenEditNokModal(false)}
         selectedNextOfKin={selectedNextOfKin}
         setNextOfKins={setNextOfKins}
+      />
+      <AssociatedPropertiesModal
+        isOpen={openNokAssociatedProperties}
+        onClose={() => setOpenNokAssociatedProperties(false)}
+        selectedNextOfKin={selectedNextOfKin}
       />
     </Box>
   );

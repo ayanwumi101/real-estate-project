@@ -17,7 +17,7 @@ import {
   Menu,
   MenuButton,
   MenuList,
-  MenuItem,
+  MenuItem, Badge
 } from '@chakra-ui/react';
 import React, { Fragment } from 'react';
 import SkeletonLoader from '~/lib/components/SkeletonLoader';
@@ -146,7 +146,18 @@ const PendingPayments = ({
                               : 'N/A'}
                           </Td>
                           <Td fontWeight={500} fontSize={14} color="#8295AA">
-                            {asset?.status || 'N/A'}
+                            <Badge
+                              color="brand.400"
+                              fontWeight={500}
+                              fontSize="14px"
+                              px="15px"
+                              textTransform="capitalize"
+                              py="4px"
+                              rounded="24px"
+                              bg="#EEEEEE"
+                            >
+                              {asset?.payment_status || 'N/A'}
+                            </Badge>
                           </Td>
                           <Td>
                             <Menu>

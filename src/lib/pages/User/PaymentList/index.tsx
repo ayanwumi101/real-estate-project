@@ -13,7 +13,8 @@ import {
   InputLeftElement,
   InputGroup,
   Select,
-  FormLabel, SkeletonText
+  FormLabel,
+  SkeletonText,
 } from '@chakra-ui/react';
 import {
   LocationIcon,
@@ -66,6 +67,14 @@ const index = () => {
     getAssetDetails();
     getAssetRemittances();
   }, [id]);
+
+  const completedPayments = assetRemittances?.filter(
+    (remittance: any) => remittance?.payment_status === 'completed'
+  );
+
+  const pendingPayments = assetRemittances?.filter(
+    (remittance: any) => remittance?.payment_status === 'pending'
+  );
 
   return (
     <Box
@@ -174,12 +183,12 @@ const index = () => {
             <Box>
               {activeTab === 'pending payments' ? (
                 <PendingPayments
-                  remittances={assetRemittances}
+                  remittances={pendingPayments}
                   isLoading={isLoading}
                 />
               ) : (
                 <CompletedPayments
-                  remittances={assetRemittances}
+                  remittances={completedPayments}
                   isLoading={isLoading}
                 />
               )}
