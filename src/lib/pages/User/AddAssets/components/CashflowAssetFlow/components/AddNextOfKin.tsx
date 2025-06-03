@@ -11,6 +11,7 @@ import {
   Spinner,
   useToast,
   Heading,
+  RadioGroup,
 } from '@chakra-ui/react';
 import React, { useContext, useEffect } from 'react';
 import {
@@ -45,7 +46,7 @@ const AddNextOfKin = ({
   const router = useRouter();
   const assetId = Cookie.get('vestier-asset-id');
   const { nextOfKins, setNextOfKins } = useContext<any>(AppContext);
-  const [selectedNextOfKin, setSelectedNextOfKin] = React.useState<any>('');
+  const [selectedNextOfKin, setSelectedNextOfKin] = React.useState<any>();
   const [openModal, setOpenModal] = React.useState<boolean>(false);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [searchTerm, setSearchTerm] = React.useState<string>('');
@@ -138,6 +139,7 @@ const AddNextOfKin = ({
       });
     }
   };
+  
 
   return (
     <Box>
@@ -206,19 +208,28 @@ const AddNextOfKin = ({
             ) : (
               <Box>
                 <Stack spacing="12px">
-                  {filteredNextOfKins?.map((nextOfKin: any, index: number) => (
-                    <AddAssetNextOfKinCard
-                      name={nextOfKin?.fullname}
-                      email={nextOfKin?.email}
-                      phoneNumber={nextOfKin?.phone}
-                      relationship={nextOfKin?.relationship}
-                      key={nextOfKin?.id}
-                      id={nextOfKin?.id}
-                      selectedNextOfKin={selectedNextOfKin}
-                      setSelectedNextOfKin={setSelectedNextOfKin}
-                    />
-                  ))}
-                  <Flex justifyContent="flex-end" gap="10px">
+                  <RadioGroup
+                    value={selectedNextOfKin}
+                    onChange={setSelectedNextOfKin}
+                  >
+                    <Stack spacing="15px">
+                      {filteredNextOfKins?.map(
+                        (nextOfKin: any, index: number) => (
+                          <AddAssetNextOfKinCard
+                            name={nextOfKin?.fullname}
+                            email={nextOfKin?.email}
+                            phoneNumber={nextOfKin?.phone}
+                            relationship={nextOfKin?.relationship}
+                            key={nextOfKin?.id}
+                            id={nextOfKin?.id}
+                            selectedNextOfKin={selectedNextOfKin}
+                            setSelectedNextOfKin={setSelectedNextOfKin}
+                          />
+                        )
+                      )}
+                    </Stack>
+                  </RadioGroup>
+                  <Flex justifyContent="space-between" gap="10px">
                     <Button
                       leftIcon={<ChevronLeftIcon />}
                       color="brand.100"

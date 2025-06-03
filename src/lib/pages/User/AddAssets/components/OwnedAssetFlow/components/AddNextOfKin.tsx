@@ -10,7 +10,7 @@ import {
   Flex,
   Spinner,
   useToast,
-  Heading,
+  Heading, RadioGroup
 } from '@chakra-ui/react';
 import React, { useContext, useEffect } from 'react';
 import {
@@ -196,24 +196,29 @@ const AddNextOfKin = ({
             </Box>
           ) : (
             <Box>
-              <Stack spacing="12px">
-                {filteredNextOfKins?.map((nextOfKin: any, index: number) => (
-                  <AddAssetNextOfKinCard
-                    name={nextOfKin?.fullname}
-                    email={nextOfKin?.email}
-                    phoneNumber={nextOfKin?.phone}
-                    relationship={nextOfKin?.relationship}
-                    key={nextOfKin?.id}
-                    id={nextOfKin?.id}
-                    selectedNextOfKin={selectedNextOfKin}
-                    setSelectedNextOfKin={setSelectedNextOfKin}
-                  />
-                ))}
-              </Stack>
+              <RadioGroup
+                value={selectedNextOfKin}
+                onChange={setSelectedNextOfKin}
+              >
+                <Stack spacing="15px">
+                  {filteredNextOfKins?.map((nextOfKin: any, index: number) => (
+                    <AddAssetNextOfKinCard
+                      name={nextOfKin?.fullname}
+                      email={nextOfKin?.email}
+                      phoneNumber={nextOfKin?.phone}
+                      relationship={nextOfKin?.relationship}
+                      key={nextOfKin?.id}
+                      id={nextOfKin?.id}
+                      selectedNextOfKin={selectedNextOfKin}
+                      setSelectedNextOfKin={setSelectedNextOfKin}
+                    />
+                  ))}
+                </Stack>
+              </RadioGroup>
             </Box>
           )}
         </Box>
-        <Flex alignItems='center' justifyContent="space-between">
+        <Flex alignItems="center" justifyContent="space-between">
           <Button
             leftIcon={<ChevronLeftIcon />}
             color="brand.100"

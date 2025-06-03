@@ -325,7 +325,7 @@ const CashflowDetails = ({
                     borderRadius="40px"
                     placeholder="e.g. 50%"
                     _placeholder={{ color: '#8295AA', fontWeight: 500 }}
-                    type="date"
+                    type="text"
                   />
                   <FormErrorMessage>
                     {typeof errors.equityOwnership === 'string'
@@ -333,7 +333,7 @@ const CashflowDetails = ({
                       : null}
                   </FormErrorMessage>
                 </FormControl>
-                <Flex justifyContent="flex-end" gap="10px">
+                <Flex justifyContent="space-between" gap="10px">
                   <Button
                     leftIcon={<ChevronLeftIcon />}
                     color="brand.100"

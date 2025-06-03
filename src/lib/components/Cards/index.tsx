@@ -11,7 +11,7 @@ import {
   Divider,
   Avatar,
   chakra,
-  VStack,
+  VStack, Radio
 } from '@chakra-ui/react';
 import {
   LocationIcon,
@@ -433,7 +433,7 @@ export const AddAssetNextOfKinCard = ({
   selectedNextOfKin,
   setSelectedNextOfKin,
 }: {
-  id: number;
+  id: string;
   name: string;
   relationship: string;
   phoneNumber: string;
@@ -448,76 +448,63 @@ export const AddAssetNextOfKinCard = ({
       borderColor="border.100"
       py="12px"
       px="24px"
+      w="full"
     >
-      <Stack spacing="14px">
-        <Box>
-          <Flex
-            alignItems="center"
-            justifyContent="space-between"
-            flexWrap="wrap"
-            gap={['20px', '0']}
-          >
-            <Box>
-              <Flex gap="10px" alignItems="flex-start">
-                <Avatar
-                  name={name}
-                  w="40px"
-                  bg="brand.500"
-                  h="40px"
-                  color="brand.100"
-                  fontWeight={700}
-                  fontSize={20}
-                />
-                <Box>
-                  <Stack spacing="4px">
-                    <Heading fontSize={16} color="brand.400" fontWeight={600}>
-                      {name}
-                    </Heading>
-                    <Text fontSize={14} color="brand.400" fontWeight={500}>
-                      {relationship}
-                    </Text>
-                  </Stack>
-                </Box>
-              </Flex>
-            </Box>
-            {/* <Text fontSize={14} fontWeight={500} color="brand.100">
-              Associated with Harborview Towers
-            </Text> */}
-          </Flex>
-        </Box>
-        <Divider color="border.100" />
-        <Box>
-          <Flex alignItems="center" justifyContent="space-between">
-            <Stack spacing="12px">
-              <Flex alignItems="center" gap="10px">
-                <TelephoneIconWithBg />
-                <Text color="brand.400" fontSize={12} fontWeight={500}>
-                  {phoneNumber}
-                </Text>
-              </Flex>
-              <Flex alignItems="center" gap="10px">
-                <EmailIconWithBg />
-                <Text color="brand.400" fontSize={12} fontWeight={500}>
-                  {email}
-                </Text>
-              </Flex>
-            </Stack>
-            <Button
-              onClick={() => setSelectedNextOfKin(id)}
-              px="25px"
-              py="3"
-              h="40px"
-              fontSize={15}
-              bg="brand.100"
-              color="brand.200"
-              fontWeight={500}
-              isDisabled={selectedNextOfKin === id}
+      <Radio size="lg" value={id.toString()} name={id.toString()} w="full">
+        <Stack spacing="14px" pl="5" w="full">
+          <Box w="full">
+            <Flex
+              alignItems="center"
+              justifyContent="space-between"
+              flexWrap="wrap"
+              gap={['20px', '0']}
             >
-              {selectedNextOfKin === id ? 'Selected' : 'Select'}
-            </Button>
-          </Flex>
-        </Box>
-      </Stack>
+              <Box>
+                <Flex gap="10px" alignItems="flex-start">
+                  <Avatar
+                    name={name}
+                    w="40px"
+                    bg="brand.500"
+                    h="40px"
+                    color="brand.100"
+                    fontWeight={700}
+                    fontSize={20}
+                  />
+                  <Box>
+                    <Stack spacing="4px">
+                      <Heading fontSize={16} color="brand.400" fontWeight={600}>
+                        {name}
+                      </Heading>
+                      <Text fontSize={14} color="brand.400" fontWeight={500}>
+                        {relationship}
+                      </Text>
+                    </Stack>
+                  </Box>
+                </Flex>
+              </Box>
+            </Flex>
+          </Box>
+          <Divider color="border.100" w="full" />
+          <Box w="full">
+            <Flex alignItems="center" justifyContent="space-between">
+              <Stack spacing="12px">
+                <Flex alignItems="center" gap="10px">
+                  <TelephoneIconWithBg />
+                  <Text color="brand.400" fontSize={12} fontWeight={500}>
+                    {phoneNumber}
+                  </Text>
+                </Flex>
+                <Flex alignItems="center" gap="10px">
+                  <EmailIconWithBg />
+                  <Text color="brand.400" fontSize={12} fontWeight={500}>
+                    {email}
+                  </Text>
+                </Flex>
+              </Stack>
+            </Flex>
+          </Box>
+        </Stack>
+      </Radio>
     </Box>
   );
 };
