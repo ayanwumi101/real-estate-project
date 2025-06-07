@@ -33,7 +33,14 @@ import { AppContext } from '~/lib/layout';
 
 // Validation Schema
 const validationSchema = Yup.object().shape({
-  profilePicture: Yup.mixed().notRequired(),
+  profilePicture: Yup.mixed().test(
+    'fileSize',
+    'Profile picture must be less than 3MB',
+    (value) => {
+      if (!value) return true;
+      return value instanceof File ? value.size <= 3 * 1024 * 1024 : true; // 3MB
+    }
+  ).notRequired(),
   dateOfBirth: Yup.date()
     .max(new Date(), 'Date of birth cannot be in the future')
     .required('Date of birth is required'),
@@ -95,14 +102,20 @@ const PersonalDetails = ({ step, setStep }: PersonalDetailsProps) => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {({ errors, touched, setFieldValue, values }) => (
+      {({
+        errors,
+        touched,
+        setFieldValue,
+        values,
+       setFieldTouched
+      }) => (
         <Form>
           <Box w={['100%', '100%', '600px']}>
             <Stack spacing="25px" w="100%">
               {/* Profile Picture */}
               <FormControl
                 w="100%"
-                // isInvalid={!!errors.profilePicture && touched.profilePicture}
+                isInvalid={!!errors.profilePicture && touched.profilePicture}
               >
                 <FormLabel
                   fontWeight={600}
@@ -166,12 +179,14 @@ const PersonalDetails = ({ step, setStep }: PersonalDetailsProps) => {
                     <Input
                       type="file"
                       id="upload"
+                      accept="image/*"
                       display="none"
                       onChange={(event) => {
-                        setFieldValue(
-                          'profilePicture',
-                          event.currentTarget.files?.[0]
-                        );
+                        const file = event.currentTarget.files?.[0];
+                        if (file) {
+                          setFieldValue('profilePicture', file);
+                          setFieldTouched('profilePicture', true);
+                        }
                       }}
                     />
                     <Box
@@ -188,7 +203,7 @@ const PersonalDetails = ({ step, setStep }: PersonalDetailsProps) => {
                     </Box>
                   </FormLabel>
                 )}
-                {/* <FormErrorMessage>{errors.profilePicture}</FormErrorMessage> */}
+                <FormErrorMessage>{errors.profilePicture}</FormErrorMessage>
               </FormControl>
 
               {/* Date of Birth */}
@@ -264,11 +279,11 @@ const PersonalDetails = ({ step, setStep }: PersonalDetailsProps) => {
                   Back
                 </Button>
                 <Box>
-                  <Flex alignItems="center" gap={['10px',"20px"]}>
+                  <Flex alignItems="center" gap={['10px', '20px']}>
                     <Button
                       bg="brand.500"
                       color="brand.100"
-                      _hover={{bg: 'brand.500'}}
+                      _hover={{ bg: 'brand.500' }}
                       h="48px"
                       borderRadius="30px"
                       fontWeight={600}
@@ -287,7 +302,7 @@ const PersonalDetails = ({ step, setStep }: PersonalDetailsProps) => {
                       fontWeight={600}
                       fontSize={16}
                       _hover={{ bg: '#000080' }}
-                      minW={['100px',"170px"]}
+                      minW={['100px', '120px']}
                     >
                       {loading ? <Spinner /> : 'Continue'}
                     </Button>

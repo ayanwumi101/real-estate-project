@@ -214,7 +214,7 @@ const NextOfKinDetails = ({
                       fontWeight={600}
                       fontSize={16}
                       _hover={{ bg: '#000080' }}
-                      minW={['100px', '170px']}
+                      minW={['100px', '110px']}
                     >
                       {loading ? <Spinner /> : 'Complete'}
                     </Button>

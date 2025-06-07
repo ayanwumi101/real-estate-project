@@ -9,47 +9,46 @@ import {
   PersonalDetailsIcon,
   AddressDetailsIcon,
 } from '~/lib/components/Icons/Icons';
-import { HiOutlineChevronDoubleRight } from "react-icons/hi";
+import { HiOutlineChevronDoubleRight } from 'react-icons/hi';
 
-
-
-const StepDivider = () => {
-  return <Box borderRight="1.5px dashed #ABABFF" h="65px" mr="2"></Box>;
+const StepDivider = ({ isActive }: { isActive: boolean }) => {
+  return <Box w={['30px',"70px"]} h="1.5px" bg={isActive ? '#000080' : 'border.200'} />;
 };
 
 const SingleStepItem = ({
-  Icon,
+  step,
   label,
   isActive,
 }: {
-  Icon: any;
+  step: number;
   label: string;
   isActive: boolean;
 }) => {
   return (
     <Box>
-      <Flex alignItems="center" gap="12px">
-        <Text
-          fontWeight={600}
-          fontSize={16}
-          color={isActive ? '#000080' : '#ABABFF'}
-        >
-          {label}
-        </Text>
+      <Stack alignItems="center" gap="12px" textAlign='center'>
         <Box
-          w="40px"
-          h="40px"
+          w={['25px',"30px"]}
+          h={['25px',"30px"]}
           borderRadius="50%"
-          bg={isActive ? '#000080' : 'none'}
+          bg={isActive ? '#000080' : 'border.200'}
           display="flex"
           alignItems="center"
           justifyContent="center"
           border="1px solid"
-          borderColor={isActive ? '#000080' : '#ABABFF'}
+          fontWeight={600}
+          color="#FFFFFF"
         >
-          <Icon isActive={isActive} />
+          {step}
         </Box>
-      </Flex>
+        <Text
+          fontWeight={600}
+          fontSize={[14,16]}
+          color={isActive ? '#000080' : 'border.200'}
+        >
+          {label}
+        </Text>
+      </Stack>
     </Box>
   );
 };
@@ -77,66 +76,33 @@ const MobileStepItem = ({
 const FormStepper = ({ step }: { step: number }) => {
   const [isMobile] = useMediaQuery('(max-width: 830px)');
   return (
-    <Fragment>
-      {isMobile ? (
-        <Box>
-          <Stack
-            alignItems="center"
-            spacing="10px"
-            direction="row"
-            flexWrap="wrap"
-          >
-            <MobileStepItem
-              label="Personal Details"
-              isActive={step > 0 ? true : false}
-            />
-            <HiOutlineChevronDoubleRight color="#000080" />
-            <MobileStepItem
-              label="Address Details"
-              isActive={step > 1 ? true : false}
-            />
-            <HiOutlineChevronDoubleRight color="#000080" />
-            <MobileStepItem
-              label="Bank Details"
-              isActive={step > 2 ? true : false}
-            />
-            <HiOutlineChevronDoubleRight color="#000080" />
-            <MobileStepItem
-              label="Next of Kin"
-              isActive={step > 3 ? true : false}
-            />
-          </Stack>
-        </Box>
-      ) : (
-        <Box as="section" w="180px">
-          <Stack alignItems="flex-end" justifyContent="flex-end">
-            <SingleStepItem
-              label="Personal Details"
-              Icon={PersonalDetailsIcon}
-              isActive={step > 0 ? true : false}
-            />
-            <StepDivider />
-            <SingleStepItem
-              label="Address Details"
-              Icon={AddressDetailsIcon}
-              isActive={step > 1 ? true : false}
-            />
-            <StepDivider />
-            <SingleStepItem
-              label="Bank Details"
-              Icon={CashflowDetailsIcon}
-              isActive={step > 2 ? true : false}
-            />
-            <StepDivider />
-            <SingleStepItem
-              label="Next of Kin"
-              Icon={NextOfKinIcon}
-              isActive={step > 3 ? true : false}
-            />
-          </Stack>
-        </Box>
-      )}
-    </Fragment>
+    <Box as="section" w="auto">
+      <Flex alignItems="center" justifyContent="cemter" gap={['7px', 0]} mx='auto' overflow='auto'>
+        <SingleStepItem
+          label="Personal Details"
+          step={1}
+          isActive={step > 0 ? true : false}
+        />
+        <StepDivider isActive={step > 0 ? true : false} />
+        <SingleStepItem
+          label="Address Details"
+          step={2}
+          isActive={step > 1 ? true : false}
+        />
+        <StepDivider isActive={step > 1 ? true : false} />
+        <SingleStepItem
+          label="Bank Details"
+          step={3}
+          isActive={step > 2 ? true : false}
+        />
+        <StepDivider isActive={step > 2 ? true : false} />
+        <SingleStepItem
+          label="Next of Kin"
+          step={4}
+          isActive={step > 3 ? true : false}
+        />
+      </Flex>
+    </Box>
   );
 };
 

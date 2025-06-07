@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Flex, Button } from '@chakra-ui/react';
+import { Box, Stack, Button, Divider } from '@chakra-ui/react';
 import React, { createContext, useEffect, useState } from 'react';
 import FormStepper from './components/FormStepper';
 import PersonalDetails from './components/PersonalDetails';
@@ -10,7 +10,6 @@ import NextOfKinDetails from './components/NextOfKinDetails';
 import { GetNigerianBanks } from '~/lib/api/services/profileService';
 import { GetAllCountries } from '~/lib/api/services/locationService';
 import Link from 'next/link';
-
 
 export const ProfileSetupContext = createContext<any>(null);
 
@@ -44,24 +43,17 @@ const index = () => {
 
   return (
     <ProfileSetupContext.Provider value={{ banks, countries }}>
-      <Box
-        borderTop={['none', 'none', '1px solid #E4E4E4']}
-        py="40px"
-        px={['20px', '20px', '55px']}
-      >
-        <Flex
-          alignItems="flex-start"
-          flexDir={['column', 'column', 'row']}
-          gap={['40px', '40px', '55px']}
-        >
+      <Box py="40px" px={['16px', '0px']} maxW="750px" mx="auto">
+        <Stack alignItems="center" spacing="40px">
           <FormStepper step={step} />
+          <Divider />
           <Box w={['100%', '80%', '80%']}>
             {step === 1 && <PersonalDetails step={step} setStep={setStep} />}
             {step === 2 && <AddressDetails step={step} setStep={setStep} />}
             {step === 3 && <BankDetails step={step} setStep={setStep} />}
             {step === 4 && <NextOfKinDetails step={step} setStep={setStep} />}
           </Box>
-        </Flex>
+        </Stack>
       </Box>
     </ProfileSetupContext.Provider>
   );

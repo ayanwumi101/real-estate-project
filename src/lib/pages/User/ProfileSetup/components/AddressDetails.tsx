@@ -152,7 +152,7 @@ const AddressDetails = ({
 
                   {/* Street Number and Street Name */}
                   <Flex
-                    alignItems="center"
+                    alignItems='flex-start'
                     gap="15px"
                     flexWrap={['wrap', 'wrap', 'nowrap']}
                     mb="22px"
@@ -194,7 +194,7 @@ const AddressDetails = ({
 
                   {/* Country, State, and City */}
                   <Flex
-                    alignItems="center"
+                    alignItems='flex-start'
                     gap="15px"
                     flexWrap={['wrap', 'wrap', 'nowrap']}
                   >
@@ -306,7 +306,7 @@ const AddressDetails = ({
                         fontWeight={600}
                         fontSize={16}
                         _hover={{ bg: '#000080' }}
-                        minW={['100px', '170px']}
+                        minW={['100px', '110px']}
                       >
                         {loading ? <Spinner /> : 'Continue'}
                       </Button>
