@@ -35,6 +35,7 @@ const API_ROUTES = {
   DELETE_ASSET: '/user/asset/delete',
   UPDATE_ASSET_DETAILS: '/user/asset/update',
   GET_ASSET_REMITTANCES: '/user/asset/remittance',
+  ADD_ASSET_REMITTANCE: '/user/asset/remittance',
 
   //location endpoints
   GET_ALL_COUNTRIES: '/countries',

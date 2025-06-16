@@ -76,6 +76,8 @@ const index = () => {
     (remittance: any) => remittance?.payment_status === 'pending'
   );
 
+  console.log(assetRemittances);
+
   return (
     <Box
       py="40px"

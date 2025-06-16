@@ -2,6 +2,7 @@
 
 import { Box, Flex, Text, Button, Stack, Heading } from '@chakra-ui/react';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import React from 'react';
 import { HiPlus } from 'react-icons/hi2';
 import { FormatAmount, formatCurrency } from '~/lib/utils/formatAmount';
@@ -18,7 +19,8 @@ const NavigationTab = ({
   setActiveTab: (value: string) => void;
   totalAmountReceived: number;
   assetType: string;
-}) => {
+  }) => {
+  const { id } = useParams();
   return (
     <Box py="15px" w="full">
       <Flex
@@ -65,7 +67,7 @@ const NavigationTab = ({
                 </Heading>
               </Stack>
             </Box>
-            <Link href="/user/my-assets/add-assets">
+            <Link href={`/user/my-assets/${id}/add-payment`}>
               <Button
                 bg="#000080"
                 fontSize={14}
