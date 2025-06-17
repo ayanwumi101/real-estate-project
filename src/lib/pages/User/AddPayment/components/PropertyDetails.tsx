@@ -10,7 +10,7 @@ const PropertyDetails = ({ assetDetails }: { assetDetails: any }) => {
         <Box>
           <Stack spacing="13px">
             <Text fontWeight={500} color="brand.300">
-              Remittance for
+              {assetDetails?.asset_type === 'cashflow' ? "Remittance for" : "Instalment for"}
             </Text>
             <Heading fontWeight={500} fontSize={24}>
               {assetDetails?.property_name || 'Skyline Residences'}
@@ -27,7 +27,7 @@ const PropertyDetails = ({ assetDetails }: { assetDetails: any }) => {
           <Flex alignItems="center" justifyContent="space-between">
             <Stack>
               <Heading fontWeight={600} fontSize={16} color="brand.600">
-                Current Remittance
+                Current {assetDetails?.asset_type === 'cashflow' ? "Remittance" : "Instalment"}
               </Heading>
               <Text fontWeight={500} fontSize={14} color="brand.300">
                 All payments received in this entry
@@ -42,7 +42,7 @@ const PropertyDetails = ({ assetDetails }: { assetDetails: any }) => {
           <Flex alignItems="center" justifyContent="space-between">
             <Stack>
               <Heading fontWeight={600} fontSize={16} color="brand.600">
-                Total remittance
+                {"Total " + (assetDetails?.asset_type === 'cashflow' ? "remittance" : "instalment")}
               </Heading>
               <Text fontWeight={500} fontSize={14} color="brand.300">
                 All payments received so far for this property

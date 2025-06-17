@@ -99,7 +99,7 @@ const UpcomingPayments = ({
                           fontSize={14}
                           textTransform="capitalize"
                         >
-                          Payment Due
+                           Due Date
                         </Th>
                         <Th
                           color="#222222"
@@ -107,7 +107,7 @@ const UpcomingPayments = ({
                           fontSize={14}
                           textTransform="capitalize"
                         >
-                          Payment Date
+                          Amount
                         </Th>
                         <Th
                           color="#222222"
@@ -171,11 +171,7 @@ const UpcomingPayments = ({
                                 : 'N/A'}
                             </Td>
                             <Td fontWeight={500} fontSize={14}>
-                              {asset?.last_cashflow_date
-                                ? moment(asset?.last_cashflow_date).format(
-                                    'ddd, Do MMMM YYYY'
-                                  )
-                                : 'N/A'}
+                              {FormatAmount(Number(asset?.cashflow_amount))}
                             </Td>
                             <Td fontWeight={500} fontSize={14}>
                               {asset?.cashflow_duration}

@@ -32,7 +32,7 @@ const validationSchema = Yup.object().shape({
     .positive('Remittance amount must be a positive number'),
 });
 
-const PaymentForm = ({ assetId }: { assetId: string | number }) => {
+const PaymentForm = ({ assetId, assetType }: { assetId: string | number; assetType: string }) => {
   const toast = useToast();
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
@@ -124,7 +124,9 @@ const PaymentForm = ({ assetId }: { assetId: string | number }) => {
                 isRequired
               >
                 <FormLabel color="brand.300" fontWeight={600} fontSize={15}>
-                  Remittance Due Date
+                  {assetType === 'cashflow'
+                    ? 'Remittance Due Date'
+                    : 'Instalment Due Date'}
                 </FormLabel>
                 <Field
                   as={Input}
@@ -168,7 +170,9 @@ const PaymentForm = ({ assetId }: { assetId: string | number }) => {
                 isRequired
               >
                 <FormLabel color="brand.300" fontWeight={600} fontSize={15}>
-                  Remittance Amount
+                  {assetType === 'cashflow'
+                    ? 'Remittance Amount'
+                    : 'Instalment Amount'}
                 </FormLabel>
                 <Input
                   type="text"

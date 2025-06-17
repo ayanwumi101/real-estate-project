@@ -43,7 +43,7 @@ const index = () => {
           flexWrap={['wrap', 'nowrap']}
         >
           <PropertyDetails assetDetails={assetDetails} />
-          <PaymentForm assetId={assetDetails?.id} />
+          <PaymentForm assetId={assetDetails?.id} assetType={assetDetails?.asset_type} />
         </Flex>
       </Stack>
     </Box>
