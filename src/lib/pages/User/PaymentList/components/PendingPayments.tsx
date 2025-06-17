@@ -17,7 +17,8 @@ import {
   Menu,
   MenuButton,
   MenuList,
-  MenuItem, Badge
+  MenuItem,
+  Badge,
 } from '@chakra-ui/react';
 import React, { Fragment } from 'react';
 import SkeletonLoader from '~/lib/components/SkeletonLoader';
@@ -41,6 +42,11 @@ const PendingPayments = ({
   const navigate = useNavigate();
   const [page, setPage] = React.useState(1);
   const [limit, setLimit] = React.useState(20);
+
+  const totalDueAmount = remittances?.reduce(
+    (acc, remittance) => acc + (Number(remittance?.amount) || 0),
+    0
+  );
   return (
     <Box>
       {isLoading ? (
@@ -77,15 +83,7 @@ const PendingPayments = ({
                       fontSize={14}
                       textTransform="capitalize"
                     >
-                      Instalment Due Date
-                    </Th>
-                    <Th
-                      color="#222222"
-                      fontWeight={500}
-                      fontSize={14}
-                      textTransform="capitalize"
-                    >
-                      Balance Left
+                      Due Date
                     </Th>
                     <Th
                       color="#222222"
@@ -126,21 +124,18 @@ const PendingPayments = ({
                       return (
                         <Tr key={asset?.id} border="none" cursor="pointer">
                           <Td fontWeight={500} fontSize={14} color="#8295AA">
-                            {asset?.last_cashflow
-                              ? moment(asset?.last_cashflow).format(
+                            {asset?.remittance_due_date
+                              ? moment(asset?.remittance_due_date).format(
                                   'ddd, Do MMMM YYYY'
                                 )
                               : 'N/A'}
                           </Td>
                           <Td fontWeight={500} fontSize={14} color="#8295AA">
-                            -
-                          </Td>
-                          <Td fontWeight={500} fontSize={14} color="#8295AA">
                             {FormatAmount(Number(asset?.amount))}
                           </Td>
                           <Td fontWeight={500} fontSize={14} color="#8295AA">
-                            {asset?.remittance_due_date
-                              ? moment(asset?.remittance_due_date).format(
+                            {asset?.payment_date
+                              ? moment(asset?.payment_date).format(
                                   'ddd, Do MMMM YYYY'
                                 )
                               : 'N/A'}
@@ -198,6 +193,12 @@ const PendingPayments = ({
                       );
                     })}
                 </Tbody>
+                <Tr borderTop="1px solid #E4E7EC">
+                  <Td fontWeight={500}>Total Amount Due</Td>
+                  <Td fontWeight={500}>
+                    {FormatAmount(Number(totalDueAmount))}
+                  </Td>
+                </Tr>
               </Table>
             </TableContainer>
           )}

@@ -31,17 +31,16 @@ import {
 } from '~/lib/components/Icons/Icons';
 import moment from 'moment';
 
-
 const CompletedPayments = ({
   isLoading,
   remittances,
 }: {
   isLoading: boolean;
   remittances: any[];
-  }) => {
-    const navigate = useNavigate();
-    const [page, setPage] = React.useState(1);
-    const [limit, setLimit] = React.useState(20);
+}) => {
+  const navigate = useNavigate();
+  const [page, setPage] = React.useState(1);
+  const [limit, setLimit] = React.useState(20);
   return (
     <Box>
       {isLoading ? (

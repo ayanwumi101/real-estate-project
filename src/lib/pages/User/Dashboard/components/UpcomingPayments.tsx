@@ -91,6 +91,14 @@ const UpcomingPayments = ({
                           fontSize={14}
                           textTransform="capitalize"
                         >
+                          Property
+                        </Th>
+                        <Th
+                          color="#222222"
+                          fontWeight={500}
+                          fontSize={14}
+                          textTransform="capitalize"
+                        >
                           Payment Due
                         </Th>
                         <Th
@@ -100,14 +108,6 @@ const UpcomingPayments = ({
                           textTransform="capitalize"
                         >
                           Payment Date
-                        </Th>
-                        <Th
-                          color="#222222"
-                          fontWeight={500}
-                          fontSize={14}
-                          textTransform="capitalize"
-                        >
-                          Remittance Amount
                         </Th>
                         <Th
                           color="#222222"
@@ -142,6 +142,23 @@ const UpcomingPayments = ({
                             // _hover={{ bg: '#f5f5f5' }}
                             cursor="pointer"
                           >
+                            <Td fontSize={15} color="#222222" fontWeight={600}>
+                              <Stack>
+                                <Heading
+                                  color="#2E353F"
+                                  fontSize={16}
+                                  fontWeight={600}
+                                >
+                                  {asset?.property_name}
+                                </Heading>
+                                <Flex alignItems="center" gap="10px">
+                                  <LocationIcon />
+                                  <Text fontSize={12} color="#222222">
+                                    {`${asset?.city_name}, ${asset?.street_name}`}
+                                  </Text>
+                                </Flex>
+                              </Stack>
+                            </Td>
                             <Td fontWeight={500} fontSize={14}>
                               {asset?.next_remittance_due_date ||
                               asset?.cashflow_payment_due ||
@@ -159,9 +176,6 @@ const UpcomingPayments = ({
                                     'ddd, Do MMMM YYYY'
                                   )
                                 : 'N/A'}
-                            </Td>
-                            <Td fontWeight={500} fontSize={13}>
-                              {FormatAmount(asset?.cashflow_amount)}
                             </Td>
                             <Td fontWeight={500} fontSize={14}>
                               {asset?.cashflow_duration}
