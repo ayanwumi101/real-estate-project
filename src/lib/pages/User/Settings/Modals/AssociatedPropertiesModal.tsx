@@ -18,10 +18,14 @@ const AssociatedPropertiesModal = ({
   isOpen,
   onClose,
   selectedNextOfKin,
+  setOpenRemoveNokModal,
+  setSelectedProperty
 }: {
   isOpen: boolean;
   onClose: () => void;
   selectedNextOfKin?: any;
+    setOpenRemoveNokModal: (open: boolean) => void;
+  setSelectedProperty: (property: any) => void;
 }) => {
   return (
     <CustomModal isOpen={isOpen} onClose={onClose}>
@@ -42,7 +46,7 @@ const AssociatedPropertiesModal = ({
           <Heading fontSize={20} fontWeight={600} color="brand.100">
             Properties - {selectedNextOfKin?.properties?.length} associated
           </Heading>
-          <Stack>
+          <Stack spacing='20px'>
             {selectedNextOfKin?.properties?.map((property: any) => {
               return (
                 <Box key={property?.id}>
@@ -88,7 +92,11 @@ const AssociatedPropertiesModal = ({
                           fontSize={14}
                           color="color.100"
                           fontWeight={500}
-                          // onClick={() => navigate(`/user/my-assets/${asset?.id}`)}
+                          onClick={() => {
+                            onClose();
+                            setOpenRemoveNokModal(true);
+                            setSelectedProperty(property);
+                          }}
                         >
                           Remove
                         </MenuItem>

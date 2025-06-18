@@ -28,18 +28,23 @@ import DeleteNokConfirmationModal from '../Modals/DeleteNokConfirmationModal';
 import { DeleteNextOfKin } from '~/lib/api/services/nokService';
 import EditNokDetails from '../Modals/EditNokDetails';
 import AssociatedPropertiesModal from '../Modals/AssociatedPropertiesModal';
+import RemoveNokFromPropertyModal from '../Modals/RemoveNokFromPropertyModal';
+import { RemoveNextOfKinFromAsset } from '~/lib/api/services/assetsService';
 
 const NextOfKins = () => {
   const toast = useToast();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = React.useState(false);
   const [openEditNokModal, setOpenEditNokModal] = React.useState(false);
+  const [openRemoveNokModal, setOpenRemoveNokModal] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [removeNokLoading, setRemoveNokLoading] = React.useState(false);
   const [selectedNokId, setSelectedNokId] = React.useState<string | null>(null);
   const [selectedNextOfKin, setSelectedNextOfKin] = React.useState<any>(null);
   const { nextOfKins, setNextOfKins } = useContext<any>(AppContext);
   const [openNokAssociatedProperties, setOpenNokAssociatedProperties] =
     React.useState<boolean>(false);
+  const [selectedProperty, setSelectedProperty] = React.useState<any>(null);
 
   const deleteNok = async () => {
     setLoading(true);
@@ -64,6 +69,37 @@ const NextOfKins = () => {
       console.error('Error deleting next of kin:', error);
     }
     setLoading(false);
+  };
+
+  const removeNokFromProperty = async () => {
+    setRemoveNokLoading(true);
+    const formData = {
+      property_id: selectedProperty?.id,
+      nok_id: selectedNextOfKin?.id,
+    };
+    try {
+      const res = await RemoveNextOfKinFromAsset(formData);
+      if (res.status) {
+        const updatedProperties = selectedNextOfKin?.properties?.filter(
+          (property: any) => property.id !== selectedProperty?.id
+        );
+        setSelectedNextOfKin((prev: any) => ({
+          ...prev,
+          properties: updatedProperties,
+        }));
+        setOpenRemoveNokModal(false);
+        toast({
+          title: 'Next of Kin removed from property successfully',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        });
+      }
+    } catch (error) {
+      console.error('Error removing next of kin from property:', error);
+    }
+    setRemoveNokLoading(false);
   };
 
   return (
@@ -303,6 +339,18 @@ const NextOfKins = () => {
         isOpen={openNokAssociatedProperties}
         onClose={() => setOpenNokAssociatedProperties(false)}
         selectedNextOfKin={selectedNextOfKin}
+        setOpenRemoveNokModal={setOpenRemoveNokModal}
+        setSelectedProperty={setSelectedProperty}
+      />
+      <RemoveNokFromPropertyModal
+        isOpen={openRemoveNokModal}
+        onClose={() => setOpenRemoveNokModal(false)}
+        loading={removeNokLoading}
+        removeNok={removeNokFromProperty}
+        nokName={selectedNextOfKin?.fullname || ''}
+        propertyName={
+          selectedNextOfKin?.properties?.[0]?.name || 'Property Name'
+        }
       />
     </Box>
   );

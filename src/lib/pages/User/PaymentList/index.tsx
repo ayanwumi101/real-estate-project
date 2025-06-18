@@ -75,7 +75,6 @@ const index = () => {
   const pendingPayments = assetRemittances?.filter(
     (remittance: any) => remittance?.payment_status === 'pending'
   );
-
   return (
     <Box
       py="40px"
@@ -140,7 +139,10 @@ const index = () => {
                       color="brand.400"
                       fontWeight={500}
                     >
-                      Remittance Status
+                      {assetDetails?.asset_type === 'cashflow'
+                        ? 'Cashflow'
+                        : 'Installment'}{' '}
+                      Status
                     </FormLabel>
                     <Select
                       id="filter"

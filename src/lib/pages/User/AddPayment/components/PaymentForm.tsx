@@ -126,7 +126,7 @@ const PaymentForm = ({ assetId, assetType }: { assetId: string | number; assetTy
                 <FormLabel color="brand.300" fontWeight={600} fontSize={15}>
                   {assetType === 'cashflow'
                     ? 'Remittance Due Date'
-                    : 'Instalment Due Date'}
+                    : 'Installment Due Date'}
                 </FormLabel>
                 <Field
                   as={Input}
@@ -172,7 +172,7 @@ const PaymentForm = ({ assetId, assetType }: { assetId: string | number; assetTy
                 <FormLabel color="brand.300" fontWeight={600} fontSize={15}>
                   {assetType === 'cashflow'
                     ? 'Remittance Amount'
-                    : 'Instalment Amount'}
+                    : 'Installment Amount'}
                 </FormLabel>
                 <Input
                   type="text"

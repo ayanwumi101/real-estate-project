@@ -93,3 +93,13 @@ export const AddAssetRemittance = async (propertyId, data) => {
   const response = await axiosInstance.post(`${API_ROUTES.ADD_ASSET_REMITTANCE}/${propertyId}`, data);
   return response.data;
 }
+
+export const RemoveNextOfKinFromAsset = async (data) => {
+  const response = await axiosInstance.delete(`${API_ROUTES.REMOVE_NEXT_OF_KIN_FROM_ASSET}`, {
+    data: data,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  return response.data;
+}

@@ -60,7 +60,7 @@ const NavigationTab = ({
             >
               <Stack>
                 <Text fontWeight={500} fontSize={13} color="brand.400">
-                  Total {assetType} Paid
+                  Total {assetType === 'cashflow' ? 'Cashflow' : 'Installment'} Paid
                 </Text>
                 <Heading fontWeight={600} fontSize={16} color="brand.300">
                   {FormatAmount(Number(totalAmountReceived) || 0)}
