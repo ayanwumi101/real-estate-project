@@ -34,14 +34,21 @@ import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import Link from 'next/link';
 import {
+  GetNigerianBanks,
   GetUserProfileDetails,
+  UpdatebankDetails,
   UpdateProfile,
 } from '~/lib/api/services/profileService';
 import useNavigate from '~/lib/utils/useNavigate';
+import AddBankDetailsModal from '../Modals/AddBankDetailsModal';
 
-
-
-const BankAccountDetails = () => {
+const BankAccountDetails = ({
+  setOpenBankDetailsModal,
+  userDetails,
+}: {
+  setOpenBankDetailsModal: (value: boolean) => void;
+  userDetails: any;
+}) => {
   return (
     <Box border="1px solid #E4E4E4" borderRadius="5px" px="24px" py="14px">
       <Stack spacing="20px">
@@ -51,12 +58,23 @@ const BankAccountDetails = () => {
         <Box>
           <Flex alignItems="center" gap="20px">
             <BankIcon />
-            <Text>First City Monument Bank | *** ***1234</Text>
+            <Text>
+              {userDetails?.bank_name} |{' '}
+              {userDetails?.account_number?.replace(/\d(?=\d{4})/g, '*')}
+            </Text>
             <FiEdit />
           </Flex>
         </Box>
-        <Button bg="#EDEDFF" color="#4040A0" fontWeight={500} w="160px">
-          Change Account
+        <Button
+          bg="#EDEDFF"
+          color="#4040A0"
+          fontWeight={500}
+          w="160px"
+          onClick={() => setOpenBankDetailsModal(true)}
+        >
+          {userDetails?.bank_name && userDetails?.account_number
+            ? 'Change Account'
+            : 'Add Account'}
         </Button>
       </Stack>
     </Box>
@@ -233,11 +251,16 @@ const ProfileHeader = ({
 };
 
 const Profile = () => {
+  const [banks, setbanks] = React.useState<any[]>([]);
   const [updateProfile, setUpdateProfile] = React.useState<boolean>(false);
   const { userDetails, setUserDetails } = useContext(AppContext);
   const isProfileComplete = userDetails?.personal_check;
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [bankDetailsLoading, setBankDetailsLoading] =
+    React.useState<boolean>(false);
 
+  const [openBankDetailsModal, setOpenBankDetailsModal] =
+    React.useState<boolean>(false);
   const toast = useToast();
   const navigate = useNavigate();
   const [phone, setPhone] = React.useState<string>('');
@@ -256,6 +279,20 @@ const Profile = () => {
     }
   }, [userDetails]);
 
+  useEffect(() => {
+    const GetBanks = async () => {
+      try {
+        const res = await GetNigerianBanks();
+        setbanks(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    GetBanks();
+  }, []);
+
+  //function to update user profile
   const handleUpdateProfile = async () => {
     setLoading(true);
     try {
@@ -452,7 +489,13 @@ const Profile = () => {
                       <Heading fontSize={15}>Bank Account</Heading>
                       <Flex alignItems="center" gap="20px">
                         <BankIcon />
-                        <Text>First City Monument Bank | *** ***1234</Text>
+                        <Text>
+                          {userDetails?.bank_name} |{' '}
+                          {userDetails?.account_number?.replace(
+                            /\d(?=\d{4})/g,
+                            '*'
+                          )}
+                        </Text>
                         <FiEdit />
                       </Flex>
                       <Button
@@ -460,8 +503,11 @@ const Profile = () => {
                         color="#4040A0"
                         fontWeight={500}
                         w="160px"
+                        onClick={() => setOpenBankDetailsModal(true)}
                       >
-                        Change Account
+                        {userDetails?.bank_name && userDetails?.account_number
+                          ? 'Change Account'
+                          : 'Add Account'}
                       </Button>
                     </Stack>
                   </Box>
@@ -516,11 +562,24 @@ const Profile = () => {
           <Box px={['20px', '40px']}>
             <Stack spacing="26px">
               <PersonalInformation />
-              <BankAccountDetails />
+              <BankAccountDetails
+                userDetails={userDetails}
+                setOpenBankDetailsModal={setOpenBankDetailsModal}
+              />
             </Stack>
           </Box>
         )}
       </Stack>
+      <AddBankDetailsModal
+        type={
+          userDetails?.bank_name && userDetails?.account_number ? 'edit' : 'add'
+        }
+        userDetails={userDetails}
+        setUserDetails={setUserDetails}
+        banks={banks}
+        isOpen={openBankDetailsModal}
+        onClose={() => setOpenBankDetailsModal(false)}
+      />
     </Box>
   );
 };

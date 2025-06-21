@@ -27,6 +27,7 @@ import {
 import { Sparklines, SparklinesLine } from 'react-sparklines';
 import Cookies from 'js-cookie';
 
+
 import { Footer } from './components/footer';
 import { Header } from './components/header';
 import '../styles/globals.css';
