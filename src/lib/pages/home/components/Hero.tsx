@@ -1,6 +1,10 @@
+'use client';
+
 import React from 'react';
 import { Flex, Box, Heading, Text, Image, Button } from '@chakra-ui/react';
 import { PurpleCheckIcon } from '~/lib/components/Icons/Icons';
+import useNavigate from '~/lib/utils/useNavigate';
+
 
 const Hero = () => {
   const features = [
@@ -8,6 +12,7 @@ const Hero = () => {
     'automated tracking',
     'smarter decisions',
   ];
+  const navigate = useNavigate();
   return (
     <Box bg="bg.200">
       <Box
@@ -70,6 +75,7 @@ const Hero = () => {
               py="12px"
               h="48px"
               px="24px"
+              onClick={() => navigate('/signup')}
             >
               Get Started Today
             </Button>

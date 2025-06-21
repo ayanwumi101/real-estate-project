@@ -36,7 +36,6 @@ import Link from 'next/link';
 import {
   GetNigerianBanks,
   GetUserProfileDetails,
-  UpdatebankDetails,
   UpdateProfile,
 } from '~/lib/api/services/profileService';
 import useNavigate from '~/lib/utils/useNavigate';
