@@ -230,7 +230,19 @@ const ProfileHeader = ({
               </Box>
             </Flex>
           </Box>
-          {!updateProfile && (
+          {updateProfile ? (
+            <Link href="/user/settings">
+              <Button
+                bg="brand.100"
+                onClick={() => setOpenModal(true)}
+                color="brand.200"
+                fontWeight={500}
+                px="24px"
+              >
+                Update Profile Picture
+              </Button>
+            </Link>
+          ) : (
             <Link href="/user/settings">
               <Button
                 bg="brand.100"
@@ -245,6 +257,11 @@ const ProfileHeader = ({
           )}
         </Flex>
       </Box>
+      <EditPersonalInfoModal
+        isOpen={openModal}
+        onClose={() => setOpenModal(false)}
+        gender={userDetails?.gender}
+      />
     </Fragment>
   );
 };
@@ -387,7 +404,12 @@ const Profile = () => {
                     py="15px"
                     px="24px"
                   >
-                    <Flex alignItems="center" gap="25px" mb="20px">
+                    <Flex
+                      alignItems="center"
+                      gap="25px"
+                      mb="20px"
+                      flexWrap={['wrap', 'nowrap']}
+                    >
                       <Box w="full">
                         <FormLabel fontWeight={600} fontSize={15}>
                           Email
@@ -395,6 +417,7 @@ const Profile = () => {
                         <Input
                           type="email"
                           w="full"
+                          isDisabled={true}
                           readOnly={true}
                           value={userDetails?.email}
                           border="1px solid"
@@ -436,7 +459,11 @@ const Profile = () => {
                         )}
                       </Box>
                     </Flex>
-                    <Flex alignItems="center" gap="25px">
+                    <Flex
+                      alignItems="center"
+                      gap="25px"
+                      flexWrap={['wrap', 'nowrap']}
+                    >
                       <Box w="full">
                         <FormLabel fontWeight={600} fontSize={15}>
                           Gender

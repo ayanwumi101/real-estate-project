@@ -34,9 +34,11 @@ import { FileUploadIcon, SelectGenderIcon } from '~/lib/components/Icons/Icons';
 const EditPersonalInfoModal = ({
   isOpen,
   onClose,
+  gender,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  gender: string;
 }) => {
   const toast = useToast();
   const [loading, setLoading] = useState<boolean>(false);
@@ -45,10 +47,6 @@ const EditPersonalInfoModal = ({
   const initialValues = {
     profilePicture: null,
     dateOfBirth: userDetails?.dateofbirth,
-    gender: userDetails?.gender,
-    phone: userDetails?.phone || '',
-    email: userDetails?.email || '',
-    address: userDetails?.address || '',
   };
 
   const validationSchema = Yup.object().shape({
@@ -65,17 +63,13 @@ const EditPersonalInfoModal = ({
     dateOfBirth: Yup.date()
       .max(new Date(), 'Date of birth cannot be in the future')
       .required('Date of birth is required'),
-    gender: Yup.string().required('Gender is required'),
-    phone: Yup.string().required('Phone number is required'),
-    email: Yup.string().email('Invalid email').required('Email is required'),
-    address: Yup.string().required('Address is required'),
   });
 
   const handleSubmit = async (values: any) => {
     const formData = {
       profile_image: values.profilePicture,
       dateofbirth: values.dateOfBirth,
-      gender: values.gender,
+      gender: gender,
     };
     setLoading(true);
     try {
@@ -249,111 +243,6 @@ const EditPersonalInfoModal = ({
                           : ''}
                       </FormErrorMessage>
                     </FormControl>
-
-                    {/* Gender */}
-                    <FormControl
-                      isInvalid={!!errors.gender && !!touched.gender}
-                    >
-                      <FormLabel fontWeight={600} fontSize={16} color="#222222">
-                        Select your Gender
-                      </FormLabel>
-                      <InputGroup
-                        w="100%"
-                        borderRadius="40px"
-                        border="1px solid #C0C0C0"
-                      >
-                        <InputLeftElement
-                          pointerEvents="none"
-                          borderTopLeftRadius="40px"
-                          borderBottomLeftRadius="40px"
-                          h="50px"
-                          bg="#F5F5F5"
-                          w="12%"
-                        >
-                          <SelectGenderIcon />
-                        </InputLeftElement>
-                        <Field
-                          as={Select}
-                          name="gender"
-                          border="none"
-                          h="50px"
-                          bg="#FBFBFB"
-                          outline="none"
-                          w="100%"
-                          borderTopRightRadius="40px"
-                          borderBottomRightRadius="40px"
-                          placeholder="Select gender"
-                          color="black"
-                          pl="16"
-                        >
-                          <option value="Male">Male</option>
-                          <option value="Female">Female</option>
-                        </Field>
-                      </InputGroup>
-                      <FormErrorMessage>
-                        {typeof errors.gender === 'string' ? errors.gender : ''}
-                      </FormErrorMessage>
-                    </FormControl>
-                    {/* Phone Number */}
-                    <FormControl isInvalid={!!errors.phone && !!touched.phone}>
-                      <FormLabel fontWeight={600} fontSize={16} color="#222222">
-                        Phone Number
-                      </FormLabel>
-                      <Field
-                        as={Input}
-                        name="phone"
-                        type="text"
-                        placeholder="Enter your phone number"
-                        h="50px"
-                        border="1px solid #C0C0C0"
-                        borderRadius="40px"
-                      />
-                      <FormErrorMessage>
-                        {typeof errors.phone === 'string' ? errors.phone : ''}
-                      </FormErrorMessage>
-                    </FormControl>
-                    {/* Email Address */}
-                    <FormControl isInvalid={!!errors.email && !!touched.email}>
-                      <FormLabel fontWeight={600} fontSize={16} color="#222222">
-                        Email Address
-                      </FormLabel>
-                      <Field
-                        as={Input}
-                        name="email"
-                        type="email"
-                        placeholder="Enter your email address"
-                        h="50px"
-                        border="1px solid #C0C0C0"
-                        borderRadius="40px"
-                        readOnly
-                      />
-                      <FormErrorMessage>
-                        {typeof errors.email === 'string' ? errors.email : ''}
-                      </FormErrorMessage>
-                    </FormControl>
-                    {/* Address */}
-                    <FormControl
-                      isInvalid={!!errors.address && !!touched.address}
-                    >
-                      <FormLabel fontWeight={600} fontSize={16} color="#222222">
-                        Address
-                      </FormLabel>
-                      <Field
-                        as={Input}
-                        name="address"
-                        type="text"
-                        placeholder="Enter your address"
-                        h="50px"
-                        border="1px solid #C0C0C0"
-                        borderRadius="40px"
-                      />
-                      <FormErrorMessage>
-                        {typeof errors.address === 'string'
-                          ? errors.address
-                          : ''}
-                      </FormErrorMessage>
-                    </FormControl>
-
                     {/* Submit Button */}
                     <Flex justifyContent="flex-end">
                       <Button
