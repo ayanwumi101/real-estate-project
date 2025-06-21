@@ -49,3 +49,15 @@ export const GetUserProfileDetails = async () => {
   const response = await axiosInstance.get(API_ROUTES.GET_USER_PROFILE_DETAILS);
   return response.data;
 }
+
+export const UpdateProfile = async (data) => {
+  const response = await axiosInstance.post(
+    API_ROUTES.UPDATE_PROFILE,
+    data, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }
+  );
+  return response.data;
+}

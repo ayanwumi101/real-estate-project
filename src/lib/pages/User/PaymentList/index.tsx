@@ -75,6 +75,7 @@ const index = () => {
   const pendingPayments = assetRemittances?.filter(
     (remittance: any) => remittance?.payment_status === 'pending'
   );
+
   return (
     <Box
       py="40px"

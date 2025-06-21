@@ -1028,8 +1028,6 @@ export const TrophyIcon = () => {
   );
 };
 
-
-
 export const TelephoneIcon = () => {
   return (
     <svg
@@ -1045,8 +1043,7 @@ export const TelephoneIcon = () => {
       />
     </svg>
   );
-}
-
+};
 
 // export const EmailIcon = () => {
 //   return (
@@ -1068,7 +1065,6 @@ export const TelephoneIcon = () => {
 //   );
 // }
 
-
 export const EmailIconWithBg = () => {
   return (
     <svg
@@ -1088,7 +1084,7 @@ export const EmailIconWithBg = () => {
       />
     </svg>
   );
-}
+};
 
 export const TelephoneIconWithBg = () => {
   return (
@@ -1118,8 +1114,7 @@ export const TelephoneIconWithBg = () => {
       </defs>
     </svg>
   );
-}
-
+};
 
 export const EditCommentIcon = () => {
   return (
@@ -1138,10 +1133,9 @@ export const EditCommentIcon = () => {
       />
     </svg>
   );
-}
+};
 
-
-export const AddNextOfKinIcon = ({isActive}:{isActive: boolean}) => {
+export const AddNextOfKinIcon = ({ isActive }: { isActive: boolean }) => {
   return (
     <svg
       width="28"
@@ -1158,8 +1152,7 @@ export const AddNextOfKinIcon = ({isActive}:{isActive: boolean}) => {
       />
     </svg>
   );
-}
-
+};
 
 export const EmptyStateIcon = () => {
   return (
@@ -1187,7 +1180,7 @@ export const EmptyStateIcon = () => {
       />
     </svg>
   );
-}
+};
 
 export const NextDueRemittanceIcon = () => {
   return (
@@ -1209,9 +1202,9 @@ export const NextDueRemittanceIcon = () => {
       />
     </svg>
   );
-}
+};
 
-export const ArrowUpIcon = () => { 
+export const ArrowUpIcon = () => {
   return (
     <svg
       width="28"
@@ -1228,10 +1221,9 @@ export const ArrowUpIcon = () => {
       />
     </svg>
   );
-}
+};
 
-
-export const BlueArrowUpIcon = () => { 
+export const BlueArrowUpIcon = () => {
   return (
     <svg
       width="24"
@@ -1249,9 +1241,9 @@ export const BlueArrowUpIcon = () => {
       />
     </svg>
   );
-}
+};
 
-export const PurpleCheckIcon = () => { 
+export const PurpleCheckIcon = () => {
   return (
     <svg
       width="18"
@@ -1268,9 +1260,9 @@ export const PurpleCheckIcon = () => {
       />
     </svg>
   );
-}
+};
 
-export const PortfolioManagementIcon = () => { 
+export const PortfolioManagementIcon = () => {
   return (
     <svg
       width="60"
@@ -1289,9 +1281,9 @@ export const PortfolioManagementIcon = () => {
       />
     </svg>
   );
-}
+};
 
-export const PropertyOverisightIcon = () => { 
+export const PropertyOverisightIcon = () => {
   return (
     <svg
       width="60"
@@ -1310,10 +1302,9 @@ export const PropertyOverisightIcon = () => {
       />
     </svg>
   );
-}
+};
 
-
-export const RecordKeepingIcon = () => { 
+export const RecordKeepingIcon = () => {
   return (
     <svg
       width="60"
@@ -1379,9 +1370,9 @@ export const RecordKeepingIcon = () => {
       />
     </svg>
   );
-}
+};
 
-export const ComplianceMonitoringIcon = () => { 
+export const ComplianceMonitoringIcon = () => {
   return (
     <svg
       width="60"
@@ -1425,9 +1416,9 @@ export const ComplianceMonitoringIcon = () => {
       />
     </svg>
   );
-}
+};
 
-export const BlackArrowRightIcon = () => { 
+export const BlackArrowRightIcon = () => {
   return (
     <svg
       width="17"
@@ -1445,8 +1436,7 @@ export const BlackArrowRightIcon = () => {
       />
     </svg>
   );
-}
-
+};
 
 export const ChevronLeftIcon = () => {
   return (
@@ -1463,10 +1453,9 @@ export const ChevronLeftIcon = () => {
       />
     </svg>
   );
-}
+};
 
-
-export const DashboardBellIcon = () => { 
+export const DashboardBellIcon = () => {
   return (
     <svg
       width="52"
@@ -1484,10 +1473,9 @@ export const DashboardBellIcon = () => {
       />
     </svg>
   );
-}
+};
 
-
-export const UpgradePropertyStatusIcon = () => { 
+export const UpgradePropertyStatusIcon = () => {
   return (
     <svg
       width="48"
@@ -1503,10 +1491,9 @@ export const UpgradePropertyStatusIcon = () => {
       />
     </svg>
   );
-}
+};
 
-
-export const AddNewPropertyIcon = () => { 
+export const AddNewPropertyIcon = () => {
   return (
     <svg
       width="52"
@@ -1529,10 +1516,9 @@ export const AddNewPropertyIcon = () => {
       />
     </svg>
   );
-}
+};
 
-
-export const DashboardCautionIcon = () => { 
+export const DashboardCautionIcon = () => {
   return (
     <svg
       width="24"
@@ -1549,10 +1535,9 @@ export const DashboardCautionIcon = () => {
       />
     </svg>
   );
-}
+};
 
-
-export const NextOfKinEmptyStateIcon = () => { 
+export const NextOfKinEmptyStateIcon = () => {
   return (
     <svg
       width="105"
@@ -1627,10 +1612,9 @@ export const NextOfKinEmptyStateIcon = () => {
       />
     </svg>
   );
-}
+};
 
-
-export const ArrowBackIcon = () => { 
+export const ArrowBackIcon = () => {
   return (
     <svg
       width="25"
@@ -1649,10 +1633,9 @@ export const ArrowBackIcon = () => {
       />
     </svg>
   );
-}
+};
 
-
-export const VerticalEllipsisIcon = () => { 
+export const VerticalEllipsisIcon = () => {
   return (
     <svg
       width="5"
@@ -1675,10 +1658,9 @@ export const VerticalEllipsisIcon = () => {
       />
     </svg>
   );
-}
+};
 
-
-export const SaveAssetDetailsIcon = () => { 
+export const SaveAssetDetailsIcon = () => {
   return (
     <svg
       width="18"
@@ -1695,10 +1677,9 @@ export const SaveAssetDetailsIcon = () => {
       />
     </svg>
   );
-}
+};
 
-
-export const PreviousPageIcon = () => { 
+export const PreviousPageIcon = () => {
   return (
     <svg
       width="20"
@@ -1715,9 +1696,9 @@ export const PreviousPageIcon = () => {
       />
     </svg>
   );
-}
+};
 
-export const NextPageIcon = () => { 
+export const NextPageIcon = () => {
   return (
     <svg
       width="20"
@@ -1734,10 +1715,9 @@ export const NextPageIcon = () => {
       />
     </svg>
   );
-}
+};
 
-
-export const EmptyPaymentsIcon = () => { 
+export const EmptyPaymentsIcon = () => {
   return (
     <svg
       width="87"
@@ -1773,10 +1753,9 @@ export const EmptyPaymentsIcon = () => {
       />
     </svg>
   );
-}
+};
 
-
-export const IncompleteProfileIcon = () => { 
+export const IncompleteProfileIcon = () => {
   return (
     <svg
       width="28"
@@ -1793,10 +1772,9 @@ export const IncompleteProfileIcon = () => {
       />
     </svg>
   );
-}
+};
 
-
-export const CompleteProfileIcon = () => { 
+export const CompleteProfileIcon = () => {
   return (
     <svg
       width="18"
@@ -1813,10 +1791,9 @@ export const CompleteProfileIcon = () => {
       />
     </svg>
   );
-}
+};
 
-
-export const AddNewAssetIcon = () => { 
+export const AddNewAssetIcon = () => {
   return (
     <svg
       width="36"
@@ -1834,9 +1811,9 @@ export const AddNewAssetIcon = () => {
       />
     </svg>
   );
-}
+};
 
-export const RegisterPaymentIcon = () => { 
+export const RegisterPaymentIcon = () => {
   return (
     <svg
       width="37"
@@ -1852,10 +1829,9 @@ export const RegisterPaymentIcon = () => {
       />
     </svg>
   );
-}
+};
 
-
-export const DashboardAddNextOfKinIcon = () => { 
+export const DashboardAddNextOfKinIcon = () => {
   return (
     <svg
       width="37"
@@ -1871,10 +1847,9 @@ export const DashboardAddNextOfKinIcon = () => {
       />
     </svg>
   );
-}
+};
 
-
-export const ChevronDownIcon = () => { 
+export const ChevronDownIcon = () => {
   return (
     <svg
       width="14"
@@ -1891,4 +1866,26 @@ export const ChevronDownIcon = () => {
       />
     </svg>
   );
-}
+};
+
+export const ContactSupportIcon = () => {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <mask id="path-1-inside-1_3473_3133" fill="white">
+        <path d="M10 20C15.5228 20 20 15.5228 20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20Z" />
+        <path d="M11 6C11 6.55228 10.5523 7 10 7C9.44772 7 9 6.55228 9 6C9 5.44772 9.44772 5 10 5C10.5523 5 11 5.44772 11 6Z" />
+      </mask>
+      <path
+        d="M9.5 14C9.5 14.2761 9.72386 14.5 10 14.5C10.2761 14.5 10.5 14.2761 10.5 14H9.5ZM10.5 10C10.5 9.72386 10.2761 9.5 10 9.5C9.72386 9.5 9.5 9.72386 9.5 10H10.5ZM10.5 14V10H9.5V14H10.5ZM19 10C19 14.9706 14.9706 19 10 19V21C16.0751 21 21 16.0751 21 10H19ZM10 19C5.02944 19 1 14.9706 1 10H-1C-1 16.0751 3.92487 21 10 21V19ZM1 10C1 5.02944 5.02944 1 10 1V-1C3.92487 -1 -1 3.92487 -1 10H1ZM10 1C14.9706 1 19 5.02944 19 10H21C21 3.92487 16.0751 -1 10 -1V1ZM10 6V8C11.1046 8 12 7.10457 12 6H10ZM10 6H8C8 7.10457 8.89543 8 10 8V6ZM10 6V4C8.89543 4 8 4.89543 8 6H10ZM10 6H12C12 4.89543 11.1046 4 10 4V6Z"
+        fill="#2E353F"
+        mask="url(#path-1-inside-1_3473_3133)"
+      />
+    </svg>
+  );
+};

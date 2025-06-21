@@ -22,6 +22,7 @@ const API_ROUTES = {
   ADD_NEXT_OF_KIN: '/user/next-of-kin',
   GET_NEXT_OF_KIN: '/user/next-of-kins',
   UPDATE_USER_PROFILE: '/user/profile/update',
+  UPDATE_PROFILE: '/user/profile/update',
 
   //assets endpoints
   ADD_ASSET_DETAILS: '/user/asset/create',
