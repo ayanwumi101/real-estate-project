@@ -504,7 +504,7 @@ const Profile = () => {
                     </Flex>
                   </Box>
                   {/* bank Account section */}
-                  <Box
+                  {/* <Box
                     border="1px solid"
                     borderColor="border.100"
                     rounded="5px"
@@ -536,7 +536,7 @@ const Profile = () => {
                           : 'Add Account'}
                       </Button>
                     </Stack>
-                  </Box>
+                  </Box> */}
                   {/* bottom badge section */}
                   <Badge
                     rounded="26px"
@@ -588,10 +588,10 @@ const Profile = () => {
           <Box px={['20px', '40px']}>
             <Stack spacing="26px">
               <PersonalInformation />
-              <BankAccountDetails
+              {/* <BankAccountDetails
                 userDetails={userDetails}
                 setOpenBankDetailsModal={setOpenBankDetailsModal}
-              />
+              /> */}
             </Stack>
           </Box>
         )}

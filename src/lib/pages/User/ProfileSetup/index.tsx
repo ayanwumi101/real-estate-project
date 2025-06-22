@@ -50,8 +50,8 @@ const index = () => {
           <Box w={['100%', '80%', '80%']}>
             {step === 1 && <PersonalDetails step={step} setStep={setStep} />}
             {step === 2 && <AddressDetails step={step} setStep={setStep} />}
-            {step === 3 && <BankDetails step={step} setStep={setStep} />}
-            {step === 4 && <NextOfKinDetails step={step} setStep={setStep} />}
+            {/* {step === 3 && <BankDetails step={step} setStep={setStep} />} */}
+            {step === 3 && <NextOfKinDetails step={step} setStep={setStep} />}
           </Box>
         </Stack>
       </Box>
