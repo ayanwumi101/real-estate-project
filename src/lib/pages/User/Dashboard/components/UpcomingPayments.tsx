@@ -75,8 +75,8 @@ const UpcomingPayments = ({
                   </Stack>
                 </Box>
               ) : (
-                <TableContainer>
-                  <Table border="none" variant="unstyled">
+                <TableContainer border="1px solid #E4E4E4" borderRadius="10px">
+                  <Table>
                     <Thead
                       color="#222222"
                       bg="#F5F5F5"
@@ -99,7 +99,7 @@ const UpcomingPayments = ({
                           fontSize={14}
                           textTransform="capitalize"
                         >
-                           Due Date
+                          Due Date
                         </Th>
                         <Th
                           color="#222222"
