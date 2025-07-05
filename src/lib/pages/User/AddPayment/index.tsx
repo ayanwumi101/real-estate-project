@@ -7,12 +7,15 @@ import { Box, Button, Flex, Stack } from '@chakra-ui/react';
 import { useParams } from 'next/navigation';
 import { ChevronLeftIcon } from '~/lib/components/Icons/Icons';
 import useNavigate from '~/lib/utils/useNavigate';
-import { GetAssetDetails } from '~/lib/api/services/assetsService';
+import { GetAssetDetails, GetAssetPaymentDueDates } from '~/lib/api/services/assetsService';
+
+
 
 const index = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [assetDetails, setAssetDetails] = React.useState<any>(null);
+  const [paymentDueDates, setPaymentDueDates] = React.useState<any>([]);
 
   React.useEffect(() => {
     const fetchAssetDetails = async () => {
@@ -22,7 +25,15 @@ const index = () => {
     fetchAssetDetails();
   }, []);
 
-  console.log(assetDetails);
+  React.useEffect(() => {
+    const fetchPaymentDueDates = async () => {
+      const dueDates = await GetAssetPaymentDueDates(id);
+      setPaymentDueDates(dueDates.data);
+    };
+    fetchPaymentDueDates();
+  }, []);
+
+  console.log(paymentDueDates);
   
   return (
     <Box p={['20px', '40px']} borderTop="1px solid" borderColor="border.100">

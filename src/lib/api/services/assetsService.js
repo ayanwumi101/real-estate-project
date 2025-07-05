@@ -103,3 +103,8 @@ export const RemoveNextOfKinFromAsset = async (data) => {
   });
   return response.data;
 }
+
+export const GetAssetPaymentDueDates = async (propertyId) => {
+  const response = await axiosInstance.get(`${API_ROUTES.GET_ASSET_DUE_DATES}/${propertyId}/payment-due-dates`);
+  return response.data;
+}

@@ -30,20 +30,21 @@ const NavigationTab = ({
         flexWrap={['wrap', 'nowrap']}
         gap={['24px', '0']}
       >
-        <Flex alignItems="center" h='full'>
+        <Flex alignItems="center" h="full">
           {' '}
           {tabs.map((tab, index) => (
             <Button
-              bg={tab === activeTab ? '#F5F5F5' : 'none'}
-              borderRadius="0px"
-              borderX={tab === activeTab ? '1px solid #E4E4E4' : 'none'}
-              borderTop={tab === activeTab ? '1px solid #E4E4E4' : 'none'}
-              color={tab === activeTab ? '#4040A0' : '#8295AA'}
-              h={['45px', '55px']}
-              px={[5, '7']}
-              fontWeight={500}
+              bg={tab === activeTab ? '#EDEDFF' : 'none'}
+              borderRadius={activeTab === tab ? '50px' : '0px'}
+              key={index}
+              color={tab === activeTab ? 'brand.100' : '#8295AA'}
+              px="20px"
+              py="16px"
+              fontWeight={tab === activeTab ? 600 : 500}
               onClick={() => setActiveTab(tab)}
               textTransform="capitalize"
+              fontSize={14}
+              _hover={{ bg: 'none' }}
             >
               {tab}
             </Button>
@@ -60,7 +61,8 @@ const NavigationTab = ({
             >
               <Stack>
                 <Text fontWeight={500} fontSize={13} color="brand.400">
-                  Total {assetType === 'cashflow' ? 'Cashflow' : 'Installment'} Paid
+                  Total {assetType === 'cashflow' ? 'Cashflow' : 'Installment'}{' '}
+                  Paid
                 </Text>
                 <Heading fontWeight={600} fontSize={16} color="brand.300">
                   {FormatAmount(Number(totalAmountReceived) || 0)}

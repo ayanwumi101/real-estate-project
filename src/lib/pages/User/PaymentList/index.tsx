@@ -25,7 +25,6 @@ import CompletedPayments from './components/CompletedPayments';
 import PendingPayments from './components/PendingPayments';
 import { useParams } from 'next/navigation';
 import {
-  GetAssetRemittances,
   GetAssetDetails,
 } from '~/lib/api/services/assetsService';
 import useNavigate from '~/lib/utils/useNavigate';
@@ -36,7 +35,6 @@ const index = () => {
   const tabs = ['pending payments', 'completed payments'];
   const [isLoading, setIsLoading] = React.useState(false);
   const [assetDetails, setAssetDetails] = useState<any>([]);
-  const [assetRemittances, setAssetRemittances] = useState<any>(null);
   const [activeTab, setActiveTab] = React.useState<string>('pending payments');
 
   const getAssetDetails = async () => {
@@ -51,31 +49,22 @@ const index = () => {
     setIsLoading(false);
   };
 
-  const getAssetRemittances = async () => {
-    setIsLoading(true);
-    try {
-      const res = await GetAssetRemittances(id);
-      const data = await res.data;
-      setAssetRemittances(data);
-    } catch (error) {
-      console.log(error);
-    }
-    setIsLoading(false);
-  };
 
   useEffect(() => {
     getAssetDetails();
-    getAssetRemittances();
   }, [id]);
 
-  const completedPayments = assetRemittances?.filter(
+  const completedPayments = assetDetails?.payments?.filter(
     (remittance: any) => remittance?.payment_status === 'completed'
   );
 
-  const pendingPayments = assetRemittances?.filter(
+  const pendingPayments = assetDetails?.payments?.filter(
     (remittance: any) => remittance?.payment_status === 'pending'
   );
 
+  console.log('assetDetails', assetDetails?.payments);
+  
+  
   return (
     <Box
       py="40px"
