@@ -46,7 +46,6 @@ const EditPersonalInfoModal = ({
 
   const initialValues = {
     profilePicture: null,
-    dateOfBirth: userDetails?.dateofbirth,
   };
 
   const validationSchema = Yup.object().shape({
@@ -60,9 +59,6 @@ const EditPersonalInfoModal = ({
         }
         return false;
       }),
-    dateOfBirth: Yup.date()
-      .max(new Date(), 'Date of birth cannot be in the future')
-      .required('Date of birth is required'),
   });
 
   const handleSubmit = async (values: any) => {
@@ -219,30 +215,6 @@ const EditPersonalInfoModal = ({
                         {errors.profilePicture}
                       </FormErrorMessage>
                     </FormControl>
-
-                    {/* Date of Birth */}
-                    <FormControl
-                      isInvalid={!!errors.dateOfBirth && !!touched.dateOfBirth}
-                    >
-                      <FormLabel fontWeight={600} fontSize={16} color="#222222">
-                        Select Date of Birth
-                      </FormLabel>
-                      <Field
-                        as={Input}
-                        type="date"
-                        name="dateOfBirth"
-                        border="1px solid #C0C0C0"
-                        bg="#FBFBFB"
-                        h="50px"
-                        borderRadius="40px"
-                        _placeholder={{ color: '#8295AA', fontWeight: 500 }}
-                      />
-                      <FormErrorMessage>
-                        {typeof errors.dateOfBirth === 'string'
-                          ? errors.dateOfBirth
-                          : ''}
-                      </FormErrorMessage>
-                    </FormControl>
                     {/* Submit Button */}
                     <Flex justifyContent="flex-end">
                       <Button
@@ -255,6 +227,7 @@ const EditPersonalInfoModal = ({
                         fontSize={16}
                         _hover={{ bg: '#000080' }}
                         minW={['100%', '200px']}
+                        isDisabled={loading}
                       >
                         {loading ? <Spinner /> : 'Update Info'}
                       </Button>

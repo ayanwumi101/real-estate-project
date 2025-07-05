@@ -105,8 +105,8 @@ const Cashflow = ({
               </Stack>
             </Box>
           ) : (
-            <TableContainer>
-              <Table border="none" variant="unstyled">
+            <TableContainer border="1px solid #E4E4E4" borderRadius="10px">
+              <Table>
                 <Thead
                   color="#222222"
                   bg="#F5F5F5"
@@ -303,38 +303,42 @@ const Cashflow = ({
                     })}
                 </Tbody>
               </Table>
+              {assets?.length > 0 && (
+                <Box w="full" bg="white" py="10px">
+                  <Flex alignItems="center" justifyContent="center" gap="13px">
+                    <Button
+                      onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                      isDisabled={page === 1}
+                      border="1px solid #E4E4E4"
+                      rounded="6px"
+                          variant="outline"
+                          p='8px'
+                    >
+                      <PreviousPageIcon />
+                    </Button>
+                    <Text fontWeight={600} fontSize={17}>
+                      {page}
+                    </Text>
+                    <Button
+                      border="1px solid #E4E4E4"
+                      rounded="6px"
+                          variant="outline"
+                          p='8px'
+                      onClick={() =>
+                        setPage((prev) =>
+                          prev < Math.ceil(assets.length / limit)
+                            ? prev + 1
+                            : prev
+                        )
+                      }
+                      isDisabled={page >= Math.ceil(assets.length / limit)}
+                    >
+                      <NextPageIcon />
+                    </Button>
+                  </Flex>
+                </Box>
+              )}
             </TableContainer>
-          )}
-          {assets?.length > 0 && (
-            <Box w="full" bg="white" py="20px" borderY="1px solid #E4E7EC">
-              <Flex alignItems="center" justifyContent="center" gap="13px">
-                <Button
-                  onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-                  isDisabled={page === 1}
-                  border="1px solid #E4E4E4"
-                  rounded="6px"
-                  variant="outline"
-                >
-                  <PreviousPageIcon />
-                </Button>
-                <Text fontWeight={600} fontSize={17}>
-                  {page}
-                </Text>
-                <Button
-                  border="1px solid #E4E4E4"
-                  rounded="6px"
-                  variant="outline"
-                  onClick={() =>
-                    setPage((prev) =>
-                      prev < Math.ceil(assets.length / limit) ? prev + 1 : prev
-                    )
-                  }
-                  isDisabled={page >= Math.ceil(assets.length / limit)}
-                >
-                  <NextPageIcon />
-                </Button>
-              </Flex>
-            </Box>
           )}
         </Fragment>
       )}

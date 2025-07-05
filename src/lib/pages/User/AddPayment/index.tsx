@@ -22,6 +22,8 @@ const index = () => {
     fetchAssetDetails();
   }, []);
 
+  console.log(assetDetails);
+  
   return (
     <Box p={['20px', '40px']} borderTop="1px solid" borderColor="border.100">
       <Stack spacing="40px" alignItems="flex-start">

@@ -40,15 +40,15 @@ const NavigationTab = ({
           {' '}
           {tabs.map((tab, index) => (
             <Button
-              bg={tab === activeTab ? '#F5F5F5' : 'none'}
-              borderRadius="0px"
-              borderX={tab === activeTab ? '1px solid #E4E4E4' : 'none'}
-              borderTop={tab === activeTab ? '1px solid #E4E4E4' : 'none'}
+              bg={tab === activeTab ? '#EDEDFF' : 'none'}
+              borderRadius={activeTab === tab ? '50px' : "0px"}
               color={tab === activeTab ? '#4040A0' : '#8295AA'}
-              h={['45px', '55px']}
-              px={[5, '7']}
-              fontWeight={500}
+              px='18px'
+              py='16px'
+              fontWeight={tab === activeTab ? 600 : 500}
               onClick={() => setActiveTab(tab)}
+              fontSize={14}
+              _hover={{bg: 'none'}}
             >
               {tab} {tab === 'Owned' ? `(${ownedAssetsCount})` : ''}{' '}
               {tab === 'Cashflow' ? `(${cashflowAssetsCount})` : ''}{' '}
@@ -56,9 +56,9 @@ const NavigationTab = ({
             </Button>
           ))}
         </Flex>
-        <Box w={['full',"auto"]}>
+        <Box w={['full', 'auto']}>
           <Flex
-            alignItems={['flex-start',"center"]}
+            alignItems={['flex-start', 'center']}
             w="full"
             gap="20px"
             flexDir={['column', 'row']}
