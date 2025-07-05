@@ -76,6 +76,23 @@ const index = () => {
 
   const UpdateAsset = async () => {
     setIsLoading(true);
+    const cashflowData = {
+      size: propertySize,
+      bought_date: boughtDate,
+      property_cost: propertyCost,
+      payment_status: paymentStatus,
+      cashflow_source: cashflowSource,
+      is_occupied: isPropertyOccupied,
+      cashflow_amount: remittanceAmount,
+      cashflow_duration: cashflowDuration,
+      last_cashflow_date: lastRemittanceDate,
+      equity_ownership: equityOwnership,
+      realtor_name: realtorName,
+      phone: realtorPhone,
+      allocation_status: allocationStatus,
+      documentation_status: documentationStatus,
+      handover_status: handoverStatus,
+    };
     const data = {
       size: propertySize,
       bought_date: boughtDate,
@@ -94,27 +111,10 @@ const index = () => {
       handover_status: handoverStatus,
       comment: comment,
     };
-    const installmentAssetData = {
-      size: propertySize,
-      bought_date: boughtDate,
-      property_cost: propertyCost,
-      payment_status: paymentStatus,
-      cashflow_source: cashflowSource,
-      is_occupied: isPropertyOccupied,
-      cashflow_amount: remittanceAmount,
-      cashflow_duration: cashflowDuration,
-      last_cashflow_date: lastRemittanceDate,
-      equity_ownership: equityOwnership,
-      realtor_name: realtorName,
-      phone: realtorPhone,
-      allocation_status: allocationStatus,
-      documentation_status: documentationStatus,
-      handover_status: handoverStatus,
-    };
     const formData =
       propertyDetails?.asset_type === 'instalment'
-        ? installmentAssetData
-        : data;
+        ? data
+        : cashflowData;
     try {
       const res = await UpdateAssetDetails(id, formData);
       if (res.status) {
