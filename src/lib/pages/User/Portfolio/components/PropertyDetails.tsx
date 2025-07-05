@@ -44,8 +44,8 @@ const PropertyListTable = ({ assets }: { assets: any[] }) => {
           </Stack>
         </Box>
       ) : (
-        <TableContainer>
-          <Table border="none" variant="unstyled">
+        <TableContainer border="1px solid #E4E4E4" borderRadius="10px">
+          <Table>
             <Thead
               color="#222222"
               bg="#F5F5F5"
@@ -116,13 +116,8 @@ const PropertyListTable = ({ assets }: { assets: any[] }) => {
             <Tbody color="#222222">
               {assets?.map((asset: any) => {
                 return (
-                  <Tr
-                    border="none"
-                    _hover={{ bg: '#f5f5f5' }}
-                    px="0"
-                    cursor="pointer"
-                  >
-                    <Td fontSize={18} fontWeight={700} px="0">
+                  <Tr border="none" _hover={{ bg: '#f5f5f5' }} cursor="pointer">
+                    <Td fontSize={18} fontWeight={700}>
                       <Flex alignItems="center" gap="10px">
                         <Stack spacing="3px">
                           <Heading

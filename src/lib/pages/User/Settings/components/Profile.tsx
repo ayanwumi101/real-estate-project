@@ -16,7 +16,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import React, { Fragment, useContext, useEffect } from 'react';
-import { FiEdit } from 'react-icons/fi';
+import { FiEdit, FiCalendar } from 'react-icons/fi';
 import { CustomerInformationItem } from '~/lib/components/Cards';
 import {
   BankIcon,
@@ -40,6 +40,12 @@ import {
 } from '~/lib/api/services/profileService';
 import useNavigate from '~/lib/utils/useNavigate';
 import AddBankDetailsModal from '../Modals/AddBankDetailsModal';
+import moment from 'moment';
+import { replace } from 'formik';
+
+
+
+
 
 const BankAccountDetails = ({
   setOpenBankDetailsModal,
@@ -83,9 +89,7 @@ const BankAccountDetails = ({
 const PersonalInformation = () => {
   const { userDetails } = useContext(AppContext);
   const [openModal, setOpenModal] = React.useState<boolean>(false);
-
   const isProfileComplete = userDetails?.personal_check;
-
   return (
     <Fragment>
       <Box border="1px solid #E4E4E4" borderRadius="5px" px="24px" py="20px">
@@ -172,7 +176,21 @@ const PersonalInformation = () => {
                   <CustomerInformationItem
                     Icon={LocationIcon}
                     label="Address"
-                    labelValue={`${userDetails?.street_no}, ${userDetails?.street_name}, ${userDetails?.city?.name}.`}
+                    labelValue={userDetails?.address as string}
+                  />
+                </Box>
+              </Flex>
+              <Flex
+                alignItems="center"
+                justifyContent="space-between"
+                flexWrap="wrap"
+                gap={['20px', '0']}
+              >
+                <Box w={['100%', '50%']}>
+                  <CustomerInformationItem
+                    Icon={FiCalendar}
+                    label="Date of Birth"
+                    labelValue={moment(userDetails?.dateofbirth).format('dddd Do MMMM YYYY')}
                   />
                 </Box>
               </Flex>
@@ -282,6 +300,7 @@ const Profile = () => {
   const [phone, setPhone] = React.useState<string>('');
   const [address, setAddress] = React.useState<string>('');
   const [gender, setGender] = React.useState<string>('');
+  const [dateOfBirth, setDateOfBirth] = React.useState<string>('');
 
   useEffect(() => {
     if (userDetails?.phone) {
@@ -292,6 +311,9 @@ const Profile = () => {
     }
     if (userDetails?.gender) {
       setGender(userDetails.gender);
+    }
+    if (userDetails?.dateofbirth) {
+      setDateOfBirth(userDetails.dateofbirth.split(' ')[0]);
     }
   }, [userDetails]);
 
@@ -316,6 +338,7 @@ const Profile = () => {
         phone,
         address,
         gender,
+        dateofbirth: dateOfBirth,
       });
       const res = await GetUserProfileDetails();
       const data = await res.data;
@@ -330,12 +353,17 @@ const Profile = () => {
       });
       navigate('/user/settings');
       setUpdateProfile(false);
+      setPhone('');
+      setAddress('');
+      setGender('');
+      setDateOfBirth('');
     } catch (error) {
       console.error('Error updating profile:', error);
     } finally {
       setLoading(false);
     }
   };
+  
 
   return (
     <Box pb="50px">
@@ -463,6 +491,7 @@ const Profile = () => {
                       alignItems="center"
                       gap="25px"
                       flexWrap={['wrap', 'nowrap']}
+                      mb="20px"
                     >
                       <Box w="full">
                         <FormLabel fontWeight={600} fontSize={15}>
@@ -499,6 +528,28 @@ const Profile = () => {
                           h="48px"
                           color="brand.300"
                           placeholder="No 102, Street Name, City, State"
+                        />
+                      </Box>
+                    </Flex>
+                    <Flex
+                      alignItems="center"
+                      gap="25px"
+                      flexWrap={['wrap', 'nowrap']}
+                    >
+                      <Box w="full">
+                        <FormLabel fontWeight={600} fontSize={15}>
+                          Date of Birth
+                        </FormLabel>
+                        <Input
+                          type="date"
+                          w={['full', '50%']}
+                          value={dateOfBirth}
+                          onChange={(e) => setDateOfBirth(e.target.value)}
+                          border="1px solid"
+                          borderColor="border.200"
+                          rounded="50px"
+                          h="48px"
+                          color="brand.300"
                         />
                       </Box>
                     </Flex>

@@ -24,7 +24,7 @@ import CustomModal from '~/lib/components/Modal';
 import * as Yup from 'yup';
 import {
   SaveUserDetails,
-  GetUserProfileDetails,
+  GetUserProfileDetails, AddProfileImage
 } from '~/lib/api/services/profileService';
 import { AppContext } from '~/lib/layout';
 import { BsImageFill } from 'react-icons/bs';
@@ -64,12 +64,10 @@ const EditPersonalInfoModal = ({
   const handleSubmit = async (values: any) => {
     const formData = {
       profile_image: values.profilePicture,
-      dateofbirth: values.dateOfBirth,
-      gender: gender,
     };
     setLoading(true);
     try {
-      const response = await SaveUserDetails(formData);
+      const response = await AddProfileImage(formData);
       if (response.status === true) {
         const newData = await GetUserProfileDetails();
         setUserDetails(newData.data);
@@ -229,7 +227,7 @@ const EditPersonalInfoModal = ({
                         minW={['100%', '200px']}
                         isDisabled={loading}
                       >
-                        {loading ? <Spinner /> : 'Update Info'}
+                        {loading ? <Spinner /> : 'Update Profile Picture'}
                       </Button>
                     </Flex>
                   </Stack>

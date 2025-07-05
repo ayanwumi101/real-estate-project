@@ -39,6 +39,18 @@ export const SaveUserDetails = async (data) => {
   return response.data;
 };
 
+export const AddProfileImage = async (data) => {
+  const response = await axiosInstance.post(
+    API_ROUTES.ADD_PROFILE_IMAGE,
+    data, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }
+  );
+  return response.data;
+};
+
 
 export const GetNigerianBanks = async () => {
   const response = await axiosInstance.get('https://nigerianbanks.xyz/');

@@ -8,19 +8,20 @@ const NavigationTab = ({tabs, activeTab, setActiveTab}:{tabs: string[], activeTa
   
   return (
     <Box py="35px" px={['15px', '40px']} w="full" overflow="auto">
-      <Flex borderBottom="1px solid #E4E4E4" w="full" overflow="auto" pb='2'>
+      <Flex borderBottom="1px solid #E4E4E4" w="full" overflow="auto" pb="2">
         {tabs.map((tab, index) => (
           <Box>
             <Button
-              bg={tab === activeTab ? '#F5F5F5' : 'none'}
-              borderRadius="0px"
-              borderX={tab === activeTab ? '1px solid #E4E4E4' : 'none'}
-              borderTop={tab === activeTab ? '1px solid #E4E4E4' : 'none'}
-              color={tab === activeTab ? '#4040A0' : '#8295AA'}
-              h={['47px', '55px']}
-              px="7"
+              bg={tab === activeTab ? '#EDEDFF' : 'none'}
+              borderRadius={tab === activeTab ? '50px' : '0px'}
+              color={tab === activeTab ? 'brand.100' : '#8295AA'}
+              px="20px"
+              py="16px"
               onClick={() => setActiveTab(tab)}
-              fontSize={[14, 16]}
+              fontSize={14}
+              key={index}
+              fontWeight={tab === activeTab ? 600 : 500}
+              _hover={{ bg: 'none' }}
             >
               {tab}
             </Button>
