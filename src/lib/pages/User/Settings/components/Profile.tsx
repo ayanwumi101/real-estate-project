@@ -61,15 +61,17 @@ const PersonalInformation = ({updateProfile, setUpdateProfile}:{updateProfile: b
               </Text>
             </Stack>
             {!updateProfile && (
-              <Button
-                bg="brand.100"
-                onClick={() => setUpdateProfile(true)}
-                color="brand.200"
-                fontWeight={500}
-                px="24px"
-              >
-                Update Personal Info
-              </Button>
+              <Link href='/user/settings'>
+                <Button
+                  bg="brand.100"
+                  onClick={() => setUpdateProfile(true)}
+                  color="brand.200"
+                  fontWeight={500}
+                  px="24px"
+                >
+                  Update Personal Info
+                </Button>
+              </Link>
             )}
           </Flex>
           <Stack alignItems="flex-start" spacing="12px">
