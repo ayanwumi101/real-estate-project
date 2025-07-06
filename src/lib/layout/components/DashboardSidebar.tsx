@@ -71,7 +71,7 @@ const DashboardSidebar = () => {
   };
 
   return (
-    <Box as="nav" color="black" bg="#FBFBFB" pl="16px" w="100%" h="100vh">
+    <Box as="nav" color="black" bg="#FBFBFB" w="100%" h="100vh">
       <Box
         borderX="1px solid #E4E4E4"
         w="100%"

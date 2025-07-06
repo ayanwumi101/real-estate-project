@@ -232,7 +232,7 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
       >
         <Stack direction="row" w="100%" mx="auto" justifyContent="center">
           <Box
-            w={isMobile ? '0%' : '20%'}
+            w={isMobile ? '0%' : '250px'}
             position="fixed"
             left="0"
             top="0"
@@ -244,8 +244,8 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
           </Box>
           <Box
             position={isMobile ? 'static' : 'absolute'}
-            left={isMobile ? '0%' : '20%'}
-            w={isMobile ? '100%' : '80%'}
+            left={isMobile ? '0%' : '250px'}
+            w={isMobile ? '100%' : 'calc(100% - 250px)'}
           >
             <Stack direction="column" spacing="12px">
               <DashboardHeader setShowSearchBar={setShowSearchBar} />

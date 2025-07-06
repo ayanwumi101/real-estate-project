@@ -109,7 +109,7 @@ const index = () => {
       allocation_status: allocationStatus,
       documentation_status: documentationStatus,
       handover_status: handoverStatus,
-      comment: comment,
+      // comment: comment,
     };
     const formData =
       propertyDetails?.asset_type === 'instalment'

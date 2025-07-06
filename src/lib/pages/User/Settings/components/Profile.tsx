@@ -41,67 +41,38 @@ import {
 import useNavigate from '~/lib/utils/useNavigate';
 import AddBankDetailsModal from '../Modals/AddBankDetailsModal';
 import moment from 'moment';
-import { replace } from 'formik';
 
 
-
-
-
-const BankAccountDetails = ({
-  setOpenBankDetailsModal,
-  userDetails,
-}: {
-  setOpenBankDetailsModal: (value: boolean) => void;
-  userDetails: any;
-}) => {
-  return (
-    <Box border="1px solid #E4E4E4" borderRadius="5px" px="24px" py="14px">
-      <Stack spacing="20px">
-        <Heading fontSize={14} fontWeight={700} color="#2E353F">
-          Bank Account
-        </Heading>
-        <Box>
-          <Flex alignItems="center" gap="20px">
-            <BankIcon />
-            <Text>
-              {userDetails?.bank_name} |{' '}
-              {userDetails?.account_number?.replace(/\d(?=\d{4})/g, '*')}
-            </Text>
-            <FiEdit />
-          </Flex>
-        </Box>
-        <Button
-          bg="#EDEDFF"
-          color="#4040A0"
-          fontWeight={500}
-          w="160px"
-          onClick={() => setOpenBankDetailsModal(true)}
-        >
-          {userDetails?.bank_name && userDetails?.account_number
-            ? 'Change Account'
-            : 'Add Account'}
-        </Button>
-      </Stack>
-    </Box>
-  );
-};
-
-const PersonalInformation = () => {
+const PersonalInformation = ({updateProfile, setUpdateProfile}:{updateProfile: boolean; setUpdateProfile: React.Dispatch<React.SetStateAction<boolean>>}) => {
   const { userDetails } = useContext(AppContext);
-  const [openModal, setOpenModal] = React.useState<boolean>(false);
   const isProfileComplete = userDetails?.personal_check;
   return (
     <Fragment>
       <Box border="1px solid #E4E4E4" borderRadius="5px" px="24px" py="20px">
         <Stack spacing="20px">
+          <Flex alignItems="center" justifyContent="space-between" mb="5">
+            <Stack>
+              <Heading fontSize={15} color="brand.300">
+                Customer Information
+              </Heading>
+              <Text>
+                We collect your information to protect you from fraud as well as
+                to comply with local laws and regulations.
+              </Text>
+            </Stack>
+            {!updateProfile && (
+              <Button
+                bg="brand.100"
+                onClick={() => setUpdateProfile(true)}
+                color="brand.200"
+                fontWeight={500}
+                px="24px"
+              >
+                Update Personal Info
+              </Button>
+            )}
+          </Flex>
           <Stack alignItems="flex-start" spacing="12px">
-            <Heading fontSize={15} color="brand.300">
-              Customer Information
-            </Heading>
-            <Text>
-              We collect your information to protect you from fraud as well as
-              to comply with local laws and regulations.
-            </Text>
             {isProfileComplete ? (
               <Badge
                 rounded="50px"
@@ -190,7 +161,9 @@ const PersonalInformation = () => {
                   <CustomerInformationItem
                     Icon={FiCalendar}
                     label="Date of Birth"
-                    labelValue={moment(userDetails?.dateofbirth).format('dddd Do MMMM YYYY')}
+                    labelValue={moment(userDetails?.dateofbirth).format(
+                      'dddd Do MMMM YYYY'
+                    )}
                   />
                 </Box>
               </Flex>
@@ -198,26 +171,20 @@ const PersonalInformation = () => {
           </Box>
         </Stack>
       </Box>
-      <EditProfileModal
+      {/* <EditProfileModal
         isOpen={openModal}
         onClose={() => setOpenModal(false)}
-      />
+      /> */}
     </Fragment>
   );
 };
 
-const ProfileHeader = ({
-  updateProfile,
-  setUpdateProfile,
-}: {
-  updateProfile: boolean;
-  setUpdateProfile: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+const ProfileHeader = () => {
   const { userDetails } = useContext(AppContext);
   const [openModal, setOpenModal] = React.useState<boolean>(false);
   return (
     <Fragment>
-      <Box p="25px" bgGradient="linear(to-r, #D8D8FF4D, #EDEDFF4D, #FFE6C44D)">
+      <Box p="25px" rounded='8px' bgGradient="linear(to-r, #D8D8FF4D, #EDEDFF4D, #FFE6C44D)">
         <Flex
           alignItems="center"
           justifyContent="space-between"
@@ -248,31 +215,15 @@ const ProfileHeader = ({
               </Box>
             </Flex>
           </Box>
-          {updateProfile ? (
-            <Link href="/user/settings">
-              <Button
-                bg="brand.100"
-                onClick={() => setOpenModal(true)}
-                color="brand.200"
-                fontWeight={500}
-                px="24px"
-              >
-                Update Profile Picture
-              </Button>
-            </Link>
-          ) : (
-            <Link href="/user/settings">
-              <Button
-                bg="brand.100"
-                onClick={() => setUpdateProfile(true)}
-                color="brand.200"
-                fontWeight={500}
-                px="24px"
-              >
-                Update Profile
-              </Button>
-            </Link>
-          )}
+          <Button
+            bg="brand.100"
+            onClick={() => setOpenModal(true)}
+            color="brand.200"
+            fontWeight={500}
+            px="24px"
+          >
+            Update Profile Picture
+          </Button>
         </Flex>
       </Box>
       <EditPersonalInfoModal
@@ -363,16 +314,12 @@ const Profile = () => {
       setLoading(false);
     }
   };
-  
 
   return (
     <Box pb="50px">
       <Stack spacing="30px">
         <Box px={['20px', '40px']}>
-          <ProfileHeader
-            updateProfile={updateProfile}
-            setUpdateProfile={setUpdateProfile}
-          />
+          <ProfileHeader />
         </Box>
         {updateProfile ? (
           <Box px={['20px', '40px']}>
@@ -638,7 +585,10 @@ const Profile = () => {
         ) : (
           <Box px={['20px', '40px']}>
             <Stack spacing="26px">
-              <PersonalInformation />
+              <PersonalInformation
+                updateProfile={updateProfile}
+                setUpdateProfile={setUpdateProfile}
+              />
               {/* <BankAccountDetails
                 userDetails={userDetails}
                 setOpenBankDetailsModal={setOpenBankDetailsModal}
