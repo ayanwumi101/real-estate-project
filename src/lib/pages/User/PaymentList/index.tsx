@@ -62,7 +62,7 @@ const index = () => {
     (remittance: any) => remittance?.payment_status === 'pending'
   );
 
-  console.log('assetDetails', assetDetails?.payments);
+  console.log('assetDetails', assetDetails);
   
   
   return (

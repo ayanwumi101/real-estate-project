@@ -50,7 +50,7 @@ const PersonalInformation = ({updateProfile, setUpdateProfile}:{updateProfile: b
     <Fragment>
       <Box border="1px solid #E4E4E4" borderRadius="5px" px="24px" py="20px">
         <Stack spacing="20px">
-          <Flex alignItems="center" justifyContent="space-between" mb="5">
+          <Flex alignItems="center" justifyContent="space-between" mb="5" flexWrap={['wrap', 'nowrap']} gap={['15px', '0']}>
             <Stack>
               <Heading fontSize={15} color="brand.300">
                 Customer Information
