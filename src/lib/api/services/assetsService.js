@@ -108,3 +108,8 @@ export const GetAssetPaymentDueDates = async (propertyId) => {
   const response = await axiosInstance.get(`${API_ROUTES.GET_ASSET_DUE_DATES}/${propertyId}/payment-due-dates`);
   return response.data;
 }
+
+export const AddPaymentToAsset = async (data) => {
+  const response = await axiosInstance.post(`${API_ROUTES.ADD_PAYMENT_TO_ASSET}`, data);
+  return response.data;
+}

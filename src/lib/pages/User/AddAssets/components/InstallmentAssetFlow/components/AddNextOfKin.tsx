@@ -87,7 +87,7 @@ const AddNextOfKin = ({
       cashflow_source: '',
       is_occupied: '',
       last_cashflow_date: '',
-      cashflow_payment_due: '',
+      cashflow_payment_due: assetData?.nextDueDate,
       cashflow_amount: '',
       cashflow_duration: '',
       duration: assetData?.paymentDuration,

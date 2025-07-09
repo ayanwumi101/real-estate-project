@@ -26,6 +26,7 @@ import PendingPayments from './components/PendingPayments';
 import { useParams } from 'next/navigation';
 import {
   GetAssetDetails,
+  GetAssetPaymentDueDates,
 } from '~/lib/api/services/assetsService';
 import useNavigate from '~/lib/utils/useNavigate';
 
@@ -36,6 +37,7 @@ const index = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [assetDetails, setAssetDetails] = useState<any>([]);
   const [activeTab, setActiveTab] = React.useState<string>('pending payments');
+  const [paymentDueDates, setPaymentDueDates] = React.useState<any[]>([]);
 
   const getAssetDetails = async () => {
     setIsLoading(true);
@@ -49,22 +51,26 @@ const index = () => {
     setIsLoading(false);
   };
 
-
   useEffect(() => {
     getAssetDetails();
   }, [id]);
 
+  React.useEffect(() => {
+    const fetchPaymentDueDates = async () => {
+      const dueDates = await GetAssetPaymentDueDates(id);
+      setPaymentDueDates(dueDates.data.payment_due_dates);
+    };
+    fetchPaymentDueDates();
+  }, [id]);
+
   const completedPayments = assetDetails?.payments?.filter(
-    (remittance: any) => remittance?.payment_status === 'completed'
+    (remittance: any) => remittance?.status === 'completed'
   );
 
   const pendingPayments = assetDetails?.payments?.filter(
-    (remittance: any) => remittance?.payment_status === 'pending'
+    (remittance: any) => remittance?.status === 'pending'
   );
 
-  console.log('assetDetails', assetDetails);
-  
-  
   return (
     <Box
       py="40px"
@@ -143,7 +149,6 @@ const index = () => {
                     >
                       <option value="all">All</option>
                       <option value="pending">Pending</option>
-                      <option value="ongoing">Ongoing</option>
                       <option value="completed">Completed</option>
                     </Select>
                   </Flex>
@@ -177,11 +182,13 @@ const index = () => {
                 <PendingPayments
                   remittances={pendingPayments}
                   isLoading={isLoading}
+                  dueDates={paymentDueDates}
                 />
               ) : (
                 <CompletedPayments
                   remittances={completedPayments}
                   isLoading={isLoading}
+                  dueDates={paymentDueDates}
                 />
               )}
             </Box>

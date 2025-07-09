@@ -34,9 +34,11 @@ import moment from 'moment';
 const CompletedPayments = ({
   isLoading,
   remittances,
+  dueDates,
 }: {
   isLoading: boolean;
   remittances: any[];
+  dueDates: any[];
 }) => {
   const navigate = useNavigate();
   const [page, setPage] = React.useState(1);
@@ -77,7 +79,7 @@ const CompletedPayments = ({
                       fontSize={14}
                       textTransform="capitalize"
                     >
-                      Remittance Due
+                      Payment Due Date
                     </Th>
                     <Th
                       color="#222222"
@@ -85,7 +87,7 @@ const CompletedPayments = ({
                       fontSize={14}
                       textTransform="capitalize"
                     >
-                      Last Payment Date
+                      Payment Date
                     </Th>
                     <Th
                       color="#222222"
@@ -123,18 +125,21 @@ const CompletedPayments = ({
                   {remittances
                     ?.slice((page - 1) * limit, page * limit)
                     ?.map((asset: any) => {
+                      const paymentDueDate = dueDates?.find(
+                        (dueDate) => dueDate.id === asset?.payment_due_date_id
+                      );
                       return (
                         <Tr key={asset?.id} border="none" cursor="pointer">
                           <Td fontWeight={500} fontSize={14} color="#8295AA">
-                            {asset?.remittance_due_date
-                              ? moment(asset?.remittance_due_date).format(
+                            {asset?.payment_due_date_id
+                              ? moment(paymentDueDate).format(
                                   'ddd, Do MMMM YYYY'
                                 )
                               : 'N/A'}
                           </Td>
                           <Td fontWeight={500} fontSize={14} color="#8295AA">
-                            {asset?.last_cashflow
-                              ? moment(asset?.last_cashflow).format(
+                            {asset?.payment_date
+                              ? moment(asset?.payment_date).format(
                                   'ddd, Do MMMM YYYY'
                                 )
                               : 'N/A'}

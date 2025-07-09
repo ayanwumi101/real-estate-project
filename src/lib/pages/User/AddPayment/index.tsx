@@ -28,12 +28,10 @@ const index = () => {
   React.useEffect(() => {
     const fetchPaymentDueDates = async () => {
       const dueDates = await GetAssetPaymentDueDates(id);
-      setPaymentDueDates(dueDates.data);
+      setPaymentDueDates(dueDates.data.payment_due_dates);
     };
     fetchPaymentDueDates();
-  }, []);
-
-  console.log(paymentDueDates);
+  }, [id]);
   
   return (
     <Box p={['20px', '40px']} borderTop="1px solid" borderColor="border.100">
@@ -56,7 +54,7 @@ const index = () => {
           flexWrap={['wrap', 'nowrap']}
         >
           <PropertyDetails assetDetails={assetDetails} />
-          <PaymentForm assetId={assetDetails?.id} assetType={assetDetails?.asset_type} />
+          <PaymentForm paymentDueDates={paymentDueDates} assetId={assetDetails?.id} assetType={assetDetails?.asset_type} />
         </Flex>
       </Stack>
     </Box>

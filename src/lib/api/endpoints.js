@@ -40,6 +40,7 @@ const API_ROUTES = {
   ADD_ASSET_REMITTANCE: '/user/asset/remittance',
   REMOVE_NEXT_OF_KIN_FROM_ASSET: '/user/asset/remove-nok',
   GET_ASSET_DUE_DATES: '/user/asset',
+  ADD_PAYMENT_TO_ASSET: '/user/asset/payment/add',
 
   //location endpoints
   GET_ALL_COUNTRIES: '/countries',

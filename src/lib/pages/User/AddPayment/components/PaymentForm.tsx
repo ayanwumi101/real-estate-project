@@ -11,28 +11,40 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { Field, Formik, Form } from 'formik';
+import moment from 'moment';
 import React, { useState } from 'react';
 import * as Yup from 'yup';
-import { AddAssetRemittance } from '~/lib/api/services/assetsService';
+import {
+  AddAssetRemittance,
+  AddPaymentToAsset,
+} from '~/lib/api/services/assetsService';
 import { formatCurrency } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
 
 const initialValues = {
   paymentStatus: '',
-  remittanceDueDate: '',
+  paymentDueDate: '',
   paymentDate: '',
   remittanceAmount: '',
 };
 const validationSchema = Yup.object().shape({
   paymentStatus: Yup.string().required('Payment status is required'),
-  remittanceDueDate: Yup.string().required('Remittance due date is required'),
+  paymentDueDate: Yup.string().required('Payment due date is required'),
   paymentDate: Yup.string().required('Payment date is required'),
   remittanceAmount: Yup.number()
     .required('Remittance amount is required')
     .positive('Remittance amount must be a positive number'),
 });
 
-const PaymentForm = ({ assetId, assetType }: { assetId: string | number; assetType: string }) => {
+const PaymentForm = ({
+  assetId,
+  assetType,
+  paymentDueDates,
+}: {
+  assetId: string | number;
+  assetType: string;
+  paymentDueDates: any[];
+}) => {
   const toast = useToast();
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
@@ -44,11 +56,12 @@ const PaymentForm = ({ assetId, assetType }: { assetId: string | number; assetTy
   ) => {
     setLoading(true);
     try {
-      const response = await AddAssetRemittance(assetId, {
-        remittance_due_date: values.remittanceDueDate,
-        last_cashflow: values.paymentDate,
+      const response = await AddPaymentToAsset({
+        payment_due_date_id: values.paymentDueDate,
+        property_id: assetId,
         amount: values.remittanceAmount,
         status: values.paymentStatus,
+        payment_date: values.paymentDate,
       });
       if (response.status === true) {
         toast({
@@ -111,36 +124,40 @@ const PaymentForm = ({ assetId, assetType }: { assetId: string | number; assetTy
                   placeholder="Select payment status"
                   _placeholder={{ color: 'brand.800' }}
                 >
-                  <option value="ongoing">Ongoing</option>
                   <option value="pending">Pending</option>
                   <option value="completed">Completed</option>
                 </Field>
                 <FormErrorMessage>{errors.paymentStatus}</FormErrorMessage>
               </FormControl>
               <FormControl
-                isInvalid={
-                  !!errors.remittanceDueDate && touched.remittanceDueDate
-                }
+                isInvalid={!!errors.paymentDueDate && touched.paymentDueDate}
                 isRequired
               >
                 <FormLabel color="brand.300" fontWeight={600} fontSize={15}>
-                  {assetType === 'cashflow'
+                  {/* {assetType === 'cashflow'
                     ? 'Remittance Due Date'
-                    : 'Installment Due Date'}
+                    : 'Installment Due Date'} */}
+                  Payment Due Date
                 </FormLabel>
                 <Field
-                  as={Input}
+                  as={Select}
                   type="date"
                   h="50px"
                   rounded="40px"
                   border="1px solid"
                   borderColor="border.100"
                   bg="brand.700"
-                  name="remittanceDueDate"
+                  name="paymentDueDate"
                   placeholder="Select due date"
                   _placeholder={{ color: 'brand.800' }}
-                />
-                <FormErrorMessage>{errors.remittanceDueDate}</FormErrorMessage>
+                >
+                  {paymentDueDates.map((dueDate) => (
+                    <option key={dueDate.id} value={dueDate.id}>
+                      {moment(dueDate.due_date).format('dddd Do MMM, YYYY')}
+                    </option>
+                  ))}
+                </Field>
+                <FormErrorMessage>{errors.paymentDueDate}</FormErrorMessage>
               </FormControl>
               <FormControl
                 isInvalid={!!errors.paymentDate && touched.paymentDate}
@@ -189,16 +206,6 @@ const PaymentForm = ({ assetId, assetType }: { assetId: string | number; assetTy
                   h="50px"
                   placeholder="₦ 0. 00"
                 />
-                {/* <Field
-                  as={Input}
-                  h="50px"
-                  rounded="40px"
-                  border="1px solid"
-                  borderColor="border.100"
-                  bg="brand.700"
-                  type="text"
-                  name="remittanceAmount"
-                /> */}
                 <FormErrorMessage>{errors.remittanceAmount}</FormErrorMessage>
               </FormControl>
               <Button

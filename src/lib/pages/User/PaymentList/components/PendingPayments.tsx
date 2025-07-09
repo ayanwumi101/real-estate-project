@@ -35,9 +35,11 @@ import moment from 'moment';
 const PendingPayments = ({
   isLoading,
   remittances,
+  dueDates,
 }: {
   isLoading: boolean;
   remittances: any[];
+  dueDates: any[];
 }) => {
   const navigate = useNavigate();
   const [page, setPage] = React.useState(1);
@@ -83,7 +85,7 @@ const PendingPayments = ({
                       fontSize={14}
                       textTransform="capitalize"
                     >
-                      Due Date
+                      Payment Due Date
                     </Th>
                     <Th
                       color="#222222"
@@ -120,12 +122,16 @@ const PendingPayments = ({
                 <Tbody color="#222222" maxH="450px" overflow="auto">
                   {remittances
                     ?.slice((page - 1) * limit, page * limit)
-                    ?.map((asset: any) => {
+                        ?.map((asset: any) => {
+                          const paymentDueDate = dueDates?.find(
+                            (dueDate) =>
+                              dueDate.id === asset?.payment_due_date_id
+                          );
                       return (
                         <Tr key={asset?.id} border="none" cursor="pointer">
                           <Td fontWeight={500} fontSize={14} color="#8295AA">
-                            {asset?.remittance_due_date
-                              ? moment(asset?.remittance_due_date).format(
+                            {asset?.payment_due_date_id
+                              ? moment(paymentDueDate).format(
                                   'ddd, Do MMMM YYYY'
                                 )
                               : 'N/A'}
