@@ -197,7 +197,7 @@ const index = () => {
               gap="40px"
             >
               <AssetDetails propertyDetails={propertyDetails} />
-              <Notes />
+              {/* <Notes /> */}
             </Flex>
           </Box>
         </Stack>
