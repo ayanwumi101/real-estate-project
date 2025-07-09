@@ -139,10 +139,10 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                     propertyDetails?.cashflow_amount || 0.0
                   )}
                 />
-                <AssetDetailsItem
+                {/* <AssetDetailsItem
                   label="Equity Ownership"
                   labelValue={`${propertyDetails?.equity_ownership || 0}%`}
-                />
+                /> */}
               </Flex>
             </Box>
           </Box>

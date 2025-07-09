@@ -40,7 +40,6 @@ const CashflowDetails = ({
     nextCashflowDate: assetData?.nextCashflowDate || '',
     cashflowAmount: assetData?.cashflowAmount || '',
     cashflowDuration: assetData?.cashflowDuration || '',
-    equityOwnership: assetData?.equityOwnership || '',
   };
 
   const validationSchema = Yup.object().shape({
@@ -63,7 +62,6 @@ const CashflowDetails = ({
     ),
     cashflowAmount: Yup.string().required('Cashflow amount is required'),
     cashflowDuration: Yup.string().required('Cashflow duration is required'),
-    equityOwnership: Yup.string().required('Equity ownership is required'),
   });
 
   const handleSubmit = async (values: any) => {
@@ -75,7 +73,6 @@ const CashflowDetails = ({
       nextCashflowDate: values.nextCashflowDate,
       cashflowAmount: values.cashflowAmount,
       cashflowDuration: values.cashflowDuration,
-      equityOwnership: values.equityOwnership,
     });
     setStep(step + 1);
   };
@@ -308,7 +305,7 @@ const CashflowDetails = ({
                       : null}
                   </FormErrorMessage>
                 </FormControl>
-                <FormControl
+                {/* <FormControl
                   isInvalid={
                     !!errors.equityOwnership && !!touched.equityOwnership
                   }
@@ -332,7 +329,7 @@ const CashflowDetails = ({
                       ? errors.equityOwnership
                       : null}
                   </FormErrorMessage>
-                </FormControl>
+                </FormControl> */}
                 <Flex justifyContent="space-between" gap="10px">
                   <Button
                     leftIcon={<ChevronLeftIcon />}

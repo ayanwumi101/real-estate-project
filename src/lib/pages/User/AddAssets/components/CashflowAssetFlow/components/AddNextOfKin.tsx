@@ -99,7 +99,7 @@ const AddNextOfKin = ({
       amount_paid: '',
       payment_plan: '',
       due_date: '',
-      equity_ownership: '',
+      // equity_ownership: '',
       payment_date: '',
       nok_ids: [selectedNextOfKin],
     };

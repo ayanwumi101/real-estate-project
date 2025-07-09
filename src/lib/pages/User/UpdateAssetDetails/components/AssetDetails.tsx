@@ -59,7 +59,7 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
     setCashflowDuration,
     lastRemittanceDate,
     setLastRemittanceDate,
-    equityOwnership,
+    // equityOwnership,
     setEquityOwnership,
     realtorName,
     setRealtorName,
@@ -279,7 +279,7 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                     onChange={(e) => setLastRemittanceDate(e.target.value)}
                   />
                 </FormControl>
-                <FormControl>
+                {/* <FormControl>
                   <FormLabel fontWeight={600} fontSize={15} color="brand.300">
                     Equity Ownership
                   </FormLabel>
@@ -292,7 +292,7 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                     value={equityOwnership || 0}
                     onChange={(e) => setEquityOwnership(e.target.value)}
                   />
-                </FormControl>
+                </FormControl> */}
               </Flex>
             </Box>
           </Box>

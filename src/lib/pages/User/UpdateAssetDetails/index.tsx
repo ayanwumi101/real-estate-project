@@ -29,7 +29,7 @@ const index = () => {
   const [cashflowDuration, setCashflowDuration] = React.useState<string>('');
   const [lastRemittanceDate, setLastRemittanceDate] =
     React.useState<string>('');
-  const [equityOwnership, setEquityOwnership] = React.useState<string>('');
+  // const [equityOwnership, setEquityOwnership] = React.useState<string>('');
   const [realtorName, setRealtorName] = React.useState<string>('');
   const [realtorPhone, setRealtorPhone] = React.useState<string>('');
   const [allocationStatus, setAllocationStatus] = React.useState<string>('');
@@ -64,7 +64,7 @@ const index = () => {
       setRemittanceAmount(propertyDetails?.cashflow_amount);
       setCashflowDuration(propertyDetails?.cashflow_duration);
       setLastRemittanceDate(propertyDetails?.last_cashflow_date);
-      setEquityOwnership(propertyDetails?.equity_ownership);
+      // setEquityOwnership(propertyDetails?.equity_ownership);
       setRealtorName(propertyDetails?.realtor_name);
       setRealtorPhone(propertyDetails?.realtor_phone);
       setAllocationStatus(propertyDetails?.allocation_status);
@@ -86,7 +86,7 @@ const index = () => {
       cashflow_amount: remittanceAmount,
       cashflow_duration: cashflowDuration,
       last_cashflow_date: lastRemittanceDate,
-      equity_ownership: equityOwnership,
+      // equity_ownership: equityOwnership,
       realtor_name: realtorName,
       phone: realtorPhone,
       allocation_status: allocationStatus,
@@ -103,7 +103,7 @@ const index = () => {
       cashflow_amount: remittanceAmount,
       cashflow_duration: cashflowDuration,
       last_cashflow_date: lastRemittanceDate,
-      equity_ownership: equityOwnership,
+      // equity_ownership: equityOwnership,
       realtor_name: realtorName,
       phone: realtorPhone,
       allocation_status: allocationStatus,
@@ -166,8 +166,8 @@ const index = () => {
         setCashflowDuration,
         lastRemittanceDate,
         setLastRemittanceDate,
-        equityOwnership,
-        setEquityOwnership,
+        // equityOwnership,
+        // setEquityOwnership,
         realtorName,
         setRealtorName,
         realtorPhone,
