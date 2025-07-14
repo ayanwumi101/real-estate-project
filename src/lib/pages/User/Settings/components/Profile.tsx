@@ -45,7 +45,7 @@ import moment from 'moment';
 
 const PersonalInformation = ({updateProfile, setUpdateProfile}:{updateProfile: boolean; setUpdateProfile: React.Dispatch<React.SetStateAction<boolean>>}) => {
   const { userDetails } = useContext(AppContext);
-  const isProfileComplete = userDetails?.personal_check;
+  const isProfileComplete = userDetails?.gender && userDetails?.phone && userDetails?.address && userDetails?.dateofbirth;
   return (
     <Fragment>
       <Box border="1px solid #E4E4E4" borderRadius="5px" px="24px" py="20px">

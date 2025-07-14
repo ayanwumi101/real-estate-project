@@ -11,9 +11,9 @@ type RootLayoutProps = {
 const APP_NAME = 'Vestier';
 
 export const metadata: Metadata = {
-  title: { default: APP_NAME, template: 'Vestier' },
+  title: { default: APP_NAME, template: 'Vestiers' },
   description:
-    "At Vestier, we're redefining real estate asset management with technology-driven solutions that help property owners, investors, and managers stay in control of their portfolios.",
+    "At Vestiers, we're redefining real estate asset management with technology-driven solutions that help property owners, investors, and managers stay in control of their portfolios.",
   applicationName: APP_NAME,
   appleWebApp: {
     capable: true,
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     telephone: false,
   },
   openGraph: {
-    url: 'https://vestier.com',
+    url: 'https://vestiers.ng',
     title: 'Vestier',
     description:
       "At Vestier, we're redefining real estate asset management with technology-driven solutions that help property owners, investors, and managers stay in control of their portfolios.",
