@@ -18,7 +18,7 @@ import {
   InputSearchIcon,
 } from '~/lib/components/Icons/Icons';
 import { HiMiniBars3 } from 'react-icons/hi2';
-import DashboardMobileSidebar from './DashboardMobileSidebar';
+import DashboardMobileSidebar from './UserMobileSidebar';
 import { AppContext } from '..';
 
 

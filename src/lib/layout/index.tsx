@@ -27,11 +27,10 @@ import {
 import { Sparklines, SparklinesLine } from 'react-sparklines';
 import Cookies from 'js-cookie';
 
-
 import { Footer } from './components/footer';
 import { Header } from './components/header';
 import '../styles/globals.css';
-import DashboardSidebar from './components/DashboardSidebar';
+import DashboardSidebar from './components/UserSidebar';
 import { usePathname, useRouter } from 'next/navigation';
 import DashboardHeader from './components/DashboardHeader';
 import {
@@ -41,6 +40,10 @@ import {
 import { GetUserProfileDetails } from '../api/services/profileService';
 import { GetNextOfKins } from '../api/services/userService';
 import styles from './styles.module.css';
+import RealtorMobileSidebar from './components/RealtorMobileSidebar';
+import RealtorSidebar from './components/RealtorSidebar';
+
+
 
 export const AppContext = createContext<any>({});
 
@@ -230,33 +233,55 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
         position={isMobile ? 'static' : 'relative'}
         bg={['none', 'rgba(100, 100, 100, 0.1)']}
       >
-        <Stack direction="row" w="100%" mx="auto" justifyContent="center">
-          <Box
-            w={isMobile ? '0%' : '250px'}
-            position="fixed"
-            left="0"
-            top="0"
-            h="100vh"
-            overflow="hidden"
-            display={isMobile ? 'none' : 'block'}
-          >
-            <DashboardSidebar />
-          </Box>
-          <Box
-            position={isMobile ? 'static' : 'absolute'}
-            left={isMobile ? '0%' : '250px'}
-            w={isMobile ? '100%' : 'calc(100% - 250px)'}
-          >
-            <Stack direction="column" spacing="12px">
-              <DashboardHeader setShowSearchBar={setShowSearchBar} />
+        {userDetails?.role === 'user' ? (
+          <Stack direction="row" w="100%" mx="auto" justifyContent="center">
+            <Box
+              w={isMobile ? '0%' : '250px'}
+              position="fixed"
+              left="0"
+              top="0"
+              h="100vh"
+              overflow="hidden"
+              display={isMobile ? 'none' : 'block'}
+            >
+              <DashboardSidebar />
+            </Box>
+            <Box
+              position={isMobile ? 'static' : 'absolute'}
+              left={isMobile ? '0%' : '250px'}
+              w={isMobile ? '100%' : 'calc(100% - 250px)'}
+            >
+              <Stack direction="column" spacing="12px">
+                <DashboardHeader setShowSearchBar={setShowSearchBar} />
+                <Box as="main" w="100%">
+                  {children}
+                </Box>
+              </Stack>
+            </Box>
+          </Stack>
+        ) : (
+          <Stack direction="row" w="100%" mx="auto" justifyContent="center">
+            <Box
+              w={isMobile ? '0%' : '250px'}
+              position="fixed"
+              left="0"
+              top="0"
+              h="100vh"
+              overflow="hidden"
+              display={isMobile ? 'none' : 'block'}
+            >
+              <RealtorSidebar />
+            </Box>
+            <Box
+              position={isMobile ? 'static' : 'absolute'}
+              left={isMobile ? '0%' : '250px'}
+              w={isMobile ? '100%' : 'calc(100% - 250px)'}
+            >
               <Box as="main" w="100%">
                 {children}
               </Box>
-            </Stack>
-          </Box>
-        </Stack>
-        {showSearBar && (
-          <DashboardSearchBar setShowSearchBar={setShowSearchBar} />
+            </Box>
+          </Stack>
         )}
       </Box>
     </AppContext.Provider>

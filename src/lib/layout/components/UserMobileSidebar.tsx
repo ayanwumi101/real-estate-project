@@ -1,6 +1,15 @@
-import { Box, Stack, Flex, Text, Button, Image, Icon, useToast } from '@chakra-ui/react';
+import {
+  Box,
+  Stack,
+  Flex,
+  Text,
+  Button,
+  Image,
+  Icon,
+  useToast,
+} from '@chakra-ui/react';
 import React from 'react';
-import { SideBarItem } from './DashboardSidebar';
+import { SideBarItem } from './UserSidebar';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -17,8 +26,11 @@ import {
 import { motion } from 'framer-motion';
 import { VscClose } from 'react-icons/vsc';
 
-
-const DashboardMobileSidebar = ({setOpenSideNav}: { setOpenSideNav: (value: boolean) => void }) => {
+const DashboardMobileSidebar = ({
+  setOpenSideNav,
+}: {
+  setOpenSideNav: (value: boolean) => void;
+}) => {
   const pathname = usePathname();
   const router = useRouter();
   const toast = useToast();
