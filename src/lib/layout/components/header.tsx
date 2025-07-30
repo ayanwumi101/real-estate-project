@@ -25,8 +25,6 @@ export const Header = () => {
   ) {
     return null;
   }
-
-
   return (
     <Fragment>
       <Box

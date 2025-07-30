@@ -1,9 +1,9 @@
 import React from 'react'
-import Signup from '~/lib/pages/Realtor/Signup'
+import ProfileSetup from '~/lib/pages/Realtor/ProfileSetup';
 
 const page = () => {
   return (
-    <Signup />
+    <ProfileSetup />
   )
 }
 

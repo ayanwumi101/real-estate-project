@@ -50,6 +50,8 @@ export const SideBarItem = ({
   );
 };
 
+
+
 const RealtorSidebar = () => {
   const pathname = usePathname();
   const router = useRouter();
@@ -109,30 +111,12 @@ const RealtorSidebar = () => {
               isActive={pathname.includes('/user/my-assets')}
               href="/user/my-assets"
             />
-            {/* <SideBarItem
-              label="Browse Project"
-              Icon={BrowseProjectIcon}
-              isActive={pathname === '/user/projects'}
-              href="/user/projects"
-            /> */}
             <SideBarItem
               label="Remittance"
               Icon={MyPortfolioIcon}
               isActive={pathname === '/user/portfolio'}
               href="/user/portfolio"
             />
-            {/* <SideBarItem
-              label="Transactions"
-              Icon={TransactionsIcon}
-              isActive={pathname === '/user/transactions'}
-              href="/user/transactions"
-            /> */}
-            {/* <SideBarItem
-              label="Help and Support"
-              Icon={HelpAndSupportIcon}
-              isActive={pathname === '/user/support'}
-              href="/user/support"
-            /> */}
             <SideBarItem
               label="Settings"
               Icon={SettingsIcon}

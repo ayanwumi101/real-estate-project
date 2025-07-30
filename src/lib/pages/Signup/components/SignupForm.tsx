@@ -19,16 +19,12 @@ import {
   useToast,
   Spinner,
   InputLeftAddon,
-  List,
-  ListItem,
-  ListIcon,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import {
   GoogleIcon,
   AppleIcon,
   MicrosoftIcon,
-  PasswordStrengthIcon,
 } from '~/lib/components/Icons/Icons';
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 import Link from 'next/link';
@@ -161,11 +157,10 @@ const SignupForm = () => {
           />
         </Link>
         <Heading fontSize={[25, 30]} fontWeight={500} mb="16px" color="#222222">
-          Join Vestier as a Realtor or Property Manager
+          Create your profile
         </Heading>
         <Text fontSize={18} color="#2E353F">
-          Help investors manage and grow their portfolios. List, update, and
-          track assets with ease.
+          Thank you for joining our platform. Let's set up your profile.{' '}
         </Text>
       </Box>
       {/* <Box mb="32px">
@@ -254,32 +249,6 @@ const SignupForm = () => {
               )}
             </FormControl>
             <FormControl
-              isInvalid={!!formik.errors.fullname && formik.touched.fullname}
-            >
-              <FormLabel mb="10px" color="#222222" fontWeight={600}>
-                Company Name (Optional)
-              </FormLabel>
-              <Input
-                border="1px solid #C0C0C0"
-                bg="#FBFBFB"
-                borderRadius="50px"
-                _placeholder={{ color: '#8295AA' }}
-                py="25px"
-                px="20px"
-                placeholder="Enter your company name"
-                color="#222222"
-                name="company"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.fullname}
-              />
-              {formik.errors.fullname && formik.touched.fullname && (
-                <Text color="red.500" mt="2">
-                  {formik.errors.fullname}
-                </Text>
-              )}
-            </FormControl>
-            <FormControl
               isInvalid={!!formik.errors.phone && formik.touched.phone}
             >
               <FormLabel mb="10px" color="#222222" fontWeight={600}>
@@ -352,7 +321,7 @@ const SignupForm = () => {
                 </Text>
               )}
             </FormControl>
-            {/* <FormControl
+            <FormControl
               isInvalid={
                 !!formik.errors.confirmPassword &&
                 formik.touched.confirmPassword
@@ -397,36 +366,7 @@ const SignupForm = () => {
                     {formik.errors.confirmPassword}
                   </Text>
                 )}
-            </FormControl> */}
-            <Box>
-              <Stack>
-                <Heading fontSize={16} fontWeight={500}>
-                  Must contain:
-                </Heading>
-                <List spacing={2} mt={2}>
-                  <ListItem
-                    display="flex"
-                    alignItems="center"
-                    gap={2}
-                    fontSize={14}
-                    color="brand.800"
-                  >
-                    <ListIcon as={PasswordStrengthIcon} />
-                    At least 8 characters
-                  </ListItem>
-                  <ListItem
-                    display="flex"
-                    alignItems="center"
-                    gap={2}
-                    fontSize={14}
-                    color="brand.800"
-                  >
-                    <ListIcon as={PasswordStrengthIcon} />
-                    one uppercase - one lowercase - one digit - one symbol
-                  </ListItem>
-                </List>
-              </Stack>
-            </Box>
+            </FormControl>
             <FormControl
               isInvalid={
                 !!formik.errors.termsAndConditions &&
@@ -452,6 +392,7 @@ const SignupForm = () => {
                   </Text>
                 )}
             </FormControl>
+
             <Box w="100%">
               <Button
                 w="100%"

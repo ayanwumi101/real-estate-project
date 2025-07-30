@@ -175,6 +175,7 @@ const DashboardSearchBar = ({
 };
 
 export const DashboardLayout = ({ children }: LayoutProps) => {
+  const pathname = usePathname();
   const [showSearBar, setShowSearchBar] = useState<boolean>(false);
   const [userDetails, setUserDetails] = useState<any>({role: 'realtor'});
   const [nextOfKins, setNextOfKins] = useState<any>([]);
@@ -233,7 +234,7 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
         position={isMobile ? 'static' : 'relative'}
         bg={['none', 'rgba(100, 100, 100, 0.1)']}
       >
-        {userDetails?.role === 'user' ? (
+        {!pathname.includes('/realtor') ? (
           <Stack direction="row" w="100%" mx="auto" justifyContent="center">
             <Box
               w={isMobile ? '0%' : '250px'}
@@ -288,6 +289,8 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
   );
 };
 
+
+
 export const HomeLayout = ({ children }: LayoutProps) => {
   return (
     <Box>
@@ -298,11 +301,13 @@ export const HomeLayout = ({ children }: LayoutProps) => {
   );
 };
 
+
+
 export const Layout = ({ children }: LayoutProps) => {
   const rawToken = Cookies.get('vestier-token');
   const token = rawToken ? JSON.parse(rawToken) : null;
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const pathname = usePathname();
 
   // useLayoutEffect(() => {
@@ -312,15 +317,15 @@ export const Layout = ({ children }: LayoutProps) => {
   //   })();
   // }, []);
 
-  useEffect(() => {
-    const isProtectedRoute = pathname.startsWith('/user') || pathname.startsWith('/realtor');
-    if (isProtectedRoute && !token) {
-      router.replace('/signin');
-    } else if (!isProtectedRoute && token) {
-      router.replace('/user/dashboard');
-    }
-    setIsLoading(false);
-  }, [pathname, router, token]);
+  // useEffect(() => {
+  //   const isProtectedRoute = pathname.startsWith('/user') || pathname.startsWith('/realtor');
+  //   if (isProtectedRoute && !token) {
+  //     router.replace('/signin');
+  //   } else if (!isProtectedRoute && token) {
+  //     router.replace('/user/dashboard');
+  //   }
+  //   setIsLoading(false);
+  // }, [pathname, router, token]);
 
   if (isLoading) {
     return (
@@ -344,10 +349,10 @@ export const Layout = ({ children }: LayoutProps) => {
 
   return (
     <Box maxWidth="1440px" mx="auto">
-      {token === undefined || token === null ? (
-        <HomeLayout>{children}</HomeLayout>
-      ) : (
+      {pathname.includes('/realtor') || pathname.includes('/user') ? (
         <DashboardLayout>{children}</DashboardLayout>
+      ) : (
+        <HomeLayout>{children}</HomeLayout>
       )}
     </Box>
   );

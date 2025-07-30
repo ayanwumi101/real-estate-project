@@ -28,8 +28,8 @@ axiosInstance.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       // Example: Clear token and redirect to login on unauthorized
-      Cookies.remove('vestier-token');
-      window.location.href = '/';
+      // Cookies.remove('vestier-token');
+      // window.location.href = '/';
     }
     return Promise.reject(error);
   }

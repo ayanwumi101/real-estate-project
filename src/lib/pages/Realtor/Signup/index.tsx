@@ -1,6 +1,8 @@
+'use client';
+
 import { Box, Flex } from '@chakra-ui/react';
 import React from 'react'
-import Signup from '~/lib/pages/Realtor/Signup'
+import Signup from './components/Signup'
 import SideImage from './components/SideImage';
 
 
