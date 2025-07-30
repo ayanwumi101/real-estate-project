@@ -176,7 +176,7 @@ const DashboardSearchBar = ({
 
 export const DashboardLayout = ({ children }: LayoutProps) => {
   const [showSearBar, setShowSearchBar] = useState<boolean>(false);
-  const [userDetails, setUserDetails] = useState<any>([]);
+  const [userDetails, setUserDetails] = useState<any>({role: 'realtor'});
   const [nextOfKins, setNextOfKins] = useState<any>([]);
   const [isMobile] = useMediaQuery('(max-width: 768px)');
   const [isUserDetailsLoading, setIsUserDetailsLoading] =
@@ -187,17 +187,17 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
     setShowSearchBar(true);
   };
 
-  const GetUserDetails = async () => {
-    setIsUserDetailsLoading(true);
-    try {
-      const res = await GetUserProfileDetails();
-      const data = await res.data;
-      setUserDetails(data);
-    } catch (error) {
-      console.log(error);
-    }
-    setIsUserDetailsLoading(false);
-  };
+  // const GetUserDetails = async () => {
+  //   setIsUserDetailsLoading(true);
+  //   try {
+  //     const res = await GetUserProfileDetails();
+  //     const data = await res.data;
+  //     setUserDetails(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  //   setIsUserDetailsLoading(false);
+  // };
 
   const GetUserNextOfKins = async () => {
     setIsNextOfKinsLoading(true);
@@ -212,7 +212,7 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
   };
 
   useEffect(() => {
-    GetUserDetails();
+    // GetUserDetails();
     GetUserNextOfKins();
   }, []);
 
@@ -313,7 +313,7 @@ export const Layout = ({ children }: LayoutProps) => {
   // }, []);
 
   useEffect(() => {
-    const isProtectedRoute = pathname.startsWith('/user');
+    const isProtectedRoute = pathname.startsWith('/user') || pathname.startsWith('/realtor');
     if (isProtectedRoute && !token) {
       router.replace('/signin');
     } else if (!isProtectedRoute && token) {
