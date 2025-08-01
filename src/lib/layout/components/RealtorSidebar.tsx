@@ -1,4 +1,4 @@
-import { Box, Flex, Text, Stack, useToast, Image } from '@chakra-ui/react';
+import { Box, Flex, Text, Stack, useToast, Image, Button, Collapse, useDisclosure } from '@chakra-ui/react';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -11,7 +11,7 @@ import {
   TransactionsIcon,
   HelpAndSupportIcon,
   SettingsIcon,
-  LogoutIcon,
+  LogoutIcon, ManagedAssetsIcon, ChevronDownIcon, ChevronUpIcon, RealtorClientsIcon, RealtorSecuritiesIcon, RealtorTeamsIcon, RealtorTransactionsIcon
 } from '~/lib/components/Icons/Icons';
 import useNavigate from '~/lib/utils/useNavigate';
 
@@ -57,6 +57,7 @@ const RealtorSidebar = () => {
   const router = useRouter();
   const toast = useToast();
   const navigate = useNavigate();
+  const { isOpen, onToggle } = useDisclosure();
 
   const LogoutUser = () => {
     navigate('/signin');
@@ -98,30 +99,75 @@ const RealtorSidebar = () => {
           />
         </Box>
         <Box py="24px">
-          <Stack spacing="16px">
+          <Stack spacing="16px" alignItems="flex-start">
             <SideBarItem
-              label="Dashboard"
-              Icon={DashboardIcon}
-              isActive={pathname === '/user/dashboard'}
-              href="/user/dashboard"
-            />
-            <SideBarItem
-              label="My Assets"
+              label="Properties"
               Icon={MyAssetsIcon}
-              isActive={pathname.includes('/user/my-assets')}
-              href="/user/my-assets"
+              isActive={pathname === '/realtor/properties'}
+              href="/realtor/properties"
+            />
+            <Button
+              onClick={onToggle}
+              rounded="0px"
+              py="10px"
+              w="100%"
+              px="34"
+              justifyContent="flex-start"
+              leftIcon={<ManagedAssetsIcon />}
+              fontWeight={500}
+              fontSize={15}
+              bg={
+                pathname.includes('/realtor/managed-assets')
+                  ? '#EDEDFF'
+                  : 'none'
+              }
+              color={pathname.includes('/realtor/managed-assets') ? '#4040A0' : '#2E353F'}
+              rightIcon={isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
+              _hover={{bg: 'none'}}
+            >
+              Managed Assets
+            </Button>
+            <Collapse in={isOpen} animateOpacity>
+              <Box
+                p="40px"
+                color="white"
+                mt="2"
+                bg="teal.500"
+                rounded="md"
+                shadow="md"
+              >
+                the links goes here
+              </Box>
+            </Collapse>
+            <SideBarItem
+              label="Transactions"
+              Icon={RealtorTransactionsIcon}
+              isActive={pathname === '/realtor/transactions'}
+              href="/realtor/transactions"
             />
             <SideBarItem
-              label="Remittance"
-              Icon={MyPortfolioIcon}
-              isActive={pathname === '/user/portfolio'}
-              href="/user/portfolio"
+              label="Clients"
+              Icon={RealtorClientsIcon}
+              isActive={pathname === '/realtor/clients'}
+              href="/realtor/clients"
+            />
+            <SideBarItem
+              label="Securities"
+              Icon={RealtorSecuritiesIcon}
+              isActive={pathname === '/realtor/securities'}
+              href="/realtor/securities"
+            />
+            <SideBarItem
+              label="Team"
+              Icon={RealtorTeamsIcon}
+              isActive={pathname === '/realtor/team'}
+              href="/realtor/team"
             />
             <SideBarItem
               label="Settings"
               Icon={SettingsIcon}
-              isActive={pathname === '/user/settings'}
-              href="/user/settings"
+              isActive={pathname === '/realtor/settings'}
+              href="/realtor/settings"
             />
             <Box
               py="10px"
