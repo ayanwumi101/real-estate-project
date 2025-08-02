@@ -12,16 +12,18 @@ import { BsChevronRight } from 'react-icons/bs';
 import AvailableAssetDetails from './components/AvailableAssetDetails';
 import SoldAssetDetails from './components/SoldAssetDetails';
 import InstalmentAssetDetails from './components/InstalmentAssetDetails';
-
-
-
-
+import Payments from './components/Payments';
 
 const index = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const tabs = ['Details', 'Payments'];
+  const [activeTab, setActiveTab] = React.useState<'Details' | 'Payments'>(
+    'Details'
+  );
   const [propertyDetails, setPropertyDetails] = React.useState<any>([]);
-  const [propertyStatus, setPropertyStatus] = React.useState<string>('available');
+  const [propertyStatus, setPropertyStatus] =
+    React.useState<string>('available');
 
   const getAssetDetails = async () => {
     try {
@@ -59,28 +61,37 @@ const index = () => {
         </Flex>
       }
     >
-      <Stack w='full'>
+      <Stack w="full">
         <Header
+          tabs={tabs}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
           propertyName={propertyDetails?.property_name}
           location={`${propertyDetails?.house_number || ''}, ${propertyDetails?.street_name || ''}, ${propertyDetails?.state_id || ''} state`}
         />
-        <Box p={['20px', '40px']}>
-          <Flex
-            alignItems="flex-start"
-            flexWrap={['wrap', 'nowrap']}
-            gap="40px"
-            w='full'
-          >
-            {propertyStatus === 'available' ? (
-              <AvailableAssetDetails propertyDetails={propertyDetails} />
-            ) : propertyStatus === 'sold' ? (
-              <SoldAssetDetails />
-            ) : propertyStatus === 'instalment' ? (
-              <InstalmentAssetDetails />
-            ) : null}
-            <Notes notes={propertyDetails?.comment} editComment={editComment} />
-          </Flex>
-        </Box>
+        {activeTab === 'Details' && (
+          <Box p={['20px', '20px']}>
+            <Flex
+              alignItems="flex-start"
+              flexWrap={['wrap', 'nowrap']}
+              gap="40px"
+              w="full"
+            >
+              {propertyStatus === 'available' ? (
+                <AvailableAssetDetails propertyDetails={propertyDetails} />
+              ) : propertyStatus === 'sold' ? (
+                <SoldAssetDetails />
+              ) : propertyStatus === 'instalment' ? (
+                <InstalmentAssetDetails />
+              ) : null}
+              <Notes
+                notes={propertyDetails?.comment}
+                editComment={editComment}
+              />
+            </Flex>
+          </Box>
+        )}
+        {activeTab === 'Payments' && <Payments />}
       </Stack>
     </RealtorDashboardLayout>
   );

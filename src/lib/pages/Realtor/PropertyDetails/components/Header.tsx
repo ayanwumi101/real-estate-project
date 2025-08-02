@@ -28,14 +28,56 @@ import useNavigate from '~/lib/utils/useNavigate';
 interface Headerprops {
   propertyName: string;
   location: string;
+  tabs: string[];
+  setActiveTab: React.Dispatch<React.SetStateAction<'Details' | 'Payments'>>;
+  activeTab: 'Details' | 'Payments';
 }
 
-const Header = ({ propertyName, location }: Headerprops) => {
+interface NavigationTabsProps {
+  tabs: string[];
+  activeTab: 'Details' | 'Payments';
+  setActiveTab: React.Dispatch<React.SetStateAction<'Details' | 'Payments'>>;
+}
+
+const NavigationTabs = ({
+  tabs,
+  activeTab,
+  setActiveTab,
+}: NavigationTabsProps) => {
+  return (
+    <Flex alignItems="center" gap="8px" py="15px">
+      {tabs.map((tab) => (
+        <Button
+          key={tab}
+          bg={tab === activeTab ? "bg.200" : 'none'}
+          fontSize={15}
+          fontWeight={600}
+          color={tab === activeTab ? "brand.100" : "brand.800"}
+          onClick={() => setActiveTab(tab as 'Details' | 'Payments')}
+        >
+          {tab}
+        </Button>
+      ))}
+    </Flex>
+  );
+};
+
+const Header = ({
+  propertyName,
+  location,
+  tabs,
+  activeTab,
+  setActiveTab,
+}: Headerprops) => {
   const router = useRouter();
   const navigate = useNavigate();
   const { id } = useParams();
   return (
-    <Box px={['20px', '40px']}>
+    <Box
+      px={['20px', '20px']}
+      borderBottom="1px solid"
+      borderColor="border.100"
+    >
       <Stack spacing="10px" alignItems="flex-start" w="full">
         <Button
           onClick={() => navigate('/user/my-assets')}
@@ -109,6 +151,17 @@ const Header = ({ propertyName, location }: Headerprops) => {
                     fontWeight={500}
                     icon={<RegisterSaleIcon />}
                   >
+                    Add Payment
+                  </MenuItem>
+                  <MenuItem
+                    py="12px"
+                    px="16px"
+                    _hover={{ bg: 'border.100' }}
+                    fontSize={14}
+                    color="color.100"
+                    fontWeight={500}
+                    icon={<RegisterSaleIcon />}
+                  >
                     Register sale
                   </MenuItem>
                 </MenuList>
@@ -116,6 +169,11 @@ const Header = ({ propertyName, location }: Headerprops) => {
             </Flex>
           </Box>
         </Flex>
+        <NavigationTabs
+          tabs={tabs}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+        />
       </Stack>
     </Box>
   );
