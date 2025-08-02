@@ -2151,3 +2151,32 @@ export const RegisterSaleIcon = () => {
     </svg>
   );
 }
+
+
+export const PaymentHistoryIcon = () => { 
+  return (
+    <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10.857 2.71432H5.42843C5.0685 2.71432 4.7233 2.85731 4.46879 3.11182C4.21427 3.36634 4.07129 3.71153 4.07129 4.07147V14.9286C4.07129 15.2885 4.21427 15.6337 4.46879 15.8883C4.7233 16.1428 5.0685 16.2858 5.42843 16.2858H13.5713C13.9312 16.2858 14.2764 16.1428 14.5309 15.8883C14.7854 15.6337 14.9284 15.2885 14.9284 14.9286V6.78575M10.857 2.71432L14.9284 6.78575M10.857 2.71432V6.78575H14.9284M12.2141 10.1786H6.78557M12.2141 12.8929H6.78557M8.14272 7.46433H6.78557" stroke="#222222" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  );
+}
+
+
+export const AddPaymentIcon = () => { 
+  return (
+    <svg
+      width="19"
+      height="19"
+      viewBox="0 0 19 19"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M9.5 4.75V14.25M4.75 9.5H14.25"
+        stroke="#222222"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
