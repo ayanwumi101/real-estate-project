@@ -2180,3 +2180,23 @@ export const AddPaymentIcon = () => {
     </svg>
   );
 }
+
+
+export const EditPropertyIcon = () => { 
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M5.14258 20.5714H19.714M15.4283 3.42859L18.8569 6.85716L9.42829 16.2857H5.99972V12.8572L15.4283 3.42859Z"
+        stroke="#F5F5F5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}

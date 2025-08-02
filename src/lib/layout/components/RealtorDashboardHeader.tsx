@@ -2,15 +2,15 @@ import { Box, Flex, Avatar, Divider, Heading, Stack } from '@chakra-ui/react';
 import React, { Children, ReactNode } from 'react';
 import { NotificationIcon } from '~/lib/components/Icons/Icons';
 
-interface RealtorDashboardHeaderProps {
-  title: string;
+interface RealtorDashboardLayoutProps {
+  title: string | React.ReactElement;
   children?: ReactNode;
 }
 
-const RealtorDashboardHeader = ({
+const RealtorDashboardLayout = ({
   title,
   children,
-}: RealtorDashboardHeaderProps) => {
+}: RealtorDashboardLayoutProps) => {
   return (
     <Box py="20px">
       <Stack spacing="20px" w="full">
@@ -54,4 +54,4 @@ const RealtorDashboardHeader = ({
   );
 };
 
-export default RealtorDashboardHeader;
+export default RealtorDashboardLayout;
