@@ -125,6 +125,9 @@ const AvailableProperties = () => {
                           color="color.100"
                           fontWeight={500}
                           icon={<RegisterSaleIcon />}
+                          onClick={() =>
+                            navigate(`/realtor/properties/57478493/register-sale`)
+                          }
                         >
                           Register sale
                         </MenuItem>

@@ -14,16 +14,17 @@ import {
 import { useParams, useRouter } from 'next/navigation';
 import React from 'react';
 import {
-  InvestIcon,
   LocationIcon,
   ChevronLeftIcon,
-  AddIcon,
-  SaveAssetDetailsIcon,
   VerticalEllipsisIcon,
   RegisterSaleIcon,
   EditPropertyIcon,
 } from '~/lib/components/Icons/Icons';
 import useNavigate from '~/lib/utils/useNavigate';
+import AddPaymentModal from '../Modals/AddPaymentModal';
+
+
+
 
 interface Headerprops {
   propertyName: string;
@@ -72,6 +73,7 @@ const Header = ({
   const router = useRouter();
   const navigate = useNavigate();
   const { id } = useParams();
+  const [openAddPaymentModal, setOpenAddPaymentModal] = React.useState(false);
   return (
     <Box
       px={['20px', '20px']}
@@ -80,7 +82,7 @@ const Header = ({
     >
       <Stack spacing="10px" alignItems="flex-start" w="full">
         <Button
-          onClick={() => navigate('/user/my-assets')}
+          onClick={() => navigate('/realtor/properties')}
           variant="ghost"
           leftIcon={<ChevronLeftIcon />}
           p="0"
@@ -150,6 +152,7 @@ const Header = ({
                     color="color.100"
                     fontWeight={500}
                     icon={<RegisterSaleIcon />}
+                    onClick={() => setOpenAddPaymentModal(true)}
                   >
                     Add Payment
                   </MenuItem>
@@ -175,6 +178,10 @@ const Header = ({
           setActiveTab={setActiveTab}
         />
       </Stack>
+      <AddPaymentModal
+        isOpen={openAddPaymentModal}
+        onClose={() => setOpenAddPaymentModal(false)}
+      />
     </Box>
   );
 };

@@ -6,8 +6,10 @@ import {
   InputLeftElement,
   Flex,
 } from '@chakra-ui/react';
+import Link from 'next/link';
 import React from 'react';
 import { AddIcon, InputSearchIcon } from '~/lib/components/Icons/Icons';
+
 
 interface NavigationTabProps {
   setActiveTab: React.Dispatch<
@@ -23,7 +25,7 @@ const NavigationTab: React.FC<NavigationTabProps> = ({
   tabs,
 }) => {
   return (
-    <Box borderBottom='1px solid' borderColor='border.100' pb='20px'>
+    <Box borderBottom="1px solid" borderColor="border.100" pb="20px">
       <Flex alignItems="center" justifyContent="space-between">
         <Flex alignItems="center" gap="10px">
           {tabs.map((tab) => (
@@ -61,9 +63,16 @@ const NavigationTab: React.FC<NavigationTabProps> = ({
               _placeholder={{ color: 'gray.500' }}
             />
           </InputGroup>
-          <Button leftIcon={<AddIcon />} bg="brand.100" color='brand.200' fontWeight={600}>
-            Add New Property
-          </Button>
+          <Link href="/realtor/properties/add-property">
+            <Button
+              leftIcon={<AddIcon />}
+              bg="brand.100"
+              color="brand.200"
+              fontWeight={600}
+            >
+              Add New Property
+            </Button>
+          </Link>
         </Flex>
       </Flex>
     </Box>

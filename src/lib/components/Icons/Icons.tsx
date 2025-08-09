@@ -2231,3 +2231,22 @@ export const ViewPaymentIcon = () => {
     </svg>
   );
 }
+
+export const CalendarIcon = () => { 
+  return (
+    <svg
+      width="29"
+      height="28"
+      viewBox="0 0 29 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M18.5 4V8M10.5 4V8M5.5 12H23.5M7.5 6H21.5C22.6046 6 23.5 6.89543 23.5 8V22C23.5 23.1046 22.6046 24 21.5 24H7.5C6.39543 24 5.5 23.1046 5.5 22V8C5.5 6.89543 6.39543 6 7.5 6Z"
+        stroke="#8295AA"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
