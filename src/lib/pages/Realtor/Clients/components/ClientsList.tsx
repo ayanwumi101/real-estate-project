@@ -133,11 +133,11 @@ const ClientsList = () => {
                           color="color.100"
                           fontWeight={500}
                           onClick={() =>
-                            navigate(`/realtor/properties/hfjrhu4884`)
+                            navigate(`/realtor/clients/hfjrhu4884`)
                           }
                           icon={<ViewpropertyIcon />}
                         >
-                          View property
+                          View client
                         </MenuItem>
                         <MenuItem
                           py="12px"

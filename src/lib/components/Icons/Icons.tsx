@@ -2289,3 +2289,23 @@ export const DeletePropertyIcon = () => {
     </svg>
   );
 }
+
+export const ArrowCircleUpIcon = () => {
+  return (
+    <svg
+      width="19"
+      height="19"
+      viewBox="0 0 19 19"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect x="0.5" y="0.5" width="18" height="18" rx="9" fill="#EDEDFF" />
+      <path
+        d="M9.5 14V5M9.5 5L5 9.5M9.5 5L14 9.5"
+        stroke="#4040A0"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
