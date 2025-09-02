@@ -1,4 +1,14 @@
-import { Box, Flex, Text, Stack, useToast, Image, Button, Collapse, useDisclosure } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Text,
+  Stack,
+  useToast,
+  Image,
+  Button,
+  Collapse,
+  useDisclosure,
+} from '@chakra-ui/react';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -11,11 +21,16 @@ import {
   TransactionsIcon,
   HelpAndSupportIcon,
   SettingsIcon,
-  LogoutIcon, ManagedAssetsIcon, ChevronDownIcon, ChevronUpIcon, RealtorClientsIcon, RealtorSecuritiesIcon, RealtorTeamsIcon, RealtorTransactionsIcon
+  LogoutIcon,
+  ManagedAssetsIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+  RealtorClientsIcon,
+  RealtorSecuritiesIcon,
+  RealtorTeamsIcon,
+  RealtorTransactionsIcon,
 } from '~/lib/components/Icons/Icons';
 import useNavigate from '~/lib/utils/useNavigate';
-
-
 
 export const SideBarItem = ({
   label,
@@ -50,7 +65,33 @@ export const SideBarItem = ({
   );
 };
 
-
+const CollapsibleSidebarItem = ({
+  label,
+  href,
+  isActive,
+  onClick,
+}: {
+  label: string;
+  href: string;
+  isActive: boolean;
+  onClick?: () => void;
+}) => {
+  return (
+    <Box
+      py="10px"
+      w="full"
+      px="70px"
+      bg={isActive ? '#EDEDFF' : 'none'}
+      onClick={onClick}
+    >
+      <Link href={href}>
+        <Text color={isActive ? '#4040A0' : '#2E353F'} fontWeight={500}>
+          {label}
+        </Text>
+      </Link>
+    </Box>
+  );
+};
 
 const RealtorSidebar = () => {
   const pathname = usePathname();
@@ -113,31 +154,43 @@ const RealtorSidebar = () => {
               w="100%"
               px="34"
               justifyContent="flex-start"
-              leftIcon={<ManagedAssetsIcon />}
+              leftIcon={
+                <ManagedAssetsIcon
+                  isActive={pathname.includes('/realtor/managed-assets')}
+                />
+              }
               fontWeight={500}
               fontSize={15}
-              bg={
+              bg="none"
+              color={
                 pathname.includes('/realtor/managed-assets')
-                  ? '#EDEDFF'
-                  : 'none'
+                  ? '#4040A0'
+                  : '#2E353F'
               }
-              color={pathname.includes('/realtor/managed-assets') ? '#4040A0' : '#2E353F'}
-              rightIcon={isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
-              _hover={{bg: 'none'}}
+              rightIcon={
+                isOpen ? (
+                  <ChevronUpIcon
+                    isActive={pathname.includes('/realtor/managed-assets')}
+                  />
+                ) : (
+                  <ChevronDownIcon isActive={pathname.includes('/realtor/managed-assets')} />
+                )
+              }
+              _hover={{ bg: 'none' }}
             >
               Managed Assets
             </Button>
-            <Collapse in={isOpen} animateOpacity>
-              <Box
-                p="40px"
-                color="white"
-                mt="2"
-                bg="teal.500"
-                rounded="md"
-                shadow="md"
-              >
-                the links goes here
-              </Box>
+            <Collapse in={isOpen} animateOpacity style={{ width: '100%' }}>
+              <CollapsibleSidebarItem
+                label="Investors"
+                isActive={pathname === '/realtor/managed-assets/investors'}
+                href="/realtor/managed-assets/investors"
+              />
+              <CollapsibleSidebarItem
+                label="Assets"
+                isActive={pathname === '/realtor/managed-assets/assets'}
+                href="/realtor/managed-assets/assets"
+              />
             </Collapse>
             <SideBarItem
               label="Transactions"

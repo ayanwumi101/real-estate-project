@@ -1849,7 +1849,7 @@ export const DashboardAddNextOfKinIcon = () => {
   );
 };
 
-export const ChevronDownIcon = () => {
+export const ChevronDownIcon = ({isActive}:{isActive?:boolean}) => {
   return (
     <svg
       width="14"
@@ -1860,7 +1860,7 @@ export const ChevronDownIcon = () => {
     >
       <path
         d="M1 1L7 7L13 1"
-        stroke="#8295AA"
+        stroke={isActive ? '#4040A0' : '#8295AA'}
         stroke-linecap="round"
         stroke-linejoin="round"
       />
@@ -1904,7 +1904,7 @@ export const PasswordStrengthIcon = () => {
   );
 }
 
-export const ManagedAssetsIcon = () => { 
+export const ManagedAssetsIcon = ({isActive}:{isActive:boolean}) => { 
   return (
     <svg
       width="20"
@@ -1915,7 +1915,7 @@ export const ManagedAssetsIcon = () => {
     >
       <path
         d="M3.57227 7.85713H16.4294M7.85798 16.4286V7.85713M5.00084 3.57141H15.0008C15.7898 3.57141 16.4294 4.211 16.4294 4.99998V15C16.4294 15.789 15.7898 16.4286 15.0008 16.4286H5.00084C4.21186 16.4286 3.57227 15.789 3.57227 15V4.99998C3.57227 4.211 4.21186 3.57141 5.00084 3.57141Z"
-        stroke="#2E353F"
+        stroke={isActive ? '#4040A0' : '#2E353F'}
         stroke-width="0.714286"
         stroke-linecap="round"
         stroke-linejoin="round"
@@ -1925,7 +1925,7 @@ export const ManagedAssetsIcon = () => {
 }
 
 
-export const ChevronUpIcon = () => { 
+export const ChevronUpIcon = ({isActive}: {isActive?:boolean}) => { 
   return (
     <svg
       width="10"
@@ -1936,7 +1936,7 @@ export const ChevronUpIcon = () => {
     >
       <path
         d="M9.28564 5.14288L4.99993 0.857169L0.714216 5.14288"
-        stroke="#2E353F"
+        stroke={isActive ? '#4040A0' : '#2E353F'}
         stroke-width="0.714286"
         stroke-linecap="round"
         stroke-linejoin="round"

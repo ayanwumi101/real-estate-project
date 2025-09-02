@@ -38,6 +38,7 @@ const RealtorDashboardLayout = ({
                 rounded="full"
                 name="User Avatar"
                 src="https://bit.ly/dan-abramov"
+                bg='brand.100'
               />
             </Flex>
           </Box>
