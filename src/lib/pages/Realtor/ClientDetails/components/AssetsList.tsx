@@ -24,7 +24,7 @@ import {
   PreviousPageIcon,
   NextPageIcon,
   ViewpropertyIcon,
-  RegisterSaleIcon,
+  RegisterSaleIcon, PaymentHistoryIcon, AddPaymentIcon
 } from '~/lib/components/Icons/Icons';
 import useNavigate from '~/lib/utils/useNavigate';
 import { FormatAmount } from '~/lib/utils/formatAmount';
@@ -157,6 +157,36 @@ const AssetsList = () => {
                           fontSize={14}
                           color="color.100"
                           fontWeight={500}
+                          onClick={() =>
+                            navigate(`/realtor/properties/hfjrhu4884`)
+                          }
+                          icon={<PaymentHistoryIcon />}
+                        >
+                          View payment history
+                        </MenuItem>
+                        <MenuItem
+                          py="12px"
+                          px="16px"
+                          _hover={{ bg: 'border.100' }}
+                          fontSize={14}
+                          color="color.100"
+                          fontWeight={500}
+                          icon={<AddPaymentIcon />}
+                          onClick={() =>
+                            navigate(
+                              `/realtor/properties/57478493/register-sale`
+                            )
+                          }
+                        >
+                          Add new payment
+                        </MenuItem>
+                        <MenuItem
+                          py="12px"
+                          px="16px"
+                          _hover={{ bg: 'border.100' }}
+                          fontSize={14}
+                          color="color.100"
+                          fontWeight={500}
                           icon={<RegisterSaleIcon />}
                           onClick={() =>
                             navigate(
@@ -164,7 +194,7 @@ const AssetsList = () => {
                             )
                           }
                         >
-                          Register sale
+                          Update asset status
                         </MenuItem>
                       </MenuList>
                     </Menu>

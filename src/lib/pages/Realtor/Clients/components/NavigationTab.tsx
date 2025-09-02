@@ -35,7 +35,7 @@ const NavigationTab = () => {
             _placeholder={{ color: 'gray.500' }} pl='40px'
           />
         </InputGroup>
-        <Link href="/realtor/properties/add-property">
+        <Link href="/realtor/clients/add-client">
           <Button
             leftIcon={<AddIcon />}
             bg="brand.100"

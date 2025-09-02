@@ -13,7 +13,7 @@ import React from 'react';
 import {
   LocationIcon,
   EmailIcon,
-  TelephoneIcon,
+  TelephoneIcon
 } from '~/lib/components/Icons/Icons';
 
 const ClientDetailsHeader = () => {
@@ -77,7 +77,7 @@ const ClientDetailsHeader = () => {
             <Divider />
             <Box>
               <Flex alignItems="center" justifyContent="space-between">
-                <Stack spacing="12px">
+                <Stack spacing="16px">
                   <Flex alignItems="center" gap="10px">
                     <LocationIcon />
                     <Text fontWeight={500} color="brand.300">
@@ -91,7 +91,7 @@ const ClientDetailsHeader = () => {
                     </Text>
                   </Flex>
                 </Stack>
-                <Stack spacing="12px">
+                <Stack spacing="16px">
                   <Flex alignItems="center" gap="10px">
                     <TelephoneIcon />
                     <Text fontWeight={500} color="brand.300">

@@ -612,7 +612,7 @@ export const CopyIcon = () => {
   );
 };
 
-export const CloseIcon = () => {
+export const CloseIcon = ({fillColor}:{fillColor? :string}) => {
   return (
     <svg
       width="28"
@@ -623,7 +623,7 @@ export const CloseIcon = () => {
     >
       <path
         d="M20 8L8 20M8 8L20 20"
-        stroke="#222222"
+        stroke={fillColor || "#222222"}
         stroke-linecap="round"
         stroke-linejoin="round"
       />
@@ -2303,6 +2303,288 @@ export const ArrowCircleUpIcon = () => {
       <path
         d="M9.5 14V5M9.5 5L5 9.5M9.5 5L14 9.5"
         stroke="#4040A0"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+
+export const DownloadReceiptIcon = () => {
+  return (
+    <svg
+      width="20"
+      height="21"
+      viewBox="0 0 20 21"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M16.4284 12.6437V15.5009C16.4284 15.8798 16.2779 16.2431 16.01 16.511C15.7421 16.779 15.3787 16.9295 14.9999 16.9295H4.99986C4.62098 16.9295 4.25762 16.779 3.98971 16.511C3.7218 16.2431 3.57129 15.8798 3.57129 15.5009V12.6437M6.42843 9.07227L9.99986 12.6437M9.99986 12.6437L13.5713 9.07227M9.99986 12.6437V4.07227"
+        stroke="#000080"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+
+export const CloseReceiptIcon = () => {
+  return (
+    <svg
+      width="28"
+      height="29"
+      viewBox="0 0 28 29"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M20 8.5L8 20.5M8 8.5L20 20.5"
+        stroke="#222222"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+
+export const PendingReceiptIcon = () => {
+  return (
+    <svg
+      width="33"
+      height="32"
+      viewBox="0 0 33 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g filter="url(#filter0_d_3451_14218)">
+        <rect x="4.5" y="2" width="24" height="24" rx="6" fill="#FBFBFB" />
+        <rect
+          x="4.5"
+          y="2"
+          width="24"
+          height="24"
+          rx="6"
+          stroke="#FFEFD9"
+          stroke-width="1.5"
+        />
+      </g>
+      <path
+        d="M19.3569 11.1426L13.6426 16.8569M13.6426 16.8569H19.3569M13.6426 16.8569V11.1426"
+        stroke="#E1A101"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <defs>
+        <filter
+          id="filter0_d_3451_14218"
+          x="0.75"
+          y="0.25"
+          width="31.5"
+          height="31.5"
+          filterUnits="userSpaceOnUse"
+          color-interpolation-filters="sRGB"
+        >
+          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dy="2" />
+          <feGaussianBlur stdDeviation="1.5" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_3451_14218"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect1_dropShadow_3451_14218"
+            result="shape"
+          />
+        </filter>
+      </defs>
+    </svg>
+  );
+}
+
+
+export const CompletedReceiptIcon = () => {
+  return (
+    <svg
+      width="33"
+      height="32"
+      viewBox="0 0 33 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g filter="url(#filter0_d_3449_11238)">
+        <rect x="4.5" y="2" width="24" height="24" rx="6" fill="#FBFBFB" />
+        <rect
+          x="4.5"
+          y="2"
+          width="24"
+          height="24"
+          rx="6"
+          stroke="#E7F5EC"
+          stroke-width="1.5"
+        />
+      </g>
+      <path
+        d="M21.0716 10.5723L14.7859 16.858L11.9287 14.0008"
+        stroke="#1BD155"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <defs>
+        <filter
+          id="filter0_d_3449_11238"
+          x="0.75"
+          y="0.25"
+          width="31.5"
+          height="31.5"
+          filterUnits="userSpaceOnUse"
+          color-interpolation-filters="sRGB"
+        >
+          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dy="2" />
+          <feGaussianBlur stdDeviation="1.5" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_3449_11238"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect1_dropShadow_3449_11238"
+            result="shape"
+          />
+        </filter>
+      </defs>
+    </svg>
+  );
+}
+
+
+export const SelectedOptionIcon = () => {
+  return (
+    <svg
+      width="33"
+      height="33"
+      viewBox="0 0 38 29"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g filter="url(#filter0_dd_3493_9100)">
+        <rect x="8" y="4" width="22" height="22" rx="11" fill="#000080" />
+      </g>
+      <path
+        d="M23.1905 11.8574L17.4286 17.6193L14.8096 15.0003"
+        stroke="#FBFBFB"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <defs>
+        <filter
+          id="filter0_dd_3493_9100"
+          x="0"
+          y="0"
+          width="33"
+          height="33"
+          filterUnits="userSpaceOnUse"
+          color-interpolation-filters="sRGB"
+        >
+          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dy="4" />
+          <feGaussianBlur stdDeviation="4" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0.196487 0 0 0 0 0.196487 0 0 0 0 0.279476 0 0 0 0.06 0"
+          />
+          <feBlend
+            mode="multiply"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_3493_9100"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dy="4" />
+          <feGaussianBlur stdDeviation="2" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0.196487 0 0 0 0 0.196487 0 0 0 0 0.279476 0 0 0 0.08 0"
+          />
+          <feBlend
+            mode="multiply"
+            in2="effect1_dropShadow_3493_9100"
+            result="effect2_dropShadow_3493_9100"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect2_dropShadow_3493_9100"
+            result="shape"
+          />
+        </filter>
+      </defs>
+    </svg>
+  );
+}
+
+export const AddClientSuccessIcon = () => {
+  return (
+    <svg
+      width="101"
+      height="100"
+      viewBox="0 0 101 100"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect x="4" y="3.5" width="93" height="93" rx="46.5" fill="#EDEDFF" />
+      <rect
+        x="4"
+        y="3.5"
+        width="93"
+        height="93"
+        rx="46.5"
+        stroke="#D8D8FF"
+        stroke-width="7"
+      />
+      <path
+        d="M63 40.625L45.8125 57.8125L38 50"
+        stroke="#222222"
+        stroke-width="1.5625"
         stroke-linecap="round"
         stroke-linejoin="round"
       />

@@ -23,6 +23,8 @@ const extendedColors: DeepPartial<
     500: '#F5F5F5',
     600: '#FFEDE9',
     700: '#E7F5EC',
+    800: '#F6EDDF',
+    900: '#E1A101'
   },
   border: {
     100: '#E4E4E4',

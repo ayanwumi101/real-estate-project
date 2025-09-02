@@ -14,7 +14,7 @@ const CustomModal = ({isOpen, onClose, children, size}: {isOpen: boolean, onClos
         maxH='90vh'
         overflow='auto'
       >
-        <ModalBody w="100%">{children}</ModalBody>
+        <ModalBody w="100%" p='0'>{children}</ModalBody>
       </ModalContent>
     </Modal>
   );
