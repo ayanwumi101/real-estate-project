@@ -110,6 +110,7 @@ const SignupForm = () => {
         phone: values.phone,
         password: values.password,
         confirm_password: values.confirmPassword,
+        role: 'investor'
       };
       try {
         const response = await SignupUser(formData);
@@ -194,7 +195,7 @@ const SignupForm = () => {
       </Box> */}
       <Box>
         <form onSubmit={formik.handleSubmit}>
-          <Stack spacing="32px">
+          <Stack spacing="25px">
             <FormControl
               isInvalid={!!formik.errors.fullname && formik.touched.fullname}
             >

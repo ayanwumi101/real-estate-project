@@ -33,6 +33,7 @@ import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import useNavigate from '~/lib/utils/useNavigate';
+import { Cookie } from 'next/font/google';
 
 export const SocialLoginButton = ({
   label,
@@ -99,7 +100,12 @@ const LoginForm = () => {
           });
           Cookies.set('vestier-token', JSON.stringify(response.data.token));
           Cookies.set('vestier-user', JSON.stringify(response.data.user));
-          navigate('/user/dashboard');
+          Cookies.set('vestier-user-role', JSON.stringify(response.data.user.role));
+          if(response.data.user.role === 'realtor'){
+            navigate('/realtor/properties');
+          } else {
+            navigate('/user/dashboard');
+          }
           resetForm();
         } else {
           toast({

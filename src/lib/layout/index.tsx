@@ -43,8 +43,6 @@ import styles from './styles.module.css';
 import RealtorMobileSidebar from './components/RealtorMobileSidebar';
 import RealtorSidebar from './components/RealtorSidebar';
 
-
-
 export const AppContext = createContext<any>({});
 
 type LayoutProps = {
@@ -175,30 +173,30 @@ const DashboardSearchBar = ({
 };
 
 export const DashboardLayout = ({ children }: LayoutProps) => {
-  const pathname = usePathname();
   const [showSearBar, setShowSearchBar] = useState<boolean>(false);
-  const [userDetails, setUserDetails] = useState<any>({role: 'realtor'});
+  const [userDetails, setUserDetails] = useState<any>();
   const [nextOfKins, setNextOfKins] = useState<any>([]);
   const [isMobile] = useMediaQuery('(max-width: 768px)');
   const [isUserDetailsLoading, setIsUserDetailsLoading] =
     useState<boolean>(true);
   const [isNextOfKinsLoading, setIsNextOfKinsLoading] = useState<boolean>(true);
+  const [userRole, setUserRole] = useState<string | null>(null);
 
   const handleChange = () => {
     setShowSearchBar(true);
   };
 
-  // const GetUserDetails = async () => {
-  //   setIsUserDetailsLoading(true);
-  //   try {
-  //     const res = await GetUserProfileDetails();
-  //     const data = await res.data;
-  //     setUserDetails(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  //   setIsUserDetailsLoading(false);
-  // };
+  const GetUserDetails = async () => {
+    setIsUserDetailsLoading(true);
+    try {
+      const res = await GetUserProfileDetails();
+      const data = await res.data;
+      setUserDetails(data);
+    } catch (error) {
+      console.log(error);
+    }
+    setIsUserDetailsLoading(false);
+  };
 
   const GetUserNextOfKins = async () => {
     setIsNextOfKinsLoading(true);
@@ -213,8 +211,14 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
   };
 
   useEffect(() => {
-    // GetUserDetails();
+    GetUserDetails();
     GetUserNextOfKins();
+  }, []);
+
+  useEffect(() => {
+    const rawUserRole = Cookies.get('vestier-user-role');
+    const role = rawUserRole ? JSON.parse(rawUserRole) : null;
+    setUserRole(role);
   }, []);
 
   return (
@@ -234,7 +238,7 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
         position={isMobile ? 'static' : 'relative'}
         bg={['none', 'rgba(100, 100, 100, 0.1)']}
       >
-        {!pathname.includes('/realtor') ? (
+        {userRole === 'investor' ? (
           <Stack direction="row" w="100%" mx="auto" justifyContent="center">
             <Box
               w={isMobile ? '0%' : '250px'}
@@ -289,8 +293,6 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
   );
 };
 
-
-
 export const HomeLayout = ({ children }: LayoutProps) => {
   return (
     <Box>
@@ -300,8 +302,6 @@ export const HomeLayout = ({ children }: LayoutProps) => {
     </Box>
   );
 };
-
-
 
 export const Layout = ({ children }: LayoutProps) => {
   const rawToken = Cookies.get('vestier-token');
@@ -317,15 +317,16 @@ export const Layout = ({ children }: LayoutProps) => {
   //   })();
   // }, []);
 
-  // useEffect(() => {
-  //   const isProtectedRoute = pathname.startsWith('/user') || pathname.startsWith('/realtor');
-  //   if (isProtectedRoute && !token) {
-  //     router.replace('/signin');
-  //   } else if (!isProtectedRoute && token) {
-  //     router.replace('/user/dashboard');
-  //   }
-  //   setIsLoading(false);
-  // }, [pathname, router, token]);
+  useEffect(() => {
+    const isProtectedRoute =
+      pathname.startsWith('/user') || pathname.startsWith('/realtor');
+    if (isProtectedRoute && !token) {
+      router.replace('/signin');
+    } else if (!isProtectedRoute && token) {
+      router.replace('/user/dashboard');
+    }
+    setIsLoading(false);
+  }, [pathname, router, token]);
 
   if (isLoading) {
     return (

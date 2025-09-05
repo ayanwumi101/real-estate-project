@@ -39,6 +39,7 @@ const RealtorMobileSidebar = ({
     router.push('/signin');
     Cookies.remove('vestier-token');
     Cookies.remove('vestier-user');
+    Cookies.remove('vestier-user-role');
     toast({
       title: 'Logout Successful',
       description: 'You have been logged out successfully!',
