@@ -20,7 +20,7 @@ import {
   Spinner,
   InputLeftAddon,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { act, useState } from 'react';
 import {
   GoogleIcon,
   AppleIcon,
@@ -68,6 +68,8 @@ const SignupForm = () => {
   const [showConfirmPassword, setShowConfirmPassword] =
     useState<boolean>(false);
   const [phone, setPhone] = React.useState<string>('234');
+  const tabs = ['Investor', 'Realtor'];
+  const [activeTab, setActiveTab] = React.useState<string>('Investor');
 
   const formik = useFormik({
     initialValues: {
@@ -76,6 +78,7 @@ const SignupForm = () => {
       phone: '234',
       password: '',
       confirmPassword: '',
+      companyName: '',
       termsAndConditions: false,
     },
     validationSchema: Yup.object({
@@ -84,6 +87,11 @@ const SignupForm = () => {
         .required('Email is required'),
       fullname: Yup.string().required('Full Name is required'),
       phone: Yup.number().required('Phone Number is required'),
+      companyName: Yup.string().when([], (_: any, schema: any) => {
+        return activeTab === 'Realtor'
+          ? schema.required('Company Name is required')
+          : schema.notRequired();
+      }),
       password: Yup.string()
         .required('Password is required')
         .min(8, 'Password must be at least 8 characters')
@@ -110,7 +118,8 @@ const SignupForm = () => {
         phone: values.phone,
         password: values.password,
         confirm_password: values.confirmPassword,
-        role: 'investor'
+        role: activeTab === 'Investor' ? 'investor' : 'realtor',
+        company_name: values.companyName
       };
       try {
         const response = await SignupUser(formData);
@@ -147,7 +156,7 @@ const SignupForm = () => {
 
   return (
     <Box px={['24px', '44px']} pb="60px" pt="30px">
-      <Box mb="45px">
+      <Box mb="40px">
         <Link href="/">
           <Image
             src="/assets/images/logo3.png"
@@ -157,12 +166,63 @@ const SignupForm = () => {
             mb="30px"
           />
         </Link>
-        <Heading fontSize={[25, 30]} fontWeight={500} mb="16px" color="#222222">
-          Create your profile
-        </Heading>
-        <Text fontSize={18} color="#2E353F">
-          Thank you for joining our platform. Let's set up your profile.{' '}
-        </Text>
+        <Box
+          w="full"
+          border="1px solid"
+          borderColor="border.100"
+          rounded="50px"
+          p="6px"
+          mb="30px"
+        >
+          <Flex>
+            {tabs.map((tab) => (
+              <Button
+                key={tab}
+                bg={activeTab === tab ? 'bg.200' : 'none'}
+                onClick={() => setActiveTab(tab)}
+                w="50%"
+                h="52px"
+                color={activeTab === tab ? 'brand.100' : 'brand.800'}
+              >
+                {tab === 'Investor'
+                  ? 'Signup as Investor'
+                  : 'Signup as Realtor'}
+              </Button>
+            ))}
+          </Flex>
+        </Box>
+        <Box>
+          {activeTab === 'Investor' ? (
+            <Stack spacing="10px">
+              <Heading
+                fontSize={[25, 30]}
+                fontWeight={500}
+                color="#222222"
+                letterSpacing="1.5px"
+              >
+                Create your profile
+              </Heading>
+              <Text fontSize={18} color="#2E353F" fontWeight={500}>
+                Thank you for joining our platform. Let's set up your profile.{' '}
+              </Text>
+            </Stack>
+          ) : (
+            <Stack spacing="10px">
+              <Heading
+                fontSize={[25, 30]}
+                letterSpacing="1.5px"
+                fontWeight={500}
+                color="#222222"
+              >
+                Join Vestier as a Realtor or Property Manager
+              </Heading>
+              <Text fontSize={18} color="#2E353F" fontWeight={500}>
+                Help investors manage and grow their portfolios. List, update,
+                and track assets with ease.
+              </Text>
+            </Stack>
+          )}
+        </Box>
       </Box>
       {/* <Box mb="32px">
         <HStack
@@ -249,6 +309,37 @@ const SignupForm = () => {
                 </Text>
               )}
             </FormControl>
+            {activeTab === 'Realtor' && (
+              <FormControl
+                isInvalid={
+                  !!formik.errors.companyName && formik.touched.companyName
+                }
+              >
+                <FormLabel mb="10px" color="#222222" fontWeight={600}>
+                  Company Name*
+                </FormLabel>
+                <Input
+                  border="1px solid #C0C0C0"
+                  bg="#FBFBFB"
+                  borderRadius="50px"
+                  _placeholder={{ color: '#8295AA' }}
+                  py="25px"
+                  px="20px"
+                  placeholder="Enter your company name"
+                  color="#222222"
+                  name="companyName"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.companyName}
+                />
+                {formik.errors.companyName && formik.touched.companyName && (
+                  <Text color="red.500" mt="2">
+                    {formik.errors.companyName}
+                  </Text>
+                )}
+              </FormControl>
+            )}
+
             <FormControl
               isInvalid={!!formik.errors.phone && formik.touched.phone}
             >
