@@ -54,13 +54,13 @@ const API_ROUTES = {
   DELETE_NEXT_OF_KIN: '/user/next-of-kin',
 
   //realtor property endpoints
-  GET_REALTOR_PROPERTIES: '/properties',
-  ADD_PROPERTY: '/properties/add',
+  GET_REALTOR_PROPERTIES: '/realtor/properties/all',
+  ADD_REALTOR_PROPERTY: '/realtor/properties/add',
 
 
   //clients endpoints
-  GET_CLIENTS: '/clients',
-  ADD_CLIENT: '/clients/add',
+  GET_CLIENTS: '/realtor/clients',
+  ADD_CLIENT: '/realtor/clients/add',
 
 };
 

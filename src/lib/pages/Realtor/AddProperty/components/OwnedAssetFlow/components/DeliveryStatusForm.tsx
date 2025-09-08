@@ -13,10 +13,12 @@ import {
 import React, { useContext } from 'react';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
-import { UpdateAssetDeliveryStatus } from '~/lib/api/services/assetsService';
 import { CreateAssetContext } from '../../..';
 import { formatCurrency } from '~/lib/utils/formatAmount';
 import { ChevronLeftIcon } from '~/lib/components/Icons/Icons';
+import { AddRealtorProperty } from '~/lib/api/services/propertiesService';
+
+
 
 const DeliveryStatusForm = ({
   step,
