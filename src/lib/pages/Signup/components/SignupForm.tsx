@@ -119,7 +119,7 @@ const SignupForm = () => {
         password: values.password,
         confirm_password: values.confirmPassword,
         role: activeTab === 'Investor' ? 'investor' : 'realtor',
-        company: values.companyName
+        company: values.companyName || '',
       };
       try {
         const response = await SignupUser(formData);
@@ -141,8 +141,8 @@ const SignupForm = () => {
         console.log(error);
         setLoading(false);
         toast({
-          title: error.response.data.error as string,
-          description: error.response.data.message,
+          title: 'Error Signing up User',
+          description: 'Unable to signup user at the moment, try again later',
           duration: 3000,
           position: 'top-right',
           isClosable: true,

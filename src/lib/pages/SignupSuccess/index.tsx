@@ -45,28 +45,29 @@ const index = () => {
           Congratulations {user?.fullname}, your account is now active.
         </Heading>
         <Text color="#2E353F" fontWeight={500}>
-          Welcome aboard! Begin your investment journey with Vestier and
-          unlock exclusive real estate opportunities. Finish setting up your
-          profile to get started.
+          Welcome aboard! Begin your investment journey with Vestier and unlock
+          exclusive real estate opportunities. Finish setting up your profile to
+          get started.
         </Text>
         <Flex gap="16px" flexWrap={['wrap', 'nowrap']}>
-          <Button
-            w="100%"
-            mb="10px"
-            bg="#000080"
-            _hover={{ bg: '#000080' }}
-            color="white"
-            h="55px"
-            borderRadius="50px"
-            onClick={() => {
-              Cookie.set('vestier-token', JSON.stringify(token));
-              Cookie.remove('vestier-new-token');
-              router.push('/user/profile-setup');
-            }}
-          >
-            Complete profile setup
-          </Button>
-
+          {user?.role === 'investor' && (
+            <Button
+              w="100%"
+              mb="10px"
+              bg="#000080"
+              _hover={{ bg: '#000080' }}
+              color="white"
+              h="55px"
+              borderRadius="50px"
+              onClick={() => {
+                Cookie.set('vestier-token', JSON.stringify(token));
+                Cookie.remove('vestier-new-token');
+                router.push('/user/dashboard');
+              }}
+            >
+              Complete profile setup
+            </Button>
+          )}
           <Button
             w="100%"
             mb="10px"
@@ -78,7 +79,13 @@ const index = () => {
             onClick={() => {
               Cookie.set('vestier-token', JSON.stringify(token));
               Cookie.remove('vestier-new-token');
-              router.push('/user/dashboard');
+              if (user?.role === 'realtor') {
+                router.push('/realtor/properties');
+                return;
+              } else {
+                router.push('/user/dashboard');
+                return;
+              }
             }}
           >
             Proceed to dashboard
