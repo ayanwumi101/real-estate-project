@@ -119,7 +119,7 @@ const SignupForm = () => {
         password: values.password,
         confirm_password: values.confirmPassword,
         role: activeTab === 'Investor' ? 'investor' : 'realtor',
-        company_name: values.companyName
+        company: values.companyName
       };
       try {
         const response = await SignupUser(formData);

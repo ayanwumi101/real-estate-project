@@ -53,6 +53,15 @@ const API_ROUTES = {
   EDIT_NEXT_OF_KIN_DETAILS: '/user/next-of-kin',
   DELETE_NEXT_OF_KIN: '/user/next-of-kin',
 
+  //realtor property endpoints
+  GET_REALTOR_PROPERTIES: '/properties',
+  ADD_PROPERTY: '/properties/add',
+
+
+  //clients endpoints
+  GET_CLIENTS: '/clients',
+  ADD_CLIENT: '/clients/add',
+
 };
 
 export default API_ROUTES;
