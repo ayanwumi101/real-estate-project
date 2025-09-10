@@ -6,14 +6,13 @@ import PropertyDetailsForm from './components/PropertyDetailsForm';
 
 
 const index = () => {
-  const [step, setStep] = React.useState(2);
+  const [step, setStep] = React.useState(1);
   const stepTitles = [
     {
       title: 'Property Details',
       description: 'Get started with adding your property to asset by filling the forms',
     },
     { title: 'Delivery Status' },
-    { title: 'Next of Kin' },
   ];
   return (
     <Box>
@@ -21,8 +20,6 @@ const index = () => {
         <FormStepHeader
           stepTitle={stepTitles[step - 1].title}
           description={stepTitles[step - 1].description ?? ''}
-          currentStep={step}
-          stepsLength={stepTitles?.length}
         />
         <Box>
           {step === 1 && (

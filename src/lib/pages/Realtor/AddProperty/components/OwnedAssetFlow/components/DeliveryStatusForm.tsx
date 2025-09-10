@@ -8,7 +8,9 @@ import {
   Select,
   Button,
   FormErrorMessage,
-  Textarea
+  Textarea,
+  Spinner,
+  useToast,
 } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import * as Yup from 'yup';
@@ -17,8 +19,7 @@ import { CreateAssetContext } from '../../..';
 import { formatCurrency } from '~/lib/utils/formatAmount';
 import { ChevronLeftIcon } from '~/lib/components/Icons/Icons';
 import { AddRealtorProperty } from '~/lib/api/services/propertiesService';
-
-
+import { useRouter } from 'next/navigation';
 
 const DeliveryStatusForm = ({
   step,
@@ -33,6 +34,9 @@ const DeliveryStatusForm = ({
     assetData,
     setAssetData,
   } = useContext<any>(CreateAssetContext);
+  const toast = useToast();
+  const router = useRouter();
+  const [loading, setLoading] = React.useState(false);
   const [propertyCost, setPropertyCost] = React.useState<string>('');
   const validationSchema = Yup.object().shape({
     propertyCost: Yup.string().required('Propety cost is required'),
@@ -42,6 +46,7 @@ const DeliveryStatusForm = ({
       'Documentation status is required'
     ),
     handoverStatus: Yup.string().required('Handover status is required'),
+    additionalInfo: Yup.string().required('Additional information is required'),
   });
 
   const initialValues = {
@@ -50,18 +55,51 @@ const DeliveryStatusForm = ({
     allocationStatus: assetData.allocationStatus || '',
     documentationStatus: assetData.documentationStatus || '',
     handoverStatus: assetData.handoverStatus || '',
+    additionalInfo: assetData.additionalInfo || '',
   };
 
   const handleSubmit = async (values: any) => {
-    setAssetData({
-      ...assetData,
-      propertyCost: values.propertyCost,
-      dateOfPurchase: values.dateOfPurchase,
-      allocationStatus: values.allocationStatus,
-      documentationStatus: values.documentationStatus,
-      handoverStatus: values.handoverStatus,
-    });
-    setStep(step + 1);
+    setLoading(true);
+    const formData = {
+      property_name: assetData.propertyName,
+      property_type: assetData.propertyType,
+      size: assetData.propertySize,
+      house_number: assetData.propertyAddress.houseNumber,
+      street_name: assetData.propertyAddress.streetName,
+      city_name: assetData.propertyAddress.city,
+      state_id: assetData.propertyAddress.state,
+      lga_id: assetData.propertyAddress.lga,
+      realtor_name: assetData.realtorDetails.name,
+      realtor_phone: assetData.phoneNumber,
+      property_cost: values.propertyCost,
+      bought_date: values.dateOfPurchase,
+      allocation_status: values.allocationStatus,
+      documentation_status: values.documentationStatus,
+      handover_status: values.handoverStatus,
+      comment: values.additionalInfo,
+    };
+    try {
+      const res = await AddRealtorProperty(formData);
+      if (res.id) {
+        toast({
+          title: 'Property Added successfully',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        });
+        router.push('/realtor/properties');
+      }
+    } catch (error: any) {
+      toast({
+        title: error.response.data.message,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      });
+    }
+    setLoading(false);
   };
 
   return (
@@ -208,11 +246,16 @@ const DeliveryStatusForm = ({
                       : ''}
                   </FormErrorMessage>
                 </FormControl>
-                <FormControl>
+                <FormControl
+                  isInvalid={
+                    !!errors.additionalInfo && !!touched.additionalInfo
+                  }
+                >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     Add Additional Information
                   </FormLabel>
-                  <Textarea
+                  <Field
+                    as={Textarea}
                     w="full"
                     bg="#FBFBFB"
                     border="1px solid #C0C0C0"
@@ -220,7 +263,13 @@ const DeliveryStatusForm = ({
                     h="100px"
                     placeholder="Enter additional information as note"
                     resize="none"
+                    name="additionalInfo"
                   />
+                  <FormErrorMessage>
+                    {typeof errors.additionalInfo === 'string'
+                      ? errors.additionalInfo
+                      : ''}
+                  </FormErrorMessage>
                 </FormControl>
                 <Flex justifyContent="space-between" alignItems="center">
                   <Button
@@ -229,7 +278,7 @@ const DeliveryStatusForm = ({
                     fontWeight={600}
                     variant="ghost"
                     _hover={{ bg: 'none' }}
-                    onClick={() => setParentStep(parentStep - 1)}
+                    onClick={() => setStep(step - 1)}
                   >
                     Back
                   </Button>
@@ -244,7 +293,7 @@ const DeliveryStatusForm = ({
                     type="submit"
                     minW="150px"
                   >
-                    Continue
+                    {loading ? <Spinner /> : 'Continue'}
                   </Button>
                 </Flex>
               </Stack>

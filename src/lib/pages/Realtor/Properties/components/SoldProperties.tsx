@@ -379,7 +379,7 @@ const PorpertyStats = () => {
   );
 };
 
-const SoldProperties = () => {
+const SoldProperties = ({ properties }: { properties: any[] }) => {
   return (
     <Box>
       <Stack spacing="20px">

@@ -17,12 +17,18 @@ interface NavigationTabProps {
   >;
   activeTab: 'available' | 'sold' | 'instalment';
   tabs: string[];
+  availableCount?: number;
+  soldCount?: number;
+  instalmentCount?: number;
 }
 
 const NavigationTab: React.FC<NavigationTabProps> = ({
   setActiveTab,
   activeTab,
   tabs,
+  availableCount = 0,
+  soldCount = 0,
+  instalmentCount = 0,
 }) => {
   return (
     <Box borderBottom="1px solid" borderColor="border.100" pb="20px">
@@ -45,7 +51,7 @@ const NavigationTab: React.FC<NavigationTabProps> = ({
               py="16px"
               textTransform={'capitalize'}
             >
-              {`${tab} (10)`}
+              {`${tab} (${tab === 'available' ? availableCount : tab === 'sold' ? soldCount : instalmentCount})`}
             </Button>
           ))}
         </Flex>

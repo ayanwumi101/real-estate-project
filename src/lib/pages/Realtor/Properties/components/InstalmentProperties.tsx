@@ -420,7 +420,7 @@ const PorpertyStats = () => {
   );
 };
 
-const InstalmentProperties = () => {
+const InstalmentProperties = ({ properties }: { properties: any[] }) => {
   return (
     <Box>
       <Stack spacing="20px">

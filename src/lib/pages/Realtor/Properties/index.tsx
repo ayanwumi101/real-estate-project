@@ -20,7 +20,7 @@ const index = () => {
     const fetchProperties = async () => {
       try {
         const data = await GetRealtorProperties();
-        setProperties(data);
+        setProperties(data?.data || []);
       } catch (error) {
         console.error('Error fetching properties:', error);
       }
@@ -29,7 +29,15 @@ const index = () => {
     fetchProperties();
   }, []);
 
-  // console.log('Properties:', properties);
+  const availableProperties = properties?.filter(
+    (property: any) => property.status === 'available'
+  );
+  const soldProperties = properties?.filter(
+    (property: any) => property.status === 'sold'
+  );
+  const instalmentProperties = properties?.filter(
+    (property: any) => property.status === 'instalment'
+  );
 
   return (
     <RealtorDashboardLayout title="Properties">
@@ -38,11 +46,20 @@ const index = () => {
           tabs={tabs}
           setActiveTab={setActiveTab}
           activeTab={activeTab}
+          availableCount={availableProperties.length}
+          soldCount={soldProperties.length}
+          instalmentCount={instalmentProperties.length}
         />
         <Box>
-          {activeTab === 'available' && <AvailableProperties />}
-          {activeTab === 'sold' && <SoldProperties />}
-          {activeTab === 'instalment' && <InstalmentProperties />}
+          {activeTab === 'available' && (
+            <AvailableProperties properties={availableProperties} />
+          )}
+          {activeTab === 'sold' && (
+            <SoldProperties properties={soldProperties} />
+          )}
+          {activeTab === 'instalment' && (
+            <InstalmentProperties properties={instalmentProperties} />
+          )}
         </Box>
       </Stack>
     </RealtorDashboardLayout>

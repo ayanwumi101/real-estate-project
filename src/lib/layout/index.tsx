@@ -309,6 +309,7 @@ export const Layout = ({ children }: LayoutProps) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const pathname = usePathname();
+  const [userRole, setUserRole] = useState<string | null>(null);
 
   // useLayoutEffect(() => {
   //   (async () => {
@@ -318,15 +319,25 @@ export const Layout = ({ children }: LayoutProps) => {
   // }, []);
 
   useEffect(() => {
+    const rawUserRole = Cookies.get('vestier-user-role');
+    const role = rawUserRole ? JSON.parse(rawUserRole) : null;
+    setUserRole(role);
+  }, []);
+
+  useEffect(() => {
     const isProtectedRoute =
       pathname.startsWith('/user') || pathname.startsWith('/realtor');
     if (isProtectedRoute && !token) {
       router.replace('/signin');
     } else if (!isProtectedRoute && token) {
-      router.replace('/user/dashboard');
+      if (userRole === 'realtor') {
+        router.replace('/realtor/properties');
+      } else {
+        router.replace('/user/dashboard');
+      }
     }
     setIsLoading(false);
-  }, [pathname, router, token]);
+  }, [pathname, router, token, userRole]);
 
   if (isLoading) {
     return (

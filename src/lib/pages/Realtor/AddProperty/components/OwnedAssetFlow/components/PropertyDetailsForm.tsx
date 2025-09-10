@@ -44,7 +44,7 @@ const PropertyDetailsForm = ({
   const [lgas, setLgas] = useState<[]>([]);
   const [countries, setCountries] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const { setAssetType, assetType, assetData, setAssetData } =
+  const { assetData, setAssetData } =
     useContext<any>(CreateAssetContext);
 
   // fetch all countries
@@ -91,7 +91,6 @@ const PropertyDetailsForm = ({
       name: assetData?.realtorDetails?.name || '',
     },
     phoneNumber: assetData?.phoneNumber || '234',
-    assetType: assetData?.assetType || 'cashflow',
   };
 
   const validationSchema = Yup.object({
@@ -111,24 +110,9 @@ const PropertyDetailsForm = ({
     phoneNumber: Yup.string()
       .required('Phone number is required')
       .min(7, 'Phone number must be at least 7 digits'),
-    assetType: Yup.string().required('Asset type is required'),
   });
 
   const handleSubmit = async (values: any) => {
-    const formData = {
-      property_name: values.propertyName,
-      property_type: values.propertyType,
-      size: values.propertySize,
-      house_number: values.propertyAddress.houseNumber,
-      street_name: values.propertyAddress.streetName,
-      city_name: values.propertyAddress.city,
-      state_id: values.propertyAddress.state,
-      realtor_name: values.realtorDetails.name,
-      phone: values.phoneNumber,
-      lga_id: values.propertyAddress.lga,
-      asset_type: values.assetType,
-    };
-    setAssetType(values.assetType);
     setAssetData(values);
     setStep(step + 1);
   };
@@ -190,18 +174,18 @@ const PropertyDetailsForm = ({
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
                     What type of property are you listing?
                   </FormLabel>
-                  <Select
-                    onChange={(value) => setFieldValue('propertyType', value)}
-                    value={values.propertyType}
+                  <Field
+                    as={Select}
                     border="1px solid #C0C0C0"
                     bg="#FBFBFB"
                     h="50px"
                     borderRadius="40px"
                     _placeholder={{ color: '#8295AA', fontWeight: 500 }}
+                    name="propertyType"
                   >
                     <option value="Land">Land</option>
                     <option value="Building">Building</option>
-                  </Select>
+                  </Field>
                   <FormErrorMessage>
                     {typeof errors.propertyType === 'string'
                       ? errors.propertyType

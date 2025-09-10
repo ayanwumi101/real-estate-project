@@ -49,12 +49,12 @@ import { Flex, Box, Stack, Text, Heading } from '@chakra-ui/react';
 
 
 
-const FormStepHeader = ({ currentStep, stepsLength, stepTitle, description }: { currentStep: number, stepsLength: number, stepTitle: string, description: string }) => {
+const FormStepHeader = ({ stepTitle, description }: { stepTitle: string, description?: string }) => {
   return (
     <Stack spacing='6px'>
-      <Text color='brand.900' fontWeight={600}>Step {currentStep}/{stepsLength}</Text>
+      {/* <Text color='brand.900' fontWeight={600}>Step {currentStep}/{stepsLength}</Text> */}
       <Heading color='brand.100' fontSize={24}>{stepTitle}</Heading>
-      <Text color='brand.300' fontSize={16} fontWeight={500}>{description}</Text>
+      {description && <Text color='brand.300' fontSize={16} fontWeight={500}>{description}</Text>}
     </Stack>
   );
 };
