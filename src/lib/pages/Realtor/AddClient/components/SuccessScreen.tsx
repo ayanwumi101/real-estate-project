@@ -1,4 +1,5 @@
 import { Box, Button, Heading, Text, Flex, Stack } from '@chakra-ui/react';
+import Link from 'next/link';
 import React from 'react';
 import { AddClientSuccessIcon } from '~/lib/components/Icons/Icons';
 
@@ -28,12 +29,28 @@ const SuccessScreen = () => {
           property or manage their profile.
         </Text>
         <Flex alignItems="center" gap="20px">
-          <Button onClick={() => {}} color="brand.200" bg="brand.100" fontWeight={700} fontSize={15}>
-            View Client Profile
-          </Button>
-          <Button onClick={() => {}} bg="bg.200" color="brand.100" fontWeight={700} fontSize={15}>
-            Assign Property
-          </Button>
+          <Link href="/realtor/clients">
+            <Button
+              color="brand.200"
+              bg="brand.100"
+              fontWeight={700}
+              fontSize={15}
+              minW={'170px'}
+            >
+              View Clients
+            </Button>
+          </Link>
+          <Link href="/realtor/clients">
+            <Button
+              bg="bg.200"
+              color="brand.100"
+              fontWeight={700}
+              fontSize={15}
+              minW={'170px'}
+            >
+              Assign Property
+            </Button>
+          </Link>
         </Flex>
       </Stack>
     </Box>

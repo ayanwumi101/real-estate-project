@@ -29,8 +29,6 @@ const DeliveryStatusForm = ({
   setStep: (value: number) => void;
 }) => {
   const {
-    step: parentStep,
-    setStep: setParentStep,
     assetData,
     setAssetData,
   } = useContext<any>(CreateAssetContext);
