@@ -112,15 +112,25 @@ const SignupForm = () => {
     }),
     onSubmit: async (values, { resetForm }) => {
       setLoading(true);
-      const formData = {
+      const InvestorFormData = {
         email: values.email,
         fullname: values.fullname,
         phone: values.phone,
         password: values.password,
         confirm_password: values.confirmPassword,
         role: activeTab === 'Investor' ? 'investor' : 'realtor',
-        company: values.companyName || '',
       };
+      const RealtorFormData = {
+        email: values.email,
+        fullname: values.fullname,
+        phone: values.phone,
+        password: values.password,
+        confirm_password: values.confirmPassword,
+        company_name: values.companyName,
+        role: activeTab === 'Investor' ? 'investor' : 'realtor',
+      };
+      const formData =
+        activeTab === 'Investor' ? InvestorFormData : RealtorFormData;
       try {
         const response = await SignupUser(formData);
         if (response.status === true) {
