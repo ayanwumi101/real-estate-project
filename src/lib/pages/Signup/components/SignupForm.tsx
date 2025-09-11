@@ -148,7 +148,6 @@ const SignupForm = () => {
           resetForm();
         }
       } catch (error: any) {
-        console.log(error);
         setLoading(false);
         toast({
           title: error?.response?.data?.error?.message,
