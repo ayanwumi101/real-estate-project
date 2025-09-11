@@ -151,8 +151,8 @@ const SignupForm = () => {
         console.log(error);
         setLoading(false);
         toast({
-          title: 'Error Signing up User',
-          description: 'Unable to signup user at the moment, try again later',
+          title: error?.response?.data?.error?.message,
+          // description: 'Unable to signup user at the moment, try again later',
           duration: 3000,
           position: 'top-right',
           isClosable: true,
