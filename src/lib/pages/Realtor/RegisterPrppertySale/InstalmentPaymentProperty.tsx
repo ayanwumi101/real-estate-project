@@ -16,7 +16,7 @@ import { ChevronLeftIcon, CloseIcon } from '~/lib/components/Icons/Icons';
 import * as Yup from 'yup';
 import { Formik, Field, Form } from 'formik';
 import { formatCurrency } from '~/lib/utils/formatAmount';
-import { CreateSoldPropertyPayment } from '~/lib/api/services/propertiesService';
+import { CreateInstalmentPropertyPayment } from '~/lib/api/services/propertiesService';
 import Link from 'next/link';
 
 const PropertySaleContext = React.createContext<any>(null);
@@ -527,8 +527,8 @@ const InstalmentPaymentProperty = ({ clients }: { clients: any[] }) => {
 
   const handleSubmit = async (values: FormValues) => {
     try {
-      const response = await CreateSoldPropertyPayment({
-        client_name: values.clientName,
+      const response = await CreateInstalmentPropertyPayment({
+        client_id: values.clientName,
         amount_sold: Number(values.amountSold),
         first_deposit: Number(values.firstDeposit),
         payment_duration: values.paymentDuration,

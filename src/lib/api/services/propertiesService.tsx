@@ -100,3 +100,27 @@ export const CreateSoldPropertyPayment = async (
   );
   return response.data;
 };
+
+interface InstalmentPropertyPayment {
+  client_id: string;
+  amount_sold: number;
+  first_deposit: number;
+  payment_duration: string;
+  instalment_amount: number;
+  commission_received: number;
+  payment_plan: string;
+  first_payment_date: string | Date;
+  next_payment_date: string | Date;
+  allocation_status: string;
+  documentation_status: string;
+  handover_status: string;
+}
+export const CreateInstalmentPropertyPayment = async (
+  instalmentData: InstalmentPropertyPayment
+) => {
+  const response = await axiosInstance.post(
+    `${API_ROUTES.GET_PROPERTY_PAYMENTS}/instalment`,
+    instalmentData
+  );
+  return response.data;
+};
