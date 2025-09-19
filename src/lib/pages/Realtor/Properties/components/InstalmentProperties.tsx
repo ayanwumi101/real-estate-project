@@ -26,12 +26,11 @@ import {
   PreviousPageIcon,
   NextPageIcon,
   ChevronDownIcon,
-  AddPaymentIcon, RegisterSaleIcon
+  AddPaymentIcon,
+  RegisterSaleIcon,
 } from '~/lib/components/Icons/Icons';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
-
-
 
 const PropertyListTable = () => {
   const navigate = useNavigate();
@@ -296,7 +295,7 @@ const PorpertyStats = () => {
                   fontWeight={500}
                   color="brand.600"
                 >
-                  Total Sales
+                  Total Instalment
                 </Text>
                 <Menu>
                   <MenuButton
@@ -403,16 +402,22 @@ const PorpertyStats = () => {
           border="1px solid"
           borderColor="border.100"
         >
-          <Stack>
-            <Box px="16px" py="12px">
-              {' '}
-              <Text mb="16px" fontSize={16} fontWeight={500} color="brand.600">
-                Next Due Payment
-              </Text>
-              <Heading fontSize={24} fontWeight={500}>
-                Tue,30 Oct 2025
-              </Heading>
-            </Box>
+          <Stack spacing="16px" px="16px" py="12px">
+            <Text fontSize={16} fontWeight={500} color="brand.600">
+              Next Due Payment
+            </Text>
+            <Heading fontSize={24} fontWeight={500}>
+              Tue,30 Oct 2025
+            </Heading>
+            <Text fontWeight={500} fontSize={14} color="brand.400">
+              <Box as="span" textDecor="underline">
+                Marx Hershey
+              </Box>{' '}
+              for{' '}
+              <Box as="span" textDecor="underline">
+                Harborview Towers
+              </Box>
+            </Text>
           </Stack>
         </Box>
       </Flex>

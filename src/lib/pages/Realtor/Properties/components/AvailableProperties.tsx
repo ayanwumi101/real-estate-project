@@ -147,11 +147,27 @@ const AvailableProperties = ({ properties }: { properties: any[] }) => {
                               icon={<RegisterSaleIcon />}
                               onClick={() =>
                                 navigate(
-                                  `/realtor/properties/57478493/register-sale`
+                                  `/realtor/properties/${property.id}/register-sale?type=fully_sold`
                                 )
                               }
                             >
-                              Register sale
+                              Register sale as Fully Sold
+                            </MenuItem>
+                            <MenuItem
+                              py="12px"
+                              px="16px"
+                              _hover={{ bg: 'border.100' }}
+                              fontSize={14}
+                              color="color.100"
+                              fontWeight={500}
+                              icon={<RegisterSaleIcon />}
+                              onClick={() =>
+                                navigate(
+                                  `/realtor/properties/${property.id}/register-sale?type=instalment`
+                                )
+                              }
+                            >
+                              Register sale as instalment payment
                             </MenuItem>
                           </MenuList>
                         </Menu>
@@ -184,7 +200,9 @@ const AvailableProperties = ({ properties }: { properties: any[] }) => {
                   p="8px"
                   onClick={() =>
                     setPage((prev) =>
-                      prev < Math.ceil(properties.length / limit) ? prev + 1 : prev
+                      prev < Math.ceil(properties.length / limit)
+                        ? prev + 1
+                        : prev
                     )
                   }
                   isDisabled={page >= Math.ceil(properties.length / limit)}

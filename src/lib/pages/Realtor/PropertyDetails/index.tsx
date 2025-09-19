@@ -4,7 +4,6 @@ import React, { useEffect } from 'react';
 import Notes from './components/Notes';
 import Header from './components/Header';
 import { Box, Stack, Flex, Text } from '@chakra-ui/react';
-import { GetAssetDetails } from '~/lib/api/services/assetsService';
 import { useParams } from 'next/navigation';
 import useNavigate from '~/lib/utils/useNavigate';
 import RealtorDashboardLayout from '~/lib/layout/components/RealtorDashboardHeader';
@@ -13,6 +12,7 @@ import AvailableAssetDetails from './components/AvailableAssetDetails';
 import SoldAssetDetails from './components/SoldAssetDetails';
 import InstalmentAssetDetails from './components/InstalmentAssetDetails';
 import Payments from './components/Payments';
+import { GetRealtorPropertyDetails } from '~/lib/api/services/propertiesService';
 
 const index = () => {
   const { id } = useParams();
@@ -27,7 +27,7 @@ const index = () => {
 
   const getAssetDetails = async () => {
     try {
-      const res = await GetAssetDetails(id);
+      const res = await GetRealtorPropertyDetails(id as string);
       const data = await res.data;
       setPropertyDetails(data);
     } catch (error) {
@@ -42,6 +42,8 @@ const index = () => {
   const editComment = () => {
     navigate(`/user/my-assets/${id}/update-details`);
   };
+
+  console.log(propertyDetails);
 
   return (
     <RealtorDashboardLayout

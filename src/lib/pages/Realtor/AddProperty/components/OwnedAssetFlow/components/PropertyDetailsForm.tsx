@@ -28,24 +28,25 @@ import {
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import Cookie from 'js-cookie';
-import { CreateAssetContext } from '../../..';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { ChevronLeftIcon } from '~/lib/components/Icons/Icons';
+import { formatCurrency } from '~/lib/utils/formatAmount';
+import { AddRealtorProperty } from '~/lib/api/services/propertiesService';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { CreateAssetContext } from '../../..';
 
-const PropertyDetailsForm = ({
-  step,
-  setStep,
-}: {
-  step: number;
-  setStep: (value: number) => void;
-}) => {
+const PropertyDetailsForm = () => {
+  const router = useRouter();
+  const toast = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [states, setStates] = useState<[]>([]);
   const [lgas, setLgas] = useState<[]>([]);
   const [countries, setCountries] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const { assetData, setAssetData } =
-    useContext<any>(CreateAssetContext);
+  const [propertyCost, setPropertyCost] = React.useState<string>('');
+  const { assetData, setAssetData } = useContext<any>(CreateAssetContext);
 
   // fetch all countries
   useEffect(() => {
@@ -87,10 +88,8 @@ const PropertyDetailsForm = ({
       state: assetData?.propertyAddress?.state || '',
       lga: assetData?.propertyAddress?.lga || '',
     },
-    realtorDetails: {
-      name: assetData?.realtorDetails?.name || '',
-    },
-    phoneNumber: assetData?.phoneNumber || '234',
+    additionalInfo: assetData?.additionalInfo || '',
+    propertyCost: assetData?.propertyCost || '',
   };
 
   const validationSchema = Yup.object({
@@ -104,17 +103,46 @@ const PropertyDetailsForm = ({
       state: Yup.string().required('State is required'),
       lga: Yup.string().required('LGA is required'),
     }),
-    realtorDetails: Yup.object({
-      name: Yup.string().required('Realtor name is required'),
-    }),
-    phoneNumber: Yup.string()
-      .required('Phone number is required')
-      .min(7, 'Phone number must be at least 7 digits'),
+    propertyCost: Yup.string().required('Property cost is required'),
+    additionalInfo: Yup.string().required('Additional information is required'),
   });
 
   const handleSubmit = async (values: any) => {
-    setAssetData(values);
-    setStep(step + 1);
+    setIsSubmitting(true);
+    const formData = {
+      property_name: values.propertyName,
+      property_type: values.propertyType,
+      size: values.propertySize,
+      house_number: values.propertyAddress.houseNumber,
+      street_name: values.propertyAddress.streetName,
+      city_name: values.propertyAddress.city,
+      state_id: values.propertyAddress.state,
+      lga_id: values.propertyAddress.lga,
+      property_cost: values.propertyCost,
+      comment: values.additionalInfo,
+    };
+    try {
+      const res = await AddRealtorProperty(formData);
+      if (res.id) {
+        toast({
+          title: 'Property Added successfully',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        });
+        router.push('/realtor/properties');
+      }
+    } catch (error: any) {
+      toast({
+        title: error.response.data.message,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      });
+    }
+    setIsSubmitting(false);
   };
 
   return (
@@ -305,7 +333,6 @@ const PropertyDetailsForm = ({
                   <Flex
                     alignItems="flex-start"
                     justifyContent="space-between"
-                    mb="15px"
                     gap="10px"
                     flexWrap={['wrap', 'wrap', 'nowrap']}
                   >
@@ -385,80 +412,73 @@ const PropertyDetailsForm = ({
                     </FormControl>
                   </Flex>
                 </FormControl>
-                <FormControl>
-                  <FormLabel fontWeight={600} fontSize={16} color="#222222">
-                    Enter your realtor name
-                  </FormLabel>
-                  <FormControl
-                    isInvalid={
-                      !!errors.realtorDetails?.name &&
-                      !!touched.realtorDetails?.name
-                    }
-                  >
-                    <Field
-                      as={Input}
-                      border="1px solid #C0C0C0"
-                      bg="#FBFBFB"
-                      h="50px"
-                      borderRadius="40px"
-                      placeholder="Name of Realtor"
-                      _placeholder={{ color: '#8295AA', fontWeight: 500 }}
-                      name="realtorDetails.name"
-                    />
-                    <FormErrorMessage>
-                      {typeof errors.realtorDetails?.name === 'string'
-                        ? errors.realtorDetails?.name
-                        : null}
-                    </FormErrorMessage>
-                  </FormControl>
-                </FormControl>
                 <FormControl
-                  isInvalid={!!errors.phoneNumber && !!touched.phoneNumber}
+                  isInvalid={!!errors.propertyCost && !!touched.propertyCost}
                 >
                   <FormLabel fontWeight={600} fontSize={16} color="#222222">
-                    Enter Realtor’s Phone number
+                    How much does the property cost?
                   </FormLabel>
-                  <PhoneInput
-                    value={values.phoneNumber}
-                    onChange={(value: string) =>
-                      setFieldValue('phoneNumber', value)
-                    }
-                    onBlur={() => setFieldTouched('phoneNumber', true)}
-                    containerStyle={{
-                      border: '1px solid #C0C0C0',
-                      backgroundColor: '#FBFBFB',
-                      padding: '5px 14px 5px 14px',
-                      borderRadius: '24px',
-                      height: '50px',
+                  <Input
+                    type="text"
+                    value={formatCurrency(propertyCost)}
+                    onChange={(e) => {
+                      const rawValue = e.target.value.replace(/[^\d]/g, '');
+                      setPropertyCost(rawValue);
+                      setFieldValue('propertyCost', rawValue);
                     }}
-                    inputStyle={{
-                      border: 'none',
-                      paddingLeft: '50px',
-                      paddingTop: '5px',
-                      backgroundColor: '#FBFBFB',
-                    }}
-                    buttonStyle={{
-                      border: 'none',
-                      background: 'none',
-                    }}
+                    name="propertyCost"
+                    bg="#FBFBFB"
+                    border="1px solid #C0C0C0"
+                    borderRadius="50px"
+                    h="50px"
+                    placeholder="₦ 0. 00"
                   />
                   <FormErrorMessage>
-                    {typeof errors?.phoneNumber === 'string'
-                      ? errors.phoneNumber
-                      : null}
+                    {typeof errors.propertyCost === 'string'
+                      ? errors.propertyCost
+                      : ''}
+                  </FormErrorMessage>
+                </FormControl>
+                <FormControl
+                  isInvalid={
+                    !!errors.additionalInfo && !!touched.additionalInfo
+                  }
+                >
+                  <FormLabel fontWeight={600} fontSize={16} color="#222222">
+                    Add Additional Information
+                  </FormLabel>
+                  <Field
+                    as={Textarea}
+                    w="full"
+                    bg="#FBFBFB"
+                    border="1px solid #C0C0C0"
+                    borderRadius="10px"
+                    h="100px"
+                    placeholder="Enter additional information as note"
+                    resize="none"
+                    name="additionalInfo"
+                  />
+                  <FormErrorMessage>
+                    {typeof errors.additionalInfo === 'string'
+                      ? errors.additionalInfo
+                      : ''}
                   </FormErrorMessage>
                 </FormControl>
                 <Flex justifyContent="space-between" alignItems="center">
-                  <Button
-                    leftIcon={<ChevronLeftIcon />}
-                    color="brand.100"
-                    fontWeight={600}
-                    variant="ghost"
-                    _hover={{ bg: 'none' }}
-                    isDisabled={true}
-                  >
-                    Back
-                  </Button>
+                  <Link href="/realtor/properties">
+                    {' '}
+                    <Button
+                      leftIcon={<ChevronLeftIcon />}
+                      color="brand.100"
+                      fontWeight={600}
+                      variant="ghost"
+                      _hover={{ bg: 'none' }}
+                      p="0"
+                    >
+                      Back
+                    </Button>
+                  </Link>
+
                   <Button
                     bg="#000080"
                     color="white"
@@ -468,9 +488,9 @@ const PropertyDetailsForm = ({
                     fontSize={16}
                     _hover={{ bg: '#000080' }}
                     type="submit"
-                    minW="150px"
+                    minW="180px"
                   >
-                    Continue
+                    {isSubmitting ? <Spinner /> : 'Submit'}
                   </Button>
                 </Flex>
               </Stack>
