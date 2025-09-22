@@ -17,6 +17,7 @@ import {
   Heading,
   Text,
 } from '@chakra-ui/react';
+import moment from 'moment';
 import React from 'react';
 import {
   VerticalEllipsisIcon,
@@ -32,7 +33,7 @@ import {
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
 
-const PropertyListTable = () => {
+const PropertyListTable = ({ properties }: { properties: any[] }) => {
   const navigate = useNavigate();
   const [page, setPage] = React.useState(1);
   const [limit, setLimit] = React.useState(8);
@@ -100,99 +101,99 @@ const PropertyListTable = () => {
           </Tr>
         </Thead>
         <Tbody color="#222222" maxH="450px" overflow="auto">
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-            ?.slice((page - 1) * limit, page * limit)
-            ?.map((asset) => {
-              return (
-                <Tr key={asset} border="none" cursor="pointer">
-                  <Td fontSize={15} color="#222222" fontWeight={600}>
-                    Green Valley Estate
-                  </Td>
-                  <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    Land
-                  </Td>
-                  <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    Marx Hershey
-                  </Td>
-                  <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    Jan 24, 2020
-                  </Td>
-                  <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    {FormatAmount(Number(500000))}
-                  </Td>
-                  <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    {FormatAmount(Number(500000))}
-                  </Td>
-                  <Td>
-                    <Menu>
-                      <MenuButton as={Button} rounded="5px" bg="bg.200">
-                        <VerticalEllipsisIcon />
-                      </MenuButton>
-                      <MenuList py="0px" rounded="16px">
-                        <MenuItem
-                          py="12px"
-                          px="16px"
-                          _hover={{ bg: 'border.100' }}
-                          fontSize={14}
-                          color="color.100"
-                          fontWeight={500}
-                          onClick={() =>
-                            navigate(`/realtor/properties/hfjrhu4884?type=instalment`)
-                          }
-                          icon={<ViewpropertyIcon />}
-                        >
-                          View property
-                        </MenuItem>
-                        <MenuItem
-                          py="12px"
-                          px="16px"
-                          _hover={{ bg: 'border.100' }}
-                          fontSize={14}
-                          color="color.100"
-                          fontWeight={500}
-                          icon={<PaymentHistoryIcon />}
-                        >
-                          View payment history
-                        </MenuItem>
-                        <MenuItem
-                          py="12px"
-                          px="16px"
-                          _hover={{ bg: 'border.100' }}
-                          fontSize={14}
-                          color="color.100"
-                          fontWeight={500}
-                          icon={<AddPaymentIcon />}
-                        >
-                          Add new payment
-                        </MenuItem>
-                        <MenuItem
-                          py="12px"
-                          px="16px"
-                          _hover={{ bg: 'border.100' }}
-                          fontSize={14}
-                          color="color.100"
-                          fontWeight={500}
-                          icon={<RealtorClientsIcon />}
-                        >
-                          View client
-                        </MenuItem>
-                        <MenuItem
-                          py="12px"
-                          px="16px"
-                          _hover={{ bg: 'border.100' }}
-                          fontSize={14}
-                          color="color.100"
-                          fontWeight={500}
-                          icon={<RegisterSaleIcon />}
-                        >
-                          Change property status
-                        </MenuItem>
-                      </MenuList>
-                    </Menu>
-                  </Td>
-                </Tr>
-              );
-            })}
+          {properties?.slice((page - 1) * limit, page * limit)?.map((asset) => {
+            return (
+              <Tr key={asset} border="none" cursor="pointer">
+                <Td fontSize={15} color="#222222" fontWeight={600}>
+                  {asset?.property_name}
+                </Td>
+                <Td fontWeight={500} fontSize={14} color="#8295AA">
+                  {asset?.property_type}
+                </Td>
+                <Td fontWeight={500} fontSize={14} color="#8295AA">
+                  {asset?.client_name}
+                </Td>
+                <Td fontWeight={500} fontSize={14} color="#8295AA">
+                  Jan 24, 2020
+                </Td>
+                <Td fontWeight={500} fontSize={14} color="#8295AA">
+                  {FormatAmount(Number(asset?.sale_price))}
+                </Td>
+                <Td fontWeight={500} fontSize={14} color="#8295AA">
+                  {FormatAmount(Number(asset?.total_commission))}
+                </Td>
+                <Td>
+                  <Menu>
+                    <MenuButton as={Button} rounded="5px" bg="bg.200">
+                      <VerticalEllipsisIcon />
+                    </MenuButton>
+                    <MenuList py="0px" rounded="16px">
+                      <MenuItem
+                        py="12px"
+                        px="16px"
+                        _hover={{ bg: 'border.100' }}
+                        fontSize={14}
+                        color="color.100"
+                        fontWeight={500}
+                        onClick={() =>
+                          navigate(
+                            `/realtor/properties/hfjrhu4884?type=instalment`
+                          )
+                        }
+                        icon={<ViewpropertyIcon />}
+                      >
+                        View property
+                      </MenuItem>
+                      <MenuItem
+                        py="12px"
+                        px="16px"
+                        _hover={{ bg: 'border.100' }}
+                        fontSize={14}
+                        color="color.100"
+                        fontWeight={500}
+                        icon={<PaymentHistoryIcon />}
+                      >
+                        View payment history
+                      </MenuItem>
+                      <MenuItem
+                        py="12px"
+                        px="16px"
+                        _hover={{ bg: 'border.100' }}
+                        fontSize={14}
+                        color="color.100"
+                        fontWeight={500}
+                        icon={<AddPaymentIcon />}
+                      >
+                        Add new payment
+                      </MenuItem>
+                      <MenuItem
+                        py="12px"
+                        px="16px"
+                        _hover={{ bg: 'border.100' }}
+                        fontSize={14}
+                        color="color.100"
+                        fontWeight={500}
+                        icon={<RealtorClientsIcon />}
+                      >
+                        View client
+                      </MenuItem>
+                      <MenuItem
+                        py="12px"
+                        px="16px"
+                        _hover={{ bg: 'border.100' }}
+                        fontSize={14}
+                        color="color.100"
+                        fontWeight={500}
+                        icon={<RegisterSaleIcon />}
+                      >
+                        Change property status
+                      </MenuItem>
+                    </MenuList>
+                  </Menu>
+                </Td>
+              </Tr>
+            );
+          })}
         </Tbody>
       </Table>
       {[1, 2, 3, 4, 5, 6, 7, 8, 10]?.length > 0 && (
@@ -232,7 +233,7 @@ const PropertyListTable = () => {
   );
 };
 
-const PorpertyStats = () => {
+const PropertyStats = () => {
   return (
     <Box w="full" overflow="auto">
       <Flex
@@ -425,12 +426,13 @@ const PorpertyStats = () => {
   );
 };
 
-const InstalmentProperties = ({ properties }: { properties: any[] }) => {
+const InstalmentProperties = ({ properties }: { properties: any }) => {
+  console.log(properties);
   return (
     <Box>
       <Stack spacing="20px">
-        <PorpertyStats />
-        <PropertyListTable />
+        <PropertyStats />
+        <PropertyListTable properties={properties?.data} />
       </Stack>
     </Box>
   );

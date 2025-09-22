@@ -17,6 +17,7 @@ import {
   Heading,
   Text,
 } from '@chakra-ui/react';
+import moment from 'moment';
 import React from 'react';
 import {
   VerticalEllipsisIcon,
@@ -30,9 +31,7 @@ import {
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
 
-
-
-const PropertyListTable = () => {
+const PropertyListTable = ({ properties }: { properties: any[] }) => {
   const navigate = useNavigate();
   const [page, setPage] = React.useState(1);
   const [limit, setLimit] = React.useState(8);
@@ -100,80 +99,82 @@ const PropertyListTable = () => {
           </Tr>
         </Thead>
         <Tbody color="#222222" maxH="450px" overflow="auto">
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-            ?.slice((page - 1) * limit, page * limit)
-            ?.map((asset) => {
-              return (
-                <Tr key={asset} border="none" cursor="pointer">
-                  <Td fontSize={15} color="#222222" fontWeight={600}>
-                    Green Valley Estate
-                  </Td>
-                  <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    Land
-                  </Td>
-                  <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    Marx Hershey
-                  </Td>
-                  <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    Jan 24, 2020
-                  </Td>
-                  <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    {FormatAmount(Number(500000))}
-                  </Td>
-                  <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    {FormatAmount(Number(500000))}
-                  </Td>
-                  <Td>
-                    <Menu>
-                      <MenuButton as={Button} rounded="5px" bg="bg.200">
-                        <VerticalEllipsisIcon />
-                      </MenuButton>
-                      <MenuList py="0px" rounded="16px">
-                        <MenuItem
-                          py="12px"
-                          px="16px"
-                          _hover={{ bg: 'border.100' }}
-                          fontSize={14}
-                          color="color.100"
-                          fontWeight={500}
-                          onClick={() =>
-                            navigate(`/realtor/properties/hfjrhu4884?type=sold`)
-                          }
-                          icon={<ViewpropertyIcon />}
-                        >
-                          View property
-                        </MenuItem>
-                        <MenuItem
-                          py="12px"
-                          px="16px"
-                          _hover={{ bg: 'border.100' }}
-                          fontSize={14}
-                          color="color.100"
-                          fontWeight={500}
-                          icon={<PaymentHistoryIcon />}
-                        >
-                          View payment history
-                        </MenuItem>
-                        <MenuItem
-                          py="12px"
-                          px="16px"
-                          _hover={{ bg: 'border.100' }}
-                          fontSize={14}
-                          color="color.100"
-                          fontWeight={500}
-                          icon={<RealtorClientsIcon />}
-                        >
-                          View client
-                        </MenuItem>
-                      </MenuList>
-                    </Menu>
-                  </Td>
-                </Tr>
-              );
-            })}
+          {properties?.slice((page - 1) * limit, page * limit)?.map((asset) => {
+            console.log(asset);
+
+            return (
+              <Tr key={asset} border="none" cursor="pointer">
+                <Td fontSize={15} color="#222222" fontWeight={600}>
+                  {asset?.property_name}
+                </Td>
+                <Td fontWeight={500} fontSize={14} color="#8295AA">
+                  {asset?.property_type}
+                </Td>
+                <Td fontWeight={500} fontSize={14} color="#8295AA">
+                  {asset?.client?.firstname} {asset?.client?.lastname}
+                </Td>
+                <Td fontWeight={500} fontSize={14} color="#8295AA">
+                  {moment(asset?.payment_history?.[0]?.payment_date).format(
+                    'ddd, Do MMMM YYYY'
+                  )}
+                </Td>
+                <Td fontWeight={500} fontSize={14} color="#8295AA">
+                  {FormatAmount(Number(asset?.amount_sold))}
+                </Td>
+                <Td fontWeight={500} fontSize={14} color="#8295AA">
+                  {FormatAmount(Number(asset?.commission))}
+                </Td>
+                <Td>
+                  <Menu>
+                    <MenuButton as={Button} rounded="5px" bg="bg.200">
+                      <VerticalEllipsisIcon />
+                    </MenuButton>
+                    <MenuList py="0px" rounded="16px">
+                      <MenuItem
+                        py="12px"
+                        px="16px"
+                        _hover={{ bg: 'border.100' }}
+                        fontSize={14}
+                        color="color.100"
+                        fontWeight={500}
+                        onClick={() =>
+                          navigate(`/realtor/properties/hfjrhu4884?type=sold`)
+                        }
+                        icon={<ViewpropertyIcon />}
+                      >
+                        View property
+                      </MenuItem>
+                      <MenuItem
+                        py="12px"
+                        px="16px"
+                        _hover={{ bg: 'border.100' }}
+                        fontSize={14}
+                        color="color.100"
+                        fontWeight={500}
+                        icon={<PaymentHistoryIcon />}
+                      >
+                        View payment history
+                      </MenuItem>
+                      <MenuItem
+                        py="12px"
+                        px="16px"
+                        _hover={{ bg: 'border.100' }}
+                        fontSize={14}
+                        color="color.100"
+                        fontWeight={500}
+                        icon={<RealtorClientsIcon />}
+                      >
+                        View client
+                      </MenuItem>
+                    </MenuList>
+                  </Menu>
+                </Td>
+              </Tr>
+            );
+          })}
         </Tbody>
       </Table>
-      {[1, 2, 3, 4, 5, 6, 7, 8, 10]?.length > 0 && (
+      {properties?.length > 0 && (
         <Box w="full" bg="white" py="10px">
           <Flex alignItems="center" justifyContent="center" gap="13px">
             <Button
@@ -210,9 +211,15 @@ const PropertyListTable = () => {
   );
 };
 
-
-
-const PorpertyStats = () => {
+const PropertyStats = ({
+  totalCommission,
+  totalProperties,
+  totalSoldPrice,
+}: {
+  totalCommission: number;
+  totalProperties: number;
+  totalSoldPrice: number;
+}) => {
   return (
     <Box>
       <Flex
@@ -237,7 +244,7 @@ const PorpertyStats = () => {
                 Total properties
               </Text>
               <Heading fontSize={24} fontWeight={500}>
-                30
+                {totalProperties}
               </Heading>
             </Box>
             <Box
@@ -290,7 +297,7 @@ const PorpertyStats = () => {
                   >
                     This Month
                   </MenuButton>
-                  <MenuList border='none' rounded='12px'>
+                  <MenuList border="none" rounded="12px">
                     <MenuItem>This Month</MenuItem>
                     <MenuItem>Last Month</MenuItem>
                     <MenuItem>Last Year</MenuItem>
@@ -298,7 +305,7 @@ const PorpertyStats = () => {
                 </Menu>
               </Flex>
               <Heading fontSize={24} fontWeight={500}>
-                ₦ 20,000,000
+                ₦ {totalSoldPrice?.toLocaleString()}
               </Heading>
             </Box>
             <Box
@@ -359,7 +366,7 @@ const PorpertyStats = () => {
                 </Menu>
               </Flex>
               <Heading fontSize={24} fontWeight={500}>
-                ₦ 20,000,000
+                ₦ {totalCommission?.toLocaleString()}
               </Heading>
             </Box>
             <Box
@@ -379,12 +386,16 @@ const PorpertyStats = () => {
   );
 };
 
-const SoldProperties = ({ properties }: { properties: any[] }) => {
+const SoldProperties = ({ properties }: { properties: any }) => {
   return (
     <Box>
       <Stack spacing="20px">
-        <PorpertyStats />
-        <PropertyListTable />
+        <PropertyStats
+          totalCommission={properties?.totals?.total_commission}
+          totalProperties={properties?.totals?.total_properties}
+          totalSoldPrice={properties?.totals?.total_sold_price}
+        />
+        <PropertyListTable properties={properties?.payments} />
       </Stack>
     </Box>
   );

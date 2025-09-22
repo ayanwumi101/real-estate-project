@@ -16,8 +16,10 @@ import {
 const index = () => {
   const tabs = ['available', 'sold', 'instalment'];
   const [properties, setProperties] = React.useState([]);
-  const [soldProperties, setSoldProperties] = React.useState([]);
-  const [instalmentProperties, setInstalmentProperties] = React.useState([]);
+  const [soldProperties, setSoldProperties] = React.useState<any>([]);
+  const [instalmentProperties, setInstalmentProperties] = React.useState<any>(
+    []
+  );
   const [activeTab, setActiveTab] = React.useState<
     'available' | 'sold' | 'instalment'
   >('available');
@@ -32,8 +34,8 @@ const index = () => {
             GetInstalmentRealtorProperties(),
           ]);
         setProperties(availableProperties?.data || []);
-        setSoldProperties(soldProperties?.data || []);
-        setInstalmentProperties(instalmentProperties?.data || []);
+        setSoldProperties(soldProperties || []);
+        setInstalmentProperties(instalmentProperties || []);
       } catch (error) {
         console.error('Error fetching properties:', error);
       }
@@ -49,8 +51,8 @@ const index = () => {
           setActiveTab={setActiveTab}
           activeTab={activeTab}
           availableCount={properties.length}
-          soldCount={soldProperties.length}
-          instalmentCount={instalmentProperties.length}
+          soldCount={soldProperties?.payments?.length}
+          instalmentCount={instalmentProperties?.data?.length}
         />
         <Box>
           {activeTab === 'available' && (
