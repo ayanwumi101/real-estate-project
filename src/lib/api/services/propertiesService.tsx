@@ -7,6 +7,20 @@ export const GetRealtorProperties = async () => {
   return response.data;
 };
 
+export const GetSoldRealtorProperties = async () => {
+  const response = await axiosInstance.get(
+    `${API_ROUTES.GET_PROPERTY_PAYMENTS}/sold`
+  );
+  return response.data;
+};
+
+export const GetInstalmentRealtorProperties = async () => {
+  const response = await axiosInstance.get(
+    `${API_ROUTES.GET_INSTALMENT_PROPERTIES}`
+  );
+  return response.data;
+};
+
 export const AddRealtorProperty = async (propertyData: any) => {
   const response = await axiosInstance.post(
     API_ROUTES.ADD_REALTOR_PROPERTY,
@@ -116,10 +130,11 @@ interface InstalmentPropertyPayment {
   handover_status: string;
 }
 export const CreateInstalmentPropertyPayment = async (
+  propertyId: string,
   instalmentData: InstalmentPropertyPayment
 ) => {
   const response = await axiosInstance.post(
-    `${API_ROUTES.GET_PROPERTY_PAYMENTS}/instalment`,
+    `${API_ROUTES.GET_PROPERTY_PAYMENTS}/instalments/${propertyId}/start`,
     instalmentData
   );
   return response.data;

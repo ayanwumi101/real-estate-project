@@ -131,7 +131,7 @@ const AvailableProperties = ({ properties }: { properties: any[] }) => {
                               color="color.100"
                               fontWeight={500}
                               onClick={() =>
-                                navigate(`/realtor/properties/${property.id}`)
+                                navigate(`/realtor/properties/${property.id}?type=available`)
                               }
                               icon={<ViewpropertyIcon />}
                             >

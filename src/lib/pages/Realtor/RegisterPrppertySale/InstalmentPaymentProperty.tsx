@@ -11,6 +11,8 @@ import {
   FormControl,
   Box,
   FormErrorMessage,
+  Spinner,
+  useToast,
 } from '@chakra-ui/react';
 import { ChevronLeftIcon, CloseIcon } from '~/lib/components/Icons/Icons';
 import * as Yup from 'yup';
@@ -18,10 +20,11 @@ import { Formik, Field, Form } from 'formik';
 import { formatCurrency } from '~/lib/utils/formatAmount';
 import { CreateInstalmentPropertyPayment } from '~/lib/api/services/propertiesService';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const PropertySaleContext = React.createContext<any>(null);
 
-const DeliveryStatus = () => {
+const DeliveryStatus = ({ loading }: { loading: boolean }) => {
   const {
     errors,
     clients,
@@ -143,7 +146,7 @@ const DeliveryStatus = () => {
           minW="180px"
           type="submit"
         >
-          Submit
+          {loading ? <Spinner /> : 'Submit'}
         </Button>
       </Flex>
     </Stack>
@@ -267,8 +270,8 @@ const RegisterProperty = ({ onNext }: { onNext: () => void }) => {
           Duration of Payment
         </FormLabel>
         <Field
-          as={Select}
-          placeholder="Select from duration of payment"
+          as={Input}
+          placeholder="Input payment duration. e.g 5 months"
           rounded="50px"
           color="brand.800"
           outline="none"
@@ -278,12 +281,8 @@ const RegisterProperty = ({ onNext }: { onNext: () => void }) => {
           bg="brand.700"
           mb="10px"
           name="paymentDuration"
-        >
-          <option value="weekly">Weekly</option>
-          <option value="monthly">Monthly</option>
-          <option value="quarterly">Quarterly</option>
-          <option value="yearly">Yearly</option>
-        </Field>
+          type="number"
+        />
         <FormErrorMessage>
           {typeof errors.paymentDuration === 'string'
             ? errors.paymentDuration
@@ -373,10 +372,10 @@ const RegisterProperty = ({ onNext }: { onNext: () => void }) => {
           bg="brand.700"
           name="paymentPlan"
         >
-          <option value="client1">Monthly</option>
-          <option value="client2">Weekly</option>
-          <option value="client3">Quarterly</option>
-          <option value="client4">Yearly</option>
+          <option value="monthly">Monthly</option>
+          <option value="weekly">Weekly</option>
+          <option value="quarterly">Quarterly</option>
+          <option value="yearly">Yearly</option>
         </Field>
         <FormErrorMessage>
           {typeof errors.paymentPlan === 'string' ? errors.paymentPlan : ''}
@@ -463,8 +462,17 @@ const RegisterProperty = ({ onNext }: { onNext: () => void }) => {
   );
 };
 
-const InstalmentPaymentProperty = ({ clients }: { clients: any[] }) => {
+const InstalmentPaymentProperty = ({
+  clients,
+  propertyId,
+}: {
+  clients: any[];
+  propertyId: string;
+}) => {
+  const router = useRouter();
+  const toast = useToast();
   const [step, setStep] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
 
   interface FormValues {
     clientName: string;
@@ -526,8 +534,9 @@ const InstalmentPaymentProperty = ({ clients }: { clients: any[] }) => {
   });
 
   const handleSubmit = async (values: FormValues) => {
+    setLoading(true);
     try {
-      const response = await CreateInstalmentPropertyPayment({
+      const response = await CreateInstalmentPropertyPayment(propertyId, {
         client_id: values.clientName,
         amount_sold: Number(values.amountSold),
         first_deposit: Number(values.firstDeposit),
@@ -542,15 +551,27 @@ const InstalmentPaymentProperty = ({ clients }: { clients: any[] }) => {
         handover_status: values.handoverStatus,
       });
       if (response.status === true) {
-        // Handle success (e.g., show a success message, navigate, etc.)
-        console.log('Payment created successfully:', response.data);
-      } else {
-        // Handle failure (e.g., show an error message)
-        console.error('Failed to create payment:', response.message);
+        toast({
+          title: 'Success',
+          description: 'Instalment payment registered successfully',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        });
+        router.push('/realtor/properties');
       }
     } catch (error) {
-      console.error('Error creating payment:', error);
+      toast({
+        title: 'Error!',
+        description: 'Failed to register instalment payment',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      });
     }
+    setLoading(false);
   };
 
   return (
@@ -617,7 +638,7 @@ const InstalmentPaymentProperty = ({ clients }: { clients: any[] }) => {
                     }}
                   />
                 )}
-                {step === 2 && <DeliveryStatus />}
+                {step === 2 && <DeliveryStatus loading={loading} />}
               </PropertySaleContext.Provider>
             </Form>
           );

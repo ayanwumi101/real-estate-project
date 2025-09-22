@@ -7,11 +7,17 @@ import AvailableProperties from './components/AvailableProperties';
 import SoldProperties from './components/SoldProperties';
 import InstalmentProperties from './components/InstalmentProperties';
 import RealtorDashboardLayout from '~/lib/layout/components/RealtorDashboardHeader';
-import { GetRealtorProperties } from '~/lib/api/services/propertiesService';
+import {
+  GetRealtorProperties,
+  GetSoldRealtorProperties,
+  GetInstalmentRealtorProperties,
+} from '~/lib/api/services/propertiesService';
 
 const index = () => {
   const tabs = ['available', 'sold', 'instalment'];
   const [properties, setProperties] = React.useState([]);
+  const [soldProperties, setSoldProperties] = React.useState([]);
+  const [instalmentProperties, setInstalmentProperties] = React.useState([]);
   const [activeTab, setActiveTab] = React.useState<
     'available' | 'sold' | 'instalment'
   >('available');
@@ -19,25 +25,21 @@ const index = () => {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const data = await GetRealtorProperties();
-        setProperties(data?.data || []);
+        const [availableProperties, soldProperties, instalmentProperties] =
+          await Promise.all([
+            GetRealtorProperties(),
+            GetSoldRealtorProperties(),
+            GetInstalmentRealtorProperties(),
+          ]);
+        setProperties(availableProperties?.data || []);
+        setSoldProperties(soldProperties?.data || []);
+        setInstalmentProperties(instalmentProperties?.data || []);
       } catch (error) {
         console.error('Error fetching properties:', error);
       }
     };
-
     fetchProperties();
   }, []);
-
-  const availableProperties = properties?.filter(
-    (property: any) => property.status === 'available'
-  );
-  const soldProperties = properties?.filter(
-    (property: any) => property.status === 'sold'
-  );
-  const instalmentProperties = properties?.filter(
-    (property: any) => property.status === 'instalment'
-  );
 
   return (
     <RealtorDashboardLayout title="Properties">
@@ -46,13 +48,13 @@ const index = () => {
           tabs={tabs}
           setActiveTab={setActiveTab}
           activeTab={activeTab}
-          availableCount={availableProperties.length}
+          availableCount={properties.length}
           soldCount={soldProperties.length}
           instalmentCount={instalmentProperties.length}
         />
         <Box>
           {activeTab === 'available' && (
-            <AvailableProperties properties={availableProperties} />
+            <AvailableProperties properties={properties} />
           )}
           {activeTab === 'sold' && (
             <SoldProperties properties={soldProperties} />

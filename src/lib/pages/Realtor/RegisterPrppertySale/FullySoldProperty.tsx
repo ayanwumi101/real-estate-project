@@ -19,6 +19,7 @@ import * as Yup from 'yup';
 import { Formik, Field, Form } from 'formik';
 import { formatCurrency } from '~/lib/utils/formatAmount';
 import { CreateSoldPropertyPayment } from '~/lib/api/services/propertiesService';
+import { useRouter } from 'next/navigation';
 
 interface FormValues {
   clientName: string;
@@ -66,6 +67,7 @@ const FullySoldProperty = ({
   propertyId: string;
 }) => {
   const toast = useToast();
+  const router = useRouter();
   const [loading, setLoading] = React.useState(false);
   const [amountSold, setAmountSold] = React.useState<string>('');
   const [commissionReceived, setCommissionReceived] =
@@ -85,7 +87,6 @@ const FullySoldProperty = ({
         handover_status: values.handoverStatus,
         payment_plan: 'full_payment',
       });
-      const responseData = response.data;
       if (response.status === true) {
         toast({
           title: 'Success',
@@ -95,6 +96,7 @@ const FullySoldProperty = ({
           isClosable: true,
           position: 'top-right',
         });
+        router.push('/realtor/properties');
       }
     } catch (error: any) {
       toast({
@@ -122,11 +124,7 @@ const FullySoldProperty = ({
           <Form>
             <Box maxW="700px" mx="auto">
               <Stack spacing="20px">
-                <Heading
-                  fontSize={24}
-                  color="brand.100"
-                  fontWeight={600}
-                >
+                <Heading fontSize={24} color="brand.100" fontWeight={600}>
                   Register Property Sale
                 </Heading>
                 <FormControl

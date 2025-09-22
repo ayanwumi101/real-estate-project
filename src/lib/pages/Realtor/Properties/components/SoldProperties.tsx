@@ -137,7 +137,7 @@ const PropertyListTable = () => {
                           color="color.100"
                           fontWeight={500}
                           onClick={() =>
-                            navigate(`/realtor/properties/hfjrhu4884`)
+                            navigate(`/realtor/properties/hfjrhu4884?type=sold`)
                           }
                           icon={<ViewpropertyIcon />}
                         >

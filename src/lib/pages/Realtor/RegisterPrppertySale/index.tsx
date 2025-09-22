@@ -59,7 +59,10 @@ const index = () => {
       {paymentType === 'fully_sold' ? (
         <FullySoldProperty propertyId={id as string} clients={clients} />
       ) : (
-        <InstalmentPaymentProperty clients={clients} />
+        <InstalmentPaymentProperty
+          clients={clients}
+          propertyId={id as string}
+        />
       )}
     </RealtorDashboardLayout>
   );
