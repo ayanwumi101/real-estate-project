@@ -233,7 +233,15 @@ const PropertyListTable = ({ properties }: { properties: any[] }) => {
   );
 };
 
-const PropertyStats = () => {
+const PropertyStats = ({
+  totalProperties,
+  totalInstalment,
+  totalCommission,
+}: {
+  totalProperties: number;
+  totalInstalment: number;
+  totalCommission: number;
+}) => {
   return (
     <Box w="full" overflow="auto">
       <Flex
@@ -258,7 +266,7 @@ const PropertyStats = () => {
                 Total properties
               </Text>
               <Heading fontSize={24} fontWeight={500}>
-                30
+                {totalProperties}
               </Heading>
             </Box>
             <Box
@@ -319,7 +327,7 @@ const PropertyStats = () => {
                 </Menu>
               </Flex>
               <Heading fontSize={24} fontWeight={500}>
-                ₦ 20,000,000
+                {FormatAmount(totalInstalment)}
               </Heading>
             </Box>
             <Box
@@ -380,7 +388,7 @@ const PropertyStats = () => {
                 </Menu>
               </Flex>
               <Heading fontSize={24} fontWeight={500}>
-                ₦ 20,000,000
+                {FormatAmount(totalCommission)}
               </Heading>
             </Box>
             <Box
@@ -427,11 +435,24 @@ const PropertyStats = () => {
 };
 
 const InstalmentProperties = ({ properties }: { properties: any }) => {
-  console.log(properties);
+  // console.log(properties);
+  const totalInstalment = properties?.data?.reduce(
+    (acc: number, curr: any) => acc + Number(curr?.amount_paid_total || 0),
+    0
+  );
+  const totalCommission = properties?.data?.reduce(
+    (acc: number, curr: any) => acc + Number(curr?.total_commission || 0),
+    0
+  );
+
   return (
     <Box>
       <Stack spacing="20px">
-        <PropertyStats />
+        <PropertyStats
+          totalProperties={properties?.data?.length}
+          totalInstalment={totalInstalment}
+          totalCommission={totalCommission}
+        />
         <PropertyListTable properties={properties?.data} />
       </Stack>
     </Box>
