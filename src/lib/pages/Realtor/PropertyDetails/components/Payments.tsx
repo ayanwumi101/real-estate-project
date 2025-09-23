@@ -29,7 +29,7 @@ import {
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
 
-const PaymentListTable = () => {
+const PaymentListTable = ({ payments }: { payments: any[] }) => {
   const navigate = useNavigate();
   const [page, setPage] = React.useState(1);
   const [limit, setLimit] = React.useState(8);
@@ -88,63 +88,61 @@ const PaymentListTable = () => {
           </Tr>
         </Thead>
         <Tbody color="#222222" maxH="450px" overflow="auto">
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-            ?.slice((page - 1) * limit, page * limit)
-            ?.map((asset) => {
-              return (
-                <Tr key={asset} border="none" cursor="pointer">
-                  <Td fontSize={15} color="#222222" fontWeight={600}>
-                    Sale
-                  </Td>
-                  <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    Thursday, Jan 24, 2020
-                  </Td>
-                  <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    {FormatAmount(Number(500000))}
-                  </Td>
-                  <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    {FormatAmount(Number(500000))}
-                  </Td>
-                  <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    <Badge
-                      colorScheme="green"
-                      rounded="50px"
-                      textTransform="capitalize"
-                      padding="4px 10px"
-                      fontSize={12}
-                      fontWeight={500}
-                      bg="bg.700"
-                      color="color.400"
-                    >
-                      Completed
-                    </Badge>
-                  </Td>
-                  <Td>
-                    <Menu>
-                      <MenuButton as={Button} rounded="5px" bg="bg.200">
-                        <VerticalEllipsisIcon />
-                      </MenuButton>
-                      <MenuList py="10px" rounded="16px">
-                        <MenuItem
-                          py="12px"
-                          px="16px"
-                          _hover={{ bg: 'border.100' }}
-                          fontSize={14}
-                          color="color.100"
-                          fontWeight={500}
-                          onClick={() =>
-                            navigate(`/realtor/properties/hfjrhu4884`)
-                          }
-                          icon={<ViewPaymentIcon />}
-                        >
-                          View payment
-                        </MenuItem>
-                      </MenuList>
-                    </Menu>
-                  </Td>
-                </Tr>
-              );
-            })}
+          {payments?.slice((page - 1) * limit, page * limit)?.map((asset) => {
+            return (
+              <Tr key={asset} border="none" cursor="pointer">
+                <Td fontSize={15} color="#222222" fontWeight={600}>
+                  Sale
+                </Td>
+                <Td fontWeight={500} fontSize={14} color="#8295AA">
+                  Thursday, Jan 24, 2020
+                </Td>
+                <Td fontWeight={500} fontSize={14} color="#8295AA">
+                  {FormatAmount(Number(500000))}
+                </Td>
+                <Td fontWeight={500} fontSize={14} color="#8295AA">
+                  {FormatAmount(Number(500000))}
+                </Td>
+                <Td fontWeight={500} fontSize={14} color="#8295AA">
+                  <Badge
+                    colorScheme="green"
+                    rounded="50px"
+                    textTransform="capitalize"
+                    padding="4px 10px"
+                    fontSize={12}
+                    fontWeight={500}
+                    bg="bg.700"
+                    color="color.400"
+                  >
+                    Completed
+                  </Badge>
+                </Td>
+                <Td>
+                  <Menu>
+                    <MenuButton as={Button} rounded="5px" bg="bg.200">
+                      <VerticalEllipsisIcon />
+                    </MenuButton>
+                    <MenuList py="10px" rounded="16px">
+                      <MenuItem
+                        py="12px"
+                        px="16px"
+                        _hover={{ bg: 'border.100' }}
+                        fontSize={14}
+                        color="color.100"
+                        fontWeight={500}
+                        onClick={() =>
+                          navigate(`/realtor/properties/hfjrhu4884`)
+                        }
+                        icon={<ViewPaymentIcon />}
+                      >
+                        View payment
+                      </MenuItem>
+                    </MenuList>
+                  </Menu>
+                </Td>
+              </Tr>
+            );
+          })}
         </Tbody>
       </Table>
       {[1, 2, 3, 4, 5, 6, 7, 8, 10]?.length > 0 && (
@@ -184,7 +182,15 @@ const PaymentListTable = () => {
   );
 };
 
-const PaymentStats = () => {
+const PaymentStats = ({
+  salesPrice,
+  totalAmountPaid,
+  totalCommission,
+}: {
+  salesPrice?: number;
+  totalAmountPaid?: number;
+  totalCommission?: number;
+} = {}) => {
   return (
     <Box>
       <Flex
@@ -205,10 +211,10 @@ const PaymentStats = () => {
           <Box px="16px" py="12px">
             {' '}
             <Text mb="16px" fontSize={16} fontWeight={500} color="brand.600">
-              Sale Price
+              Sales Price
             </Text>
             <Heading fontSize={24} fontWeight={500}>
-              ₦25,005,900
+              {salesPrice ? FormatAmount(salesPrice) : '₦0.00'}
             </Heading>
           </Box>
         </Box>
@@ -226,7 +232,7 @@ const PaymentStats = () => {
               Amount Paid
             </Text>
             <Heading fontSize={24} fontWeight={500}>
-              ₦25,005,900
+              {totalAmountPaid ? FormatAmount(totalAmountPaid) : '₦0.00'}
             </Heading>
           </Box>
         </Box>
@@ -244,7 +250,7 @@ const PaymentStats = () => {
               Commision Received
             </Text>
             <Heading fontSize={24} fontWeight={500}>
-              ₦25,005,900
+              {totalCommission ? FormatAmount(totalCommission) : '₦0.00'}
             </Heading>
           </Box>
         </Box>
@@ -253,12 +259,18 @@ const PaymentStats = () => {
   );
 };
 
-const Payments = () => {
+const Payments = ({ payments }: { payments: any }) => {
+  console.log(payments);
+
   return (
     <Box py="20px">
       <Stack spacing="20px">
-        <PaymentStats />
-        <PaymentListTable />
+        <PaymentStats
+          salesPrice={payments?.totals?.total_sold_price}
+          totalCommission={payments?.totals?.total_commission}
+          totalAmountPaid={payments?.totals?.total_amount_paid}
+        />
+        <PaymentListTable payments={payments?.payments} />
       </Stack>
     </Box>
   );

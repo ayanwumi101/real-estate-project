@@ -16,6 +16,7 @@ import {
   GetAvailablePropertyDetails,
   GetInstalmentPropertyDetails,
   GetSoldPropertyDetails,
+  GetSoldPropertyPayments,
 } from '~/lib/api/services/propertiesService';
 
 const index = () => {
@@ -35,6 +36,9 @@ const index = () => {
   const [instalmentPropertyDetails, setInstalmentPropertyDetails] =
     React.useState<any>([]);
   const [soldPropertyDetails, setSoldPropertyDetails] = React.useState<any>([]);
+  const [soldPropertyPayments, setSoldPropertyPayments] = React.useState<any>(
+    []
+  );
 
   const getAvailablePropertyDetails = async () => {
     try {
@@ -63,11 +67,21 @@ const index = () => {
     }
   };
 
+  const getSoldPropertyPayments = async () => {
+    try {
+      const res = await GetSoldPropertyPayments(id as string);
+      setSoldPropertyPayments(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     const type = searchParams.get('type');
     if (type === 'available' || type === 'instalment' || type === 'sold') {
       if (type === 'sold') {
         getSoldPropertyDetails();
+        getSoldPropertyPayments();
       } else if (type === 'instalment') {
         getInstalmentPropertyDetails();
       } else {
@@ -78,8 +92,6 @@ const index = () => {
       setPropertyType('available');
     }
   }, [searchParams, id, propertyType]);
-
-  console.log(soldPropertyDetails, propertyType);
 
   return (
     <RealtorDashboardLayout
@@ -140,7 +152,7 @@ const index = () => {
             </Flex>
           </Box>
         )}
-        {activeTab === 'Payments' && <Payments />}
+        {activeTab === 'Payments' && <Payments payments={soldPropertyPayments} />}
       </Stack>
     </RealtorDashboardLayout>
   );

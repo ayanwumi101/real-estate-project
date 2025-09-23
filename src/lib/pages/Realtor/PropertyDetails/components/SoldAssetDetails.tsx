@@ -15,6 +15,7 @@ import moment from 'moment';
 import React from 'react';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 
+
 const AssetDetailsItem = ({
   label,
   labelValue,

@@ -43,9 +43,23 @@ export const GetInstalmentPropertyDetails = async (instalmentId: string) => {
   return response.data;
 };
 
+export const GetInstalmentPropertyPayments = async (instalmentId: string) => {
+  const response = await axiosInstance.get(
+    `${API_ROUTES.GET_INSTALMENT_PROPERTY_DETAILS}/${instalmentId}/payments`
+  );
+  return response.data;
+};
+
 export const GetSoldPropertyDetails = async (propertyId: string) => {
   const response = await axiosInstance.get(
     `${API_ROUTES.GET_PROPERTY_PAYMENTS}/sold/${propertyId}`
+  );
+  return response.data;
+};
+
+export const GetSoldPropertyPayments = async (propertyId: string) => {
+  const response = await axiosInstance.get(
+    `${API_ROUTES.GET_PROPERTY_PAYMENTS}/sold?instalment_id=${propertyId}`
   );
   return response.data;
 };
