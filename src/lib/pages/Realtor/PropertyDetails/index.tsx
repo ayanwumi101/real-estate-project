@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import Notes from './components/Notes';
 import Header from './components/Header';
 import { Box, Stack, Flex, Text } from '@chakra-ui/react';
-import { useParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import useNavigate from '~/lib/utils/useNavigate';
 import RealtorDashboardLayout from '~/lib/layout/components/RealtorDashboardHeader';
 import { BsChevronRight } from 'react-icons/bs';
@@ -12,38 +12,74 @@ import AvailableAssetDetails from './components/AvailableAssetDetails';
 import SoldAssetDetails from './components/SoldAssetDetails';
 import InstalmentAssetDetails from './components/InstalmentAssetDetails';
 import Payments from './components/Payments';
-import { GetRealtorPropertyDetails } from '~/lib/api/services/propertiesService';
+import {
+  GetAvailablePropertyDetails,
+  GetInstalmentPropertyDetails,
+  GetSoldPropertyDetails,
+} from '~/lib/api/services/propertiesService';
 
 const index = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const tabs = ['Details', 'Payments'];
+  const searchParams = useSearchParams();
+  const [propertyType, setPropertyType] = React.useState<
+    'available' | 'instalment' | 'sold'
+  >('available');
+  const tabs =
+    propertyType === 'available' ? ['Details'] : ['Details', 'Payments'];
   const [activeTab, setActiveTab] = React.useState<'Details' | 'Payments'>(
     'Details'
   );
-  const [propertyDetails, setPropertyDetails] = React.useState<any>([]);
-  const [propertyStatus, setPropertyStatus] =
-    React.useState<string>('available');
+  const [availablePropertyDetails, setAvailablePropertyDetails] =
+    React.useState<any>([]);
+  const [instalmentPropertyDetails, setInstalmentPropertyDetails] =
+    React.useState<any>([]);
+  const [soldPropertyDetails, setSoldPropertyDetails] = React.useState<any>([]);
 
-  const getAssetDetails = async () => {
+  const getAvailablePropertyDetails = async () => {
     try {
-      const res = await GetRealtorPropertyDetails(id as string);
-      const data = await res.data;
-      setPropertyDetails(data);
+      const res = await GetAvailablePropertyDetails(id as string);
+      setAvailablePropertyDetails(res?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getInstalmentPropertyDetails = async () => {
+    try {
+      const res = await GetInstalmentPropertyDetails(id as string);
+      setInstalmentPropertyDetails(res?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getSoldPropertyDetails = async () => {
+    try {
+      const res = await GetSoldPropertyDetails(id as string);
+      setSoldPropertyDetails(res);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    getAssetDetails();
-  }, [id]);
+    const type = searchParams.get('type');
+    if (type === 'available' || type === 'instalment' || type === 'sold') {
+      if (type === 'sold') {
+        getSoldPropertyDetails();
+      } else if (type === 'instalment') {
+        getInstalmentPropertyDetails();
+      } else {
+        getAvailablePropertyDetails();
+      }
+      setPropertyType(type);
+    } else {
+      setPropertyType('available');
+    }
+  }, [searchParams, id, propertyType]);
 
-  const editComment = () => {
-    navigate(`/user/my-assets/${id}/update-details`);
-  };
-
-  console.log(propertyDetails);
+  console.log(soldPropertyDetails, propertyType);
 
   return (
     <RealtorDashboardLayout
@@ -67,9 +103,16 @@ const index = () => {
         <Header
           tabs={tabs}
           activeTab={activeTab}
+          propertyType={propertyType}
           setActiveTab={setActiveTab}
-          propertyName={propertyDetails?.property_name}
-          location={`${propertyDetails?.house_number || ''}, ${propertyDetails?.street_name || ''}, ${propertyDetails?.state_id || ''} state`}
+          propertyName={availablePropertyDetails?.property_name}
+          location={
+            propertyType === 'available'
+              ? `${availablePropertyDetails?.house_number} ${availablePropertyDetails?.street_name} ${availablePropertyDetails?.city_name}`
+              : propertyType === 'sold'
+                ? `${soldPropertyDetails?.house_number} ${soldPropertyDetails?.street_name} ${soldPropertyDetails?.city_name}`
+                : `${instalmentPropertyDetails?.house_number} ${instalmentPropertyDetails?.street_name} ${instalmentPropertyDetails?.city_name}`
+          }
         />
         {activeTab === 'Details' && (
           <Box p={['20px', '20px']}>
@@ -79,16 +122,20 @@ const index = () => {
               gap="40px"
               w="full"
             >
-              {propertyStatus === 'available' ? (
-                <AvailableAssetDetails propertyDetails={propertyDetails} />
-              ) : propertyStatus === 'sold' ? (
-                <SoldAssetDetails />
-              ) : propertyStatus === 'instalment' ? (
-                <InstalmentAssetDetails />
+              {propertyType === 'available' ? (
+                <AvailableAssetDetails
+                  propertyDetails={availablePropertyDetails}
+                />
+              ) : propertyType === 'sold' ? (
+                <SoldAssetDetails propertyDetails={soldPropertyDetails} />
+              ) : propertyType === 'instalment' ? (
+                <InstalmentAssetDetails
+                  propertyDetails={instalmentPropertyDetails}
+                />
               ) : null}
               <Notes
-                notes={propertyDetails?.comment}
-                editComment={editComment}
+                notes={availablePropertyDetails?.comment}
+                // editComment={editComment}
               />
             </Flex>
           </Box>

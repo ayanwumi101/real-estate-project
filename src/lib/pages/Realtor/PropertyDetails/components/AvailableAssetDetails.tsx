@@ -36,7 +36,11 @@ const AssetDetailsItem = ({
   );
 };
 
-const AvailableAssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
+const AvailableAssetDetails = ({
+  propertyDetails,
+}: {
+  propertyDetails: any;
+}) => {
   return (
     <Box w={['full', '60%']}>
       <Stack spacing="32px">
@@ -61,203 +65,22 @@ const AvailableAssetDetails = ({ propertyDetails }: { propertyDetails: any }) =>
           <Box>
             <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
               <AssetDetailsItem
-                label="Amount Purchased"
+                label="Property Size"
+                labelValue={propertyDetails?.size || 'N/A'}
+              />
+              <AssetDetailsItem
+                label="Property Type"
+                labelValue={propertyDetails?.property_type || 'N/A'}
+              />
+              <AssetDetailsItem
+                label="Sale Price"
                 labelValue={FormatAmount(propertyDetails?.property_cost || 0.0)}
               />
-              <AssetDetailsItem
-                label="When was property bought?"
-                labelValue={
-                  propertyDetails?.bought_date
-                    ? moment(propertyDetails?.bought_date).format(
-                        'ddd, Do MMMM YYYY'
-                      )
-                    : 'N/A'
-                }
-              />
-              <AssetDetailsItem
-                label="Payment Status:"
-                labelValue={
-                  propertyDetails?.asset_type === 'instalment'
-                    ? 'Ongoing'
-                    : propertyDetails?.asset_type === 'owned'
-                      ? 'Completed'
-                      : 'Completed'
-                }
-              />
             </Flex>
           </Box>
         </Box>
-
-        {/* Cashflow details */}
-        {propertyDetails?.asset_type === 'cashflow' && (
-          <Box
-            border="1px solid"
-            borderColor="border.100"
-            p="32px"
-            borderRadius="8px"
-            maxW="645px"
-          >
-            <Heading
-              pb="12px"
-              borderBottom="1px solid"
-              borderColor="border.100"
-              fontSize={16}
-              color="brand.400"
-              mb="32px"
-            >
-              Cashflow Details
-            </Heading>
-
-            <Box>
-              <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
-                <AssetDetailsItem
-                  label="Cashflow Source"
-                  labelValue={propertyDetails?.cashflow_source || 'N/A'}
-                />
-                <AssetDetailsItem
-                  label="Property Currently Occupied?"
-                  labelValue={propertyDetails?.is_occupied ? 'Yes' : 'No'}
-                />
-                <AssetDetailsItem
-                  label="Last Cashflow Payment"
-                  labelValue={
-                    propertyDetails?.last_cashflow_date
-                      ? moment(propertyDetails?.last_cashflow_date).format(
-                          'ddd, Do MMMM YYYY'
-                        )
-                      : 'Never Collected'
-                  }
-                />
-                <AssetDetailsItem
-                  label="Cashflow Duration"
-                  labelValue={propertyDetails?.cashflow_duration || 'N/A'}
-                />
-                <AssetDetailsItem
-                  label="Cashflow Amount"
-                  labelValue={FormatAmount(
-                    propertyDetails?.cashflow_amount || 0.0
-                  )}
-                />
-                {/* <AssetDetailsItem
-                  label="Equity Ownership"
-                  labelValue={`${propertyDetails?.equity_ownership || 0}%`}
-                /> */}
-              </Flex>
-            </Box>
-          </Box>
-        )}
-
-        {/* Payment Details */}
-        {propertyDetails?.asset_type === 'instalment' && (
-          <Box
-            border="1px solid"
-            borderColor="border.100"
-            p="32px"
-            borderRadius="8px"
-            maxW="645px"
-          >
-            <Heading
-              pb="12px"
-              borderBottom="1px solid"
-              borderColor="border.100"
-              fontSize={16}
-              color="brand.400"
-              mb="32px"
-            >
-              Payment Details
-            </Heading>
-            <Box>
-              <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
-                <AssetDetailsItem
-                  label="Amount Paid"
-                  labelValue={FormatAmount(
-                    Number(propertyDetails?.amount_paid || 0.0)
-                  )}
-                />
-                <AssetDetailsItem
-                  label="Outstanding Balance"
-                  labelValue={FormatAmount(
-                    Number(propertyDetails?.amount_left || 0.0)
-                  )}
-                />
-                <AssetDetailsItem
-                  label="Payment plan"
-                  labelValue={propertyDetails?.payment_plan || 'N/A'}
-                />
-                <AssetDetailsItem
-                  label="Installment payment"
-                  labelValue={FormatAmount(
-                    Number(propertyDetails?.amount_paid) || 0.0
-                  )}
-                />
-                <AssetDetailsItem
-                  label="Last Payment Date"
-                  labelValue={
-                    propertyDetails?.payment_date
-                      ? moment(propertyDetails?.payment_date).format(
-                          'ddd, Do MMMM YYYY'
-                        )
-                      : 'N/A'
-                  }
-                />
-                <AssetDetailsItem
-                  label="Next Payment Date"
-                  labelValue={
-                    propertyDetails?.due_date
-                      ? moment(propertyDetails?.due_date).format(
-                          'ddd, Do MMMM YYYY'
-                        )
-                      : 'N/A'
-                  }
-                />
-                <AssetDetailsItem
-                  label="Duration of Payment"
-                  labelValue={propertyDetails?.duration || 'N/A'}
-                />
-              </Flex>
-            </Box>
-          </Box>
-        )}
-
-        {/* Realtor Details */}
-        <Box
-          border="1px solid"
-          borderColor="border.100"
-          p="32px"
-          borderRadius="8px"
-          maxW="645px"
-        >
-          <Heading
-            pb="12px"
-            borderBottom="1px solid"
-            borderColor="border.100"
-            fontSize={16}
-            color="brand.400"
-            mb="32px"
-          >
-            Realtor Details
-          </Heading>
-
-          <Box>
-            <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
-              <AssetDetailsItem
-                label="Realtor Name"
-                labelValue={propertyDetails?.realtor_name || 'N/A'}
-              />
-              <AssetDetailsItem
-                label="Phone Number"
-                labelValue={
-                  propertyDetails?.realtor_phone?.startsWith('234')
-                    ? `+${propertyDetails?.realtor_phone}`
-                    : propertyDetails?.realtor_phone
-                }
-              />
-            </Flex>
-          </Box>
-        </Box>
-
         {/* Delivery details */}
-        <Box
+        {/* <Box
           border="1px solid"
           borderColor="border.100"
           p="32px"
@@ -319,7 +142,7 @@ const AvailableAssetDetails = ({ propertyDetails }: { propertyDetails: any }) =>
               />
             </Flex>
           </Box>
-        </Box>
+        </Box> */}
       </Stack>
     </Box>
   );

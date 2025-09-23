@@ -100,8 +100,6 @@ const PropertyListTable = ({ properties }: { properties: any[] }) => {
         </Thead>
         <Tbody color="#222222" maxH="450px" overflow="auto">
           {properties?.slice((page - 1) * limit, page * limit)?.map((asset) => {
-            console.log(asset);
-
             return (
               <Tr key={asset} border="none" cursor="pointer">
                 <Td fontSize={15} color="#222222" fontWeight={600}>
@@ -138,7 +136,7 @@ const PropertyListTable = ({ properties }: { properties: any[] }) => {
                         color="color.100"
                         fontWeight={500}
                         onClick={() =>
-                          navigate(`/realtor/properties/hfjrhu4884?type=sold`)
+                          navigate(`/realtor/properties/${asset?.property_id}?type=sold`)
                         }
                         icon={<ViewpropertyIcon />}
                       >

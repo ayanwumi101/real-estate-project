@@ -3,7 +3,7 @@ import React from 'react';
 import { EditCommentIcon } from '~/lib/components/Icons/Icons';
 
 
-const Notes = ({ notes, editComment }: { notes: string;  editComment: () => void}) => {
+const Notes = ({ notes, editComment }: { notes: string;  editComment?: () => void}) => {
   return (
     <Box
       w={['100%',"40%"]}

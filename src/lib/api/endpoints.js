@@ -61,9 +61,10 @@ const API_ROUTES = {
   //clients endpoints
   GET_CLIENTS: '/realtor/clients',
   ADD_CLIENT: '/realtor/clients/add',
-  GET_PROPERTY_DETAILS: '/properties',
+  GET_PROPERTY_DETAILS: '/realtor/properties',
   GET_PROPERTY_PAYMENTS: '/realtor/property-payments',
   GET_INSTALMENT_PROPERTIES: '/realtor/properties/instalments',
+  GET_INSTALMENT_PROPERTY_DETAILS: '/realtor/property-payments/instalments',
 
 };
 

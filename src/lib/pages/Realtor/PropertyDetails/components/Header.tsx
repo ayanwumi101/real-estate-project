@@ -23,15 +23,13 @@ import {
 import useNavigate from '~/lib/utils/useNavigate';
 import AddPaymentModal from '../Modals/AddPaymentModal';
 
-
-
-
 interface Headerprops {
   propertyName: string;
   location: string;
   tabs: string[];
   setActiveTab: React.Dispatch<React.SetStateAction<'Details' | 'Payments'>>;
   activeTab: 'Details' | 'Payments';
+  propertyType: 'available' | 'instalment' | 'sold';
 }
 
 interface NavigationTabsProps {
@@ -50,10 +48,10 @@ const NavigationTabs = ({
       {tabs.map((tab) => (
         <Button
           key={tab}
-          bg={tab === activeTab ? "bg.200" : 'none'}
+          bg={tab === activeTab ? 'bg.200' : 'none'}
           fontSize={15}
           fontWeight={600}
-          color={tab === activeTab ? "brand.100" : "brand.800"}
+          color={tab === activeTab ? 'brand.100' : 'brand.800'}
           onClick={() => setActiveTab(tab as 'Details' | 'Payments')}
         >
           {tab}
@@ -69,6 +67,7 @@ const Header = ({
   tabs,
   activeTab,
   setActiveTab,
+  propertyType,
 }: Headerprops) => {
   const router = useRouter();
   const navigate = useNavigate();
@@ -102,28 +101,41 @@ const Header = ({
             <Stack spacing="10px">
               <Flex alignItems="center" gap="10px">
                 <Heading fontSize={[20, 24]} fontWeight={500} color="#222222">
-                  Skyline Residences
+                  {propertyName}
                 </Heading>
                 <Badge
                   px="10px"
                   py="4px"
                   rounded="50px"
-                  bg="bg.200"
+                  bg={
+                    propertyType === 'instalment'
+                      ? '#F6EDDF'
+                      : propertyType === 'sold'
+                        ? '#E7F5EC'
+                        : 'bg.200'
+                  }
                   fontSize={12}
                   fontWeight={500}
-                  color="brand.100"
+                  color={
+                    propertyType === 'instalment'
+                      ? '#E1A101'
+                      : propertyType === 'sold'
+                        ? '#1BD155'
+                        : 'brand.100'
+                  }
                   textTransform="capitalize"
                 >
-                  Available
+                  {propertyType}
                 </Badge>
               </Flex>
-
-              <Flex alignItems="center" gap="10px">
-                <LocationIcon />
-                <Text color="#2E353F" fontWeight={500}>
-                  3517 W. Gray St. Utica, Pennsylvania 57867
-                </Text>
-              </Flex>
+              {location && (
+                <Flex alignItems="center" gap="10px">
+                  <LocationIcon />
+                  <Text color="#2E353F" fontWeight={500}>
+                    {location ? location : 'N/A'}
+                  </Text>
+                </Flex>
+              )}
             </Stack>
           </Box>
           <Box>

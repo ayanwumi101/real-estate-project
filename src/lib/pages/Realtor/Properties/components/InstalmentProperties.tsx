@@ -137,7 +137,7 @@ const PropertyListTable = ({ properties }: { properties: any[] }) => {
                         fontWeight={500}
                         onClick={() =>
                           navigate(
-                            `/realtor/properties/hfjrhu4884?type=instalment`
+                            `/realtor/properties/${asset?.instalment_id}?type=instalment`
                           )
                         }
                         icon={<ViewpropertyIcon />}

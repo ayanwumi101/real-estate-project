@@ -29,9 +29,23 @@ export const AddRealtorProperty = async (propertyData: any) => {
   return response.data;
 };
 
-export const GetRealtorPropertyDetails = async (propertyId: string) => {
+export const GetAvailablePropertyDetails = async (propertyId: string) => {
   const response = await axiosInstance.get(
-    `${API_ROUTES.GET_PROPERTY_DETAILS}/${propertyId}`
+    `${API_ROUTES.GET_PROPERTY_DETAILS}/available/${propertyId}`
+  );
+  return response.data;
+};
+
+export const GetInstalmentPropertyDetails = async (instalmentId: string) => {
+  const response = await axiosInstance.get(
+    `${API_ROUTES.GET_INSTALMENT_PROPERTY_DETAILS}/${instalmentId}/details`
+  );
+  return response.data;
+};
+
+export const GetSoldPropertyDetails = async (propertyId: string) => {
+  const response = await axiosInstance.get(
+    `${API_ROUTES.GET_PROPERTY_PAYMENTS}/sold/${propertyId}`
   );
   return response.data;
 };
