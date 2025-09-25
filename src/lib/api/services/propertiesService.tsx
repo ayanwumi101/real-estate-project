@@ -9,7 +9,7 @@ export const GetRealtorProperties = async () => {
 
 export const GetSoldRealtorProperties = async () => {
   const response = await axiosInstance.get(
-    `${API_ROUTES.GET_PROPERTY_PAYMENTS}/sold`
+    `${API_ROUTES.GET_PROPERTY_PAYMENTS}`
   );
   return response.data;
 };
@@ -29,6 +29,14 @@ export const AddRealtorProperty = async (propertyData: any) => {
   return response.data;
 };
 
+export const GetAllPropertyPayments = async () => {
+  const response = await axiosInstance.get(
+    `${API_ROUTES.GET_PROPERTY_PAYMENTS}`
+  );
+  return response.data;
+};
+
+
 export const GetAvailablePropertyDetails = async (propertyId: string) => {
   const response = await axiosInstance.get(
     `${API_ROUTES.GET_PROPERTY_DETAILS}/available/${propertyId}`
@@ -38,38 +46,32 @@ export const GetAvailablePropertyDetails = async (propertyId: string) => {
 
 export const GetInstalmentPropertyDetails = async (instalmentId: string) => {
   const response = await axiosInstance.get(
-    `${API_ROUTES.GET_INSTALMENT_PROPERTY_DETAILS}/${instalmentId}/details`
-  );
-  return response.data;
-};
-
-export const GetInstalmentPropertyPayments = async (instalmentId: string) => {
-  const response = await axiosInstance.get(
-    `${API_ROUTES.GET_INSTALMENT_PROPERTY_DETAILS}/${instalmentId}/payments`
+    `/realtor/property-payments/instalments/${instalmentId}/details`
   );
   return response.data;
 };
 
 export const GetSoldPropertyDetails = async (propertyId: string) => {
   const response = await axiosInstance.get(
-    `${API_ROUTES.GET_PROPERTY_PAYMENTS}/sold/${propertyId}`
+    `/realtor/property-payments/sold/${propertyId}`
   );
   return response.data;
 };
 
 export const GetSoldPropertyPayments = async (propertyId: string) => {
   const response = await axiosInstance.get(
-    `${API_ROUTES.GET_PROPERTY_PAYMENTS}/sold?instalment_id=${propertyId}`
+    `/realtor/property-payments/sold/${propertyId}/details`
   );
   return response.data;
 };
 
-export const GetAllPropertyPayments = async () => {
+export const GetInstalmentPropertyPayments = async (propertyId: string) => {
   const response = await axiosInstance.get(
-    `${API_ROUTES.GET_PROPERTY_PAYMENTS}`
+    `/realtor/property-payments/instalments/payment/${propertyId}/details`
   );
   return response.data;
 };
+
 
 interface PaymentDetails {
   instalment_id: string;

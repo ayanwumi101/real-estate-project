@@ -15,9 +15,11 @@ import Payments from './components/Payments';
 import {
   GetAvailablePropertyDetails,
   GetInstalmentPropertyDetails,
+  GetInstalmentPropertyPayments,
   GetSoldPropertyDetails,
   GetSoldPropertyPayments,
 } from '~/lib/api/services/propertiesService';
+import InstalmentPayments from './components/InstalmentPayments';
 
 const index = () => {
   const { id } = useParams();
@@ -39,6 +41,8 @@ const index = () => {
   const [soldPropertyPayments, setSoldPropertyPayments] = React.useState<any>(
     []
   );
+  const [instalmentPropertyPayments, setInstalmentPropertyPayments] =
+    React.useState<any>([]);
 
   const getAvailablePropertyDetails = async () => {
     try {
@@ -93,6 +97,25 @@ const index = () => {
     }
   }, [searchParams, id, propertyType]);
 
+  useEffect(() => {
+    if (
+      propertyType === 'instalment' &&
+      instalmentPropertyDetails?.property_id
+    ) {
+      const getInstalmentPropertyPayments = async () => {
+        try {
+          const res = await GetInstalmentPropertyPayments(
+            instalmentPropertyDetails?.property_id as string
+          );
+          setInstalmentPropertyPayments(res);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      getInstalmentPropertyPayments();
+    }
+  }, [instalmentPropertyDetails]);
+
   return (
     <RealtorDashboardLayout
       title={
@@ -117,7 +140,13 @@ const index = () => {
           activeTab={activeTab}
           propertyType={propertyType}
           setActiveTab={setActiveTab}
-          propertyName={availablePropertyDetails?.property_name}
+          propertyName={
+            propertyType === 'available'
+              ? availablePropertyDetails?.property_name
+              : propertyType === 'sold'
+                ? soldPropertyDetails?.property_name
+                : instalmentPropertyDetails?.property_name
+          }
           location={
             propertyType === 'available'
               ? `${availablePropertyDetails?.house_number} ${availablePropertyDetails?.street_name} ${availablePropertyDetails?.city_name}`
@@ -152,7 +181,15 @@ const index = () => {
             </Flex>
           </Box>
         )}
-        {activeTab === 'Payments' && <Payments payments={soldPropertyPayments} />}
+        {activeTab === 'Payments' && (
+          <Box>
+            {propertyType === 'instalment' ? (
+              <InstalmentPayments payments={instalmentPropertyPayments} />
+            ) : (
+              <Payments payments={soldPropertyPayments} />
+            )}
+          </Box>
+        )}
       </Stack>
     </RealtorDashboardLayout>
   );

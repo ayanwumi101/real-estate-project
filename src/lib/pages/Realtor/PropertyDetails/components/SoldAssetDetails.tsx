@@ -70,10 +70,6 @@ const SoldAssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                 label="Property Type"
                 labelValue={propertyDetails?.property_type || 'N/A'}
               />
-              <AssetDetailsItem
-                label="Sales Price"
-                labelValue={FormatAmount(propertyDetails?.sale_price || 0.0)}
-              />
             </Flex>
           </Box>
         </Box>
@@ -99,54 +95,26 @@ const SoldAssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
           <Box>
             <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
               <AssetDetailsItem
-                label="Payment Plan"
-                labelValue={propertyDetails?.payment_plan}
+                label="Date of Sale"
+                labelValue={
+                  propertyDetails?.payment_details?.sold_date
+                    ? moment(propertyDetails?.payment_details?.sold_date).format(
+                        'ddd, Do MMMM YYYY'
+                      )
+                    : 'N/A'
+                }
               />
               <AssetDetailsItem
-                label="Duration of Payment"
-                labelValue={`${propertyDetails?.payment_duration ? propertyDetails?.payment_duration : 0} Months`}
-              />
-              <AssetDetailsItem
-                label="Amount Paid"
+                label="Sales Price"
                 labelValue={FormatAmount(
-                  Number(propertyDetails?.amount_paid_total) || 0.0
+                  propertyDetails?.payment_details?.amount_sold || 0.0
                 )}
-              />
-              <AssetDetailsItem
-                label="Outstanding Balance"
-                labelValue={FormatAmount(
-                  Number(propertyDetails?.outstanding_balance) || 0.0
-                )}
-              />
-              <AssetDetailsItem
-                label="Instalment Payment"
-                labelValue={propertyDetails?.instalment_payment || 'N/A'}
               />
               <AssetDetailsItem
                 label="Total Commission Earned"
                 labelValue={FormatAmount(
-                  Number(propertyDetails?.total_commission) || 0.0
+                  propertyDetails?.payment_details?.commission || 0.0
                 )}
-              />
-              <AssetDetailsItem
-                label="Last Instalment Payment"
-                labelValue={
-                  propertyDetails?.last_instalment_payment
-                    ? moment(propertyDetails?.last_instalment_payment).format(
-                        'ddd, Do MMMM YYYY'
-                      )
-                    : 'N/A'
-                }
-              />
-              <AssetDetailsItem
-                label="Next Instalment Payment"
-                labelValue={
-                  propertyDetails?.next_instalment_payment
-                    ? moment(propertyDetails?.next_instalment_payment).format(
-                        'ddd, Do MMMM YYYY'
-                      )
-                    : 'N/A'
-                }
               />
             </Flex>
           </Box>
@@ -210,7 +178,10 @@ const SoldAssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
 
           <Box>
             <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
-              <AssetDetailsItem label="Payment Status" labelValue={'Ongoing'} />
+              <AssetDetailsItem
+                label="Payment Status"
+                labelValue={propertyDetails?.payment_status || 'N/A'}
+              />
               <AssetDetailsItem
                 label="Allocation Status"
                 labelValue={

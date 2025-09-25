@@ -18,6 +18,7 @@ import {
   Text,
   Badge,
 } from '@chakra-ui/react';
+import moment from 'moment';
 import React from 'react';
 import {
   VerticalEllipsisIcon,
@@ -90,18 +91,18 @@ const PaymentListTable = ({ payments }: { payments: any[] }) => {
         <Tbody color="#222222" maxH="450px" overflow="auto">
           {payments?.slice((page - 1) * limit, page * limit)?.map((asset) => {
             return (
-              <Tr key={asset} border="none" cursor="pointer">
+              <Tr key={asset?.id} border="none" cursor="pointer">
                 <Td fontSize={15} color="#222222" fontWeight={600}>
                   Sale
                 </Td>
                 <Td fontWeight={500} fontSize={14} color="#8295AA">
-                  Thursday, Jan 24, 2020
+                  {moment(asset?.date_sold).format('ddd, Do MMMM YYYY')}
                 </Td>
                 <Td fontWeight={500} fontSize={14} color="#8295AA">
-                  {FormatAmount(Number(500000))}
+                  {FormatAmount(Number(asset?.amount_sold))}
                 </Td>
                 <Td fontWeight={500} fontSize={14} color="#8295AA">
-                  {FormatAmount(Number(500000))}
+                  {FormatAmount(Number(asset?.commission))}
                 </Td>
                 <Td fontWeight={500} fontSize={14} color="#8295AA">
                   <Badge
@@ -114,7 +115,7 @@ const PaymentListTable = ({ payments }: { payments: any[] }) => {
                     bg="bg.700"
                     color="color.400"
                   >
-                    Completed
+                    {asset?.status}
                   </Badge>
                 </Td>
                 <Td>
@@ -145,7 +146,7 @@ const PaymentListTable = ({ payments }: { payments: any[] }) => {
           })}
         </Tbody>
       </Table>
-      {[1, 2, 3, 4, 5, 6, 7, 8, 10]?.length > 0 && (
+      {payments?.length > 0 && (
         <Box w="full" bg="white" py="10px">
           <Flex alignItems="center" justifyContent="center" gap="13px">
             <Button
@@ -260,17 +261,15 @@ const PaymentStats = ({
 };
 
 const Payments = ({ payments }: { payments: any }) => {
-  console.log(payments);
-
   return (
     <Box py="20px">
       <Stack spacing="20px">
         <PaymentStats
-          salesPrice={payments?.totals?.total_sold_price}
-          totalCommission={payments?.totals?.total_commission}
-          totalAmountPaid={payments?.totals?.total_amount_paid}
+          salesPrice={payments?.data?.property?.property_cost}
+          totalCommission={payments?.data?.total_commission}
+          totalAmountPaid={payments?.data?.total_amount_paid}
         />
-        <PaymentListTable payments={payments?.payments} />
+        <PaymentListTable payments={payments?.data?.payments} />
       </Stack>
     </Box>
   );

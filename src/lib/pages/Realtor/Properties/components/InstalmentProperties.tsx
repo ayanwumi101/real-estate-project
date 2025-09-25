@@ -196,7 +196,7 @@ const PropertyListTable = ({ properties }: { properties: any[] }) => {
           })}
         </Tbody>
       </Table>
-      {[1, 2, 3, 4, 5, 6, 7, 8, 10]?.length > 0 && (
+      {properties?.length > 0 && (
         <Box w="full" bg="white" py="10px">
           <Flex alignItems="center" justifyContent="center" gap="13px">
             <Button

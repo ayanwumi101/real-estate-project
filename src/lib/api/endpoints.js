@@ -62,9 +62,9 @@ const API_ROUTES = {
   GET_CLIENTS: '/realtor/clients',
   ADD_CLIENT: '/realtor/clients/add',
   GET_PROPERTY_DETAILS: '/realtor/properties',
-  GET_PROPERTY_PAYMENTS: '/realtor/property-payments',
+  GET_PROPERTY_PAYMENTS: '/realtor/property-payments/sold',
   GET_INSTALMENT_PROPERTIES: '/realtor/properties/instalments',
-  GET_INSTALMENT_PROPERTY_DETAILS: '/realtor/property-payments/instalments',
+  GET_INSTALMENT_PROPERTY_DETAILS: '/realtor/property-payments/instalments/payment',
 
 };
 
