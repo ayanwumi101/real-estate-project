@@ -367,7 +367,7 @@ export const SettingsIcon = ({ isActive }: { isActive: boolean }) => {
   );
 };
 
-export const LogoutIcon = ({ isActive }: { isActive: boolean }) => {
+export const LogoutIcon = ({ isActive }: { isActive?: boolean }) => {
   return (
     <svg
       width="14"

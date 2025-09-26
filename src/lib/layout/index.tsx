@@ -32,7 +32,9 @@ import { Header } from './components/header';
 import '../styles/globals.css';
 import DashboardSidebar from './components/UserSidebar';
 import { usePathname, useRouter } from 'next/navigation';
-import DashboardHeader from './components/DashboardHeader';
+import DashboardHeader, {
+  MobileDashboardHeader,
+} from './components/DashboardHeader';
 import {
   DashboardNotificationIcon,
   InputSearchIcon,
@@ -40,7 +42,6 @@ import {
 import { GetUserProfileDetails } from '../api/services/profileService';
 import { GetNextOfKins } from '../api/services/userService';
 import styles from './styles.module.css';
-import RealtorMobileSidebar from './components/RealtorMobileSidebar';
 import RealtorSidebar from './components/RealtorSidebar';
 
 export const AppContext = createContext<any>({});
@@ -282,7 +283,8 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
               left={isMobile ? '0%' : '250px'}
               w={isMobile ? '100%' : 'calc(100% - 250px)'}
             >
-              <Box as="main" w="100%">
+              <MobileDashboardHeader />
+              <Box as="main" w="100%" mt={['70px', '0']}>
                 {children}
               </Box>
             </Box>

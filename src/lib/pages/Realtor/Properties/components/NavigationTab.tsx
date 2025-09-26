@@ -5,11 +5,11 @@ import {
   InputGroup,
   InputLeftElement,
   Flex,
+  Divider,
 } from '@chakra-ui/react';
-import Link from 'next/link';
 import React from 'react';
 import { AddIcon, InputSearchIcon } from '~/lib/components/Icons/Icons';
-
+import useNavigate from '~/lib/utils/useNavigate';
 
 interface NavigationTabProps {
   setActiveTab: React.Dispatch<
@@ -30,9 +30,15 @@ const NavigationTab: React.FC<NavigationTabProps> = ({
   soldCount = 0,
   instalmentCount = 0,
 }) => {
+  const navigate = useNavigate();
   return (
     <Box borderBottom="1px solid" borderColor="border.100" pb="20px">
-      <Flex alignItems="center" justifyContent="space-between">
+      <Flex
+        alignItems="center"
+        justifyContent="space-between"
+        flexWrap={['wrap', 'nowrap']}
+        gap={[5, 0]}
+      >
         <Flex alignItems="center" gap="10px">
           {tabs.map((tab) => (
             <Button
@@ -55,9 +61,9 @@ const NavigationTab: React.FC<NavigationTabProps> = ({
             </Button>
           ))}
         </Flex>
-
-        <Flex alignItems="center" gap="10px">
-          <InputGroup w="325px">
+        <Divider display={['block', 'none']} />
+        <Flex alignItems="center" gap={['5px', '10px']}>
+          <InputGroup w={['60%', '325px']}>
             <InputLeftElement pointerEvents="none">
               <InputSearchIcon />
             </InputLeftElement>
@@ -66,19 +72,22 @@ const NavigationTab: React.FC<NavigationTabProps> = ({
               placeholder="Search properties..."
               rounded="50px"
               fontSize={14}
+              w="full"
               _placeholder={{ color: 'gray.500' }}
             />
           </InputGroup>
-          <Link href="/realtor/properties/add-property">
-            <Button
-              leftIcon={<AddIcon />}
-              bg="brand.100"
-              color="brand.200"
-              fontWeight={600}
-            >
-              Add New Property
-            </Button>
-          </Link>
+
+          <Button
+            leftIcon={<AddIcon />}
+            bg="brand.100"
+            color="brand.200"
+            fontWeight={600}
+            w={['40%', 'auto']}
+            onClick={() => navigate('/realtor/properties/add-property')}
+            fontSize={[14, 16]}
+          >
+            Add New Property
+          </Button>
         </Flex>
       </Flex>
     </Box>
