@@ -58,7 +58,7 @@ const RealtorDashboardLayout = ({
           w="95%"
           mx="auto"
         >
-          <Heading fontSize={30} fontWeight={700} color="brand.100">
+          <Heading fontSize={[25,30]} fontWeight={700} color="brand.100">
             {title}
           </Heading>
           <Box display={['none', 'block']}>

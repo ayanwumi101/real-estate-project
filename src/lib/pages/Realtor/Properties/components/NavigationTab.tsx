@@ -62,7 +62,7 @@ const NavigationTab: React.FC<NavigationTabProps> = ({
           ))}
         </Flex>
         <Divider display={['block', 'none']} />
-        <Flex alignItems="center" gap={['5px', '10px']} w="full">
+        <Flex alignItems="center" gap={['5px', '10px']}>
           <InputGroup w={['60%', '325px']}>
             <InputLeftElement pointerEvents="none">
               <InputSearchIcon />

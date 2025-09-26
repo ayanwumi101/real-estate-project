@@ -75,12 +75,12 @@ const AddClientForm = ({
       {({ errors, touched, values, setFieldValue, setFieldTouched }) => {
         return (
           <Form>
-            <Box maxW="800px" mx="auto" py="25px">
+            <Box maxW="800px" mx="auto" px={['16px', 0]} py="25px">
               <Stack spacing="24px">
-                <Heading fontSize={24} color="brand.100">
+                <Heading fontSize={[20, 24]} color="brand.100">
                   Add a new client
                 </Heading>
-                <Flex gap="24px">
+                <Flex gap="24px" flexWrap={['wrap', 'nowrap']}>
                   <FormControl
                     isInvalid={!!errors.firstName && touched.firstName}
                   >
@@ -147,7 +147,7 @@ const AddClientForm = ({
                     {errors.email && touched.email && errors.email}
                   </FormErrorMessage>
                 </FormControl>
-                <Flex gap="24px">
+                <Flex gap="24px" flexWrap={['wrap', 'nowrap']}>
                   <FormControl isInvalid={!!errors.gender && touched.gender}>
                     <FormLabel>Client gender</FormLabel>
                     <Field
@@ -216,9 +216,15 @@ const AddClientForm = ({
                     {errors.address && touched.address && errors.address}
                   </FormErrorMessage>
                 </FormControl>
-                <FormControl>
+                <FormControl w='full' overflow='auto'>
                   <FormLabel>Assign property to client</FormLabel>
-                  <Flex alignItems="center" gap="13px">
+                  <Flex
+                    w="full"
+                    alignItems="center"
+                    gap={['7px', '13px']}
+                    overflow="auto"
+                    flexWrap={['wrap', 'nowrap']}
+                  >
                     <Button
                       leftIcon={<SelectedOptionIcon />}
                       variant="outline"
@@ -226,6 +232,7 @@ const AddClientForm = ({
                       fontWeight={600}
                       borderColor="brand.100"
                       fontSize={14}
+                      // w={["270px", "auto"]}
                     >
                       Select Existing Property
                     </Button>
