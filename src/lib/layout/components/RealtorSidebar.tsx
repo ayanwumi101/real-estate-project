@@ -14,8 +14,6 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 import {
-  BrowseProjectIcon,
-  DashboardIcon,
   MyAssetsIcon,
   MyPortfolioIcon,
   TransactionsIcon,

@@ -7,6 +7,8 @@ import {
   Image,
   Icon,
   useToast,
+  useDisclosure,
+  Collapse,
 } from '@chakra-ui/react';
 import React from 'react';
 import { SideBarItem } from './UserSidebar';
@@ -22,9 +24,44 @@ import {
   HelpAndSupportIcon,
   SettingsIcon,
   LogoutIcon,
+  ManagedAssetsIcon,
+  ChevronUpIcon,
+  ChevronDownIcon,
+  RealtorClientsIcon,
+  RealtorSecuritiesIcon,
+  RealtorTeamsIcon,
+  RealtorTransactionsIcon,
 } from '~/lib/components/Icons/Icons';
 import { motion } from 'framer-motion';
 import { VscClose } from 'react-icons/vsc';
+
+const CollapsibleSidebarItem = ({
+  label,
+  href,
+  isActive,
+  onClick,
+}: {
+  label: string;
+  href: string;
+  isActive: boolean;
+  onClick?: () => void;
+}) => {
+  return (
+    <Box
+      py="10px"
+      w="full"
+      px="70px"
+      bg={isActive ? '#EDEDFF' : 'none'}
+      onClick={onClick}
+    >
+      <Link href={href}>
+        <Text color={isActive ? '#4040A0' : '#2E353F'} fontWeight={500}>
+          {label}
+        </Text>
+      </Link>
+    </Box>
+  );
+};
 
 const RealtorMobileSidebar = ({
   setOpenSideNav,
@@ -34,6 +71,7 @@ const RealtorMobileSidebar = ({
   const pathname = usePathname();
   const router = useRouter();
   const toast = useToast();
+  const { isOpen, onToggle } = useDisclosure();
 
   const LogoutUser = () => {
     router.push('/signin');
@@ -106,52 +144,92 @@ const RealtorMobileSidebar = ({
         </Box>
         <Stack spacing="16px">
           <SideBarItem
-            label="Dashboard"
+            label="Properties"
             Icon={DashboardIcon}
-            isActive={pathname === '/user/dashboard'}
-            href="/user/dashboard"
+            isActive={pathname === '/realtor/properties'}
+            href="/realtor/properties"
             onClick={() => setOpenSideNav(false)}
           />
+          <Button
+            onClick={onToggle}
+            rounded="0px"
+            py="10px"
+            w="100%"
+            px="34"
+            justifyContent="flex-start"
+            leftIcon={
+              <ManagedAssetsIcon
+                isActive={pathname.includes('/realtor/managed-assets')}
+              />
+            }
+            fontWeight={500}
+            fontSize={15}
+            bg="none"
+            color={
+              pathname.includes('/realtor/managed-assets')
+                ? '#4040A0'
+                : '#2E353F'
+            }
+            rightIcon={
+              isOpen ? (
+                <ChevronUpIcon
+                  isActive={pathname.includes('/realtor/managed-assets')}
+                />
+              ) : (
+                <ChevronDownIcon
+                  isActive={pathname.includes('/realtor/managed-assets')}
+                />
+              )
+            }
+            _hover={{ bg: 'none' }}
+          >
+            Managed Assets
+          </Button>
+          <Collapse in={isOpen} animateOpacity style={{ width: '100%' }}>
+            <CollapsibleSidebarItem
+              label="Investors"
+              isActive={pathname === '/realtor/managed-assets/investors'}
+              href="/realtor/managed-assets/investors"
+            />
+            <CollapsibleSidebarItem
+              label="Assets"
+              isActive={pathname === '/realtor/managed-assets/assets'}
+              href="/realtor/managed-assets/assets"
+            />
+          </Collapse>
           <SideBarItem
-            label="My Assets"
-            Icon={MyAssetsIcon}
-            isActive={pathname === '/user/my-assets'}
-            href="/user/my-assets"
-            onClick={() => setOpenSideNav(false)}
-          />
-          {/* <SideBarItem
-            label="Browse Project"
-            Icon={BrowseProjectIcon}
-            isActive={pathname === '/user/projects'}
-            href="/user/projects"
-            onClick={() => setOpenSideNav(false)}
-          /> */}
-          <SideBarItem
-            label="Remittance"
-            Icon={MyPortfolioIcon}
-            isActive={pathname === '/user/portfolio'}
-            href="/user/portfolio"
-            onClick={() => setOpenSideNav(false)}
-          />
-          {/* <SideBarItem
             label="Transactions"
-            Icon={TransactionsIcon}
-            isActive={pathname === '/user/transactions'}
-            href="/user/transactions"
+            Icon={RealtorTransactionsIcon}
+            isActive={pathname === '/realtor/transactions'}
+            href="/realtor/transactions"
             onClick={() => setOpenSideNav(false)}
           />
           <SideBarItem
-            label="Help and Support"
-            Icon={HelpAndSupportIcon}
-            isActive={pathname === '/user/support'}
-            href="/user/support"
+            label="Clients"
+            Icon={RealtorClientsIcon}
+            isActive={pathname === '/realtor/clients'}
+            href="/realtor/clients"
             onClick={() => setOpenSideNav(false)}
-          /> */}
+          />
+          <SideBarItem
+            label="Securities"
+            Icon={RealtorSecuritiesIcon}
+            isActive={pathname === '/realtor/securities'}
+            href="/realtor/securities"
+            onClick={() => setOpenSideNav(false)}
+          />
+          <SideBarItem
+            label="Team"
+            Icon={RealtorTeamsIcon}
+            isActive={pathname === '/realtor/team'}
+            href="/realtor/team"
+            onClick={() => setOpenSideNav(false)}
+          />
           <SideBarItem
             label="Settings"
             Icon={SettingsIcon}
-            isActive={pathname === '/user/settings'}
-            href="/user/settings"
+            isActive={pathname === '/realtor/settings'}
+            href="/realtor/settings"
             onClick={() => setOpenSideNav(false)}
           />
           <Box py="10px" w="100%" px="34" onClick={LogoutUser} cursor="pointer">

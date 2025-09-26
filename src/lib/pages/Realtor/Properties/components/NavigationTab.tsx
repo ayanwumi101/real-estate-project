@@ -62,7 +62,7 @@ const NavigationTab: React.FC<NavigationTabProps> = ({
           ))}
         </Flex>
         <Divider display={['block', 'none']} />
-        <Flex alignItems="center" gap={['5px', '10px']}>
+        <Flex alignItems="center" gap={['5px', '10px']} w="full">
           <InputGroup w={['60%', '325px']}>
             <InputLeftElement pointerEvents="none">
               <InputSearchIcon />
@@ -84,7 +84,7 @@ const NavigationTab: React.FC<NavigationTabProps> = ({
             fontWeight={600}
             w={['40%', 'auto']}
             onClick={() => navigate('/realtor/properties/add-property')}
-            fontSize={[14, 16]}
+            fontSize={[13, 16]}
           >
             Add New Property
           </Button>

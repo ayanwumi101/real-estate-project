@@ -45,7 +45,7 @@ const index = () => {
 
   return (
     <RealtorDashboardLayout title="Properties">
-      <Stack spacing="30px" px={['20px', 0]}>
+      <Stack spacing="30px" px={['10px', 0]}>
         <NavigationTab
           tabs={tabs}
           setActiveTab={setActiveTab}

@@ -23,7 +23,7 @@ const index = () => {
   }, []);
   return (
     <RealtorDashboardLayout title="Clients">
-      <Stack spacing="30px">
+      <Stack spacing="30px" px={['10px', 0]}>
         <NavigationTab />
         <ClientsList clients={clients} />
       </Stack>
