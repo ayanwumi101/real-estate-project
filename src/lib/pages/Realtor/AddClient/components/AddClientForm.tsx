@@ -14,7 +14,7 @@ import {
   border,
   Spinner,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { CloseIcon, SelectedOptionIcon } from '~/lib/components/Icons/Icons';
@@ -42,6 +42,15 @@ const AddClientForm = ({
   addClient: (value: any) => Promise<void>;
   loading?: boolean;
 }) => {
+  const options = [
+    { title: 'Select Existing Property', value: 'existing' },
+    { title: 'Add New property', value: 'new' },
+    { title: 'Not Now', value: 'none' },
+  ];
+  const [assignOptions, setAssignOptions] = useState<
+    'existing' | 'new' | 'none'
+  >('existing');
+
   const initialValues: AddClientValues = {
     firstName: '',
     lastName: '',
@@ -59,7 +68,7 @@ const AddClientForm = ({
     gender: Yup.string().required('Gender is required'),
     phone: Yup.string().required('Phone number is required'),
     address: Yup.string().required('Address is required'),
-    propertyIds: Yup.array().min(1, 'At least one property is required'),
+    propertyIds: Yup.array(),
   });
 
   const handleSubmit = async (values: any) => {
@@ -216,7 +225,7 @@ const AddClientForm = ({
                     {errors.address && touched.address && errors.address}
                   </FormErrorMessage>
                 </FormControl>
-                <FormControl w='full' overflow='auto'>
+                <FormControl w="full" overflow="auto">
                   <FormLabel>Assign property to client</FormLabel>
                   <Flex
                     w="full"
@@ -225,84 +234,88 @@ const AddClientForm = ({
                     overflow="auto"
                     flexWrap={['wrap', 'nowrap']}
                   >
-                    <Button
-                      leftIcon={<SelectedOptionIcon />}
-                      variant="outline"
-                      color="brand.100"
-                      fontWeight={600}
-                      borderColor="brand.100"
-                      fontSize={14}
-                      // w={["270px", "auto"]}
-                    >
-                      Select Existing Property
-                    </Button>
-                    <Button
-                      variant="outline"
-                      color="brand.800"
-                      fontWeight={600}
-                      borderColor="border.200"
-                      fontSize={14}
-                    >
-                      Add New Property
-                    </Button>
-                    <Button
-                      variant="outline"
-                      color="brand.800"
-                      fontWeight={600}
-                      borderColor="border.200"
-                      fontSize={14}
-                    >
-                      Not Now
-                    </Button>
+                    {options?.map((option) => (
+                      <Button
+                        leftIcon={
+                          option?.value === assignOptions ? (
+                            <SelectedOptionIcon />
+                          ) : undefined
+                        }
+                        variant="outline"
+                        color={
+                          option.value === assignOptions
+                            ? 'brand.100'
+                            : 'brand.800'
+                        }
+                        fontWeight={600}
+                        borderColor={
+                          option?.value === assignOptions
+                            ? 'brand.100'
+                            : 'border.200'
+                        }
+                        fontSize={14}
+                        // w={["270px", "auto"]}
+                        onClick={() =>
+                          setAssignOptions(
+                            option.value as 'existing' | 'none' | 'new'
+                          )
+                        }
+                      >
+                        {option.title}
+                      </Button>
+                    ))}
                   </Flex>
                 </FormControl>
-                <FormControl
-                  isInvalid={!!errors.propertyIds && !!touched.propertyIds}
-                >
-                  <FormLabel>Select Property</FormLabel>
-                  <Multiselect
-                    placeholder="Select property from your list"
-                    options={properties?.map((property) => ({
-                      name: property.property_name,
-                      id: property.id,
-                    }))}
-                    selectedValues={properties
-                      ?.filter((property: any) =>
-                        values.propertyIds.includes(property.id)
-                      )
-                      .map((property: any) => ({
+                {assignOptions === 'existing' && (
+                  <FormControl
+                    isInvalid={!!errors.propertyIds && !!touched.propertyIds}
+                  >
+                    <FormLabel>Select Property</FormLabel>
+                    <Multiselect
+                      placeholder="Select property from your list"
+                      options={properties?.map((property) => ({
                         name: property.property_name,
                         id: property.id,
                       }))}
-                    onSelect={(selectedList) => {
-                      const ids = selectedList.map((item: any) => item.id);
-                      setFieldValue('propertyIds', ids);
-                    }}
-                    onRemove={(selectedList) => {
-                      const ids = selectedList.map((item: any) => item.id);
-                      setFieldValue('propertyIds', ids);
-                    }}
-                    displayValue="name"
-                    style={{
-                      multiselectContainer: {
-                        border: '1px solid #C0C0C0',
-                        borderRadius: '50px',
-                        padding: '5px 14px',
-                        backgroundColor: '#FBFBFB',
-                        height: '50px',
-                      },
-                      searchBox: {
-                        border: 'none',
-                        width: '100%',
-                      },
-                    }}
-                  />
-                  <FormErrorMessage>
-                    {errors.propertyIds &&
-                      touched.propertyIds &&
-                      errors.propertyIds}
-                  </FormErrorMessage>
-                </FormControl>
+                      selectedValues={properties
+                        ?.filter((property: any) =>
+                          values.propertyIds.includes(property.id)
+                        )
+                        .map((property: any) => ({
+                          name: property.property_name,
+                          id: property.id,
+                        }))}
+                      onSelect={(selectedList) => {
+                        const ids = selectedList.map((item: any) => item.id);
+                        setFieldValue('propertyIds', ids);
+                      }}
+                      onRemove={(selectedList) => {
+                        const ids = selectedList.map((item: any) => item.id);
+                        setFieldValue('propertyIds', ids);
+                      }}
+                      displayValue="name"
+                      style={{
+                        multiselectContainer: {
+                          border: '1px solid #C0C0C0',
+                          borderRadius: '50px',
+                          padding: '5px 14px',
+                          backgroundColor: '#FBFBFB',
+                          height: '50px',
+                        },
+                        searchBox: {
+                          border: 'none',
+                          width: '100%',
+                        },
+                      }}
+                    />
+                    <FormErrorMessage>
+                      {errors.propertyIds &&
+                        touched.propertyIds &&
+                        errors.propertyIds}
+                    </FormErrorMessage>
+                  </FormControl>
+                )}
+
                 <Flex alignItems="center" justifyContent="space-between">
                   <Link href="/realtor/clients">
                     <Button

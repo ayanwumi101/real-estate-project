@@ -122,9 +122,9 @@ const FullySoldProperty = ({
       {({ errors, touched, values, setFieldValue, setFieldTouched }) => {
         return (
           <Form>
-            <Box maxW="700px" mx="auto">
+            <Box maxW="700px" mx="auto" px={['16px', 0]}>
               <Stack spacing="20px">
-                <Heading fontSize={24} color="brand.100" fontWeight={600}>
+                <Heading fontSize={[20, 24]} color="brand.100" fontWeight={600}>
                   Register Property Sale
                 </Heading>
                 <FormControl
@@ -166,7 +166,11 @@ const FullySoldProperty = ({
                     </Text>
                   </Flex>
                 </FormControl>
-                <Flex alignItems="center" gap="24px">
+                <Flex
+                  alignItems="center"
+                  gap="24px"
+                  flexWrap={['wrap', 'nowrap']}
+                >
                   <FormControl
                     isInvalid={!!errors.amountSold && touched.amountSold}
                   >

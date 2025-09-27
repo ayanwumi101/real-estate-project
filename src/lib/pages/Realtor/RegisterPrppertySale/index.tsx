@@ -42,15 +42,15 @@ const index = () => {
     <RealtorDashboardLayout
       title={
         <Flex alignItems="center" gap="8px">
-          <Text fontSize={16} fontWeight={600} color="brand.400">
+          <Text fontSize={[15,16]} fontWeight={600} color="brand.400">
             Properties
           </Text>
           <BsChevronRight size={15} fontWeight={900} />
-          <Text fontSize={16} fontWeight={600} color="brand.400">
+          <Text fontSize={[15,16]} fontWeight={600} color="brand.400">
             Available Properties
           </Text>
           <BsChevronRight size={15} fontWeight={900} />
-          <Text fontSize={16} fontWeight={600} color="brand.800">
+          <Text fontSize={[15,16]} fontWeight={600} color="brand.800">
             Skyline Residences
           </Text>
         </Flex>

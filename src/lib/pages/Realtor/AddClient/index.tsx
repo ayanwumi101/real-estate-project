@@ -54,13 +54,21 @@ const index = () => {
         });
         // router.push('/realtor/clients');
       }
-    } catch (error) {
+    } catch (error: any) {
+      const errorMessages = Object.entries(error?.response?.data?.message)
+        .map(([key, value]: any) => {
+          const formattedKey = key.charAt(0).toUpperCase() + key.slice(1);
+          return `${formattedKey}: ${value.join(', ')}`;
+        })
+        .join('\n');
       toast({
         title: 'Error.',
-        description: 'There was an error adding the client. Please try again.',
+        description:
+          errorMessages || 'An error occurred while adding the client.',
         status: 'error',
         duration: 3000,
         isClosable: true,
+        position: 'top-right',
       });
       console.error('Error adding client:', error);
     }

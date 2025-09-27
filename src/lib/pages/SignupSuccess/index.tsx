@@ -71,9 +71,9 @@ const index = () => {
           <Button
             w="100%"
             mb="10px"
-            bg="brand.100"
-            color="white"
-            _hover={{ bg: '#000080' }}
+            bg="#EDEDFF"
+            color="brand.100"
+            _hover={{ bg: '#EDEDFF', color: 'brand.100' }}
             h="55px"
             borderRadius="50px"
             onClick={() => {

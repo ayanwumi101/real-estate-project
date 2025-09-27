@@ -207,7 +207,7 @@ const RegisterProperty = ({ onNext }: { onNext: () => void }) => {
           </Text>
         </Flex>
       </FormControl>
-      <Flex alignItems="center" gap="24px">
+      <Flex alignItems="center" gap="24px" flexWrap={['wrap', 'nowrap']}>
         <FormControl isInvalid={!!errors.amountSold && touched.amountSold}>
           <FormLabel fontWeight={600} fontSize={15} color="brand.400">
             Amount Sold
@@ -267,7 +267,7 @@ const RegisterProperty = ({ onNext }: { onNext: () => void }) => {
         isInvalid={!!errors.paymentDuration && touched.paymentDuration}
       >
         <FormLabel fontWeight={600} fontSize={15} color="brand.400">
-          Duration of Payment
+          Duration of Payment (Month)
         </FormLabel>
         <Field
           as={Input}
@@ -289,7 +289,7 @@ const RegisterProperty = ({ onNext }: { onNext: () => void }) => {
             : ''}
         </FormErrorMessage>
       </FormControl>
-      <Flex alignItems="center" gap="24px">
+      <Flex alignItems="center" gap="24px" flexWrap={['wrap', 'nowrap']}>
         <FormControl
           isInvalid={!!errors.instalmentAmount && touched.instalmentAmount}
         >
@@ -381,7 +381,7 @@ const RegisterProperty = ({ onNext }: { onNext: () => void }) => {
           {typeof errors.paymentPlan === 'string' ? errors.paymentPlan : ''}
         </FormErrorMessage>
       </FormControl>
-      <Flex alignItems="center" gap="24px">
+      <Flex alignItems="center" gap="24px" flexWrap={['wrap', 'nowrap']}>
         <FormControl
           isInvalid={!!errors.firstPaymentDate && touched.firstPaymentDate}
         >
@@ -575,7 +575,7 @@ const InstalmentPaymentProperty = ({
   };
 
   return (
-    <Box maxW="700px" mx="auto">
+    <Box maxW="700px" mx="auto" px={['16px', 0]}>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}

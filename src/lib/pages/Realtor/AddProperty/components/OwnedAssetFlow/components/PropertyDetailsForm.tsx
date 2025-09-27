@@ -47,7 +47,7 @@ const PropertyDetailsForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [propertyCost, setPropertyCost] = React.useState<string>('');
   const { assetData, setAssetData } = useContext<any>(CreateAssetContext);
-
+  
   // fetch all countries
   useEffect(() => {
     const GetCountries = async () => {
@@ -104,7 +104,7 @@ const PropertyDetailsForm = () => {
       lga: Yup.string().required('LGA is required'),
     }),
     propertyCost: Yup.string().required('Property cost is required'),
-    additionalInfo: Yup.string().required('Additional information is required'),
+    additionalInfo: Yup.string(),
   });
 
   const handleSubmit = async (values: any) => {
@@ -123,7 +123,7 @@ const PropertyDetailsForm = () => {
     };
     try {
       const res = await AddRealtorProperty(formData);
-      if (res.id) {
+      if (res.status === true) {
         toast({
           title: 'Property Added successfully',
           status: 'success',
@@ -211,6 +211,7 @@ const PropertyDetailsForm = () => {
                     _placeholder={{ color: '#8295AA', fontWeight: 500 }}
                     name="propertyType"
                   >
+                    <option value="select">Select Property Type</option>
                     <option value="Land">Land</option>
                     <option value="Building">Building</option>
                   </Field>
