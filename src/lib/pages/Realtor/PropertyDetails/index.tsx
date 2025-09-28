@@ -119,17 +119,26 @@ const index = () => {
   return (
     <RealtorDashboardLayout
       title={
-        <Flex alignItems="center" gap="8px">
-          <Text fontSize={16} fontWeight={600} color="brand.400">
+        <Flex alignItems="center" gap="8px" flexWrap={['wrap', 'nowrap']}>
+          <Text fontSize={[15, 16]} fontWeight={600} color="brand.400">
             Properties
           </Text>
           <BsChevronRight size={15} fontWeight={900} />
-          <Text fontSize={16} fontWeight={600} color="brand.400">
-            Available Properties
+          <Text fontSize={[15, 16]} fontWeight={600} color="brand.400">
+            {propertyType === 'available'
+              ? 'Available'
+              : propertyType === 'sold'
+                ? 'Sold'
+                : 'Instalment'}{' '}
+            Properties
           </Text>
           <BsChevronRight size={15} fontWeight={900} />
-          <Text fontSize={16} fontWeight={600} color="brand.800">
-            Skyline Residences
+          <Text fontSize={[15, 16]} fontWeight={600} color="brand.800">
+            {propertyType === 'available'
+              ? availablePropertyDetails?.property_name
+              : propertyType === 'sold'
+                ? soldPropertyDetails?.property_name
+                : instalmentPropertyDetails?.property_name}
           </Text>
         </Flex>
       }
