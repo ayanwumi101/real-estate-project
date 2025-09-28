@@ -30,6 +30,7 @@ import {
   AddPaymentIcon,
   RegisterSaleIcon,
 } from '~/lib/components/Icons/Icons';
+import { findClosestPaymentDueDate } from '~/lib/utils/findClosestDueAsset';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
 
@@ -237,10 +238,12 @@ const PropertyStats = ({
   totalProperties,
   totalInstalment,
   totalCommission,
+  nextDueProperty,
 }: {
   totalProperties: number;
   totalInstalment: number;
   totalCommission: number;
+  nextDueProperty?: any;
 }) => {
   return (
     <Box w="full" overflow="auto">
@@ -250,7 +253,7 @@ const PropertyStats = ({
         justifyContent="space-between"
         gap="16px"
         overflow="auto"
-        pb='3'
+        pb="3"
       >
         {/* first card */}
         <Box
@@ -417,15 +420,19 @@ const PropertyStats = ({
               Next Due Payment
             </Text>
             <Heading fontSize={24} fontWeight={500}>
-              Tue,30 Oct 2025
+              {nextDueProperty?.next_payment_due
+                ? moment(nextDueProperty?.next_payment_due).format(
+                    'ddd,DD MMM YYYY'
+                  )
+                : 'N/A'}
             </Heading>
             <Text fontWeight={500} fontSize={14} color="brand.400">
               <Box as="span" textDecor="underline">
-                Marx Hershey
+                {nextDueProperty?.client_name || 'N/A'}
               </Box>{' '}
               for{' '}
               <Box as="span" textDecor="underline">
-                Harborview Towers
+                {nextDueProperty?.property_name || 'N/A'}
               </Box>
             </Text>
           </Stack>
@@ -436,7 +443,6 @@ const PropertyStats = ({
 };
 
 const InstalmentProperties = ({ properties }: { properties: any }) => {
-  // console.log(properties);
   const totalInstalment = properties?.data?.reduce(
     (acc: number, curr: any) => acc + Number(curr?.amount_paid_total || 0),
     0
@@ -445,6 +451,8 @@ const InstalmentProperties = ({ properties }: { properties: any }) => {
     (acc: number, curr: any) => acc + Number(curr?.total_commission || 0),
     0
   );
+
+  const closestDueProperty = findClosestPaymentDueDate(properties?.data || []);
 
   return (
     <Box>

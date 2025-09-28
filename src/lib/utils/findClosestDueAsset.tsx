@@ -19,3 +19,23 @@ export function getAssetWithEarliestPaymentDue(assets: any[]) {
     return currentDate < closestDate ? current : closest;
   });
 }
+
+
+export function findClosestPaymentDueDate(data: any[]) {
+  const now = new Date();
+
+  // Filter out invalid or past dates if you only want upcoming ones
+  const upcoming = data.filter((item) => {
+    const dueDate = new Date(item?.next_payment_due).getTime();
+    return !isNaN(dueDate); // valid date
+  });
+
+  if (upcoming.length === 0) return null;
+
+  // Reduce to the object with the smallest absolute difference from now
+  return upcoming.reduce((closest: any, current: any) => {
+    const closestDiff = Math.abs(new Date(closest.next_payment_due).getTime() - now.getTime());
+    const currentDiff = Math.abs(new Date(current.next_payment_due).getTime() - now.getTime());
+    return currentDiff < closestDiff ? current : closest;
+  });
+}

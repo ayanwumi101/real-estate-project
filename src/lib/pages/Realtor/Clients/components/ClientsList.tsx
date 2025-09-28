@@ -125,13 +125,15 @@ const ClientsList = ({ clients }: { clients: any[] }) => {
                   return (
                     <Tr key={client.id} border="none" cursor="pointer">
                       <Td fontSize={15} color="#222222" fontWeight={600}>
-                        {`${client.firstname} ${client.lastname}`}
+                        {`${client?.firstname} ${client.lastname}`}
                       </Td>
                       <Td fontWeight={500} fontSize={14} color="#8295AA">
-                        {client.email}
+                        {client?.email}
                       </Td>
                       <Td fontWeight={500} fontSize={14} color="#8295AA">
-                        N/A
+                        {client?.phone?.startsWith('234')
+                          ? `+${client.phone}`
+                          : 'N/A'}
                       </Td>
                       <Td fontWeight={500} fontSize={14} color="#8295AA">
                         {client.address}
