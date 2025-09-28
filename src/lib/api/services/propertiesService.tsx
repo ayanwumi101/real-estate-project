@@ -139,7 +139,7 @@ export const CreateSoldPropertyPayment = async (
   soldData: SoldPropertyPayment
 ) => {
   const response = await axiosInstance.post(
-    `${API_ROUTES.GET_PROPERTY_PAYMENTS}/sold`,
+    `/realtor/property-payments/sold`,
     soldData
   );
   return response.data;
@@ -164,7 +164,7 @@ export const CreateInstalmentPropertyPayment = async (
   instalmentData: InstalmentPropertyPayment
 ) => {
   const response = await axiosInstance.post(
-    `${API_ROUTES.GET_PROPERTY_PAYMENTS}/instalments/${propertyId}/start`,
+    `/realtor/property-payments/instalments/${propertyId}/start`,
     instalmentData
   );
   return response.data;

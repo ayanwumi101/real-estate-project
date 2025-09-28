@@ -366,7 +366,7 @@ const FullySoldProperty = ({
                     bg="brand.100"
                     type="submit"
                   >
-                    {loading ? <Spinner /> : 'Save payment'}
+                    {loading ? <Spinner /> : 'Register Property Sale'}
                   </Button>
                 </Flex>
               </Stack>

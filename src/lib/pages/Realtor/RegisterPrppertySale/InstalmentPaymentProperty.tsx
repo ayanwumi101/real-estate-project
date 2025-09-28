@@ -146,7 +146,7 @@ const DeliveryStatus = ({ loading }: { loading: boolean }) => {
           minW="180px"
           type="submit"
         >
-          {loading ? <Spinner /> : 'Submit'}
+          {loading ? <Spinner /> : 'Register Property Sale'}
         </Button>
       </Flex>
     </Stack>
