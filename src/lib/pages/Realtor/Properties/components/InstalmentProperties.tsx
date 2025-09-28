@@ -243,7 +243,7 @@ const PropertyStats = ({
   totalProperties: number;
   totalInstalment: number;
   totalCommission: number;
-  nextDueProperty?: any;
+  nextDueProperty: any;
 }) => {
   return (
     <Box w="full" overflow="auto">
@@ -461,6 +461,7 @@ const InstalmentProperties = ({ properties }: { properties: any }) => {
           totalProperties={properties?.data?.length}
           totalInstalment={totalInstalment}
           totalCommission={totalCommission}
+          nextDueProperty={closestDueProperty}
         />
         <PropertyListTable properties={properties?.data} />
       </Stack>

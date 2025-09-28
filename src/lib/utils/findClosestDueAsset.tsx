@@ -39,3 +39,27 @@ export function findClosestPaymentDueDate(data: any[]) {
     return currentDiff < closestDiff ? current : closest;
   });
 }
+
+
+// export function findClosestPaymentDueDate(data: any[]) {
+//   const now = new Date();
+
+//   // Only include items where next_payment_due is truthy AND a valid date
+//   const upcoming = data.filter((item) => {
+//     if (!item?.next_payment_due) return false; // null or undefined
+//     const dueDate = new Date(item.next_payment_due);
+//     return !isNaN(dueDate.getTime()); // valid date
+//   });
+
+//   if (upcoming.length === 0) return null;
+
+//   return upcoming.reduce((closest: any, current: any) => {
+//     const closestDiff = Math.abs(
+//       new Date(closest.next_payment_due).getTime() - now.getTime()
+//     );
+//     const currentDiff = Math.abs(
+//       new Date(current.next_payment_due).getTime() - now.getTime()
+//     );
+//     return currentDiff < closestDiff ? current : closest;
+//   });
+// }
