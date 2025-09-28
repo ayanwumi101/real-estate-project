@@ -27,8 +27,6 @@ import {
 } from '~/lib/api/services/locationService';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
-import Cookie from 'js-cookie';
-import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { ChevronLeftIcon } from '~/lib/components/Icons/Icons';
 import { formatCurrency } from '~/lib/utils/formatAmount';
@@ -47,7 +45,7 @@ const PropertyDetailsForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [propertyCost, setPropertyCost] = React.useState<string>('');
   const { assetData, setAssetData } = useContext<any>(CreateAssetContext);
-  
+
   // fetch all countries
   useEffect(() => {
     const GetCountries = async () => {
