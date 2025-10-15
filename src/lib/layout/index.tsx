@@ -256,6 +256,7 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
               position={isMobile ? 'static' : 'absolute'}
               left={isMobile ? '0%' : '250px'}
               w={isMobile ? '100%' : 'calc(100% - 250px)'}
+              px={isMobile ? 0 : 5}
             >
               <Stack direction="column" spacing="12px">
                 <DashboardHeader setShowSearchBar={setShowSearchBar} />
@@ -282,6 +283,7 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
               position={isMobile ? 'static' : 'absolute'}
               left={isMobile ? '0%' : '250px'}
               w={isMobile ? '100%' : 'calc(100% - 250px)'}
+              px={isMobile ? 0 : 5}
             >
               <MobileDashboardHeader />
               <Box as="main" w="100%" mt={['70px', '0']}>
@@ -297,7 +299,7 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
 
 export const HomeLayout = ({ children }: LayoutProps) => {
   return (
-    <Box>
+    <Box maxWidth="1440px" mx="auto">
       <Header />
       <Box as="main">{children}</Box>
       <Footer />
@@ -362,7 +364,7 @@ export const Layout = ({ children }: LayoutProps) => {
   }
 
   return (
-    <Box maxWidth="1440px" mx="auto">
+    <Box>
       {pathname.includes('/realtor') || pathname.includes('/user') ? (
         <DashboardLayout>{children}</DashboardLayout>
       ) : (
