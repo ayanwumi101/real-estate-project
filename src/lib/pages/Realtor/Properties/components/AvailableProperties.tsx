@@ -122,54 +122,58 @@ const AvailableProperties = ({ properties }: { properties: any[] }) => {
                           <MenuButton as={Button} rounded="5px" bg="bg.200">
                             <VerticalEllipsisIcon />
                           </MenuButton>
-                          <MenuList py="0px">
-                            <MenuItem
-                              py="12px"
-                              px="16px"
-                              _hover={{ bg: 'border.100' }}
-                              fontSize={14}
-                              color="color.100"
-                              fontWeight={500}
-                              onClick={() =>
-                                navigate(`/realtor/properties/${property.id}?type=available`)
-                              }
-                              icon={<ViewpropertyIcon />}
-                            >
-                              View property
-                            </MenuItem>
-                            <MenuItem
-                              py="12px"
-                              px="16px"
-                              _hover={{ bg: 'border.100' }}
-                              fontSize={14}
-                              color="color.100"
-                              fontWeight={500}
-                              icon={<RegisterSaleIcon />}
-                              onClick={() =>
-                                navigate(
-                                  `/realtor/properties/${property.id}/register-sale?type=fully_sold`
-                                )
-                              }
-                            >
-                              Register sale as Fully Sold
-                            </MenuItem>
-                            <MenuItem
-                              py="12px"
-                              px="16px"
-                              _hover={{ bg: 'border.100' }}
-                              fontSize={14}
-                              color="color.100"
-                              fontWeight={500}
-                              icon={<RegisterSaleIcon />}
-                              onClick={() =>
-                                navigate(
-                                  `/realtor/properties/${property.id}/register-sale?type=instalment`
-                                )
-                              }
-                            >
-                              Register sale as instalment payment
-                            </MenuItem>
-                          </MenuList>
+                          <Portal>
+                            <MenuList py="0px">
+                              <MenuItem
+                                py="12px"
+                                px="16px"
+                                _hover={{ bg: 'border.100' }}
+                                fontSize={14}
+                                color="color.100"
+                                fontWeight={500}
+                                onClick={() =>
+                                  navigate(
+                                    `/realtor/properties/${property.id}?type=available`
+                                  )
+                                }
+                                icon={<ViewpropertyIcon />}
+                              >
+                                View property
+                              </MenuItem>
+                              <MenuItem
+                                py="12px"
+                                px="16px"
+                                _hover={{ bg: 'border.100' }}
+                                fontSize={14}
+                                color="color.100"
+                                fontWeight={500}
+                                icon={<RegisterSaleIcon />}
+                                onClick={() =>
+                                  navigate(
+                                    `/realtor/properties/${property.id}/register-sale?type=fully_sold`
+                                  )
+                                }
+                              >
+                                Register sale as Fully Sold
+                              </MenuItem>
+                              <MenuItem
+                                py="12px"
+                                px="16px"
+                                _hover={{ bg: 'border.100' }}
+                                fontSize={14}
+                                color="color.100"
+                                fontWeight={500}
+                                icon={<RegisterSaleIcon />}
+                                onClick={() =>
+                                  navigate(
+                                    `/realtor/properties/${property.id}/register-sale?type=instalment`
+                                  )
+                                }
+                              >
+                                Register sale as instalment payment
+                              </MenuItem>
+                            </MenuList>
+                          </Portal>
                         </Menu>
                       </Td>
                     </Tr>

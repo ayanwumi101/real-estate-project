@@ -12,7 +12,7 @@ import {
   MenuItem,
 } from '@chakra-ui/react';
 import { useParams, useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   LocationIcon,
   ChevronLeftIcon,
@@ -22,6 +22,8 @@ import {
 } from '~/lib/components/Icons/Icons';
 import useNavigate from '~/lib/utils/useNavigate';
 import AddPaymentModal from '../Modals/AddPaymentModal';
+import { GetPropertyDueDates } from '~/lib/api/services/propertiesService';
+import { duration } from 'moment';
 
 interface Headerprops {
   propertyName: string;
@@ -73,6 +75,23 @@ const Header = ({
   const navigate = useNavigate();
   const { id } = useParams();
   const [openAddPaymentModal, setOpenAddPaymentModal] = React.useState(false);
+  const [selectedProperty, setSelectedProperty] = React.useState<any>(null);
+  const [dueDates, setDueDates] = React.useState<any>([]);
+
+  const GetDueDates = async () => {
+    if (propertyType === 'instalment' && id) {
+      try {
+        const res = await GetPropertyDueDates(id as string);
+        setDueDates(res?.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    GetDueDates();
+  }, [id]);
   return (
     <Box
       px={['20px', '20px']}
@@ -156,18 +175,20 @@ const Header = ({
                   <VerticalEllipsisIcon />
                 </MenuButton>
                 <MenuList py="0px">
-                  <MenuItem
-                    py="12px"
-                    px="16px"
-                    _hover={{ bg: 'border.100' }}
-                    fontSize={14}
-                    color="color.100"
-                    fontWeight={500}
-                    icon={<RegisterSaleIcon />}
-                    onClick={() => setOpenAddPaymentModal(true)}
-                  >
-                    Add Payment
-                  </MenuItem>
+                  {propertyType === 'instalment' && (
+                    <MenuItem
+                      py="12px"
+                      px="16px"
+                      _hover={{ bg: 'border.100' }}
+                      fontSize={14}
+                      color="color.100"
+                      fontWeight={500}
+                      icon={<RegisterSaleIcon />}
+                      onClick={() => setOpenAddPaymentModal(true)}
+                    >
+                      Add Payment
+                    </MenuItem>
+                  )}
                   <MenuItem
                     py="12px"
                     px="16px"
@@ -190,10 +211,12 @@ const Header = ({
           setActiveTab={setActiveTab}
         />
       </Stack>
-      <AddPaymentModal
+      {/* <AddPaymentModal
         isOpen={openAddPaymentModal}
         onClose={() => setOpenAddPaymentModal(false)}
-      />
+        instalmentId={id as string}
+        dueDates={dueDates}
+      /> */}
     </Box>
   );
 };

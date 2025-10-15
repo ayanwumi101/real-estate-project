@@ -149,70 +149,72 @@ const ClientsList = ({ clients }: { clients: any[] }) => {
                           <MenuButton as={Button} rounded="5px" bg="bg.200">
                             <VerticalEllipsisIcon />
                           </MenuButton>
-                          <MenuList py="0px">
-                            <MenuItem
-                              py="12px"
-                              px="16px"
-                              _hover={{ bg: 'border.100' }}
-                              fontSize={14}
-                              color="color.100"
-                              fontWeight={500}
-                              onClick={() =>
-                                navigate(`/realtor/clients/hfjrhu4884`)
-                              }
-                              icon={<ViewpropertyIcon />}
-                            >
-                              View client
-                            </MenuItem>
-                            <MenuItem
-                              py="12px"
-                              px="16px"
-                              _hover={{ bg: 'border.100' }}
-                              fontSize={14}
-                              color="color.100"
-                              fontWeight={500}
-                              icon={<AddPaymentIcon />}
-                              onClick={() =>
-                                navigate(
-                                  `/realtor/properties/57478493/register-sale`
-                                )
-                              }
-                            >
-                              Add to property
-                            </MenuItem>
-                            <MenuItem
-                              py="12px"
-                              px="16px"
-                              _hover={{ bg: 'border.100' }}
-                              fontSize={14}
-                              color="color.100"
-                              fontWeight={500}
-                              icon={<AssignPropertyIcon />}
-                              onClick={() =>
-                                navigate(
-                                  `/realtor/properties/57478493/register-sale`
-                                )
-                              }
-                            >
-                              Assign Manager
-                            </MenuItem>
-                            <MenuItem
-                              py="12px"
-                              px="16px"
-                              _hover={{ bg: 'border.100' }}
-                              fontSize={14}
-                              color="color.100"
-                              fontWeight={500}
-                              icon={<DeletePropertyIcon />}
-                              onClick={() =>
-                                navigate(
-                                  `/realtor/properties/57478493/register-sale`
-                                )
-                              }
-                            >
-                              Delete Client
-                            </MenuItem>
-                          </MenuList>
+                          <Portal>
+                            <MenuList py="0px">
+                              <MenuItem
+                                py="12px"
+                                px="16px"
+                                _hover={{ bg: 'border.100' }}
+                                fontSize={14}
+                                color="color.100"
+                                fontWeight={500}
+                                onClick={() =>
+                                  navigate(`/realtor/clients/hfjrhu4884`)
+                                }
+                                icon={<ViewpropertyIcon />}
+                              >
+                                View client
+                              </MenuItem>
+                              <MenuItem
+                                py="12px"
+                                px="16px"
+                                _hover={{ bg: 'border.100' }}
+                                fontSize={14}
+                                color="color.100"
+                                fontWeight={500}
+                                icon={<AddPaymentIcon />}
+                                onClick={() =>
+                                  navigate(
+                                    `/realtor/properties/57478493/register-sale`
+                                  )
+                                }
+                              >
+                                Add to property
+                              </MenuItem>
+                              <MenuItem
+                                py="12px"
+                                px="16px"
+                                _hover={{ bg: 'border.100' }}
+                                fontSize={14}
+                                color="color.100"
+                                fontWeight={500}
+                                icon={<AssignPropertyIcon />}
+                                onClick={() =>
+                                  navigate(
+                                    `/realtor/properties/57478493/register-sale`
+                                  )
+                                }
+                              >
+                                Assign Manager
+                              </MenuItem>
+                              <MenuItem
+                                py="12px"
+                                px="16px"
+                                _hover={{ bg: 'border.100' }}
+                                fontSize={14}
+                                color="color.100"
+                                fontWeight={500}
+                                icon={<DeletePropertyIcon />}
+                                onClick={() =>
+                                  navigate(
+                                    `/realtor/properties/57478493/register-sale`
+                                  )
+                                }
+                              >
+                                Delete Client
+                              </MenuItem>
+                            </MenuList>
+                          </Portal>
                         </Menu>
                       </Td>
                     </Tr>

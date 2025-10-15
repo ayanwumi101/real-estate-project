@@ -36,7 +36,6 @@ export const GetAllPropertyPayments = async () => {
   return response.data;
 };
 
-
 export const GetAvailablePropertyDetails = async (propertyId: string) => {
   const response = await axiosInstance.get(
     `${API_ROUTES.GET_PROPERTY_DETAILS}/available/${propertyId}`
@@ -71,7 +70,6 @@ export const GetInstalmentPropertyPayments = async (propertyId: string) => {
   );
   return response.data;
 };
-
 
 interface PaymentDetails {
   instalment_id: string;
@@ -166,6 +164,28 @@ export const CreateInstalmentPropertyPayment = async (
   const response = await axiosInstance.post(
     `/realtor/property-payments/instalments/${propertyId}/start`,
     instalmentData
+  );
+  return response.data;
+};
+
+export const AddPaymentToInstalmentProperty = async (data: {
+  instalment_id: string;
+  schedule_id: string;
+  amount: number;
+  payment_date: string;
+  commission: number;
+  payment_status: string;
+}) => {
+  const response = await axiosInstance.post(
+    '/realtor/property-payments/instalments/add-payment',
+    data
+  );
+  return response.data;
+};
+
+export const GetPropertyDueDates = async (instalmentId: string) => {
+  const response = await axiosInstance.get(
+    `/realtor/property-payments/instalments/dues/${instalmentId}`
   );
   return response.data;
 };

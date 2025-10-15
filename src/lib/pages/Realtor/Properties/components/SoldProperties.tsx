@@ -16,6 +16,7 @@ import {
   MenuItem,
   Heading,
   Text,
+  Portal,
 } from '@chakra-ui/react';
 import moment from 'moment';
 import React from 'react';
@@ -112,7 +113,7 @@ const PropertyListTable = ({ properties }: { properties: any[] }) => {
                   {asset?.client?.firstname} {asset?.client?.lastname}
                 </Td>
                 <Td fontWeight={500} fontSize={14} color="#8295AA">
-                  {moment(asset?.payment_history?.[0]?.payment_date).format(
+                  {moment(asset?.payment_date).format(
                     'ddd, Do MMMM YYYY'
                   )}
                 </Td>
@@ -127,44 +128,48 @@ const PropertyListTable = ({ properties }: { properties: any[] }) => {
                     <MenuButton as={Button} rounded="5px" bg="bg.200">
                       <VerticalEllipsisIcon />
                     </MenuButton>
-                    <MenuList py="0px" rounded="16px">
-                      <MenuItem
-                        py="12px"
-                        px="16px"
-                        _hover={{ bg: 'border.100' }}
-                        fontSize={14}
-                        color="color.100"
-                        fontWeight={500}
-                        onClick={() =>
-                          navigate(`/realtor/properties/${asset?.property_id}?type=sold`)
-                        }
-                        icon={<ViewpropertyIcon />}
-                      >
-                        View property
-                      </MenuItem>
-                      <MenuItem
-                        py="12px"
-                        px="16px"
-                        _hover={{ bg: 'border.100' }}
-                        fontSize={14}
-                        color="color.100"
-                        fontWeight={500}
-                        icon={<PaymentHistoryIcon />}
-                      >
-                        View payment history
-                      </MenuItem>
-                      <MenuItem
-                        py="12px"
-                        px="16px"
-                        _hover={{ bg: 'border.100' }}
-                        fontSize={14}
-                        color="color.100"
-                        fontWeight={500}
-                        icon={<RealtorClientsIcon />}
-                      >
-                        View client
-                      </MenuItem>
-                    </MenuList>
+                    <Portal>
+                      <MenuList py="0px" rounded="16px">
+                        <MenuItem
+                          py="12px"
+                          px="16px"
+                          _hover={{ bg: 'border.100' }}
+                          fontSize={14}
+                          color="color.100"
+                          fontWeight={500}
+                          onClick={() =>
+                            navigate(
+                              `/realtor/properties/${asset?.property_id}?type=sold`
+                            )
+                          }
+                          icon={<ViewpropertyIcon />}
+                        >
+                          View property
+                        </MenuItem>
+                        <MenuItem
+                          py="12px"
+                          px="16px"
+                          _hover={{ bg: 'border.100' }}
+                          fontSize={14}
+                          color="color.100"
+                          fontWeight={500}
+                          icon={<PaymentHistoryIcon />}
+                        >
+                          View payment history
+                        </MenuItem>
+                        <MenuItem
+                          py="12px"
+                          px="16px"
+                          _hover={{ bg: 'border.100' }}
+                          fontSize={14}
+                          color="color.100"
+                          fontWeight={500}
+                          icon={<RealtorClientsIcon />}
+                        >
+                          View client
+                        </MenuItem>
+                      </MenuList>
+                    </Portal>
                   </Menu>
                 </Td>
               </Tr>
@@ -226,7 +231,7 @@ const PropertyStats = ({
         justifyContent="space-between"
         gap="16px"
         overflow="auto"
-        pb='3'
+        pb="3"
       >
         {/* first card */}
         <Box
@@ -257,7 +262,7 @@ const PropertyStats = ({
               <Text>
                 Last Updated:{' '}
                 <Box as="span" color="brand.100">
-                  June 12, 2025
+                  {moment(new Date()).format('Do MMMM, YYYY')}
                 </Box>
               </Text>
             </Box>
@@ -318,7 +323,7 @@ const PropertyStats = ({
               <Text>
                 Last Updated:{' '}
                 <Box as="span" color="brand.100">
-                  June 12, 2025
+                  {moment(new Date()).format('Do MMMM, YYYY')}
                 </Box>
               </Text>
             </Box>

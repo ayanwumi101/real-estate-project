@@ -15,10 +15,10 @@ import {
   MenuList,
   MenuItem,
   Heading,
-  Text,
+  Text, Portal
 } from '@chakra-ui/react';
 import moment from 'moment';
-import React from 'react';
+import React, { Fragment, useEffect } from 'react';
 import {
   VerticalEllipsisIcon,
   ViewpropertyIcon,
@@ -33,204 +33,244 @@ import {
 import { findClosestPaymentDueDate } from '~/lib/utils/findClosestDueAsset';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
+import AddPaymentModal from '../../PropertyDetails/Modals/AddPaymentModal';
+import { GetPropertyDueDates } from '~/lib/api/services/propertiesService';
 
 const PropertyListTable = ({ properties }: { properties: any[] }) => {
   const navigate = useNavigate();
   const [page, setPage] = React.useState(1);
   const [limit, setLimit] = React.useState(8);
-  const assets = Array.from({ length: 10 }, (_, i) => ({ id: i + 1 }));
-  return (
-    <TableContainer border="1px solid #E4E4E4" borderRadius="10px">
-      <Table>
-        <Thead color="#222222" bg="#F5F5F5" py="22px" h="53px" border="none">
-          <Tr border="none">
-            <Th
-              color="#222222"
-              fontWeight={500}
-              fontSize={14}
-              textTransform="capitalize"
-            >
-              Property Name
-            </Th>
-            <Th
-              color="#222222"
-              fontWeight={500}
-              fontSize={14}
-              textTransform="capitalize"
-            >
-              property Type
-            </Th>
-            <Th
-              color="#222222"
-              fontWeight={500}
-              fontSize={14}
-              textTransform="capitalize"
-            >
-              Client
-            </Th>
-            <Th
-              color="#222222"
-              fontWeight={500}
-              fontSize={14}
-              textTransform="capitalize"
-            >
-              Date Sold
-            </Th>
-            <Th
-              color="#222222"
-              fontWeight={500}
-              fontSize={14}
-              textTransform="capitalize"
-            >
-              Sale Price
-            </Th>
+  const [openModal, setOpenModal] = React.useState(false);
+  const [selectedProperty, setSelectedProperty] = React.useState<any>(null);
+  const [dueDates, setDueDates] = React.useState<any>([]);
 
-            <Th
-              color="#222222"
-              fontWeight={500}
-              fontSize={14}
-              textTransform="capitalize"
-            >
-              Commission
-            </Th>
-            <Th
-              color="#222222"
-              fontWeight={500}
-              fontSize={14}
-              textTransform="capitalize"
-            ></Th>
-          </Tr>
-        </Thead>
-        <Tbody color="#222222" maxH="450px" overflow="auto">
-          {properties?.slice((page - 1) * limit, page * limit)?.map((asset) => {
-            return (
-              <Tr key={asset} border="none" cursor="pointer">
-                <Td fontSize={15} color="#222222" fontWeight={600}>
-                  {asset?.property_name}
-                </Td>
-                <Td fontWeight={500} fontSize={14} color="#8295AA">
-                  {asset?.property_type}
-                </Td>
-                <Td fontWeight={500} fontSize={14} color="#8295AA">
-                  {asset?.client_name}
-                </Td>
-                <Td fontWeight={500} fontSize={14} color="#8295AA">
-                  Jan 24, 2020
-                </Td>
-                <Td fontWeight={500} fontSize={14} color="#8295AA">
-                  {FormatAmount(Number(asset?.sale_price))}
-                </Td>
-                <Td fontWeight={500} fontSize={14} color="#8295AA">
-                  {FormatAmount(Number(asset?.total_commission))}
-                </Td>
-                <Td>
-                  <Menu>
-                    <MenuButton as={Button} rounded="5px" bg="bg.200">
-                      <VerticalEllipsisIcon />
-                    </MenuButton>
-                    <MenuList py="0px" rounded="16px">
-                      <MenuItem
-                        py="12px"
-                        px="16px"
-                        _hover={{ bg: 'border.100' }}
-                        fontSize={14}
-                        color="color.100"
-                        fontWeight={500}
-                        onClick={() =>
-                          navigate(
-                            `/realtor/properties/${asset?.instalment_id}?type=instalment`
-                          )
-                        }
-                        icon={<ViewpropertyIcon />}
-                      >
-                        View property
-                      </MenuItem>
-                      <MenuItem
-                        py="12px"
-                        px="16px"
-                        _hover={{ bg: 'border.100' }}
-                        fontSize={14}
-                        color="color.100"
-                        fontWeight={500}
-                        icon={<PaymentHistoryIcon />}
-                      >
-                        View payment history
-                      </MenuItem>
-                      <MenuItem
-                        py="12px"
-                        px="16px"
-                        _hover={{ bg: 'border.100' }}
-                        fontSize={14}
-                        color="color.100"
-                        fontWeight={500}
-                        icon={<AddPaymentIcon />}
-                      >
-                        Add new payment
-                      </MenuItem>
-                      <MenuItem
-                        py="12px"
-                        px="16px"
-                        _hover={{ bg: 'border.100' }}
-                        fontSize={14}
-                        color="color.100"
-                        fontWeight={500}
-                        icon={<RealtorClientsIcon />}
-                      >
-                        View client
-                      </MenuItem>
-                      <MenuItem
-                        py="12px"
-                        px="16px"
-                        _hover={{ bg: 'border.100' }}
-                        fontSize={14}
-                        color="color.100"
-                        fontWeight={500}
-                        icon={<RegisterSaleIcon />}
-                      >
-                        Change property status
-                      </MenuItem>
-                    </MenuList>
-                  </Menu>
-                </Td>
-              </Tr>
-            );
-          })}
-        </Tbody>
-      </Table>
-      {properties?.length > 0 && (
-        <Box w="full" bg="white" py="10px">
-          <Flex alignItems="center" justifyContent="center" gap="13px">
-            <Button
-              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-              isDisabled={page === 1}
-              border="1px solid #E4E4E4"
-              rounded="6px"
-              variant="outline"
-              p="8px"
-            >
-              <PreviousPageIcon />
-            </Button>
-            <Text fontWeight={600} fontSize={17}>
-              {page}
-            </Text>
-            <Button
-              border="1px solid #E4E4E4"
-              rounded="6px"
-              variant="outline"
-              p="8px"
-              onClick={() =>
-                setPage((prev) =>
-                  prev < Math.ceil(assets.length / limit) ? prev + 1 : prev
-                )
-              }
-              isDisabled={page >= Math.ceil(assets.length / limit)}
-            >
-              <NextPageIcon />
-            </Button>
-          </Flex>
-        </Box>
-      )}
-    </TableContainer>
+  const GetDueDates = async () => {
+    if (selectedProperty) {
+      try {
+        const res = await GetPropertyDueDates(selectedProperty?.instalment_id);
+        setDueDates(res?.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    GetDueDates();
+  }, [selectedProperty]);
+
+  return (
+    <Fragment>
+      <TableContainer border="1px solid #E4E4E4" borderRadius="10px">
+        <Table>
+          <Thead color="#222222" bg="#F5F5F5" py="22px" h="53px" border="none">
+            <Tr border="none">
+              <Th
+                color="#222222"
+                fontWeight={500}
+                fontSize={14}
+                textTransform="capitalize"
+              >
+                Property Name
+              </Th>
+              <Th
+                color="#222222"
+                fontWeight={500}
+                fontSize={14}
+                textTransform="capitalize"
+              >
+                property Type
+              </Th>
+              <Th
+                color="#222222"
+                fontWeight={500}
+                fontSize={14}
+                textTransform="capitalize"
+              >
+                Client
+              </Th>
+              <Th
+                color="#222222"
+                fontWeight={500}
+                fontSize={14}
+                textTransform="capitalize"
+              >
+                Date Sold
+              </Th>
+              <Th
+                color="#222222"
+                fontWeight={500}
+                fontSize={14}
+                textTransform="capitalize"
+              >
+                Sale Price
+              </Th>
+
+              <Th
+                color="#222222"
+                fontWeight={500}
+                fontSize={14}
+                textTransform="capitalize"
+              >
+                Commission
+              </Th>
+              <Th
+                color="#222222"
+                fontWeight={500}
+                fontSize={14}
+                textTransform="capitalize"
+              ></Th>
+            </Tr>
+          </Thead>
+          <Tbody color="#222222" maxH="450px" overflow="auto">
+            {properties
+              ?.slice((page - 1) * limit, page * limit)
+              ?.map((asset) => {
+                return (
+                  <Tr key={asset} border="none" cursor="pointer">
+                    <Td fontSize={15} color="#222222" fontWeight={600}>
+                      {asset?.property_name}
+                    </Td>
+                    <Td fontWeight={500} fontSize={14} color="#8295AA">
+                      {asset?.property_type}
+                    </Td>
+                    <Td fontWeight={500} fontSize={14} color="#8295AA">
+                      {asset?.client_name}
+                    </Td>
+                    <Td fontWeight={500} fontSize={14} color="#8295AA">
+                      Jan 24, 2020
+                    </Td>
+                    <Td fontWeight={500} fontSize={14} color="#8295AA">
+                      {FormatAmount(Number(asset?.sale_price))}
+                    </Td>
+                    <Td fontWeight={500} fontSize={14} color="#8295AA">
+                      {FormatAmount(Number(asset?.total_commission))}
+                    </Td>
+                    <Td>
+                      <Menu>
+                        <MenuButton as={Button} rounded="5px" bg="bg.200">
+                          <VerticalEllipsisIcon />
+                        </MenuButton>
+                        <Portal>
+                          <MenuList py="0px" rounded="16px">
+                            <MenuItem
+                              py="12px"
+                              px="16px"
+                              _hover={{ bg: 'border.100' }}
+                              fontSize={14}
+                              color="color.100"
+                              fontWeight={500}
+                              onClick={() =>
+                                navigate(
+                                  `/realtor/properties/${asset?.instalment_id}?type=instalment`
+                                )
+                              }
+                              icon={<ViewpropertyIcon />}
+                            >
+                              View property
+                            </MenuItem>
+                            <MenuItem
+                              py="12px"
+                              px="16px"
+                              _hover={{ bg: 'border.100' }}
+                              fontSize={14}
+                              color="color.100"
+                              fontWeight={500}
+                              icon={<PaymentHistoryIcon />}
+                            >
+                              View payment history
+                            </MenuItem>
+                            <MenuItem
+                              py="12px"
+                              px="16px"
+                              _hover={{ bg: 'border.100' }}
+                              fontSize={14}
+                              color="color.100"
+                              fontWeight={500}
+                              icon={<AddPaymentIcon />}
+                              onClick={() => {
+                                setOpenModal(true);
+                                setSelectedProperty(asset);
+                              }}
+                            >
+                              Add new payment
+                            </MenuItem>
+                            <MenuItem
+                              py="12px"
+                              px="16px"
+                              _hover={{ bg: 'border.100' }}
+                              fontSize={14}
+                              color="color.100"
+                              fontWeight={500}
+                              icon={<RealtorClientsIcon />}
+                            >
+                              View client
+                            </MenuItem>
+                            <MenuItem
+                              py="12px"
+                              px="16px"
+                              _hover={{ bg: 'border.100' }}
+                              fontSize={14}
+                              color="color.100"
+                              fontWeight={500}
+                              icon={<RegisterSaleIcon />}
+                            >
+                              Change property status
+                            </MenuItem>
+                          </MenuList>
+                        </Portal>
+                      </Menu>
+                    </Td>
+                  </Tr>
+                );
+              })}
+          </Tbody>
+        </Table>
+        {properties?.length > 0 && (
+          <Box w="full" bg="white" py="10px">
+            <Flex alignItems="center" justifyContent="center" gap="13px">
+              <Button
+                onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                isDisabled={page === 1}
+                border="1px solid #E4E4E4"
+                rounded="6px"
+                variant="outline"
+                p="8px"
+              >
+                <PreviousPageIcon />
+              </Button>
+              <Text fontWeight={600} fontSize={17}>
+                {page}
+              </Text>
+              <Button
+                border="1px solid #E4E4E4"
+                rounded="6px"
+                variant="outline"
+                p="8px"
+                onClick={() =>
+                  setPage((prev) =>
+                    prev < Math.ceil(properties.length / limit)
+                      ? prev + 1
+                      : prev
+                  )
+                }
+                isDisabled={page >= Math.ceil(properties.length / limit)}
+              >
+                <NextPageIcon />
+              </Button>
+            </Flex>
+          </Box>
+        )}
+      </TableContainer>
+      <AddPaymentModal
+        isOpen={openModal}
+        dueDates={dueDates}
+        onClose={() => setOpenModal(false)}
+        instalmentId={selectedProperty?.instalment_id}
+        monthsPaid={selectedProperty?.payment_history?.length}
+        paidInstalment={selectedProperty?.amount_paid_total}
+      />
+    </Fragment>
   );
 };
 
@@ -284,7 +324,7 @@ const PropertyStats = ({
               <Text>
                 Last Updated:{' '}
                 <Box as="span" color="brand.100">
-                  June 12, 2025
+                   {moment(new Date()).format('Do MMMM, YYYY')}
                 </Box>
               </Text>
             </Box>
@@ -345,7 +385,7 @@ const PropertyStats = ({
               <Text>
                 Last Updated:{' '}
                 <Box as="span" color="brand.100">
-                  June 12, 2025
+                   {moment(new Date()).format('Do MMMM, YYYY')}
                 </Box>
               </Text>
             </Box>
