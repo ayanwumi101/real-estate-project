@@ -152,7 +152,7 @@ interface InstalmentPropertyPayment {
   commission: number;
   payment_plan: string;
   first_payment_date: string | Date;
-  next_payment_date: string | Date;
+  next_instalment_date: string | Date;
   allocation_status: string;
   documentation_status: string;
   handover_status: string;

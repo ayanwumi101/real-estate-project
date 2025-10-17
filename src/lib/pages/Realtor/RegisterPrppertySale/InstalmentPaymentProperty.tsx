@@ -545,7 +545,7 @@ const InstalmentPaymentProperty = ({
         commission: Number(values.commissionReceived),
         payment_plan: values.paymentPlan,
         first_payment_date: values.firstPaymentDate,
-        next_payment_date: values.nextPaymentDate,
+        next_instalment_date: values.nextPaymentDate,
         allocation_status: values.allocationStatus,
         documentation_status: values.documentationStatus,
         handover_status: values.handoverStatus,

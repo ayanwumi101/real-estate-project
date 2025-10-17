@@ -15,7 +15,8 @@ import {
   MenuList,
   MenuItem,
   Heading,
-  Text, Portal
+  Text,
+  Portal,
 } from '@chakra-ui/react';
 import moment from 'moment';
 import React, { Fragment, useEffect } from 'react';
@@ -138,7 +139,7 @@ const PropertyListTable = ({ properties }: { properties: any[] }) => {
                       {asset?.client_name}
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
-                      Jan 24, 2020
+                      {moment(asset?.sald_date).format('ddd, Do MMMM YYYY')}
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
                       {FormatAmount(Number(asset?.sale_price))}
@@ -324,7 +325,7 @@ const PropertyStats = ({
               <Text>
                 Last Updated:{' '}
                 <Box as="span" color="brand.100">
-                   {moment(new Date()).format('Do MMMM, YYYY')}
+                  {moment(new Date()).format('Do MMMM, YYYY')}
                 </Box>
               </Text>
             </Box>
@@ -385,7 +386,7 @@ const PropertyStats = ({
               <Text>
                 Last Updated:{' '}
                 <Box as="span" color="brand.100">
-                   {moment(new Date()).format('Do MMMM, YYYY')}
+                  {moment(new Date()).format('Do MMMM, YYYY')}
                 </Box>
               </Text>
             </Box>
