@@ -149,7 +149,7 @@ interface InstalmentPropertyPayment {
   first_deposit: number;
   payment_duration: string;
   instalment_amount: number;
-  commission_received: number;
+  commission: number;
   payment_plan: string;
   first_payment_date: string | Date;
   next_payment_date: string | Date;

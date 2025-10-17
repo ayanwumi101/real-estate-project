@@ -542,7 +542,7 @@ const InstalmentPaymentProperty = ({
         first_deposit: Number(values.firstDeposit),
         payment_duration: values.paymentDuration,
         instalment_amount: Number(values.instalmentAmount),
-        commission_received: Number(values.commissionReceived),
+        commission: Number(values.commissionReceived),
         payment_plan: values.paymentPlan,
         first_payment_date: values.firstPaymentDate,
         next_payment_date: values.nextPaymentDate,
