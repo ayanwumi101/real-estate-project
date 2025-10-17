@@ -8,6 +8,7 @@ import RealtorDashboardLayout from '~/lib/layout/components/RealtorDashboardHead
 import FullySoldProperty from './FullySoldProperty';
 import InstalmentPaymentProperty from './InstalmentPaymentProperty';
 import { GetRealtorClients } from '~/lib/api/services/clientsService';
+import { GetAvailablePropertyDetails } from '~/lib/api/services/propertiesService';
 
 const index = () => {
   const { id } = useParams();
@@ -16,6 +17,8 @@ const index = () => {
   >('fully_sold');
   const searchParams = useSearchParams();
   const [clients, setClients] = React.useState([]);
+  const [availablePropertyDetails, setAvailablePropertyDetails] =
+    React.useState<any>([]);
 
   useEffect(() => {
     const type = searchParams.get('type');
@@ -38,20 +41,33 @@ const index = () => {
     fetchClients();
   }, []);
 
+  const getAvailablePropertyDetails = async () => {
+    try {
+      const res = await GetAvailablePropertyDetails(id as string);
+      setAvailablePropertyDetails(res?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  React.useEffect(() => {
+    getAvailablePropertyDetails();
+  }, [id]);
+
   return (
     <RealtorDashboardLayout
       title={
         <Flex alignItems="center" gap="8px">
-          <Text fontSize={[15,16]} fontWeight={600} color="brand.400">
+          <Text fontSize={[15, 16]} fontWeight={600} color="brand.400">
             Properties
           </Text>
           <BsChevronRight size={15} fontWeight={900} />
-          <Text fontSize={[15,16]} fontWeight={600} color="brand.400">
+          <Text fontSize={[15, 16]} fontWeight={600} color="brand.400">
             Available Properties
           </Text>
           <BsChevronRight size={15} fontWeight={900} />
-          <Text fontSize={[15,16]} fontWeight={600} color="brand.800">
-            Skyline Residences
+          <Text fontSize={[15, 16]} fontWeight={600} color="brand.800">
+            {availablePropertyDetails?.property_name}
           </Text>
         </Flex>
       }
