@@ -15,7 +15,6 @@ import moment from 'moment';
 import React from 'react';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 
-
 const AssetDetailsItem = ({
   label,
   labelValue,
@@ -98,9 +97,9 @@ const SoldAssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                 label="Date of Sale"
                 labelValue={
                   propertyDetails?.payment_details?.sold_date
-                    ? moment(propertyDetails?.payment_details?.sold_date).format(
-                        'ddd, Do MMMM YYYY'
-                      )
+                    ? moment(
+                        propertyDetails?.payment_details?.sold_date
+                      ).format('ddd, Do MMMM YYYY')
                     : 'N/A'
                 }
               />
@@ -143,14 +142,18 @@ const SoldAssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
             <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
               <AssetDetailsItem
                 label="Client Name"
-                labelValue={propertyDetails?.client_name || 'N/A'}
+                labelValue={
+                  propertyDetails?.client_details?.client_name || 'N/A'
+                }
               />
               <AssetDetailsItem
                 label="Phone Number"
                 labelValue={
-                  propertyDetails?.client_phone?.startsWith('234')
-                    ? `+${propertyDetails?.client_phone}`
-                    : propertyDetails?.client_phone || 'N/A'
+                  propertyDetails?.client_details?.client_phone?.startsWith(
+                    '234'
+                  )
+                    ? `+${propertyDetails?.client_details?.client_phone}`
+                    : propertyDetails?.client_details?.client_phone || 'N/A'
                 }
               />
             </Flex>
