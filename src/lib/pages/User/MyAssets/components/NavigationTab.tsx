@@ -35,20 +35,22 @@ const NavigationTab = ({
         justifyContent="space-between"
         flexWrap={['wrap', 'nowrap']}
         gap={['24px', '0']}
+        pb="2"
       >
         <Flex alignItems="center" borderBottom={['1px solid #E4E4E4', 'none']}>
           {' '}
           {tabs.map((tab, index) => (
             <Button
               bg={tab === activeTab ? '#EDEDFF' : 'none'}
-              borderRadius={activeTab === tab ? '50px' : "0px"}
+              borderRadius={activeTab === tab ? '50px' : '0px'}
               color={tab === activeTab ? '#4040A0' : '#8295AA'}
-              px='18px'
-              py='16px'
+              px="18px"
+              py="16px"
               fontWeight={tab === activeTab ? 600 : 500}
               onClick={() => setActiveTab(tab)}
               fontSize={14}
-              _hover={{bg: 'none'}}
+              _hover={{ bg: 'none' }}
+              key={index}
             >
               {tab} {tab === 'Owned' ? `(${ownedAssetsCount})` : ''}{' '}
               {tab === 'Cashflow' ? `(${cashflowAssetsCount})` : ''}{' '}

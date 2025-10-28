@@ -151,7 +151,7 @@ const AddNextOfKin = ({
           />
         </InputGroup>
         <Box w="full">
-          <Flex alignItems="center" justifyContent="space-between">
+          <Flex alignItems="center" justifyContent="space-between" flexWrap={['wrap', 'nowrap']} gap='16px'>
             <Text color="brand.300">
               Select a next of kin to associated with this property
             </Text>

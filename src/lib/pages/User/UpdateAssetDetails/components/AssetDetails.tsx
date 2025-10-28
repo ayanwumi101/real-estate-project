@@ -124,7 +124,7 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                   rounded="40px"
                   border="1px solid"
                   borderColor="border.200"
-                  value={boughtDate.split(' ')[0]}
+                  value={boughtDate?.split(' ')[0]}
                   onChange={(e) => setBoughtDate(e.target.value)}
                 />
               </FormControl>

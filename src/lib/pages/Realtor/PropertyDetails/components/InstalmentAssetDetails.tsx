@@ -41,7 +41,6 @@ const InstalmentAssetDetails = ({
 }: {
   propertyDetails: any;
 }) => {
-
   return (
     <Box>
       <Stack spacing="32px">
