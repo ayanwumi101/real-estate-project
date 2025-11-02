@@ -64,19 +64,8 @@ const index = () => {
       setPropertyType('available');
     }
   }, [id, propertyType]);
+
   useEffect(() => {
-    // const type = searchParams.get('type');
-    // if (type === 'available' || type === 'instalment' || type === 'sold') {
-    //   if (type === 'sold' || type === 'instalment') {
-    //     getPropertyPaymentHistory();
-    //   } else {
-    //     getAvailablePropertyDetails();
-    //     getPropertyPaymentHistory();
-    //   }
-    //   setPropertyType(type);
-    // } else {
-    //   setPropertyType('available');
-    // }
     getAvailablePropertyDetails();
     getPropertyPaymentHistory();
   }, [searchParams, id, propertyType]);
@@ -98,13 +87,9 @@ const index = () => {
             Properties
           </Text>
           <BsChevronRight size={15} fontWeight={900} />
-          {/* <Text fontSize={[15, 16]} fontWeight={600} color="brand.800">
-            {propertyType === 'available'
-              ? availablePropertyDetails?.property_name
-              : propertyType === 'sold'
-                ? soldPropertyDetails?.property_name
-                : instalmentPropertyDetails?.property_name}
-          </Text> */}
+          <Text fontSize={[15, 16]} fontWeight={600} color="brand.800">
+            {availablePropertyDetails?.property_name}
+          </Text>
         </Flex>
       }
     >
