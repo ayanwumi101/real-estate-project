@@ -43,9 +43,9 @@ export const GetAvailablePropertyDetails = async (propertyId: string) => {
   return response.data;
 };
 
-export const GetInstalmentPropertyDetails = async (instalmentId: string) => {
+export const GetInstalmentPropertyPaymentHistory = async (propertyId: string) => {
   const response = await axiosInstance.get(
-    `/realtor/property-payments/instalments/${instalmentId}/details`
+    `/realtor/properties/${propertyId}/payment-details`
   );
   return response.data;
 };

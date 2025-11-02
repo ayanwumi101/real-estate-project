@@ -42,6 +42,7 @@ const index = () => {
     };
     fetchProperties();
   }, []);
+  
 
   return (
     <RealtorDashboardLayout title="Properties">
@@ -52,7 +53,7 @@ const index = () => {
           activeTab={activeTab}
           availableCount={properties.length}
           soldCount={soldProperties?.payments?.length}
-          instalmentCount={instalmentProperties?.data?.length}
+          instalmentCount={instalmentProperties?.data?.total_instalment_property}
         />
         <Box>
           {activeTab === 'available' && (

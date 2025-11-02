@@ -23,21 +23,27 @@ import {
 import useNavigate from '~/lib/utils/useNavigate';
 import AddPaymentModal from '../Modals/AddPaymentModal';
 import { GetPropertyDueDates } from '~/lib/api/services/propertiesService';
-import { duration } from 'moment';
+import Link from 'next/link';
+
+
 
 interface Headerprops {
   propertyName: string;
   location: string;
   tabs: string[];
-  setActiveTab: React.Dispatch<React.SetStateAction<'Details' | 'Payments'>>;
-  activeTab: 'Details' | 'Payments';
+  setActiveTab: React.Dispatch<
+    React.SetStateAction<'Details' | 'Sales History'>
+  >;
+  activeTab: 'Details' | 'Sales History';
   propertyType: 'available' | 'instalment' | 'sold';
 }
 
 interface NavigationTabsProps {
   tabs: string[];
-  activeTab: 'Details' | 'Payments';
-  setActiveTab: React.Dispatch<React.SetStateAction<'Details' | 'Payments'>>;
+  activeTab: 'Details' | 'Sales History';
+  setActiveTab: React.Dispatch<
+    React.SetStateAction<'Details' | 'Sales History'>
+  >;
 }
 
 const NavigationTabs = ({
@@ -54,7 +60,7 @@ const NavigationTabs = ({
           fontSize={15}
           fontWeight={600}
           color={tab === activeTab ? 'brand.100' : 'brand.800'}
-          onClick={() => setActiveTab(tab as 'Details' | 'Payments')}
+          onClick={() => setActiveTab(tab as 'Details' | 'Sales History')}
         >
           {tab}
         </Button>
@@ -93,89 +99,92 @@ const Header = ({
     GetDueDates();
   }, [id]);
   return (
-    <Box
-      px={['20px', '20px']}
-      borderBottom="1px solid"
-      borderColor="border.100"
-    >
-      <Stack spacing="10px" alignItems="flex-start" w="full">
-        <Button
-          onClick={() => navigate('/realtor/properties')}
-          variant="ghost"
-          leftIcon={<ChevronLeftIcon />}
-          p="0"
-          _hover={{ bg: 'none' }}
-          color="brand.100"
-        >
-          Back
-        </Button>
-        <Flex
-          alignItems="flex-start"
-          justifyContent="space-between"
-          gap={['20px', 0]}
-          flexWrap={['wrap', 'wrap', 'nowrap']}
-          w="full"
-        >
-          <Box>
-            <Stack spacing="10px">
-              <Flex alignItems="center" gap="10px">
-                <Heading fontSize={[20, 24]} fontWeight={500} color="#222222">
-                  {propertyName}
-                </Heading>
-                <Badge
-                  px="10px"
-                  py="4px"
-                  rounded="50px"
-                  bg={
-                    propertyType === 'instalment'
-                      ? '#F6EDDF'
-                      : propertyType === 'sold'
-                        ? '#E7F5EC'
-                        : 'bg.200'
-                  }
-                  fontSize={12}
-                  fontWeight={500}
-                  color={
-                    propertyType === 'instalment'
-                      ? '#E1A101'
-                      : propertyType === 'sold'
-                        ? '#1BD155'
-                        : 'brand.100'
-                  }
-                  textTransform="capitalize"
-                >
-                  {propertyType}
-                </Badge>
-              </Flex>
-              {location && (
+   
+    
+      <Box
+        px={['20px', '20px']}
+        borderBottom="1px solid"
+        borderColor="border.100"
+      >
+        <Stack spacing="10px" alignItems="flex-start" w="full">
+          <Button
+            onClick={() => navigate('/realtor/properties')}
+            variant="ghost"
+            leftIcon={<ChevronLeftIcon />}
+            p="0"
+            _hover={{ bg: 'none' }}
+            color="brand.100"
+          >
+            Back
+          </Button>
+          <Flex
+            alignItems="flex-start"
+            justifyContent="space-between"
+            gap={['20px', 0]}
+            flexWrap={['wrap', 'wrap', 'nowrap']}
+            w="full"
+          >
+            <Box>
+              <Stack spacing="10px">
                 <Flex alignItems="center" gap="10px">
-                  <LocationIcon />
-                  <Text color="#2E353F" fontWeight={500}>
-                    {location ? location : 'N/A'}
-                  </Text>
+                  <Heading fontSize={[20, 24]} fontWeight={500} color="#222222">
+                    {propertyName}
+                  </Heading>
+                  <Badge
+                    px="10px"
+                    py="4px"
+                    rounded="50px"
+                    bg={
+                      propertyType === 'instalment'
+                        ? '#F6EDDF'
+                        : propertyType === 'sold'
+                          ? '#E7F5EC'
+                          : 'bg.200'
+                    }
+                    fontSize={12}
+                    fontWeight={500}
+                    color={
+                      propertyType === 'instalment'
+                        ? '#E1A101'
+                        : propertyType === 'sold'
+                          ? '#1BD155'
+                          : 'brand.100'
+                    }
+                    textTransform="capitalize"
+                  >
+                    {propertyType}
+                  </Badge>
                 </Flex>
-              )}
-            </Stack>
-          </Box>
-          <Box>
-            <Flex alignItems="center" gap="10px">
-              <Button
-                bg="brand.100"
-                _hover={{ bg: 'bg.200' }}
-                color="brand.200"
-                fontWeight={600}
-                fontSize={15}
-                leftIcon={<EditPropertyIcon />}
-                h="43px"
-              >
-                Edit Property
-              </Button>
-              <Menu>
-                <MenuButton as={Button} rounded="5px" bg="bg.200">
-                  <VerticalEllipsisIcon />
-                </MenuButton>
-                <MenuList py="0px">
-                  {propertyType === 'instalment' && (
+                {location && (
+                  <Flex alignItems="center" gap="10px">
+                    <LocationIcon />
+                    <Text color="#2E353F" fontWeight={500}>
+                      {location ? location : 'N/A'}
+                    </Text>
+                  </Flex>
+                )}
+              </Stack>
+            </Box>
+            <Box>
+              <Flex alignItems="center" gap="10px">
+                <Button
+                  bg="brand.100"
+                  _hover={{ bg: 'bg.200' }}
+                  color="brand.200"
+                  fontWeight={600}
+                  fontSize={15}
+                  leftIcon={<EditPropertyIcon />}
+                  h="43px"
+                >
+                  Edit Property
+                </Button>
+                {propertyType === 'available' && (
+                  <Menu>
+                    <MenuButton as={Button} rounded="5px" bg="bg.200">
+                      <VerticalEllipsisIcon />
+                    </MenuButton>
+                    <MenuList py="0px">
+                      {/* {propertyType === 'instalment' && (
                     <MenuItem
                       py="12px"
                       px="16px"
@@ -188,36 +197,56 @@ const Header = ({
                     >
                       Add Payment
                     </MenuItem>
-                  )}
-                  <MenuItem
-                    py="12px"
-                    px="16px"
-                    _hover={{ bg: 'border.100' }}
-                    fontSize={14}
-                    color="color.100"
-                    fontWeight={500}
-                    icon={<RegisterSaleIcon />}
-                  >
-                    Register sale
-                  </MenuItem>
-                </MenuList>
-              </Menu>
-            </Flex>
-          </Box>
-        </Flex>
-        <NavigationTabs
-          tabs={tabs}
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-        />
-      </Stack>
-      {/* <AddPaymentModal
+                  )} */}
+                      <Link
+                        href={`/realtor/properties/${id}/register-sale?type=fully_sold`}
+                      >
+                        <MenuItem
+                          py="12px"
+                          px="16px"
+                          _hover={{ bg: 'border.100' }}
+                          fontSize={14}
+                          color="color.100"
+                          fontWeight={500}
+                          icon={<RegisterSaleIcon />}
+                        >
+                          Register sale as Outright payment
+                        </MenuItem>
+                      </Link>
+                      <Link
+                        href={`/realtor/properties/${id}/register-sale?type=instalment`}
+                      >
+                        <MenuItem
+                          py="12px"
+                          px="16px"
+                          _hover={{ bg: 'border.100' }}
+                          fontSize={14}
+                          color="color.100"
+                          fontWeight={500}
+                          icon={<RegisterSaleIcon />}
+                        >
+                          Register sale as Instalment payment
+                        </MenuItem>
+                      </Link>
+                    </MenuList>
+                  </Menu>
+                )}
+              </Flex>
+            </Box>
+          </Flex>
+          <NavigationTabs
+            tabs={tabs}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+        </Stack>
+        {/* <AddPaymentModal
         isOpen={openAddPaymentModal}
         onClose={() => setOpenAddPaymentModal(false)}
         instalmentId={id as string}
         dueDates={dueDates}
       /> */}
-    </Box>
+      </Box>
   );
 };
 

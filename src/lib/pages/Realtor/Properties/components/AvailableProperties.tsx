@@ -154,7 +154,7 @@ const AvailableProperties = ({ properties }: { properties: any[] }) => {
                                   )
                                 }
                               >
-                                Register sale as Fully Sold
+                                Register sale as Outright payment
                               </MenuItem>
                               <MenuItem
                                 py="12px"

@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import Notes from './components/Notes';
 import Header from './components/Header';
-import { Box, Stack, Flex, Text } from '@chakra-ui/react';
+import { Box, Stack, Flex, Text, Button, Heading } from '@chakra-ui/react';
 import { useParams, useSearchParams } from 'next/navigation';
 import useNavigate from '~/lib/utils/useNavigate';
 import RealtorDashboardLayout from '~/lib/layout/components/RealtorDashboardHeader';
@@ -14,12 +14,13 @@ import InstalmentAssetDetails from './components/InstalmentAssetDetails';
 import Payments from './components/Payments';
 import {
   GetAvailablePropertyDetails,
-  GetInstalmentPropertyDetails,
+  GetInstalmentPropertyPaymentHistory,
   GetInstalmentPropertyPayments,
   GetSoldPropertyDetails,
   GetSoldPropertyPayments,
 } from '~/lib/api/services/propertiesService';
-import InstalmentPayments from './components/InstalmentPayments';
+import { ChevronLeftIcon } from '~/lib/components/Icons/Icons';
+import InstalmentPropertyDetails from './components/InstalmentPropertyDetails';
 
 const index = () => {
   const { id } = useParams();
@@ -28,20 +29,13 @@ const index = () => {
   const [propertyType, setPropertyType] = React.useState<
     'available' | 'instalment' | 'sold'
   >('available');
-  const tabs =
-    propertyType === 'available' ? ['Details'] : ['Details', 'Payments'];
-  const [activeTab, setActiveTab] = React.useState<'Details' | 'Payments'>(
+  const tabs = ['Details', 'Sales History'];
+  const [activeTab, setActiveTab] = React.useState<'Details' | 'Sales History'>(
     'Details'
   );
   const [availablePropertyDetails, setAvailablePropertyDetails] =
     React.useState<any>([]);
-  const [instalmentPropertyDetails, setInstalmentPropertyDetails] =
-    React.useState<any>([]);
-  const [soldPropertyDetails, setSoldPropertyDetails] = React.useState<any>([]);
-  const [soldPropertyPayments, setSoldPropertyPayments] = React.useState<any>(
-    []
-  );
-  const [instalmentPropertyPayments, setInstalmentPropertyPayments] =
+  const [propertyPaymentHistory, setPropertyPaymentHistory] =
     React.useState<any>([]);
 
   const getAvailablePropertyDetails = async () => {
@@ -53,28 +47,10 @@ const index = () => {
     }
   };
 
-  const getInstalmentPropertyDetails = async () => {
+  const getPropertyPaymentHistory = async () => {
     try {
-      const res = await GetInstalmentPropertyDetails(id as string);
-      setInstalmentPropertyDetails(res?.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getSoldPropertyDetails = async () => {
-    try {
-      const res = await GetSoldPropertyDetails(id as string);
-      setSoldPropertyDetails(res);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getSoldPropertyPayments = async () => {
-    try {
-      const res = await GetSoldPropertyPayments(id as string);
-      setSoldPropertyPayments(res);
+      const res = await GetInstalmentPropertyPaymentHistory(id as string);
+      setPropertyPaymentHistory(res?.data);
     } catch (error) {
       console.log(error);
     }
@@ -83,38 +59,27 @@ const index = () => {
   useEffect(() => {
     const type = searchParams.get('type');
     if (type === 'available' || type === 'instalment' || type === 'sold') {
-      if (type === 'sold') {
-        getSoldPropertyDetails();
-        getSoldPropertyPayments();
-      } else if (type === 'instalment') {
-        getInstalmentPropertyDetails();
-      } else {
-        getAvailablePropertyDetails();
-      }
       setPropertyType(type);
     } else {
       setPropertyType('available');
     }
-  }, [searchParams, id, propertyType]);
-
+  }, [id, propertyType]);
   useEffect(() => {
-    if (
-      propertyType === 'instalment' &&
-      instalmentPropertyDetails?.property_id
-    ) {
-      const getInstalmentPropertyPayments = async () => {
-        try {
-          const res = await GetInstalmentPropertyPayments(
-            instalmentPropertyDetails?.property_id as string
-          );
-          setInstalmentPropertyPayments(res);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      getInstalmentPropertyPayments();
-    }
-  }, [instalmentPropertyDetails]);
+    // const type = searchParams.get('type');
+    // if (type === 'available' || type === 'instalment' || type === 'sold') {
+    //   if (type === 'sold' || type === 'instalment') {
+    //     getPropertyPaymentHistory();
+    //   } else {
+    //     getAvailablePropertyDetails();
+    //     getPropertyPaymentHistory();
+    //   }
+    //   setPropertyType(type);
+    // } else {
+    //   setPropertyType('available');
+    // }
+    getAvailablePropertyDetails();
+    getPropertyPaymentHistory();
+  }, [searchParams, id, propertyType]);
 
   return (
     <RealtorDashboardLayout
@@ -133,73 +98,59 @@ const index = () => {
             Properties
           </Text>
           <BsChevronRight size={15} fontWeight={900} />
-          <Text fontSize={[15, 16]} fontWeight={600} color="brand.800">
+          {/* <Text fontSize={[15, 16]} fontWeight={600} color="brand.800">
             {propertyType === 'available'
               ? availablePropertyDetails?.property_name
               : propertyType === 'sold'
                 ? soldPropertyDetails?.property_name
                 : instalmentPropertyDetails?.property_name}
-          </Text>
+          </Text> */}
         </Flex>
       }
     >
-      <Stack w="full">
-        <Header
-          tabs={tabs}
-          activeTab={activeTab}
-          propertyType={propertyType}
-          setActiveTab={setActiveTab}
-          propertyName={
-            propertyType === 'available'
-              ? availablePropertyDetails?.property_name
-              : propertyType === 'sold'
-                ? soldPropertyDetails?.property_name
-                : instalmentPropertyDetails?.property_name
-          }
-          location={
-            propertyType === 'available'
-              ? `${availablePropertyDetails?.house_number} ${availablePropertyDetails?.street_name} ${availablePropertyDetails?.city_name}`
-              : propertyType === 'sold'
-                ? `${soldPropertyDetails?.house_number} ${soldPropertyDetails?.street_name} ${soldPropertyDetails?.city_name}`
-                : `${instalmentPropertyDetails?.house_number} ${instalmentPropertyDetails?.street_name} ${instalmentPropertyDetails?.city_name}`
-          }
+      {propertyType !== 'available' ? (
+        <InstalmentPropertyDetails
+          totalSalePrice={propertyPaymentHistory?.total_sale_price}
+          totalCommission={propertyPaymentHistory?.total_commission_received}
+          totalPayment={propertyPaymentHistory?.total_payment}
+          payments={propertyPaymentHistory?.sales}
         />
-        {activeTab === 'Details' && (
-          <Box p={['20px', '20px']}>
-            <Flex
-              alignItems="flex-start"
-              flexWrap={['wrap', 'nowrap']}
-              gap="40px"
-              w="full"
-            >
-              {propertyType === 'available' ? (
-                <AvailableAssetDetails
-                  propertyDetails={availablePropertyDetails}
-                />
-              ) : propertyType === 'sold' ? (
-                <SoldAssetDetails propertyDetails={soldPropertyDetails} />
-              ) : propertyType === 'instalment' ? (
-                <InstalmentAssetDetails
-                  propertyDetails={instalmentPropertyDetails}
-                />
-              ) : null}
-              <Notes
-                notes={availablePropertyDetails?.comment}
-                // editComment={editComment}
-              />
-            </Flex>
-          </Box>
-        )}
-        {activeTab === 'Payments' && (
-          <Box>
-            {propertyType === 'instalment' ? (
-              <InstalmentPayments payments={instalmentPropertyPayments} />
-            ) : (
-              <Payments payments={soldPropertyPayments} />
+      ) : (
+        <Stack w="full">
+          <Header
+            tabs={tabs}
+            activeTab={activeTab}
+            propertyType={propertyType}
+            setActiveTab={setActiveTab}
+            propertyName={availablePropertyDetails?.property_name}
+            location={`${availablePropertyDetails?.house_number} ${availablePropertyDetails?.street_name} ${availablePropertyDetails?.city_name}`}
+          />
+          {activeTab === 'Details' && (
+            <Box p={['20px', '20px']}>
+              <Flex
+                alignItems="flex-start"
+                flexWrap={['wrap', 'nowrap']}
+                gap="40px"
+                w="full"
+              >
+                {propertyType === 'available' && (
+                  <AvailableAssetDetails
+                    propertyDetails={availablePropertyDetails}
+                  />
+                )}
+                <Notes notes={availablePropertyDetails?.comment} />
+              </Flex>
+            </Box>
+          )}
+          <Fragment>
+            {activeTab === 'Sales History' && (
+              <Box>
+                <Payments payments={propertyPaymentHistory} />
+              </Box>
             )}
-          </Box>
-        )}
-      </Stack>
+          </Fragment>
+        </Stack>
+      )}
     </RealtorDashboardLayout>
   );
 };

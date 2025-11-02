@@ -17,6 +17,11 @@ import {
   Heading,
   Text,
   Badge,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  FormLabel,
+  Select,
 } from '@chakra-ui/react';
 import moment from 'moment';
 import React from 'react';
@@ -26,6 +31,7 @@ import {
   ViewPaymentIcon,
   PreviousPageIcon,
   NextPageIcon,
+  InputSearchIcon,
 } from '~/lib/components/Icons/Icons';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
@@ -46,7 +52,7 @@ const PaymentListTable = ({ payments }: { payments: any[] }) => {
               fontSize={14}
               textTransform="capitalize"
             >
-              Type
+              Client
             </Th>
             <Th
               color="#222222"
@@ -54,7 +60,7 @@ const PaymentListTable = ({ payments }: { payments: any[] }) => {
               fontSize={14}
               textTransform="capitalize"
             >
-              Date
+              Sale Type
             </Th>
             <Th
               color="#222222"
@@ -62,7 +68,15 @@ const PaymentListTable = ({ payments }: { payments: any[] }) => {
               fontSize={14}
               textTransform="capitalize"
             >
-              Amount
+              Sale Price
+            </Th>
+            <Th
+              color="#222222"
+              fontWeight={500}
+              fontSize={14}
+              textTransform="capitalize"
+            >
+              Amount Paid
             </Th>
             <Th
               color="#222222"
@@ -78,7 +92,15 @@ const PaymentListTable = ({ payments }: { payments: any[] }) => {
               fontSize={14}
               textTransform="capitalize"
             >
-              Status
+              Date Sold
+            </Th>
+            <Th
+              color="#222222"
+              fontWeight={500}
+              fontSize={14}
+              textTransform="capitalize"
+            >
+              Last Payment
             </Th>
             <Th
               color="#222222"
@@ -91,32 +113,37 @@ const PaymentListTable = ({ payments }: { payments: any[] }) => {
         <Tbody color="#222222" maxH="450px" overflow="auto">
           {payments?.slice((page - 1) * limit, page * limit)?.map((asset) => {
             return (
-              <Tr key={asset?.id} border="none" cursor="pointer">
-                <Td fontSize={15} color="#222222" fontWeight={600}>
-                  Sale
+              <Tr
+                key={asset?.id}
+                border="none"
+                cursor="pointer"
+                color="#222222"
+              >
+                <Td fontWeight={500} fontSize={14}>
+                  {asset?.client_name}
                 </Td>
-                <Td fontWeight={500} fontSize={14} color="#8295AA">
-                  {moment(asset?.date_sold).format('ddd, Do MMMM YYYY')}
+                <Td
+                  fontSize={15}
+                 
+                  fontWeight={600}
+                  textTransform="capitalize"
+                >
+                  {asset?.sale_type}
                 </Td>
-                <Td fontWeight={500} fontSize={14} color="#8295AA">
-                  {FormatAmount(Number(asset?.amount_sold))}
+                <Td fontWeight={500} fontSize={14}>
+                  {FormatAmount(Number(asset?.sale_price))}
                 </Td>
-                <Td fontWeight={500} fontSize={14} color="#8295AA">
+                <Td fontWeight={500} fontSize={14}>
+                  {FormatAmount(Number(asset?.amount_paid))}
+                </Td>
+                <Td fontWeight={500} fontSize={14}>
                   {FormatAmount(Number(asset?.commission))}
                 </Td>
-                <Td fontWeight={500} fontSize={14} color="#8295AA">
-                  <Badge
-                    colorScheme="green"
-                    rounded="50px"
-                    textTransform="capitalize"
-                    padding="4px 10px"
-                    fontSize={12}
-                    fontWeight={500}
-                    bg="bg.700"
-                    color="color.400"
-                  >
-                    {asset?.status}
-                  </Badge>
+                <Td fontWeight={500} fontSize={14}>
+                  {moment(asset?.date_sold).format('ddd, Do MMMM YYYY')}
+                </Td>
+                <Td fontWeight={500} fontSize={14}>
+                  {moment(asset?.last_payment).format('ddd, Do MMMM YYYY')}
                 </Td>
                 <Td>
                   <Menu>
@@ -136,7 +163,21 @@ const PaymentListTable = ({ payments }: { payments: any[] }) => {
                         }
                         icon={<ViewPaymentIcon />}
                       >
-                        View payment
+                        View payment history
+                      </MenuItem>
+                      <MenuItem
+                        py="12px"
+                        px="16px"
+                        _hover={{ bg: 'border.100' }}
+                        fontSize={14}
+                        color="color.100"
+                        fontWeight={500}
+                        onClick={() =>
+                          navigate(`/realtor/properties/hfjrhu4884`)
+                        }
+                        icon={<ViewPaymentIcon />}
+                      >
+                        View client profile
                       </MenuItem>
                     </MenuList>
                   </Menu>
@@ -187,10 +228,12 @@ const PaymentStats = ({
   salesPrice,
   totalAmountPaid,
   totalCommission,
+  noOfSales,
 }: {
   salesPrice?: number;
   totalAmountPaid?: number;
   totalCommission?: number;
+  noOfSales?: number;
 } = {}) => {
   return (
     <Box>
@@ -230,7 +273,7 @@ const PaymentStats = ({
           <Box px="16px" py="12px">
             {' '}
             <Text mb="16px" fontSize={16} fontWeight={500} color="brand.600">
-              Amount Paid
+              Total Payments
             </Text>
             <Heading fontSize={24} fontWeight={500}>
               {totalAmountPaid ? FormatAmount(totalAmountPaid) : '₦0.00'}
@@ -255,6 +298,23 @@ const PaymentStats = ({
             </Heading>
           </Box>
         </Box>
+        <Box
+          w="full"
+          h="auto"
+          rounded="5px"
+          border="1px solid"
+          borderColor="border.100"
+        >
+          <Box px="16px" py="12px">
+            {' '}
+            <Text mb="16px" fontSize={16} fontWeight={500} color="brand.600">
+              Number of Sales
+            </Text>
+            <Heading fontSize={24} fontWeight={500}>
+              {noOfSales || 0}
+            </Heading>
+          </Box>
+        </Box>
       </Flex>
     </Box>
   );
@@ -265,11 +325,49 @@ const Payments = ({ payments }: { payments: any }) => {
     <Box py="20px">
       <Stack spacing="20px">
         <PaymentStats
-          salesPrice={payments?.data?.property?.property_cost}
-          totalCommission={payments?.data?.total_commission}
-          totalAmountPaid={payments?.data?.total_amount_paid}
+          salesPrice={payments?.total_sale_price}
+          totalCommission={payments?.total_commission_received}
+          totalAmountPaid={payments?.total_payment}
+          noOfSales={payments?.number_of_sales}
         />
-        <PaymentListTable payments={payments?.data?.payments} />
+        <Flex alignItems="center" justifyContent="space-between">
+          <InputGroup w={['full', '325px']}>
+            <InputLeftElement pointerEvents="none">
+              <InputSearchIcon />
+            </InputLeftElement>
+            <Input
+              type="text"
+              placeholder="Search client..."
+              rounded="50px"
+              fontSize={14}
+              w="full"
+              _placeholder={{ color: 'gray.500' }}
+            />
+          </InputGroup>
+          <Flex alignItems="center" gap="20px">
+            <Box>
+              <Flex alignItems="center" gap="5px">
+                <FormLabel>Sale Type:</FormLabel>
+                <Select w="110px" fontSize={14} rounded="50px">
+                  <option value="all">All</option>
+                  <option value="sale">Sale</option>
+                  <option value="instalment">Instalment</option>
+                </Select>
+              </Flex>
+            </Box>
+            <Box>
+              <Flex alignItems="center" gap="5px">
+                <FormLabel>Status:</FormLabel>
+                <Select w="110px" fontSize={14} rounded="50px">
+                  <option value="all">All</option>
+                  <option value="sale">Pending</option>
+                  <option value="instalment">Completed</option>
+                </Select>
+              </Flex>
+            </Box>
+          </Flex>
+        </Flex>
+        <PaymentListTable payments={payments?.sales} />
       </Stack>
     </Box>
   );

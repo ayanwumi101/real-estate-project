@@ -145,7 +145,7 @@ const PropertyListTable = ({ properties }: { properties: any[] }) => {
                       {FormatAmount(Number(asset?.sale_price))}
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
-                      {FormatAmount(Number(asset?.total_commission))}
+                      {FormatAmount(Number(asset?.commission))}
                     </Td>
                     <Td>
                       <Menu>
@@ -163,7 +163,7 @@ const PropertyListTable = ({ properties }: { properties: any[] }) => {
                               fontWeight={500}
                               onClick={() =>
                                 navigate(
-                                  `/realtor/properties/${asset?.instalment_id}?type=instalment`
+                                  `/realtor/properties/${asset?.property_id}?type=instalment`
                                 )
                               }
                               icon={<ViewpropertyIcon />}
@@ -461,8 +461,8 @@ const PropertyStats = ({
               Next Due Payment
             </Text>
             <Heading fontSize={24} fontWeight={500}>
-              {nextDueProperty?.next_payment_due
-                ? moment(nextDueProperty?.next_payment_due).format(
+              {nextDueProperty?.due_date
+                ? moment(nextDueProperty?.due_date).format(
                     'ddd,DD MMM YYYY'
                   )
                 : 'N/A'}
@@ -484,27 +484,18 @@ const PropertyStats = ({
 };
 
 const InstalmentProperties = ({ properties }: { properties: any }) => {
-  const totalInstalment = properties?.data?.reduce(
-    (acc: number, curr: any) => acc + Number(curr?.amount_paid_total || 0),
-    0
-  );
-  const totalCommission = properties?.data?.reduce(
-    (acc: number, curr: any) => acc + Number(curr?.total_commission || 0),
-    0
-  );
-
-  const closestDueProperty = findClosestPaymentDueDate(properties?.data || []);
-
   return (
     <Box>
       <Stack spacing="20px">
         <PropertyStats
-          totalProperties={properties?.data?.length}
-          totalInstalment={totalInstalment}
-          totalCommission={totalCommission}
-          nextDueProperty={closestDueProperty}
+          totalProperties={properties?.data?.total_instalment_property || 0}
+          totalInstalment={properties?.data?.total_instalment_payments || 0}
+          totalCommission={properties?.data?.total_commission || 0}
+          nextDueProperty={properties?.data?.next_due_date}
         />
-        <PropertyListTable properties={properties?.data} />
+        <PropertyListTable
+          properties={properties?.data?.instalment_properties}
+        />
       </Stack>
     </Box>
   );
