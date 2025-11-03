@@ -348,24 +348,32 @@ const Payments = ({ payments }: { payments: any }) => {
           </InputGroup>
           <Flex
             alignItems="center"
-            gap={['0px', '20px']}
-            justifyContent={['space-between', 'flex-end']}
-            w="full"
+            gap="20px"
+            flexWrap={['wrap', 'nowrap']}
+            // w="full"
           >
-            <Box>
-              <Flex alignItems="center" gap="5px">
+            <Box w={['full', '250px']}>
+              <Flex
+                alignItems="center"
+                gap={['0px', '5px']}
+                flexWrap={['wrap', 'nowrap']}
+              >
                 <FormLabel fontSize={[15, 16]}>Sale Type:</FormLabel>
-                <Select w="110px" fontSize={14} rounded="50px">
+                <Select w={['full', '140px']} fontSize={14} rounded="50px">
                   <option value="all">All</option>
                   <option value="sale">Sale</option>
                   <option value="instalment">Instalment</option>
                 </Select>
               </Flex>
             </Box>
-            <Box>
-              <Flex alignItems="center" gap="5px">
+            <Box w={['full', '200px']}>
+              <Flex
+                alignItems="center"
+                gap={['0px', '5px']}
+                flexWrap={['wrap', 'nowrap']}
+              >
                 <FormLabel fontSize={[15, 16]}>Status:</FormLabel>
-                <Select w="110px" fontSize={14} rounded="50px">
+                <Select w="full" fontSize={14} rounded="50px">
                   <option value="all">All</option>
                   <option value="sale">Pending</option>
                   <option value="instalment">Completed</option>
