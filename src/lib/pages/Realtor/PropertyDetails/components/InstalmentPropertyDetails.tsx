@@ -30,7 +30,6 @@ import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
 import moment from 'moment';
 
-
 const InstalmentPropertyDetails = ({
   payments,
   totalSalePrice,
@@ -54,6 +53,7 @@ const InstalmentPropertyDetails = ({
       alignItems="flex-start"
       justifyContent="flex-start"
       spacing="20px"
+      px={['20px', '0px']}
     >
       <Button
         onClick={() => navigate('/realtor/properties')}
@@ -72,6 +72,7 @@ const InstalmentPropertyDetails = ({
           justifyContent="space-between"
           gap="16px"
           overflow="auto"
+          pb="2"
         >
           {/* first card */}
           <Box
@@ -80,6 +81,7 @@ const InstalmentPropertyDetails = ({
             rounded="5px"
             border="1px solid"
             borderColor="border.100"
+            minW={['260px', '30%']}
           >
             <Box px="16px" py="12px">
               {' '}
@@ -98,6 +100,7 @@ const InstalmentPropertyDetails = ({
             rounded="5px"
             border="1px solid"
             borderColor="border.100"
+            minW={['260px', '30%']}
           >
             <Box px="16px" py="12px">
               {' '}
@@ -116,6 +119,7 @@ const InstalmentPropertyDetails = ({
             rounded="5px"
             border="1px solid"
             borderColor="border.100"
+            minW={['260px', '30%']}
           >
             <Box px="16px" py="12px">
               {' '}
