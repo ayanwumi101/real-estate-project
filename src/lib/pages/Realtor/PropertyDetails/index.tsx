@@ -9,15 +9,10 @@ import useNavigate from '~/lib/utils/useNavigate';
 import RealtorDashboardLayout from '~/lib/layout/components/RealtorDashboardHeader';
 import { BsChevronRight } from 'react-icons/bs';
 import AvailableAssetDetails from './components/AvailableAssetDetails';
-import SoldAssetDetails from './components/SoldAssetDetails';
-import InstalmentAssetDetails from './components/InstalmentAssetDetails';
 import Payments from './components/Payments';
 import {
   GetAvailablePropertyDetails,
   GetInstalmentPropertyPaymentHistory,
-  GetInstalmentPropertyPayments,
-  GetSoldPropertyDetails,
-  GetSoldPropertyPayments,
 } from '~/lib/api/services/propertiesService';
 import { ChevronLeftIcon } from '~/lib/components/Icons/Icons';
 import InstalmentPropertyDetails from './components/InstalmentPropertyDetails';
@@ -101,7 +96,7 @@ const index = () => {
           payments={propertyPaymentHistory?.sales}
         />
       ) : (
-        <Stack w="full">
+        <Stack w="full" spacing="12px">
           <Header
             tabs={tabs}
             activeTab={activeTab}

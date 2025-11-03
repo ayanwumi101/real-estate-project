@@ -122,12 +122,7 @@ const PaymentListTable = ({ payments }: { payments: any[] }) => {
                 <Td fontWeight={500} fontSize={14}>
                   {asset?.client_name}
                 </Td>
-                <Td
-                  fontSize={15}
-                 
-                  fontWeight={600}
-                  textTransform="capitalize"
-                >
+                <Td fontSize={15} fontWeight={600} textTransform="capitalize">
                   {asset?.sale_type}
                 </Td>
                 <Td fontWeight={500} fontSize={14}>
@@ -241,12 +236,13 @@ const PaymentStats = ({
         w="full"
         alignItems="center"
         justifyContent="space-between"
-        gap="16px"
+        gap="10px"
         overflow="auto"
+        pb="2"
       >
         {/* first card */}
         <Box
-          w="full"
+          minW={['260px', '24%']}
           h="auto"
           rounded="5px"
           border="1px solid"
@@ -264,7 +260,7 @@ const PaymentStats = ({
         </Box>
         {/* second card */}
         <Box
-          w="full"
+          minW={['260px', '24%']}
           h="auto"
           rounded="5px"
           border="1px solid"
@@ -282,7 +278,7 @@ const PaymentStats = ({
         </Box>
         {/* third card */}
         <Box
-          w="full"
+          minW={['260px', '24%']}
           h="auto"
           rounded="5px"
           border="1px solid"
@@ -299,7 +295,7 @@ const PaymentStats = ({
           </Box>
         </Box>
         <Box
-          w="full"
+          minW={['260px', '24%']}
           h="auto"
           rounded="5px"
           border="1px solid"
@@ -322,7 +318,7 @@ const PaymentStats = ({
 
 const Payments = ({ payments }: { payments: any }) => {
   return (
-    <Box py="20px">
+    <Box py="20px" px={['20px', '0px']}>
       <Stack spacing="20px">
         <PaymentStats
           salesPrice={payments?.total_sale_price}
@@ -330,7 +326,13 @@ const Payments = ({ payments }: { payments: any }) => {
           totalAmountPaid={payments?.total_payment}
           noOfSales={payments?.number_of_sales}
         />
-        <Flex alignItems="center" justifyContent="space-between">
+        <Flex
+          alignItems="center"
+          justifyContent="space-between"
+          flexWrap={['wrap', 'nowrap']}
+          gap={['20px', '0px']}
+          w="full"
+        >
           <InputGroup w={['full', '325px']}>
             <InputLeftElement pointerEvents="none">
               <InputSearchIcon />
@@ -344,10 +346,15 @@ const Payments = ({ payments }: { payments: any }) => {
               _placeholder={{ color: 'gray.500' }}
             />
           </InputGroup>
-          <Flex alignItems="center" gap="20px">
+          <Flex
+            alignItems="center"
+            gap={['0px', '20px']}
+            justifyContent={['space-between', 'flex-end']}
+            w="full"
+          >
             <Box>
               <Flex alignItems="center" gap="5px">
-                <FormLabel>Sale Type:</FormLabel>
+                <FormLabel fontSize={[15, 16]}>Sale Type:</FormLabel>
                 <Select w="110px" fontSize={14} rounded="50px">
                   <option value="all">All</option>
                   <option value="sale">Sale</option>
@@ -357,7 +364,7 @@ const Payments = ({ payments }: { payments: any }) => {
             </Box>
             <Box>
               <Flex alignItems="center" gap="5px">
-                <FormLabel>Status:</FormLabel>
+                <FormLabel fontSize={[15, 16]}>Status:</FormLabel>
                 <Select w="110px" fontSize={14} rounded="50px">
                   <option value="all">All</option>
                   <option value="sale">Pending</option>
