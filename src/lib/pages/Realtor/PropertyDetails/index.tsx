@@ -13,6 +13,7 @@ import Payments from './components/Payments';
 import {
   GetAvailablePropertyDetails,
   GetInstalmentPropertyPaymentHistory,
+  GetPropertyPaymentHistory,
 } from '~/lib/api/services/propertiesService';
 import { ChevronLeftIcon } from '~/lib/components/Icons/Icons';
 import InstalmentPropertyDetails from './components/InstalmentPropertyDetails';
@@ -24,6 +25,7 @@ const index = () => {
   const [propertyType, setPropertyType] = React.useState<
     'available' | 'instalment' | 'sold'
   >('available');
+
   const tabs = ['Details', 'Sales History'];
   const [activeTab, setActiveTab] = React.useState<'Details' | 'Sales History'>(
     'Details'
@@ -94,6 +96,7 @@ const index = () => {
           totalCommission={propertyPaymentHistory?.total_commission_received}
           totalPayment={propertyPaymentHistory?.total_payment}
           payments={propertyPaymentHistory?.sales}
+          propertyId={id as string}
         />
       ) : (
         <Stack w="full" spacing="12px">
@@ -125,7 +128,10 @@ const index = () => {
           <Fragment>
             {activeTab === 'Sales History' && (
               <Box>
-                <Payments payments={propertyPaymentHistory} />
+                <Payments
+                  payments={propertyPaymentHistory}
+                  assetId={id as string}
+                />
               </Box>
             )}
           </Fragment>

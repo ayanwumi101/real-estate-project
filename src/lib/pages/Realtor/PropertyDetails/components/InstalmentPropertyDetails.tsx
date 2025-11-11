@@ -35,11 +35,13 @@ const InstalmentPropertyDetails = ({
   totalSalePrice,
   totalCommission,
   totalPayment,
+  propertyId,
 }: {
   payments: any[];
   totalSalePrice: number;
   totalCommission: number;
   totalPayment: number;
+  propertyId: string;
 }) => {
   const navigate = useNavigate();
   const [page, setPage] = React.useState(1);
@@ -194,64 +196,84 @@ const InstalmentPropertyDetails = ({
             </Tr>
           </Thead>
           <Tbody color="#222222" maxH="450px" overflow="auto">
-            {payments?.slice((page - 1) * limit, page * limit)?.map((asset) => {
-              return (
-                <Tr key={asset?.id} border="none" cursor="pointer">
-                  <Td fontSize={15} color="#222222" fontWeight={600}>
-                    Sale
-                  </Td>
-                  <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    {moment(asset?.date_sold).format('ddd, Do MMMM YYYY')}
-                  </Td>
-                  <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    {FormatAmount(Number(asset?.amount_paid))}
-                  </Td>
-                  <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    {FormatAmount(Number(asset?.commission))}
-                  </Td>
-                  <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    {asset?.client_name}
-                  </Td>
-                  <Td fontWeight={500} fontSize={14} color="#8295AA">
-                    <Badge
-                      colorScheme="green"
-                      rounded="50px"
-                      textTransform="capitalize"
-                      padding="4px 10px"
-                      fontSize={12}
-                      fontWeight={500}
-                      bg="bg.700"
-                      color="color.400"
-                    >
-                      {asset?.status || 'Completed'}
-                    </Badge>
-                  </Td>
-                  <Td>
-                    <Menu>
-                      <MenuButton as={Button} rounded="5px" bg="bg.200">
-                        <VerticalEllipsisIcon />
-                      </MenuButton>
-                      <MenuList py="10px" rounded="16px">
-                        <MenuItem
-                          py="12px"
-                          px="16px"
-                          _hover={{ bg: 'border.100' }}
-                          fontSize={14}
-                          color="color.100"
-                          fontWeight={500}
-                          onClick={() =>
-                            navigate(`/realtor/properties/hfjrhu4884`)
-                          }
-                          icon={<ViewPaymentIcon />}
-                        >
-                          View receipt
-                        </MenuItem>
-                      </MenuList>
-                    </Menu>
-                  </Td>
-                </Tr>
-              );
-            })}
+            {payments
+              ?.slice((page - 1) * limit, page * limit)
+              ?.map((payment) => {
+                return (
+                  <Tr key={payment?.id} border="none" cursor="pointer">
+                    <Td fontSize={15} color="#222222" fontWeight={600}>
+                      Sale
+                    </Td>
+                    <Td fontWeight={500} fontSize={14} color="#8295AA">
+                      {moment(payment?.payment_date).format(
+                        'ddd, Do MMMM YYYY'
+                      )}
+                    </Td>
+                    <Td fontWeight={500} fontSize={14} color="#8295AA">
+                      {FormatAmount(Number(payment?.amount_paid))}
+                    </Td>
+                    <Td fontWeight={500} fontSize={14} color="#8295AA">
+                      {FormatAmount(Number(payment?.commission))}
+                    </Td>
+                    <Td fontWeight={500} fontSize={14} color="#8295AA">
+                      {payment?.client_name}
+                    </Td>
+                    <Td fontWeight={500} fontSize={14} color="#8295AA">
+                      <Badge
+                        colorScheme="green"
+                        rounded="50px"
+                        textTransform="capitalize"
+                        padding="4px 10px"
+                        fontSize={12}
+                        fontWeight={500}
+                        bg="bg.700"
+                        color="color.400"
+                      >
+                        {payment?.status || 'Completed'}
+                      </Badge>
+                    </Td>
+                    <Td>
+                      <Menu>
+                        <MenuButton as={Button} rounded="5px" bg="bg.200">
+                          <VerticalEllipsisIcon />
+                        </MenuButton>
+                        <MenuList py="10px" rounded="16px">
+                          {/* <MenuItem
+                            py="12px"
+                            px="16px"
+                            _hover={{ bg: 'border.100' }}
+                            fontSize={14}
+                            color="color.100"
+                            fontWeight={500}
+                            onClick={() =>
+                              navigate(
+                                `/realtor/properties/payment-history/${payment?.property_sale_id}`
+                              )
+                            }
+                            icon={<ViewPaymentIcon />}
+                          >
+                            View payment history
+                          </MenuItem> */}
+                          <MenuItem
+                            py="12px"
+                            px="16px"
+                            _hover={{ bg: 'border.100' }}
+                            fontSize={14}
+                            color="color.100"
+                            fontWeight={500}
+                            onClick={() =>
+                              navigate(`/realtor/properties/hfjrhu4884`)
+                            }
+                            icon={<ViewPaymentIcon />}
+                          >
+                            View receipt
+                          </MenuItem>
+                        </MenuList>
+                      </Menu>
+                    </Td>
+                  </Tr>
+                );
+              })}
           </Tbody>
         </Table>
         {payments?.length > 0 && (

@@ -178,6 +178,11 @@ const PropertyListTable = ({ properties }: { properties: any[] }) => {
                               color="color.100"
                               fontWeight={500}
                               icon={<PaymentHistoryIcon />}
+                              onClick={() =>
+                                navigate(
+                                  `/realtor/properties/payment-history/${asset?.property_sale_id}`
+                                )
+                              }
                             >
                               View payment history
                             </MenuItem>

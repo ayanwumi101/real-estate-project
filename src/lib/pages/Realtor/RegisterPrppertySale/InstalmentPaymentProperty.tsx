@@ -162,11 +162,46 @@ const RegisterProperty = ({ onNext }: { onNext: () => void }) => {
     touched,
     setFieldValue,
     setFieldTouched,
+    values,
   } = React.useContext(PropertySaleContext);
   const [amountSold, setAmountSold] = useState<string>('');
   const [firstDeposit, setFirstDeposit] = useState<string>('');
   const [instalmentAmount, setInstalmentAmount] = useState<string>('');
   const [commissionReceived, setCommissionReceived] = useState<string>('');
+
+  const calculateNextPaymentDate = (plan: string, startDate: string) => {
+    if (!plan || !startDate) return '';
+    const date = new Date(startDate);
+    switch (plan) {
+      case 'weekly':
+        date.setDate(date.getDate() + 7);
+        break;
+      case 'monthly':
+        date.setMonth(date.getMonth() + 1);
+        break;
+      case 'quarterly':
+        date.setMonth(date.getMonth() + 3);
+        break;
+      case 'yearly':
+        date.setFullYear(date.getFullYear() + 1);
+        break;
+      default:
+        return '';
+    }
+    return date.toISOString().split('T')[0]; // format YYYY-MM-DD
+  };
+
+  // Auto-update next payment date when plan or first date changes
+  React.useEffect(() => {
+    if (values.paymentPlan && values.firstPaymentDate) {
+      const nextDate = calculateNextPaymentDate(
+        values.paymentPlan,
+        values.firstPaymentDate
+      );
+      setFieldValue('nextPaymentDate', nextDate);
+    }
+  }, [values.paymentPlan, values.firstPaymentDate, setFieldValue]);
+
   return (
     <Stack spacing="20px">
       <Heading fontSize={24} fontWeight={600} color="brand.100">
@@ -381,6 +416,7 @@ const RegisterProperty = ({ onNext }: { onNext: () => void }) => {
           {typeof errors.paymentPlan === 'string' ? errors.paymentPlan : ''}
         </FormErrorMessage>
       </FormControl>
+
       <Flex alignItems="center" gap="24px" flexWrap={['wrap', 'nowrap']}>
         <FormControl
           isInvalid={!!errors.firstPaymentDate && touched.firstPaymentDate}
@@ -390,7 +426,8 @@ const RegisterProperty = ({ onNext }: { onNext: () => void }) => {
           </FormLabel>
           <Field
             as={Input}
-            placeholder="Enter amount sold"
+            type="date"
+            name="firstPaymentDate"
             rounded="50px"
             color="brand.800"
             outline="none"
@@ -399,8 +436,6 @@ const RegisterProperty = ({ onNext }: { onNext: () => void }) => {
             borderColor="border.200"
             bg="brand.700"
             mb="10px"
-            type="date"
-            name="firstPaymentDate"
           />
           <FormErrorMessage>
             {typeof errors.firstPaymentDate === 'string'
@@ -408,6 +443,7 @@ const RegisterProperty = ({ onNext }: { onNext: () => void }) => {
               : ''}
           </FormErrorMessage>
         </FormControl>
+
         <FormControl
           isInvalid={!!errors.nextPaymentDate && touched.nextPaymentDate}
         >
@@ -416,7 +452,8 @@ const RegisterProperty = ({ onNext }: { onNext: () => void }) => {
           </FormLabel>
           <Field
             as={Input}
-            placeholder="Enter commission received"
+            type="date"
+            name="nextPaymentDate"
             rounded="50px"
             color="brand.800"
             outline="none"
@@ -425,8 +462,6 @@ const RegisterProperty = ({ onNext }: { onNext: () => void }) => {
             borderColor="border.200"
             bg="brand.700"
             mb="10px"
-            type="date"
-            name="nextPaymentDate"
           />
           <FormErrorMessage>
             {typeof errors.nextPaymentDate === 'string'

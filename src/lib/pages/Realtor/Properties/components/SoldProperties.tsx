@@ -113,9 +113,7 @@ const PropertyListTable = ({ properties }: { properties: any[] }) => {
                   {asset?.client?.firstname} {asset?.client?.lastname}
                 </Td>
                 <Td fontWeight={500} fontSize={14} color="#8295AA">
-                  {moment(asset?.payment_date).format(
-                    'ddd, Do MMMM YYYY'
-                  )}
+                  {moment(asset?.payment_date).format('ddd, Do MMMM YYYY')}
                 </Td>
                 <Td fontWeight={500} fontSize={14} color="#8295AA">
                   {FormatAmount(Number(asset?.amount_sold))}
@@ -154,6 +152,11 @@ const PropertyListTable = ({ properties }: { properties: any[] }) => {
                           color="color.100"
                           fontWeight={500}
                           icon={<PaymentHistoryIcon />}
+                          onClick={() =>
+                            navigate(
+                              `/realtor/properties/payment-history/${asset?.property_sale_id}`
+                            )
+                          }
                         >
                           View payment history
                         </MenuItem>

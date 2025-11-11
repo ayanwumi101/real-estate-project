@@ -189,3 +189,11 @@ export const GetPropertyDueDates = async (instalmentId: string) => {
   );
   return response.data;
 };
+
+
+export const GetPropertyPaymentHistory = async (propertyId: string) => {
+  const response = await axiosInstance.get(
+    `/realtor/property-sales/${propertyId}/history`
+  );
+  return response.data;
+};

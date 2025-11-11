@@ -36,11 +36,19 @@ import {
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
 
-const PaymentListTable = ({ payments }: { payments: any[] }) => {
+const PaymentListTable = ({
+  payments,
+  assetId,
+}: {
+  payments: any[];
+  assetId: string;
+}) => {
   const navigate = useNavigate();
   const [page, setPage] = React.useState(1);
   const [limit, setLimit] = React.useState(8);
-  const assets = Array.from({ length: 10 }, (_, i) => ({ id: i + 1 }));
+  const assets = Array.from({ length: payments?.length }, (_, i) => ({
+    id: i + 1,
+  }));
   return (
     <TableContainer border="1px solid #E4E4E4" borderRadius="10px">
       <Table>
@@ -111,34 +119,34 @@ const PaymentListTable = ({ payments }: { payments: any[] }) => {
           </Tr>
         </Thead>
         <Tbody color="#222222" maxH="450px" overflow="auto">
-          {payments?.slice((page - 1) * limit, page * limit)?.map((asset) => {
+          {payments?.slice((page - 1) * limit, page * limit)?.map((payment) => {
             return (
               <Tr
-                key={asset?.id}
+                key={payment?.id}
                 border="none"
                 cursor="pointer"
                 color="#222222"
               >
                 <Td fontWeight={500} fontSize={14}>
-                  {asset?.client_name}
+                  {payment?.client_name}
                 </Td>
                 <Td fontSize={15} fontWeight={600} textTransform="capitalize">
-                  {asset?.sale_type}
+                  {payment?.sale_type}
                 </Td>
                 <Td fontWeight={500} fontSize={14}>
-                  {FormatAmount(Number(asset?.sale_price))}
+                  {FormatAmount(Number(payment?.sale_price))}
                 </Td>
                 <Td fontWeight={500} fontSize={14}>
-                  {FormatAmount(Number(asset?.amount_paid))}
+                  {FormatAmount(Number(payment?.amount_paid))}
                 </Td>
                 <Td fontWeight={500} fontSize={14}>
-                  {FormatAmount(Number(asset?.commission))}
+                  {FormatAmount(Number(payment?.commission))}
                 </Td>
                 <Td fontWeight={500} fontSize={14}>
-                  {moment(asset?.date_sold).format('ddd, Do MMMM YYYY')}
+                  {moment(payment?.date_sold).format('ddd, Do MMMM YYYY')}
                 </Td>
                 <Td fontWeight={500} fontSize={14}>
-                  {moment(asset?.last_payment).format('ddd, Do MMMM YYYY')}
+                  {moment(payment?.last_payment).format('ddd, Do MMMM YYYY')}
                 </Td>
                 <Td>
                   <Menu>
@@ -146,7 +154,7 @@ const PaymentListTable = ({ payments }: { payments: any[] }) => {
                       <VerticalEllipsisIcon />
                     </MenuButton>
                     <MenuList py="10px" rounded="16px">
-                      <MenuItem
+                      {/* <MenuItem
                         py="12px"
                         px="16px"
                         _hover={{ bg: 'border.100' }}
@@ -154,12 +162,14 @@ const PaymentListTable = ({ payments }: { payments: any[] }) => {
                         color="color.100"
                         fontWeight={500}
                         onClick={() =>
-                          navigate(`/realtor/properties/hfjrhu4884`)
+                          navigate(
+                            `/realtor/properties/${assetId}/payment-history/${payment?.id}`
+                          )
                         }
                         icon={<ViewPaymentIcon />}
                       >
                         View payment history
-                      </MenuItem>
+                      </MenuItem> */}
                       <MenuItem
                         py="12px"
                         px="16px"
@@ -316,7 +326,7 @@ const PaymentStats = ({
   );
 };
 
-const Payments = ({ payments }: { payments: any }) => {
+const Payments = ({ payments, assetId }: { payments: any; assetId: string }) => {
   return (
     <Box py="20px" px={['20px', '0px']}>
       <Stack spacing="20px">
@@ -382,7 +392,7 @@ const Payments = ({ payments }: { payments: any }) => {
             </Box>
           </Flex>
         </Flex>
-        <PaymentListTable payments={payments?.sales} />
+        <PaymentListTable assetId={assetId} payments={payments?.sales} />
       </Stack>
     </Box>
   );
