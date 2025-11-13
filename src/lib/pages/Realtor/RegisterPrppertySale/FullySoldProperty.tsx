@@ -23,6 +23,7 @@ import { useRouter } from 'next/navigation';
 
 interface FormValues {
   clientName: string;
+  salePrice: string;
   amountSold: string;
   commissionReceived: string;
   dateSold: string;
@@ -33,6 +34,7 @@ interface FormValues {
 
 const initialValues: FormValues = {
   clientName: '',
+  salePrice: '',
   amountSold: '',
   commissionReceived: '',
   dateSold: '',
@@ -43,6 +45,10 @@ const initialValues: FormValues = {
 
 const validationSchema = Yup.object({
   clientName: Yup.string().required('Client name is required'),
+  sale_price: Yup.number()
+    .typeError('Sale price must be a number')
+    .positive('Sale price must be positive')
+    .required('Sale price is required'),
   amountSold: Yup.number()
     .typeError('Amount sold must be a number')
     .positive('Amount sold must be positive')
@@ -69,6 +75,7 @@ const FullySoldProperty = ({
   const toast = useToast();
   const router = useRouter();
   const [loading, setLoading] = React.useState(false);
+  const [salePrice, setSalePrice] = React.useState<string>('');
   const [amountSold, setAmountSold] = React.useState<string>('');
   const [commissionReceived, setCommissionReceived] =
     React.useState<string>('');
@@ -79,6 +86,7 @@ const FullySoldProperty = ({
       const response = await CreateSoldPropertyPayment({
         realtor_property_id: propertyId as string,
         client_id: values.clientName,
+        sale_price: Number(values.salePrice),
         amount_sold: Number(values.amountSold),
         commission: Number(values.commissionReceived),
         date_sold: values.dateSold,
@@ -172,6 +180,33 @@ const FullySoldProperty = ({
                   flexWrap={['wrap', 'nowrap']}
                 >
                   <FormControl
+                    isInvalid={!!errors.salePrice && touched.salePrice}
+                  >
+                    <FormLabel fontWeight={600} fontSize={15} color="brand.400">
+                      Sale Price
+                    </FormLabel>
+                    <Input
+                      type="text"
+                      value={formatCurrency(salePrice)}
+                      onChange={(e) => {
+                        const rawValue = e.target.value.replace(/[^\d]/g, '');
+                        setSalePrice(rawValue);
+                        setFieldValue('salePrice', rawValue);
+                      }}
+                      name="salePrice"
+                      bg="#FBFBFB"
+                      border="1px solid #C0C0C0"
+                      borderRadius="50px"
+                      h="50px"
+                      placeholder="₦ 0. 00"
+                    />
+                    <FormErrorMessage>
+                      {typeof errors.salePrice === 'string'
+                        ? errors.salePrice
+                        : ''}
+                    </FormErrorMessage>
+                  </FormControl>
+                  <FormControl
                     isInvalid={!!errors.amountSold && touched.amountSold}
                   >
                     <FormLabel fontWeight={600} fontSize={15} color="brand.400">
@@ -198,6 +233,12 @@ const FullySoldProperty = ({
                         : ''}
                     </FormErrorMessage>
                   </FormControl>
+                </Flex>
+                <Flex
+                  alignItems="center"
+                  gap="24px"
+                  flexWrap={['wrap', 'nowrap']}
+                >
                   <FormControl
                     isInvalid={
                       !!errors.commissionReceived && touched.commissionReceived
@@ -227,29 +268,33 @@ const FullySoldProperty = ({
                         : ''}
                     </FormErrorMessage>
                   </FormControl>
+                  <FormControl
+                    isInvalid={!!errors.dateSold && touched.dateSold}
+                  >
+                    <FormLabel fontWeight={600} fontSize={15} color="brand.400">
+                      Date Sold
+                    </FormLabel>
+                    <Field
+                      as={Input}
+                      placeholder="Enter date sold"
+                      rounded="50px"
+                      color="brand.800"
+                      outline="none"
+                      h="50px"
+                      border="1px solid"
+                      borderColor="border.200"
+                      bg="brand.700"
+                      // mb="10px"
+                      type="date"
+                      name="dateSold"
+                    />
+                    <FormErrorMessage>
+                      {typeof errors.dateSold === 'string'
+                        ? errors.dateSold
+                        : ''}
+                    </FormErrorMessage>
+                  </FormControl>
                 </Flex>
-                <FormControl isInvalid={!!errors.dateSold && touched.dateSold}>
-                  <FormLabel fontWeight={600} fontSize={15} color="brand.400">
-                    Date Sold
-                  </FormLabel>
-                  <Field
-                    as={Input}
-                    placeholder="Enter date sold"
-                    rounded="50px"
-                    color="brand.800"
-                    outline="none"
-                    h="50px"
-                    border="1px solid"
-                    borderColor="border.200"
-                    bg="brand.700"
-                    mb="10px"
-                    type="date"
-                    name="dateSold"
-                  />
-                  <FormErrorMessage>
-                    {typeof errors.dateSold === 'string' ? errors.dateSold : ''}
-                  </FormErrorMessage>
-                </FormControl>
                 <Heading
                   my="2"
                   fontSize={24}

@@ -297,13 +297,13 @@ const PropertyStats = ({
         w="full"
         // alignItems="center"
         justifyContent="space-between"
-        gap="16px"
+        gap="10px"
         overflow="auto"
         pb="3"
       >
         {/* first card */}
         <Box
-          minW="357px"
+          minW={['357px', '24.5%']}
           h="auto"
           rounded="5px"
           border="1px solid"
@@ -338,7 +338,7 @@ const PropertyStats = ({
         </Box>
         {/* second card */}
         <Box
-          minW="357px"
+          minW={['357px', '24.5%']}
           h="auto"
           rounded="5px"
           border="1px solid"
@@ -399,7 +399,7 @@ const PropertyStats = ({
         </Box>
         {/* third card */}
         <Box
-          minW="357px"
+          minW={['357px', '24.5%']}
           h="auto"
           rounded="5px"
           border="1px solid"
@@ -455,7 +455,7 @@ const PropertyStats = ({
         </Box>
         {/* Fourth card */}
         <Box
-          minW="357px"
+          minW={['357px', '24.5%']}
           h="auto"
           rounded="5px"
           border="1px solid"
@@ -467,9 +467,7 @@ const PropertyStats = ({
             </Text>
             <Heading fontSize={24} fontWeight={500}>
               {nextDueProperty?.due_date
-                ? moment(nextDueProperty?.due_date).format(
-                    'ddd,DD MMM YYYY'
-                  )
+                ? moment(nextDueProperty?.due_date).format('ddd,DD MMM YYYY')
                 : 'N/A'}
             </Heading>
             <Text fontWeight={500} fontSize={14} color="brand.400">

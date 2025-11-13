@@ -24,7 +24,7 @@ import {
   Select,
 } from '@chakra-ui/react';
 import moment from 'moment';
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   VerticalEllipsisIcon,
   ViewpropertyIcon,
@@ -126,18 +126,27 @@ const PaymentListTable = ({
                 border="none"
                 cursor="pointer"
                 color="#222222"
+                bg={payment?.sale_type === 'outright' ? '#ededed' : 'none'}
               >
-                <Td fontWeight={500} fontSize={14}>
+                <Td fontWeight={500} fontSize={14} textTransform="capitalize">
                   {payment?.client_name}
                 </Td>
                 <Td fontSize={15} fontWeight={600} textTransform="capitalize">
-                  {payment?.sale_type}
+                  {payment?.sale_type || 'Instalment'}
                 </Td>
                 <Td fontWeight={500} fontSize={14}>
-                  {FormatAmount(Number(payment?.sale_price))}
+                  {FormatAmount(
+                    Number(payment?.amount_sold || payment?.sale_price)
+                  )}
                 </Td>
                 <Td fontWeight={500} fontSize={14}>
-                  {FormatAmount(Number(payment?.amount_paid))}
+                  {FormatAmount(
+                    Number(
+                      payment?.sale_type === 'outright'
+                        ? payment?.amount_sold || payment?.sale_price
+                        : payment?.amount_paid
+                    )
+                  )}
                 </Td>
                 <Td fontWeight={500} fontSize={14}>
                   {FormatAmount(Number(payment?.commission))}
@@ -154,22 +163,6 @@ const PaymentListTable = ({
                       <VerticalEllipsisIcon />
                     </MenuButton>
                     <MenuList py="10px" rounded="16px">
-                      {/* <MenuItem
-                        py="12px"
-                        px="16px"
-                        _hover={{ bg: 'border.100' }}
-                        fontSize={14}
-                        color="color.100"
-                        fontWeight={500}
-                        onClick={() =>
-                          navigate(
-                            `/realtor/properties/${assetId}/payment-history/${payment?.id}`
-                          )
-                        }
-                        icon={<ViewPaymentIcon />}
-                      >
-                        View payment history
-                      </MenuItem> */}
                       <MenuItem
                         py="12px"
                         px="16px"
@@ -178,7 +171,23 @@ const PaymentListTable = ({
                         color="color.100"
                         fontWeight={500}
                         onClick={() =>
-                          navigate(`/realtor/properties/hfjrhu4884`)
+                          navigate(
+                            `/realtor/properties/payment-history/${payment?.property_sale_id}`
+                          )
+                        }
+                        icon={<ViewPaymentIcon />}
+                      >
+                        View payment history
+                      </MenuItem>
+                      <MenuItem
+                        py="12px"
+                        px="16px"
+                        _hover={{ bg: 'border.100' }}
+                        fontSize={14}
+                        color="color.100"
+                        fontWeight={500}
+                        onClick={() =>
+                          navigate(`/realtor/clients/${payment?.client_id}`)
                         }
                         icon={<ViewPaymentIcon />}
                       >
@@ -326,7 +335,56 @@ const PaymentStats = ({
   );
 };
 
-const Payments = ({ payments, assetId }: { payments: any; assetId: string }) => {
+const Payments = ({
+  payments,
+  assetId,
+}: {
+  payments: any;
+  assetId: string;
+}) => {
+  const [searchKeyword, setSearchKeyword] = useState<string>('');
+  const [propertySaleFilter, setPropertySaleFilter] = useState<
+    'all' | 'outright' | 'instalment'
+  >('all');
+  const [filteredPayments, setFilteredPayments] = useState<any[]>([]);
+
+  // Filter payments based on search keyword and sale type
+  const filterPayments = useCallback(() => {
+    if (!payments?.sales) return [];
+
+    return payments.sales.filter((payment: any) => {
+      // Filter by sale type
+      const matchesSaleType =
+        propertySaleFilter === 'all' ||
+        payment?.sale_type === propertySaleFilter;
+
+      // Filter by search keyword (client name)
+      const matchesSearch =
+        !searchKeyword ||
+        (payment?.client_name?.toLowerCase() || '').includes(
+          searchKeyword.toLowerCase()
+        );
+
+      return matchesSaleType && matchesSearch;
+    });
+  }, [payments?.sales, propertySaleFilter, searchKeyword]);
+
+  // Update filtered payments when filters or search changes
+  useEffect(() => {
+    const filtered = filterPayments();
+    setFilteredPayments(filtered);
+  }, [filterPayments]);
+
+  // Handle search input change
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchKeyword(e.target.value);
+  };
+
+  // Handle sale type filter change
+  const handleSaleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setPropertySaleFilter(e.target.value as 'all' | 'outright' | 'instalment');
+  };
+
   return (
     <Box py="20px" px={['20px', '0px']}>
       <Stack spacing="20px">
@@ -354,45 +412,33 @@ const Payments = ({ payments, assetId }: { payments: any; assetId: string }) => 
               fontSize={14}
               w="full"
               _placeholder={{ color: 'gray.500' }}
+              value={searchKeyword}
+              onChange={handleSearchChange}
             />
           </InputGroup>
-          <Flex
-            alignItems="center"
-            gap="20px"
-            flexWrap={['wrap', 'nowrap']}
-            // w="full"
-          >
-            <Box w={['full', '250px']}>
-              <Flex
-                alignItems="center"
-                gap={['0px', '5px']}
-                flexWrap={['wrap', 'nowrap']}
+
+          <Box w={['full', '250px']}>
+            <Flex
+              alignItems="center"
+              gap={['0px', '5px']}
+              flexWrap={['wrap', 'nowrap']}
+            >
+              <FormLabel fontSize={[15, 16]}>Sale Type:</FormLabel>
+              <Select
+                value={propertySaleFilter}
+                onChange={handleSaleTypeChange}
+                w={['full', '140px']}
+                fontSize={14}
+                rounded="50px"
               >
-                <FormLabel fontSize={[15, 16]}>Sale Type:</FormLabel>
-                <Select w={['full', '140px']} fontSize={14} rounded="50px">
-                  <option value="all">All</option>
-                  <option value="sale">Sale</option>
-                  <option value="instalment">Instalment</option>
-                </Select>
-              </Flex>
-            </Box>
-            <Box w={['full', '200px']}>
-              <Flex
-                alignItems="center"
-                gap={['0px', '5px']}
-                flexWrap={['wrap', 'nowrap']}
-              >
-                <FormLabel fontSize={[15, 16]}>Status:</FormLabel>
-                <Select w="full" fontSize={14} rounded="50px">
-                  <option value="all">All</option>
-                  <option value="sale">Pending</option>
-                  <option value="instalment">Completed</option>
-                </Select>
-              </Flex>
-            </Box>
-          </Flex>
+                <option value="all">All</option>
+                <option value="outright">Outright</option>
+                <option value="instalment">Instalment</option>
+              </Select>
+            </Flex>
+          </Box>
         </Flex>
-        <PaymentListTable assetId={assetId} payments={payments?.sales} />
+        <PaymentListTable assetId={assetId} payments={filteredPayments} />
       </Stack>
     </Box>
   );

@@ -47,7 +47,7 @@ const PaymentStats = ({
   noOfSales?: number;
 } = {}) => {
   return (
-    <Box>
+    <Box w="full">
       <Flex
         w="full"
         alignItems="center"
@@ -58,7 +58,7 @@ const PaymentStats = ({
       >
         {/* first card */}
         <Box
-          minW={['260px', '32%']}
+          minW={['260px', '33%']}
           h="auto"
           rounded="5px"
           border="1px solid"
@@ -76,7 +76,7 @@ const PaymentStats = ({
         </Box>
         {/* second card */}
         <Box
-          minW={['260px', '32%']}
+          minW={['260px', '33%']}
           h="auto"
           rounded="5px"
           border="1px solid"
@@ -94,7 +94,7 @@ const PaymentStats = ({
         </Box>
         {/* third card */}
         <Box
-          minW={['260px', '32%']}
+          minW={['260px', '33%']}
           h="auto"
           rounded="5px"
           border="1px solid"

@@ -19,7 +19,7 @@ import { Button } from '@chakra-ui/react';
 import { PreviousPageIcon, NextPageIcon } from '~/lib/components/Icons/Icons';
 import { Text } from '@chakra-ui/react';
 import { Flex } from '@chakra-ui/react';
-import { Heading } from '@chakra-ui/react';
+
 
 const PaymentHistoryTable = ({ payments }: { payments: any[] }) => {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const PaymentHistoryTable = ({ payments }: { payments: any[] }) => {
     id: i + 1,
   }));
   return (
-    <TableContainer border="1px solid #E4E4E4" borderRadius="10px">
+    <TableContainer w="full" border="1px solid #E4E4E4" borderRadius="10px">
       <Table>
         <Thead color="#222222" bg="#F5F5F5" py="22px" h="53px" border="none">
           <Tr border="none">
@@ -91,7 +91,7 @@ const PaymentHistoryTable = ({ payments }: { payments: any[] }) => {
                 color="#222222"
               >
                 <Td fontSize={15} fontWeight={600} textTransform="capitalize">
-                  {payment?.type}
+                  {payment?.type || 'Instalment'}
                 </Td>
                 <Td fontWeight={500} fontSize={14}>
                   {FormatAmount(Number(payment?.amount))}
