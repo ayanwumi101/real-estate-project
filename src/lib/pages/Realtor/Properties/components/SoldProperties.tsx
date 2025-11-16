@@ -101,6 +101,8 @@ const PropertyListTable = ({ properties }: { properties: any[] }) => {
         </Thead>
         <Tbody color="#222222" maxH="450px" overflow="auto">
           {properties?.slice((page - 1) * limit, page * limit)?.map((asset) => {
+            console.log(asset);
+
             return (
               <Tr key={asset} border="none" cursor="pointer">
                 <Td fontSize={15} color="#222222" fontWeight={600}>

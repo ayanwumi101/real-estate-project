@@ -474,7 +474,7 @@ const PropertyDetailsForm = () => {
                       _hover={{ bg: 'none' }}
                       p="0"
                     >
-                      Back
+                      Cancel
                     </Button>
                   </Link>
 
@@ -489,7 +489,7 @@ const PropertyDetailsForm = () => {
                     type="submit"
                     minW="180px"
                   >
-                    {isSubmitting ? <Spinner /> : 'Submit'}
+                    {isSubmitting ? <Spinner /> : 'Save Property'}
                   </Button>
                 </Flex>
               </Stack>

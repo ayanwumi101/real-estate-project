@@ -32,6 +32,8 @@ import {
   PreviousPageIcon,
   NextPageIcon,
   InputSearchIcon,
+  RealtorClientsIcon,
+  PaymentHistoryIcon,
 } from '~/lib/components/Icons/Icons';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
@@ -175,7 +177,7 @@ const PaymentListTable = ({
                             `/realtor/properties/payment-history/${payment?.property_sale_id}`
                           )
                         }
-                        icon={<ViewPaymentIcon />}
+                        icon={<PaymentHistoryIcon />}
                       >
                         View payment history
                       </MenuItem>
@@ -189,7 +191,7 @@ const PaymentListTable = ({
                         onClick={() =>
                           navigate(`/realtor/clients/${payment?.client_id}`)
                         }
-                        icon={<ViewPaymentIcon />}
+                        icon={<RealtorClientsIcon />}
                       >
                         View client profile
                       </MenuItem>

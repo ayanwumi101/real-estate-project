@@ -29,6 +29,7 @@ import {
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
 import moment from 'moment';
+import PaymentReceiptModal from '../Modals/PaymentReceiptModal';
 
 const InstalmentPropertyDetails = ({
   payments,
@@ -49,6 +50,9 @@ const InstalmentPropertyDetails = ({
   const assets = Array.from({ length: payments?.length }, (_, i) => ({
     id: i + 1,
   }));
+  const [openReceiptModal, setOpenReceiptModal] =
+    React.useState<boolean>(false);
+  const [selectedPayment, setSelectedPayment] = React.useState<any>(null);
   return (
     <Stack
       w="full"
@@ -210,7 +214,9 @@ const InstalmentPropertyDetails = ({
                       )}
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
-                      {FormatAmount(Number(payment?.amount_paid))}
+                      {FormatAmount(
+                        Number(payment?.amount_paid || payment?.amount_sold)
+                      )}
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
                       {FormatAmount(Number(payment?.commission))}
@@ -238,7 +244,7 @@ const InstalmentPropertyDetails = ({
                           <VerticalEllipsisIcon />
                         </MenuButton>
                         <MenuList py="10px" rounded="16px">
-                          {/* <MenuItem
+                          <MenuItem
                             py="12px"
                             px="16px"
                             _hover={{ bg: 'border.100' }}
@@ -253,7 +259,7 @@ const InstalmentPropertyDetails = ({
                             icon={<ViewPaymentIcon />}
                           >
                             View payment history
-                          </MenuItem> */}
+                          </MenuItem>
                           <MenuItem
                             py="12px"
                             px="16px"
@@ -261,12 +267,13 @@ const InstalmentPropertyDetails = ({
                             fontSize={14}
                             color="color.100"
                             fontWeight={500}
-                            onClick={() =>
-                              navigate(`/realtor/properties/hfjrhu4884`)
-                            }
+                            onClick={() => {
+                              setOpenReceiptModal(true);
+                              setSelectedPayment(payment);
+                            }}
                             icon={<ViewPaymentIcon />}
                           >
-                            View receipt
+                            View Receipt
                           </MenuItem>
                         </MenuList>
                       </Menu>
@@ -310,6 +317,11 @@ const InstalmentPropertyDetails = ({
           </Box>
         )}
       </TableContainer>
+      <PaymentReceiptModal
+        isOpen={openReceiptModal}
+        onClose={() => setOpenReceiptModal(false)}
+        selectedPayment={selectedPayment}
+      />
     </Stack>
   );
 };
