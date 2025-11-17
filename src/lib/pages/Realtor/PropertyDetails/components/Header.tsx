@@ -162,18 +162,28 @@ const Header = ({
             </Stack>
           </Box>
           <Box w={['full', 'auto']}>
-            <Flex alignItems="center" gap="10px" justifyContent={['space-between', 'flex-end']} w="full">
-              <Button
-                bg="brand.100"
-                _hover={{ bg: 'bg.200' }}
-                color="brand.200"
-                fontWeight={600}
-                fontSize={15}
-                leftIcon={<EditPropertyIcon />}
-                h="43px"
+            <Flex
+              alignItems="center"
+              gap="10px"
+              justifyContent={['space-between', 'flex-end']}
+              w="full"
+            >
+              <Link
+                href={`/realtor/properties/${id}/update?type=${propertyType}`}
+                passHref
               >
-                Edit Property
-              </Button>
+                <Button
+                  bg="brand.100"
+                  _hover={{ bg: 'bg.200' }}
+                  color="brand.200"
+                  fontWeight={600}
+                  fontSize={15}
+                  leftIcon={<EditPropertyIcon />}
+                  h="43px"
+                >
+                  Edit Property
+                </Button>
+              </Link>
               {propertyType === 'available' && (
                 <Menu>
                   <MenuButton as={Button} rounded="5px" bg="bg.200">

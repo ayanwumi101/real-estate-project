@@ -159,7 +159,7 @@ const ClientsList = ({ clients }: { clients: any[] }) => {
                                 color="color.100"
                                 fontWeight={500}
                                 onClick={() =>
-                                  navigate(`/realtor/clients/hfjrhu4884`)
+                                  navigate(`/realtor/clients/${client.id}`)
                                 }
                                 icon={<ViewpropertyIcon />}
                               >

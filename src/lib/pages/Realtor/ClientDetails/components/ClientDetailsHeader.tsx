@@ -13,10 +13,10 @@ import React from 'react';
 import {
   LocationIcon,
   EmailIcon,
-  TelephoneIcon
+  TelephoneIcon,
 } from '~/lib/components/Icons/Icons';
 
-const ClientDetailsHeader = () => {
+const ClientDetailsHeader = ({ client }: { client: any }) => {
   return (
     <Box py="25px">
       <Flex alignItems="flex-start" gap="25px">
@@ -35,7 +35,7 @@ const ClientDetailsHeader = () => {
               <Flex alignItems="center" justifyContent="space-between">
                 <Stack spacing="12px">
                   <Heading fontWeight={500} fontSize={30} color="brand.300">
-                    James Brown
+                    {client?.firstname} {client?.lastname}
                   </Heading>
                   <Flex alignItems="center" gap="10px">
                     <Text fontWeight={500} color="brand.300">
@@ -81,13 +81,13 @@ const ClientDetailsHeader = () => {
                   <Flex alignItems="center" gap="10px">
                     <LocationIcon />
                     <Text fontWeight={500} color="brand.300">
-                      Brooklyn, NY
+                      {client?.address}
                     </Text>
                   </Flex>
                   <Flex alignItems="center" gap="10px">
                     <EmailIcon />
                     <Text fontWeight={500} color="brand.300">
-                      james.brown@example.com
+                      {client?.email}
                     </Text>
                   </Flex>
                 </Stack>
@@ -95,13 +95,15 @@ const ClientDetailsHeader = () => {
                   <Flex alignItems="center" gap="10px">
                     <TelephoneIcon />
                     <Text fontWeight={500} color="brand.300">
-                      (123) 456-7890
+                      {client?.phone?.startsWith('234')
+                        ? `+${client?.phone}`
+                        : client?.phone}
                     </Text>
                   </Flex>
                   <Flex alignItems="center" gap="10px">
                     <LocationIcon />
                     <Text fontWeight={500} color="brand.300">
-                      Address 8502 Preston Rd. Inglewood, Maine 98380
+                      {client?.address}
                     </Text>
                   </Flex>
                 </Stack>

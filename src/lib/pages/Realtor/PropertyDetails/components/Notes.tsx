@@ -8,7 +8,7 @@ const Notes = ({ notes, editComment }: { notes: string;  editComment?: () => voi
     <Box
       w={['100%',"40%"]}
       bg="brand.200"
-      minH="350px"
+      // minH="350px"
       p="30px"
       border="1px solid"
       borderColor="border.100"

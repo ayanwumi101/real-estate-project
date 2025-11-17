@@ -43,7 +43,7 @@ const NavigationTab = () => {
           color="brand.200"
           fontWeight={600}
           fontSize={[13, 16]}
-          w={['40%', '150px']}
+          w={['40%', '180px']}
           onClick={() => navigate('/realtor/clients/add-client')}
         >
           Add New Client

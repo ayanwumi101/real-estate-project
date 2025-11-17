@@ -3,7 +3,7 @@
 import React, { useEffect, Fragment } from 'react';
 import Notes from './components/Notes';
 import Header from './components/Header';
-import { Box, Stack, Flex, Text, Button, Heading } from '@chakra-ui/react';
+import { Box, Stack, Flex, Text } from '@chakra-ui/react';
 import { useParams, useSearchParams } from 'next/navigation';
 import useNavigate from '~/lib/utils/useNavigate';
 import RealtorDashboardLayout from '~/lib/layout/components/RealtorDashboardHeader';
@@ -13,10 +13,11 @@ import Payments from './components/Payments';
 import {
   GetAvailablePropertyDetails,
   GetInstalmentPropertyPaymentHistory,
-  GetPropertyPaymentHistory,
+  UpdateProperty,
 } from '~/lib/api/services/propertiesService';
-import { ChevronLeftIcon } from '~/lib/components/Icons/Icons';
 import InstalmentPropertyDetails from './components/InstalmentPropertyDetails';
+
+
 
 const index = () => {
   const { id } = useParams();

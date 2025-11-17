@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { Flex, Text, Stack, Box } from '@chakra-ui/react';
 import React from 'react';
@@ -10,12 +10,30 @@ import AssetsList from './components/AssetsList';
 import TransactionsList from './components/TransactionsList';
 import Securities from './components/Securities';
 import Analytics from './components/Analytics';
+import { GetClientDetails } from '~/lib/api/services/clientsService';
+import { useParams } from 'next/navigation';
 
 const index = () => {
+  const { id } = useParams();
   const tabs = ['assets', 'transactions', 'securities', 'analytics'];
   const [activeTab, setActiveTab] = React.useState<
     'assets' | 'transactions' | 'securities' | 'analytics'
   >('assets');
+  const [clientDetails, setClientDetails] = React.useState<any>({} as any);
+
+  const getClientDetails = async () => {
+    try {
+      const response = await GetClientDetails(id);
+      setClientDetails(response?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  React.useEffect(() => {
+    getClientDetails();
+  }, [id]);
+
   return (
     <RealtorDashboardLayout
       title={
@@ -25,13 +43,13 @@ const index = () => {
           </Text>
           <BsChevronRight size={15} fontWeight={900} />
           <Text fontSize={16} fontWeight={600} color="brand.800">
-            james Brown
+            {`${clientDetails?.client?.firstname} ${clientDetails?.client?.lastname}`}
           </Text>
         </Flex>
       }
     >
       <Stack spacing="20px">
-        <ClientDetailsHeader />
+        <ClientDetailsHeader client={clientDetails?.client} />
         <NavigationTab
           tabs={tabs}
           activeTab={activeTab}
