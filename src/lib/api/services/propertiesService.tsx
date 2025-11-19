@@ -127,7 +127,7 @@ export const DeletePropertyPayment = async (paymentId: string) => {
 interface SoldPropertyPayment {
   realtor_property_id: string;
   client_id: string;
-  sale_price: number;
+  // sale_price: number;
   amount_sold: number;
   commission: number;
   date_sold: string | Date;

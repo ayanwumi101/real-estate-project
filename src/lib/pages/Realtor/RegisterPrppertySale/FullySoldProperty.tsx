@@ -23,7 +23,7 @@ import { useRouter } from 'next/navigation';
 
 interface FormValues {
   clientName: string;
-  salePrice: string;
+  // salePrice: string;
   amountSold: string;
   commissionReceived: string;
   dateSold: string;
@@ -34,7 +34,7 @@ interface FormValues {
 
 const initialValues: FormValues = {
   clientName: '',
-  salePrice: '',
+  // salePrice: '',
   amountSold: '',
   commissionReceived: '',
   dateSold: '',
@@ -45,10 +45,10 @@ const initialValues: FormValues = {
 
 const validationSchema = Yup.object({
   clientName: Yup.string().required('Client name is required'),
-  sale_price: Yup.number()
-    .typeError('Sale price must be a number')
-    .positive('Sale price must be positive')
-    .required('Sale price is required'),
+  // sale_price: Yup.number()
+  //   .typeError('Sale price must be a number')
+  //   .positive('Sale price must be positive')
+  //   .required('Sale price is required'),
   amountSold: Yup.number()
     .typeError('Amount sold must be a number')
     .positive('Amount sold must be positive')
@@ -86,7 +86,7 @@ const FullySoldProperty = ({
       const response = await CreateSoldPropertyPayment({
         realtor_property_id: propertyId as string,
         client_id: values.clientName,
-        sale_price: Number(values.salePrice),
+        // sale_price: Number(values.salePrice),
         amount_sold: Number(values.amountSold),
         commission: Number(values.commissionReceived),
         date_sold: values.dateSold,
@@ -179,7 +179,7 @@ const FullySoldProperty = ({
                   gap="24px"
                   flexWrap={['wrap', 'nowrap']}
                 >
-                  <FormControl
+                  {/* <FormControl
                     isInvalid={!!errors.salePrice && touched.salePrice}
                   >
                     <FormLabel fontWeight={600} fontSize={15} color="brand.400">
@@ -205,7 +205,7 @@ const FullySoldProperty = ({
                         ? errors.salePrice
                         : ''}
                     </FormErrorMessage>
-                  </FormControl>
+                  </FormControl> */}
                   <FormControl
                     isInvalid={!!errors.amountSold && touched.amountSold}
                   >
