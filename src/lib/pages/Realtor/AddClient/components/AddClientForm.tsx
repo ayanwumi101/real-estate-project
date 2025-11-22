@@ -225,7 +225,7 @@ const AddClientForm = ({
                     {errors.address && touched.address && errors.address}
                   </FormErrorMessage>
                 </FormControl>
-                <FormControl w="full" overflow="auto">
+                {/* <FormControl w="full" overflow="auto">
                   <FormLabel>Assign property to client</FormLabel>
                   <Flex
                     w="full"
@@ -265,57 +265,56 @@ const AddClientForm = ({
                       </Button>
                     ))}
                   </Flex>
-                </FormControl>
-                {assignOptions === 'existing' && (
-                  <FormControl
-                    isInvalid={!!errors.propertyIds && !!touched.propertyIds}
-                  >
-                    <FormLabel>Select Property</FormLabel>
-                    <Multiselect
-                      placeholder="Select property from your list"
-                      options={properties?.map((property) => ({
+                </FormControl> */}
+                {/* {assignOptions === 'existing' && ( */}
+                <FormControl
+                  isInvalid={!!errors.propertyIds && !!touched.propertyIds}
+                >
+                  <FormLabel>Select Property</FormLabel>
+                  <Multiselect
+                    placeholder="Select property from your list"
+                    options={properties?.map((property) => ({
+                      name: property.property_name,
+                      id: property.id,
+                    }))}
+                    selectedValues={properties
+                      ?.filter((property: any) =>
+                        values.propertyIds.includes(property.id)
+                      )
+                      .map((property: any) => ({
                         name: property.property_name,
                         id: property.id,
                       }))}
-                      selectedValues={properties
-                        ?.filter((property: any) =>
-                          values.propertyIds.includes(property.id)
-                        )
-                        .map((property: any) => ({
-                          name: property.property_name,
-                          id: property.id,
-                        }))}
-                      onSelect={(selectedList) => {
-                        const ids = selectedList.map((item: any) => item.id);
-                        setFieldValue('propertyIds', ids);
-                      }}
-                      onRemove={(selectedList) => {
-                        const ids = selectedList.map((item: any) => item.id);
-                        setFieldValue('propertyIds', ids);
-                      }}
-                      displayValue="name"
-                      style={{
-                        multiselectContainer: {
-                          border: '1px solid #C0C0C0',
-                          borderRadius: '50px',
-                          padding: '5px 14px',
-                          backgroundColor: '#FBFBFB',
-                          height: '50px',
-                        },
-                        searchBox: {
-                          border: 'none',
-                          width: '100%',
-                        },
-                      }}
-                    />
-                    <FormErrorMessage>
-                      {errors.propertyIds &&
-                        touched.propertyIds &&
-                        errors.propertyIds}
-                    </FormErrorMessage>
-                  </FormControl>
-                )}
-
+                    onSelect={(selectedList) => {
+                      const ids = selectedList.map((item: any) => item.id);
+                      setFieldValue('propertyIds', ids);
+                    }}
+                    onRemove={(selectedList) => {
+                      const ids = selectedList.map((item: any) => item.id);
+                      setFieldValue('propertyIds', ids);
+                    }}
+                    displayValue="name"
+                    style={{
+                      multiselectContainer: {
+                        border: '1px solid #C0C0C0',
+                        borderRadius: '50px',
+                        padding: '5px 14px',
+                        backgroundColor: '#FBFBFB',
+                        height: '50px',
+                      },
+                      searchBox: {
+                        border: 'none',
+                        width: '100%',
+                      },
+                    }}
+                  />
+                  <FormErrorMessage>
+                    {errors.propertyIds &&
+                      touched.propertyIds &&
+                      errors.propertyIds}
+                  </FormErrorMessage>
+                </FormControl>
+                {/* )} */}
                 <Flex alignItems="center" justifyContent="space-between">
                   <Link href="/realtor/clients">
                     <Button

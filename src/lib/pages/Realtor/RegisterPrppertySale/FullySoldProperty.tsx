@@ -400,6 +400,7 @@ const FullySoldProperty = ({
                     color="brand.100"
                     fontWeight={500}
                     leftIcon={<CloseIcon />}
+                    onClick={() => router.back()}
                   >
                     Cancel
                   </Button>

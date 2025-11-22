@@ -207,10 +207,9 @@ const RegisterProperty = ({ onNext }: { onNext: () => void }) => {
       default:
         return '';
     }
-    return date.toISOString().split('T')[0]; // format YYYY-MM-DD
+    return date.toISOString().split('T')[0];
   };
 
-  // Auto-update next payment date when plan or first date changes
   React.useEffect(() => {
     if (values.paymentPlan && values.firstPaymentDate) {
       const nextDate = calculateNextPaymentDate(
@@ -321,7 +320,7 @@ const RegisterProperty = ({ onNext }: { onNext: () => void }) => {
         isInvalid={!!errors.paymentDuration && touched.paymentDuration}
       >
         <FormLabel fontWeight={600} fontSize={15} color="brand.400">
-          Duration of Payment (Month)
+          Duration of Payment in Month
         </FormLabel>
         <Field
           as={Input}
