@@ -337,7 +337,7 @@ const PaymentStats = ({
   );
 };
 
-const Payments = ({
+const SalesHistory = ({
   payments,
   assetId,
 }: {
@@ -446,4 +446,4 @@ const Payments = ({
   );
 };
 
-export default Payments;
+export default SalesHistory;

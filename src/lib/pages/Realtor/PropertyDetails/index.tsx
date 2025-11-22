@@ -9,15 +9,13 @@ import useNavigate from '~/lib/utils/useNavigate';
 import RealtorDashboardLayout from '~/lib/layout/components/RealtorDashboardHeader';
 import { BsChevronRight } from 'react-icons/bs';
 import AvailableAssetDetails from './components/AvailableAssetDetails';
-import Payments from './components/Payments';
 import {
   GetAvailablePropertyDetails,
   GetInstalmentPropertyPaymentHistory,
   UpdateProperty,
 } from '~/lib/api/services/propertiesService';
 import InstalmentPropertyDetails from './components/InstalmentPropertyDetails';
-
-
+import SalesHistory from './components/SalesHistory';
 
 const index = () => {
   const { id } = useParams();
@@ -91,7 +89,7 @@ const index = () => {
         </Flex>
       }
     >
-      {propertyType !== 'available' ? (
+      {/* {propertyType !== 'available' ? (
         <InstalmentPropertyDetails
           totalSalePrice={propertyPaymentHistory?.total_sale_price}
           totalCommission={propertyPaymentHistory?.total_commission_received}
@@ -99,45 +97,46 @@ const index = () => {
           payments={propertyPaymentHistory?.sales}
           propertyId={id as string}
         />
-      ) : (
-        <Stack w="full" spacing="12px">
-          <Header
-            tabs={tabs}
-            activeTab={activeTab}
-            propertyType={propertyType}
-            setActiveTab={setActiveTab}
-            propertyName={availablePropertyDetails?.property_name}
-            location={`${availablePropertyDetails?.house_number} ${availablePropertyDetails?.street_name} ${availablePropertyDetails?.city_name}`}
-          />
-          {activeTab === 'Details' && (
-            <Box p={['20px', '20px']}>
-              <Flex
-                alignItems="flex-start"
-                flexWrap={['wrap', 'nowrap']}
-                gap="40px"
-                w="full"
-              >
-                {propertyType === 'available' && (
-                  <AvailableAssetDetails
-                    propertyDetails={availablePropertyDetails}
-                  />
-                )}
-                <Notes notes={availablePropertyDetails?.comment} />
-              </Flex>
+      ) : ( */}
+      <Stack w="full" spacing="12px">
+        <Header
+          tabs={tabs}
+          noOfSales={propertyPaymentHistory?.number_of_sales ?? 0}
+          activeTab={activeTab}
+          propertyType={propertyType}
+          setActiveTab={setActiveTab}
+          propertyName={availablePropertyDetails?.property_name}
+          location={`${availablePropertyDetails?.house_number} ${availablePropertyDetails?.street_name} ${availablePropertyDetails?.city_name}`}
+        />
+        {activeTab === 'Details' && (
+          <Box p={['20px', '20px']}>
+            <Flex
+              alignItems="flex-start"
+              flexWrap={['wrap', 'nowrap']}
+              gap="40px"
+              w="full"
+            >
+              {/* {propertyType === 'available' && ( */}
+              <AvailableAssetDetails
+                propertyDetails={availablePropertyDetails}
+              />
+              {/* )} */}
+              <Notes notes={availablePropertyDetails?.comment} />
+            </Flex>
+          </Box>
+        )}
+        <Fragment>
+          {activeTab === 'Sales History' && (
+            <Box>
+              <SalesHistory
+                payments={propertyPaymentHistory}
+                assetId={id as string}
+              />
             </Box>
           )}
-          <Fragment>
-            {activeTab === 'Sales History' && (
-              <Box>
-                <Payments
-                  payments={propertyPaymentHistory}
-                  assetId={id as string}
-                />
-              </Box>
-            )}
-          </Fragment>
-        </Stack>
-      )}
+        </Fragment>
+      </Stack>
+      {/* )} */}
     </RealtorDashboardLayout>
   );
 };

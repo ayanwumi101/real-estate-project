@@ -34,6 +34,7 @@ interface Headerprops {
   >;
   activeTab: 'Details' | 'Sales History';
   propertyType: 'available' | 'instalment' | 'sold';
+  noOfSales: number;
 }
 
 interface NavigationTabsProps {
@@ -42,12 +43,14 @@ interface NavigationTabsProps {
   setActiveTab: React.Dispatch<
     React.SetStateAction<'Details' | 'Sales History'>
   >;
+  noOfSales: number;
 }
 
 const NavigationTabs = ({
   tabs,
   activeTab,
   setActiveTab,
+  noOfSales,
 }: NavigationTabsProps) => {
   return (
     <Flex alignItems="center" gap="8px" py="15px">
@@ -60,7 +63,7 @@ const NavigationTabs = ({
           color={tab === activeTab ? 'brand.100' : 'brand.800'}
           onClick={() => setActiveTab(tab as 'Details' | 'Sales History')}
         >
-          {tab}
+          {`${tab} ${tab === 'Sales History' && `(${noOfSales})`}`}
         </Button>
       ))}
     </Flex>
@@ -74,6 +77,7 @@ const Header = ({
   activeTab,
   setActiveTab,
   propertyType,
+  noOfSales,
 }: Headerprops) => {
   const router = useRouter();
   const navigate = useNavigate();
@@ -244,6 +248,7 @@ const Header = ({
           tabs={tabs}
           activeTab={activeTab}
           setActiveTab={setActiveTab}
+          noOfSales={noOfSales}
         />
       </Stack>
       {/* <AddPaymentModal

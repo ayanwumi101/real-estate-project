@@ -164,10 +164,29 @@ const RegisterProperty = ({ onNext }: { onNext: () => void }) => {
     setFieldTouched,
     values,
   } = React.useContext(PropertySaleContext);
-  const [amountSold, setAmountSold] = useState<string>('');
-  const [firstDeposit, setFirstDeposit] = useState<string>('');
-  const [instalmentAmount, setInstalmentAmount] = useState<string>('');
-  const [commissionReceived, setCommissionReceived] = useState<string>('');
+  const [amountSold, setAmountSold] = useState<string>(values.amountSold || '');
+  const [firstDeposit, setFirstDeposit] = useState<string>(
+    values.firstDeposit || ''
+  );
+  const [instalmentAmount, setInstalmentAmount] = useState<string>(
+    values.instalmentAmount || ''
+  );
+  const [commissionReceived, setCommissionReceived] = useState<string>(
+    values.commissionReceived || ''
+  );
+
+  React.useEffect(() => {
+    if (values.amountSold) setAmountSold(values.amountSold);
+    if (values.firstDeposit) setFirstDeposit(values.firstDeposit);
+    if (values.instalmentAmount) setInstalmentAmount(values.instalmentAmount);
+    if (values.commissionReceived)
+      setCommissionReceived(values.commissionReceived);
+  }, [
+    values.amountSold,
+    values.firstDeposit,
+    values.instalmentAmount,
+    values.commissionReceived,
+  ]);
 
   const calculateNextPaymentDate = (plan: string, startDate: string) => {
     if (!plan || !startDate) return '';

@@ -20,6 +20,9 @@ interface NavigationTabProps {
   availableCount?: number;
   soldCount?: number;
   instalmentCount?: number;
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+  searchProperties: () => void;
 }
 
 const NavigationTab: React.FC<NavigationTabProps> = ({
@@ -29,6 +32,9 @@ const NavigationTab: React.FC<NavigationTabProps> = ({
   availableCount = 0,
   soldCount = 0,
   instalmentCount = 0,
+  searchQuery,
+  setSearchQuery,
+  searchProperties,
 }) => {
   const navigate = useNavigate();
   return (
@@ -74,6 +80,11 @@ const NavigationTab: React.FC<NavigationTabProps> = ({
               fontSize={14}
               w="full"
               _placeholder={{ color: 'gray.500' }}
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                searchProperties();
+              }}
             />
           </InputGroup>
 

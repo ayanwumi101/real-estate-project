@@ -133,6 +133,12 @@ const index = () => {
     getAvailablePropertyDetails();
   }, [searchParams, id, propertyType]);
 
+  useEffect(() => {
+    if (propertyDetails) {
+      setPropertyCost(propertyDetails.property_cost || '');
+    }
+  }, [id, propertyDetails]);
+
   const handleSubmit = async (values: any) => {
     setIsSubmitting(true);
     const formData = {
