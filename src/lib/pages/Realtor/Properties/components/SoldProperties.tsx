@@ -170,6 +170,9 @@ const PropertyListTable = ({ properties }: { properties: any[] }) => {
                           color="color.100"
                           fontWeight={500}
                           icon={<RealtorClientsIcon />}
+                          onClick={() =>
+                            navigate(`/realtor/clients/${asset?.client?.id}`)
+                          }
                         >
                           View client
                         </MenuItem>
