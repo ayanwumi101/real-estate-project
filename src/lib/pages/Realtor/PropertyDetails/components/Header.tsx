@@ -63,7 +63,7 @@ const NavigationTabs = ({
           color={tab === activeTab ? 'brand.100' : 'brand.800'}
           onClick={() => setActiveTab(tab as 'Details' | 'Sales History')}
         >
-          {`${tab} ${tab === 'Sales History' && `(${noOfSales})`}`}
+          {tab === 'Sales History' ? `${tab} (${noOfSales})` : tab}
         </Button>
       ))}
     </Flex>
@@ -108,7 +108,7 @@ const Header = ({
     >
       <Stack spacing="10px" alignItems="flex-start" w="full">
         <Button
-          onClick={() => navigate('/realtor/properties')}
+          onClick={() => navigate(`/realtor/properties?tab=${propertyType}`)}
           variant="ghost"
           leftIcon={<ChevronLeftIcon />}
           p="0"

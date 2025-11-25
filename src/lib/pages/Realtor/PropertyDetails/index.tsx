@@ -111,7 +111,7 @@ const index = () => {
         {activeTab === 'Details' && (
           <Box p={['20px', '20px']}>
             <Flex
-              alignItems="flex-start"
+              // alignItems="flex-start"
               flexWrap={['wrap', 'nowrap']}
               gap="40px"
               w="full"
@@ -125,16 +125,16 @@ const index = () => {
             </Flex>
           </Box>
         )}
-        <Fragment>
-          {activeTab === 'Sales History' && (
-            <Box>
-              <SalesHistory
-                payments={propertyPaymentHistory}
-                assetId={id as string}
-              />
-            </Box>
-          )}
-        </Fragment>
+        {/* <Fragment> */}
+        {activeTab === 'Sales History' && (
+          <Box>
+            <SalesHistory
+              payments={propertyPaymentHistory}
+              assetId={id as string}
+            />
+          </Box>
+        )}
+        {/* </Fragment> */}
       </Stack>
       {/* )} */}
     </RealtorDashboardLayout>

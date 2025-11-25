@@ -69,9 +69,11 @@ const validationSchema = Yup.object({
 const FullySoldProperty = ({
   clients,
   propertyId,
+  fetchClients,
 }: {
   clients: any[];
   propertyId: string;
+  fetchClients: () => void;
 }) => {
   const toast = useToast();
   const router = useRouter();
@@ -449,7 +451,11 @@ const FullySoldProperty = ({
           );
         }}
       </Formik>
-      <AddClientModal isOpen={openModal} onClose={() => setOpenModal(false)} />
+      <AddClientModal
+        isOpen={openModal}
+        fetchClients={fetchClients}
+        onClose={() => setOpenModal(false)}
+      />
     </Fragment>
   );
 };

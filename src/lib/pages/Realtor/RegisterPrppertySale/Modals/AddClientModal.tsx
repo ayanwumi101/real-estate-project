@@ -58,9 +58,11 @@ const validationSchema = Yup.object().shape({
 const AddClientModal = ({
   isOpen,
   onClose,
+  fetchClients,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  fetchClients: () => void;
 }) => {
   const toast = useToast();
   const [loading, setLoading] = useState<boolean>(false);
@@ -89,7 +91,7 @@ const AddClientModal = ({
     try {
       const response = await AddRealtorClient(formData);
       if (response?.data?.id) {
-        fetchProperties();
+        await fetchClients();
         toast({
           title: 'Client Added.',
           description: "You've successfully added a new client.",

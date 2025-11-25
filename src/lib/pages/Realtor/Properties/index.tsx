@@ -12,8 +12,12 @@ import {
   GetSoldRealtorProperties,
   GetInstalmentRealtorProperties,
 } from '~/lib/api/services/propertiesService';
+import { useSearchParams } from 'next/navigation';
+
 
 const index = () => {
+  const searchParams = useSearchParams();
+  const tab = searchParams.get('tab');
   const tabs = ['available', 'sold', 'instalment'];
   const [properties, setProperties] = React.useState([]);
   const [filteredProperties, setFilteredProperties] = React.useState([]);
@@ -75,10 +79,11 @@ const index = () => {
       );
       setFilteredSoldProperties(filtered);
     } else {
-      const filtered = instalmentProperties?.data?.instalment_properties?.filter(
-        (property: any) =>
-          property?.property_name?.toLowerCase().includes(searchLower)
-      );
+      const filtered =
+        instalmentProperties?.data?.instalment_properties?.filter(
+          (property: any) =>
+            property?.property_name?.toLowerCase().includes(searchLower)
+        );
       setFilteredInstalmentProperties(filtered);
     }
   }, [
@@ -92,6 +97,14 @@ const index = () => {
   useEffect(() => {
     SearchProperties();
   }, [searchQuery, SearchProperties]);
+
+  useEffect(() => {
+    if (tab && tabs.includes(tab as string)) {
+      setActiveTab(tab as 'available' | 'sold' | 'instalment');
+    } else {
+      setActiveTab('available');
+    }
+  }, [tab, tabs]);
 
   return (
     <RealtorDashboardLayout title="Properties">

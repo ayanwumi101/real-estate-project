@@ -96,7 +96,7 @@ const PropertyListTable = ({ properties }: { properties: any[] }) => {
                 fontSize={14}
                 textTransform="capitalize"
               >
-                Date Sold
+                Sale Price
               </Th>
               <Th
                 color="#222222"
@@ -104,9 +104,8 @@ const PropertyListTable = ({ properties }: { properties: any[] }) => {
                 fontSize={14}
                 textTransform="capitalize"
               >
-                Sale Price
+                Amount Paid
               </Th>
-
               <Th
                 color="#222222"
                 fontWeight={500}
@@ -139,10 +138,10 @@ const PropertyListTable = ({ properties }: { properties: any[] }) => {
                       {asset?.client_name}
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
-                      {moment(asset?.sald_date).format('ddd, Do MMMM YYYY')}
+                      {FormatAmount(Number(asset?.sale_price))}
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
-                      {FormatAmount(Number(asset?.sale_price))}
+                      {FormatAmount(Number(asset?.total_amount_paid))}
                     </Td>
                     <Td fontWeight={500} fontSize={14} color="#8295AA">
                       {FormatAmount(Number(asset?.commission))}

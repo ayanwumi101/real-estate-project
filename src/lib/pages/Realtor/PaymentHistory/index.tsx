@@ -11,9 +11,11 @@ import { BsChevronRight } from 'react-icons/bs';
 import { Text, Flex, Button } from '@chakra-ui/react';
 import useNavigate from '~/lib/utils/useNavigate';
 import { ChevronLeftIcon } from '~/lib/components/Icons/Icons';
+import { useRouter } from 'next/navigation';
 
 const index = () => {
   const { id } = useParams();
+  const router = useRouter();
   const navigate = useNavigate();
   const [paymentHistory, setPaymentHistory] = React.useState<any>([]);
 
@@ -55,7 +57,7 @@ const index = () => {
       <Box py="20px" px={['20px', '0px']} w="full">
         <Stack w="full" spacing="20px" alignItems="flex-start">
           <Button
-            onClick={() => navigate('/realtor/properties')}
+            onClick={() => router.back()}
             variant="ghost"
             leftIcon={<ChevronLeftIcon />}
             p="0"

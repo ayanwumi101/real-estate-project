@@ -7,6 +7,7 @@ import {
   Flex,
   Divider,
 } from '@chakra-ui/react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import React from 'react';
 import { AddIcon, InputSearchIcon } from '~/lib/components/Icons/Icons';
 import useNavigate from '~/lib/utils/useNavigate';
@@ -37,6 +38,9 @@ const NavigationTab: React.FC<NavigationTabProps> = ({
   searchProperties,
 }) => {
   const navigate = useNavigate();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   return (
     <Box borderBottom="1px solid" borderColor="border.100" pb="20px">
       <Flex
@@ -49,9 +53,13 @@ const NavigationTab: React.FC<NavigationTabProps> = ({
           {tabs.map((tab) => (
             <Button
               key={tab}
-              onClick={() =>
-                setActiveTab(tab as 'available' | 'sold' | 'instalment')
-              }
+              onClick={() => {
+                setActiveTab(tab as 'available' | 'sold' | 'instalment');
+                const params = new URLSearchParams(searchParams.toString());
+                params.set('tab', tab);
+                router.replace(`?${params.toString()}`, { scroll: false });
+                setActiveTab(tab as 'available' | 'sold' | 'instalment');
+              }}
               border="none"
               rounded="50px"
               h="40px"

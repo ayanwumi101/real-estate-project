@@ -8,6 +8,7 @@ import {
   Th,
   Tbody,
   Td,
+  Badge,
 } from '@chakra-ui/react';
 import useNavigate from '~/lib/utils/useNavigate';
 import moment from 'moment';
@@ -21,8 +22,6 @@ import { Text } from '@chakra-ui/react';
 import { Flex } from '@chakra-ui/react';
 import PaymentReceiptModal from '../../PropertyDetails/Modals/PaymentReceiptModal';
 import { Fragment } from 'react';
-
-
 
 const PaymentHistoryTable = ({ payments }: { payments: any[] }) => {
   const navigate = useNavigate();
@@ -54,6 +53,15 @@ const PaymentHistoryTable = ({ payments }: { payments: any[] }) => {
                 fontSize={14}
                 textTransform="capitalize"
               >
+                Payment Date
+              </Th>
+
+              <Th
+                color="#222222"
+                fontWeight={500}
+                fontSize={14}
+                textTransform="capitalize"
+              >
                 Amount Paid
               </Th>
               <Th
@@ -63,14 +71,6 @@ const PaymentHistoryTable = ({ payments }: { payments: any[] }) => {
                 textTransform="capitalize"
               >
                 Commission
-              </Th>
-              <Th
-                color="#222222"
-                fontWeight={500}
-                fontSize={14}
-                textTransform="capitalize"
-              >
-                Date Sold
               </Th>
               <Th
                 color="#222222"
@@ -107,20 +107,39 @@ const PaymentHistoryTable = ({ payments }: { payments: any[] }) => {
                       {payment?.type || 'Instalment'}
                     </Td>
                     <Td fontWeight={500} fontSize={14}>
+                      {moment(payment?.date).format('ddd, Do MMMM YYYY')}
+                    </Td>
+                    <Td fontWeight={500} fontSize={14}>
                       {FormatAmount(Number(payment?.amount))}
                     </Td>
                     <Td fontWeight={500} fontSize={14}>
                       {FormatAmount(Number(payment?.commission))}
-                    </Td>
-                    <Td fontWeight={500} fontSize={14}>
-                      {moment(payment?.date).format('ddd, Do MMMM YYYY')}
                     </Td>
                     <Td
                       fontWeight={500}
                       fontSize={14}
                       textTransform="capitalize"
                     >
-                      {payment?.status}
+                      <Badge
+                        bg={
+                          payment?.status === 'completed'
+                            ? '#E7F5EC'
+                            : '#F6EDDF'
+                        }
+                        color={
+                          payment?.status === 'completed'
+                            ? '#1BD155'
+                            : '#E1A101'
+                        }
+                        rounded="16px"
+                        fontWeight={500}
+                        fontSize={14}
+                        textTransform="capitalize"
+                        px="12px"
+                        py="3px"
+                      >
+                        {payment?.status}
+                      </Badge>
                     </Td>
                     <Td>
                       <Menu>
