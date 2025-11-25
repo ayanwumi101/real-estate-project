@@ -31,6 +31,7 @@ import {
 import useNavigate from '~/lib/utils/useNavigate';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import EmptyState from '../../EmptyState';
+import { AssignPropertyToClientIcon } from '~/lib/components/Icons/Icon-Images';
 
 const ClientsList = ({ clients }: { clients: any[] }) => {
   const navigate = useNavigate();
@@ -188,12 +189,12 @@ const ClientsList = ({ clients }: { clients: any[] }) => {
                                 fontSize={14}
                                 color="color.100"
                                 fontWeight={500}
-                                icon={<AssignPropertyIcon />}
-                                onClick={() =>
-                                  navigate(
-                                    `/realtor/properties/57478493/register-sale`
-                                  )
-                                }
+                                icon={<AssignPropertyToClientIcon />}
+                                // onClick={() =>
+                                //   navigate(
+                                //     `/realtor/properties/57478493/register-sale`
+                                //   )
+                                // }
                               >
                                 Assign Manager
                               </MenuItem>
