@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect, Fragment, Suspense } from 'react';
 import Header from './components/Header';
 import {
   Box,
@@ -36,6 +36,7 @@ import {
 import Link from 'next/link';
 import { formatCurrency } from '~/lib/utils/formatAmount';
 import { ChevronLeftIcon } from '~/lib/components/Icons/Icons';
+
 
 const index = () => {
   const { id } = useParams();

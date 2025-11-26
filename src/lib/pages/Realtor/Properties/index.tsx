@@ -1,7 +1,7 @@
 'use client';
 
 import { Stack, Box } from '@chakra-ui/react';
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, Suspense } from 'react';
 import NavigationTab from './components/NavigationTab';
 import AvailableProperties from './components/AvailableProperties';
 import SoldProperties from './components/SoldProperties';
@@ -14,8 +14,7 @@ import {
 } from '~/lib/api/services/propertiesService';
 import { useSearchParams } from 'next/navigation';
 
-
-const index = () => {
+const PropertiesContent = () => {
   const searchParams = useSearchParams();
   const tab = searchParams.get('tab');
   const tabs = ['available', 'sold', 'instalment'];
@@ -29,9 +28,7 @@ const index = () => {
   );
   const [filteredInstalmentProperties, setFilteredInstalmentProperties] =
     useState<any>([]);
-  const [activeTab, setActiveTab] = React.useState<
-    'available' | 'sold' | 'instalment'
-  >('available');
+  const [activeTab, setActiveTab] = React.useState<'available' | 'sold' | 'instalment'>('available');
   const [searchQuery, setSearchQuery] = React.useState<string>('');
 
   useEffect(() => {
@@ -138,4 +135,13 @@ const index = () => {
   );
 };
 
-export default index;
+
+const Index = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PropertiesContent />
+    </Suspense>
+  );
+};
+
+export default Index;
