@@ -140,7 +140,7 @@ const ClientsList = ({ clients }: { clients: any[] }) => {
                         {client.address}
                       </Td>
                       <Td fontWeight={500} fontSize={14} color="#8295AA">
-                        {client?.properties_count}
+                        {client?.property_count}
                       </Td>
                       <Td fontWeight={500} fontSize={14} color="#8295AA">
                         {client?.manager || 'N/A'}
