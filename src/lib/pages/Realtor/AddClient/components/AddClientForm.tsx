@@ -267,7 +267,7 @@ const AddClientForm = ({
                   </Flex>
                 </FormControl> */}
                 {/* {assignOptions === 'existing' && ( */}
-                <FormControl
+                {/* <FormControl
                   isInvalid={!!errors.propertyIds && !!touched.propertyIds}
                 >
                   <FormLabel>Select Property</FormLabel>
@@ -313,7 +313,7 @@ const AddClientForm = ({
                       touched.propertyIds &&
                       errors.propertyIds}
                   </FormErrorMessage>
-                </FormControl>
+                </FormControl> */}
                 {/* )} */}
                 <Flex alignItems="center" justifyContent="space-between">
                   <Link href="/realtor/clients">
