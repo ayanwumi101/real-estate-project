@@ -158,7 +158,7 @@ const Header = ({
               {location && (
                 <Flex alignItems="center" gap="10px">
                   <LocationIcon />
-                  <Text color="#2E353F" fontWeight={500}>
+                  <Text color="#2E353F" fontWeight={500} fontSize={[14, 16]}>
                     {location ? location : 'N/A'}
                   </Text>
                 </Flex>
@@ -175,6 +175,7 @@ const Header = ({
               <Link
                 href={`/realtor/properties/${id}/update?type=${propertyType}`}
                 passHref
+                style={{ width: '100%' }}
               >
                 <Button
                   bg="brand.100"
@@ -184,6 +185,7 @@ const Header = ({
                   fontSize={15}
                   leftIcon={<EditPropertyIcon />}
                   h="43px"
+                  w={['100%', '200px']}
                 >
                   Edit Property
                 </Button>
@@ -194,20 +196,6 @@ const Header = ({
                     <VerticalEllipsisIcon />
                   </MenuButton>
                   <MenuList py="0px">
-                    {/* {propertyType === 'instalment' && (
-                    <MenuItem
-                      py="12px"
-                      px="16px"
-                      _hover={{ bg: 'border.100' }}
-                      fontSize={14}
-                      color="color.100"
-                      fontWeight={500}
-                      icon={<RegisterSaleIcon />}
-                      onClick={() => setOpenAddPaymentModal(true)}
-                    >
-                      Add Payment
-                    </MenuItem>
-                  )} */}
                     <Link
                       href={`/realtor/properties/${id}/register-sale?type=fully_sold`}
                     >

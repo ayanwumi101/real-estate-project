@@ -35,99 +35,190 @@ import {
 } from '~/lib/components/Icons/Icons';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 
+
 const PaymentStats = ({
   salesPrice,
   totalAmountPaid,
   totalCommission,
   noOfSales,
+  propertyType,
+  outstandingBalance,
+  nextDueDate,
 }: {
   salesPrice?: number;
   totalAmountPaid?: number;
   totalCommission?: number;
   noOfSales?: number;
-} = {}) => {
+  propertyType: string;
+  outstandingBalance: number;
+  nextDueDate?: string | Date;
+}) => {
   return (
     <Box w="full">
-      <Flex
-        w="full"
-        alignItems="center"
-        justifyContent="space-between"
-        gap="10px"
-        overflow="auto"
-        pb="2"
-      >
-        {/* first card */}
-        <Box
-          minW={['260px', '33%']}
-          h="auto"
-          rounded="5px"
-          border="1px solid"
-          borderColor="border.100"
+      {propertyType === 'instalment' ? (
+        <Flex
+          w="full"
+          alignItems="center"
+          justifyContent="space-between"
+          gap="10px"
+          overflow="auto"
+          pb="2"
         >
-          <Box px="16px" py="12px">
-            {' '}
-            <Text mb="16px" fontSize={16} fontWeight={500} color="brand.600">
-              Sales Price
-            </Text>
-            <Heading fontSize={24} fontWeight={500}>
-              {salesPrice ? FormatAmount(salesPrice) : '₦0.00'}
-            </Heading>
+          {/* first card */}
+          <Box
+            minW={['260px', '20%']}
+            h="auto"
+            rounded="5px"
+            border="1px solid"
+            borderColor="border.100"
+          >
+            <Box px="16px" py="12px">
+              {' '}
+              <Text mb="16px" fontSize={16} fontWeight={500} color="brand.600">
+                Sales Price
+              </Text>
+              <Heading fontSize={24} fontWeight={500}>
+                {salesPrice ? FormatAmount(salesPrice) : '₦0.00'}
+              </Heading>
+            </Box>
           </Box>
-        </Box>
-        {/* second card */}
-        <Box
-          minW={['260px', '33%']}
-          h="auto"
-          rounded="5px"
-          border="1px solid"
-          borderColor="border.100"
+          {/* second card */}
+          <Box
+            minW={['260px', '20%']}
+            h="auto"
+            rounded="5px"
+            border="1px solid"
+            borderColor="border.100"
+          >
+            <Box px="16px" py="12px">
+              {' '}
+              <Text mb="16px" fontSize={16} fontWeight={500} color="brand.600">
+                Total Payments
+              </Text>
+              <Heading fontSize={24} fontWeight={500}>
+                {totalAmountPaid ? FormatAmount(totalAmountPaid) : '₦0.00'}
+              </Heading>
+            </Box>
+          </Box>
+          {/* third card */}
+          <Box
+            minW={['260px', '20%']}
+            h="auto"
+            rounded="5px"
+            border="1px solid"
+            borderColor="border.100"
+          >
+            <Box px="16px" py="12px">
+              {' '}
+              <Text mb="16px" fontSize={16} fontWeight={500} color="brand.600">
+                Total Pending
+              </Text>
+              <Heading fontSize={24} fontWeight={500}>
+                {totalCommission ? FormatAmount(outstandingBalance) : '₦0.00'}
+              </Heading>
+            </Box>
+          </Box>
+          {/* third card */}
+          <Box
+            minW={['260px', '20%']}
+            h="auto"
+            rounded="5px"
+            border="1px solid"
+            borderColor="border.100"
+          >
+            <Box px="16px" py="12px">
+              {' '}
+              <Text mb="16px" fontSize={16} fontWeight={500} color="brand.600">
+                Commision Received
+              </Text>
+              <Heading fontSize={24} fontWeight={500}>
+                {totalCommission ? FormatAmount(totalCommission) : '₦0.00'}
+              </Heading>
+            </Box>
+          </Box>
+          <Box
+            minW={['260px', '20%']}
+            h="auto"
+            rounded="5px"
+            border="1px solid"
+            borderColor="border.100"
+          >
+            <Box px="16px" py="12px">
+              {' '}
+              <Text mb="16px" fontSize={16} fontWeight={500} color="brand.600">
+                Next Due Payment
+              </Text>
+              <Heading fontSize={24} fontWeight={500}>
+                {moment(nextDueDate).format('do, dd mm yyyy')}
+              </Heading>
+            </Box>
+          </Box>
+        </Flex>
+      ) : (
+        <Flex
+          w="full"
+          alignItems="center"
+          justifyContent="space-between"
+          gap="10px"
+          overflow="auto"
+          pb="2"
         >
-          <Box px="16px" py="12px">
-            {' '}
-            <Text mb="16px" fontSize={16} fontWeight={500} color="brand.600">
-              Total Payments
-            </Text>
-            <Heading fontSize={24} fontWeight={500}>
-              {totalAmountPaid ? FormatAmount(totalAmountPaid) : '₦0.00'}
-            </Heading>
+          {/* first card */}
+          <Box
+            minW={['260px', '33%']}
+            h="auto"
+            rounded="5px"
+            border="1px solid"
+            borderColor="border.100"
+          >
+            <Box px="16px" py="12px">
+              {' '}
+              <Text mb="16px" fontSize={16} fontWeight={500} color="brand.600">
+                Sales Price
+              </Text>
+              <Heading fontSize={24} fontWeight={500}>
+                {salesPrice ? FormatAmount(salesPrice) : '₦0.00'}
+              </Heading>
+            </Box>
           </Box>
-        </Box>
-        {/* third card */}
-        <Box
-          minW={['260px', '33%']}
-          h="auto"
-          rounded="5px"
-          border="1px solid"
-          borderColor="border.100"
-        >
-          <Box px="16px" py="12px">
-            {' '}
-            <Text mb="16px" fontSize={16} fontWeight={500} color="brand.600">
-              Commision Received
-            </Text>
-            <Heading fontSize={24} fontWeight={500}>
-              {totalCommission ? FormatAmount(totalCommission) : '₦0.00'}
-            </Heading>
+          {/* second card */}
+          <Box
+            minW={['260px', '33%']}
+            h="auto"
+            rounded="5px"
+            border="1px solid"
+            borderColor="border.100"
+          >
+            <Box px="16px" py="12px">
+              {' '}
+              <Text mb="16px" fontSize={16} fontWeight={500} color="brand.600">
+                Total Payments
+              </Text>
+              <Heading fontSize={24} fontWeight={500}>
+                {totalAmountPaid ? FormatAmount(totalAmountPaid) : '₦0.00'}
+              </Heading>
+            </Box>
           </Box>
-        </Box>
-        {/* <Box
-          minW={['260px', '24%']}
-          h="auto"
-          rounded="5px"
-          border="1px solid"
-          borderColor="border.100"
-        >
-          <Box px="16px" py="12px">
-            {' '}
-            <Text mb="16px" fontSize={16} fontWeight={500} color="brand.600">
-              Number of Sales
-            </Text>
-            <Heading fontSize={24} fontWeight={500}>
-              {noOfSales || 0}
-            </Heading>
+          {/* third card */}
+          <Box
+            minW={['260px', '33%']}
+            h="auto"
+            rounded="5px"
+            border="1px solid"
+            borderColor="border.100"
+          >
+            <Box px="16px" py="12px">
+              {' '}
+              <Text mb="16px" fontSize={16} fontWeight={500} color="brand.600">
+                Commision Received
+              </Text>
+              <Heading fontSize={24} fontWeight={500}>
+                {totalCommission ? FormatAmount(totalCommission) : '₦0.00'}
+              </Heading>
+            </Box>
           </Box>
-        </Box> */}
-      </Flex>
+        </Flex>
+      )}
     </Box>
   );
 };

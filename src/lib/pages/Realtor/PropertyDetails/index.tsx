@@ -69,12 +69,21 @@ const index = () => {
   return (
     <RealtorDashboardLayout
       title={
-        <Flex alignItems="center" gap="8px" flexWrap={['wrap', 'nowrap']}>
+        <Flex
+          alignItems="center"
+          gap={['5px', '8px']}
+          // flexWrap={['wrap', 'nowrap']}
+        >
           <Text fontSize={[15, 16]} fontWeight={600} color="brand.400">
             Properties
           </Text>
           <BsChevronRight size={15} fontWeight={900} />
-          <Text fontSize={[15, 16]} fontWeight={600} color="brand.400">
+          <Text
+            fontSize={[15, 16]}
+            fontWeight={600}
+            color="brand.400"
+            noOfLines={[1, 2, 3]}
+          >
             {propertyType === 'available'
               ? 'Available'
               : propertyType === 'sold'
@@ -83,7 +92,12 @@ const index = () => {
             Properties
           </Text>
           <BsChevronRight size={15} fontWeight={900} />
-          <Text fontSize={[15, 16]} fontWeight={600} color="brand.800">
+          <Text
+            fontSize={[15, 16]}
+            fontWeight={600}
+            color="brand.800"
+            noOfLines={[1, 2, 3]}
+          >
             {availablePropertyDetails?.property_name}
           </Text>
         </Flex>

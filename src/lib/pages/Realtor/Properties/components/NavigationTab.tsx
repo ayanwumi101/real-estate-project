@@ -76,8 +76,12 @@ const NavigationTab: React.FC<NavigationTabProps> = ({
           ))}
         </Flex>
         <Divider display={['block', 'none']} />
-        <Flex alignItems="center" gap={['5px', '10px']}>
-          <InputGroup w={['60%', '325px']}>
+        <Flex
+          alignItems="center"
+          gap={['15px', '10px']}
+          flexWrap={['wrap', 'nowrap']}
+        >
+          <InputGroup w={['100%', '325px']}>
             <InputLeftElement pointerEvents="none">
               <InputSearchIcon />
             </InputLeftElement>
@@ -101,7 +105,7 @@ const NavigationTab: React.FC<NavigationTabProps> = ({
             bg="brand.100"
             color="brand.200"
             fontWeight={600}
-            w={['40%', 'auto']}
+            w={['full', 'auto']}
             onClick={() => navigate('/realtor/properties/add-property')}
             fontSize={[13, 16]}
           >

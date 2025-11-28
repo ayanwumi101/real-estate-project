@@ -45,7 +45,7 @@ const PaymentHistoryTable = ({ payments }: { payments: any[] }) => {
                 fontSize={14}
                 textTransform="capitalize"
               >
-                Sale Type
+                Type
               </Th>
               <Th
                 color="#222222"
@@ -53,7 +53,7 @@ const PaymentHistoryTable = ({ payments }: { payments: any[] }) => {
                 fontSize={14}
                 textTransform="capitalize"
               >
-                Payment Date
+                Date
               </Th>
 
               <Th
@@ -62,7 +62,7 @@ const PaymentHistoryTable = ({ payments }: { payments: any[] }) => {
                 fontSize={14}
                 textTransform="capitalize"
               >
-                Amount Paid
+                Amount
               </Th>
               <Th
                 color="#222222"

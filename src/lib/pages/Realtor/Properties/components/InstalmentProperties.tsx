@@ -208,6 +208,9 @@ const PropertyListTable = ({ properties }: { properties: any[] }) => {
                               color="color.100"
                               fontWeight={500}
                               icon={<RealtorClientsIcon />}
+                              onClick={() =>
+                                navigate(`/realtor/clients/${asset?.client_id}`)
+                              }
                             >
                               View client
                             </MenuItem>
@@ -219,8 +222,13 @@ const PropertyListTable = ({ properties }: { properties: any[] }) => {
                               color="color.100"
                               fontWeight={500}
                               icon={<RegisterSaleIcon />}
+                              onClick={() =>
+                                navigate(
+                                  `/realtor/properties/${asset?.property_id}/register-sale?type=fully_sold`
+                                )
+                              }
                             >
-                              Change property status
+                              Change property status to fully sold
                             </MenuItem>
                           </MenuList>
                         </Portal>
