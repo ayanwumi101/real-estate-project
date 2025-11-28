@@ -48,7 +48,7 @@ const PropertyListTable = ({ properties }: { properties: any[] }) => {
   const GetDueDates = async () => {
     if (selectedProperty) {
       try {
-        const res = await GetPropertyDueDates(selectedProperty?.instalment_id);
+        const res = await GetPropertyDueDates(selectedProperty?.property_id);
         setDueDates(res?.data);
       } catch (error) {
         console.log(error);
@@ -280,8 +280,6 @@ const PropertyListTable = ({ properties }: { properties: any[] }) => {
         dueDates={dueDates}
         onClose={() => setOpenModal(false)}
         instalmentId={selectedProperty?.instalment_id}
-        monthsPaid={selectedProperty?.payment_history?.length}
-        paidInstalment={selectedProperty?.amount_paid_total}
       />
     </Fragment>
   );

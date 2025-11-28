@@ -27,8 +27,6 @@ interface AddPaymentModalProps {
   isOpen: boolean;
   onClose: () => void;
   instalmentId: string;
-  monthsPaid: number | string;
-  paidInstalment: number | string;
   dueDates: any[];
 }
 
@@ -36,8 +34,6 @@ const AddPaymentModal = ({
   isOpen,
   onClose,
   instalmentId,
-  monthsPaid,
-  paidInstalment,
   dueDates,
 }: AddPaymentModalProps) => {
   const toast = useToast();
@@ -95,6 +91,9 @@ const AddPaymentModal = ({
     }
     setLoading(false);
   };
+
+  console.log(dueDates, 'due dates');
+
   return (
     <CustomModal size="xl" isOpen={isOpen} onClose={onClose}>
       <Formik
@@ -109,7 +108,7 @@ const AddPaymentModal = ({
                 <Heading fontSize={20} fontWeight={600}>
                   Add Instalment Payment
                 </Heading>
-                <Box>
+                {/* <Box>
                   <Flex alignItems="center" gap="32px">
                     <Stack spacing="6px">
                       <Heading fontSize={16} fontWeight={600} color="brand.600">
@@ -126,7 +125,7 @@ const AddPaymentModal = ({
                       <Text>{monthsPaid}</Text>
                     </Stack>
                   </Flex>
-                </Box>
+                </Box> */}
                 <Box>
                   <Stack spacing="20px">
                     <FormControl
@@ -170,7 +169,7 @@ const AddPaymentModal = ({
                         fontWeight={600}
                         color="brand.300"
                       >
-                        Schedule Id
+                        Instalment Due Date
                       </FormLabel>
                       <Field
                         as={Select}

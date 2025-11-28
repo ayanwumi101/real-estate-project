@@ -11,7 +11,6 @@ import {
   FormControl,
   FormLabel,
   FormErrorMessage,
-  border,
   Spinner,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
