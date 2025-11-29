@@ -58,7 +58,7 @@ const AddPaymentModal = ({
 
   const handleSubmit = async (values: any) => {
     const formData = {
-      instalment_id: instalmentId,
+      property_sale_id: instalmentId,
       schedule_id: values.schedule_id,
       amount: Number(values.amount),
       payment_date: values.payment_date,
