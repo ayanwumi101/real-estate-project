@@ -83,10 +83,11 @@ const AddPaymentModal = ({
     } catch (error) {
       console.log(error);
       toast({
-        title: 'Payment added failed',
+        title: 'Unable to add new instalment payment',
         status: 'error',
         duration: 5000,
         isClosable: true,
+        position: 'top',
       });
     }
     setLoading(false);
