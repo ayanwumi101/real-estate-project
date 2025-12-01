@@ -68,18 +68,15 @@ const AddPaymentModal = ({
     console.log(formData);
     setLoading(true);
     try {
-      const response = await AddPaymentToInstalmentProperty(formData);
-      console.log(response);
-      if (response.id) {
-        toast({
-          title: 'Payment added successfully',
-          status: 'success',
-          duration: 3000,
-          isClosable: true,
-          position: 'top-right',
-        });
-        onClose();
-      }
+      await AddPaymentToInstalmentProperty(formData);
+      toast({
+        title: 'Payment added successfully',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      });
+      onClose();
     } catch (error) {
       console.log(error);
       toast({
