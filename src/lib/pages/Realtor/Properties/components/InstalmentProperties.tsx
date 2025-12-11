@@ -48,7 +48,9 @@ const PropertyListTable = ({ properties }: { properties: any[] }) => {
   const GetDueDates = async () => {
     if (selectedProperty) {
       try {
-        const res = await GetPropertyDueDates(selectedProperty?.property_sale_id);
+        const res = await GetPropertyDueDates(
+          selectedProperty?.property_sale_id
+        );
         setDueDates(res?.data);
       } catch (error) {
         console.log(error);
@@ -277,9 +279,13 @@ const PropertyListTable = ({ properties }: { properties: any[] }) => {
       </TableContainer>
       <AddPaymentModal
         isOpen={openModal}
-        dueDates={dueDates}
         onClose={() => setOpenModal(false)}
         instalmentId={selectedProperty?.property_sale_id}
+        dueDate={
+          selectedProperty?.next_instalment_date ||
+          selectedProperty?.first_payment_date
+        }
+        clientId={selectedProperty?.client_id}
       />
     </Fragment>
   );

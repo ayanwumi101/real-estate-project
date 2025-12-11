@@ -1,3 +1,334 @@
+// import {
+//   Heading,
+//   Text,
+//   Button,
+//   Input,
+//   InputLeftElement,
+//   InputGroup,
+//   Select,
+//   Stack,
+//   FormLabel,
+//   FormControl,
+//   Box,
+//   Flex,
+//   FormErrorMessage,
+//   Spinner,
+//   useToast,
+// } from '@chakra-ui/react';
+// import React from 'react';
+// import CustomModal from '~/lib/components/Modal';
+// import { AddPaymentToInstalmentProperty } from '~/lib/api/services/propertiesService';
+// import * as yup from 'yup';
+// import { Formik, Field, Form } from 'formik';
+// import { FormatAmount, formatCurrency } from '~/lib/utils/formatAmount';
+// import moment from 'moment';
+
+// interface AddPaymentModalProps {
+//   isOpen: boolean;
+//   onClose: () => void;
+//   instalmentId: string;
+//   dueDate: string | Date;
+// }
+
+// const AddPaymentModal = ({
+//   isOpen,
+//   onClose,
+//   instalmentId,
+//   dueDate,
+// }: AddPaymentModalProps) => {
+//   const toast = useToast();
+//   const [loading, setLoading] = React.useState(false);
+//   const [commission, setCommission] = React.useState<string>('');
+//   const [instalmentAmount, setInstalmentAmount] = React.useState<string>('');
+//   const initialValues = {
+//     due_date: '',
+//     amount: 0,
+//     payment_date: '',
+//     commission: 0,
+//     payment_status: 'paid',
+//   };
+
+//   const parsedDueDate = moment(dueDate, 'YYYY-MM-DD HH:mm:ss').toDate();
+
+//   const validationSchema = yup.object({
+//     due_date: yup
+//       .date()
+//       .typeError('Invalid date format')
+//       .required('Due date is required')
+//       .max(
+//         parsedDueDate,
+//         `Due date cannot be later than ${moment(parsedDueDate).format('YYYY-MM-DD')}`
+//       ),
+//     amount: yup.number().required('Amount is required'),
+//     payment_date: yup.date().required('Payment date is required'),
+//     commission: yup.number().required('Commission is required'),
+//     payment_status: yup.string().required('Payment status is required'),
+//   });
+
+//   const handleSubmit = async (values: any) => {
+//     const formData = {
+//       property_sale_id: instalmentId,
+//       client_id: values.schedule_id,
+//       amount_paid: Number(values.amount),
+//       payment_date: values.payment_date,
+//       due_date: values.due_date,
+//       commission: Number(values.commission),
+//       payment_status: values.payment_status,
+//     };
+//     console.log(formData);
+//     setLoading(true);
+//     try {
+//       await AddPaymentToInstalmentProperty(formData);
+//       toast({
+//         title: 'Payment added successfully',
+//         status: 'success',
+//         duration: 3000,
+//         isClosable: true,
+//         position: 'top-right',
+//       });
+//       onClose();
+//     } catch (error) {
+//       console.log(error);
+//       toast({
+//         title: 'Unable to add new instalment payment',
+//         status: 'error',
+//         duration: 5000,
+//         isClosable: true,
+//         position: 'top',
+//       });
+//     }
+//     setLoading(false);
+//   };
+
+//   console.log(dueDate);
+
+//   return (
+//     <CustomModal size="xl" isOpen={isOpen} onClose={onClose}>
+//       <Formik
+//         initialValues={initialValues}
+//         validationSchema={validationSchema}
+//         onSubmit={handleSubmit}
+//       >
+//         {({ errors, touched, values, setFieldValue, setFieldTouched }) => {
+//           return (
+//             <Form>
+//               <Stack spacing="24px">
+//                 <Heading fontSize={20} fontWeight={600}>
+//                   Add Instalment Payment
+//                 </Heading>
+//                 {/* <Box>
+//                   <Flex alignItems="center" gap="32px">
+//                     <Stack spacing="6px">
+//                       <Heading fontSize={16} fontWeight={600} color="brand.600">
+//                         Paid Instalment
+//                       </Heading>
+//                       <Text fontSize={16} fontWeight={500} color="brand.400">
+//                         {FormatAmount(Number(paidInstalment))}
+//                       </Text>
+//                     </Stack>
+//                     <Stack spacing="6px">
+//                       <Heading fontSize={16} fontWeight={600} color="brand.600">
+//                         Months Paid
+//                       </Heading>
+//                       <Text>{monthsPaid}</Text>
+//                     </Stack>
+//                   </Flex>
+//                 </Box> */}
+//                 <Box>
+//                   <Stack spacing="20px">
+//                     <FormControl
+//                       isInvalid={
+//                         !!errors.payment_status && touched.payment_status
+//                       }
+//                     >
+//                       <FormLabel
+//                         fontSize={16}
+//                         fontWeight={600}
+//                         color="brand.300"
+//                       >
+//                         Payment Status
+//                       </FormLabel>
+//                       <Field
+//                         as={Select}
+//                         placeholder="Select payment status"
+//                         rounded="50px"
+//                         color="brand.800"
+//                         outline="none"
+//                         h="50px"
+//                         border="1px solid"
+//                         borderColor="border.200"
+//                         _focus={{ border: 'none', outline: 'none' }}
+//                         name="payment_status"
+//                       >
+//                         <option value="pending">Pending</option>
+//                         <option value="completed">Completed</option>
+//                       </Field>
+//                       <FormErrorMessage>
+//                         {errors.payment_status &&
+//                           touched.payment_status &&
+//                           errors.payment_status}
+//                       </FormErrorMessage>
+//                     </FormControl>
+//                     <FormControl
+//                       isInvalid={!!errors.due_date && touched.due_date}
+//                     >
+//                       <FormLabel
+//                         fontSize={16}
+//                         fontWeight={600}
+//                         color="brand.300"
+//                       >
+//                         Instalment Due Date
+//                       </FormLabel>
+//                       <Field
+//                         as={Input}
+//                         type="date"
+//                         placeholder="dd/mm/yyyy"
+//                         rounded="50px"
+//                         color="brand.800"
+//                         outline="none"
+//                         h="50px"
+//                         border="1px solid"
+//                         borderColor="border.200"
+//                         _focus={{ border: 'none', outline: 'none' }}
+//                         name="due_date"
+//                       />
+//                       <FormErrorMessage>
+//                         {errors.due_date && touched.due_date && errors.due_date}
+//                       </FormErrorMessage>
+//                     </FormControl>
+//                     <FormControl
+//                       isInvalid={!!errors.payment_date && touched.payment_date}
+//                     >
+//                       <FormLabel
+//                         fontSize={16}
+//                         fontWeight={600}
+//                         color="brand.300"
+//                       >
+//                         Payment Date
+//                       </FormLabel>
+//                       <Field
+//                         as={Input}
+//                         type="date"
+//                         placeholder="dd/mm/yyyy"
+//                         rounded="50px"
+//                         color="brand.800"
+//                         outline="none"
+//                         h="50px"
+//                         border="1px solid"
+//                         borderColor="border.200"
+//                         _focus={{ border: 'none', outline: 'none' }}
+//                         name="payment_date"
+//                       />
+//                       <FormErrorMessage>
+//                         {errors.payment_date &&
+//                           touched.payment_date &&
+//                           errors.payment_date}
+//                       </FormErrorMessage>
+//                     </FormControl>
+//                     <FormControl isInvalid={!!errors.amount && touched.amount}>
+//                       <FormLabel
+//                         fontSize={16}
+//                         fontWeight={600}
+//                         color="brand.300"
+//                       >
+//                         Instalment Amount
+//                       </FormLabel>
+//                       <Input
+//                         value={formatCurrency(instalmentAmount)}
+//                         onChange={(e) => {
+//                           const rawValue = e.target.value.replace(/[^\d]/g, '');
+//                           setInstalmentAmount(rawValue);
+//                           setFieldValue('amount', rawValue);
+//                         }}
+//                         type="text"
+//                         placeholder="Enter instalment amount received"
+//                         rounded="50px"
+//                         color="brand.800"
+//                         outline="none"
+//                         h="50px"
+//                         border="1px solid"
+//                         borderColor="border.200"
+//                         _focus={{ border: 'none', outline: 'none' }}
+//                         name="amount"
+//                       />
+//                       <FormErrorMessage>
+//                         {errors.amount && touched.amount && errors.amount}
+//                       </FormErrorMessage>
+//                     </FormControl>
+//                     <FormControl
+//                       isInvalid={!!errors.payment_date && touched.payment_date}
+//                     >
+//                       <FormLabel
+//                         fontSize={16}
+//                         fontWeight={600}
+//                         color="brand.300"
+//                       >
+//                         Commission
+//                       </FormLabel>
+//                       <Input
+//                         type="text"
+//                         value={formatCurrency(commission)}
+//                         onChange={(e) => {
+//                           const rawValue = e.target.value.replace(/[^\d]/g, '');
+//                           setCommission(rawValue);
+//                           setFieldValue('commission', rawValue);
+//                         }}
+//                         placeholder="Enter commission received"
+//                         rounded="50px"
+//                         color="brand.800"
+//                         outline="none"
+//                         h="50px"
+//                         border="1px solid"
+//                         borderColor="border.200"
+//                         _focus={{ border: 'none', outline: 'none' }}
+//                         name="commission"
+//                       />
+//                       <FormErrorMessage>
+//                         {errors.commission &&
+//                           touched.commission &&
+//                           errors.commission}
+//                       </FormErrorMessage>
+//                     </FormControl>
+//                   </Stack>
+//                 </Box>
+//                 <Box>
+//                   <Flex
+//                     alignItems="center"
+//                     gap="16px"
+//                     justifyContent="flex-end"
+//                   >
+//                     <Button
+//                       bg="brand.500"
+//                       color="brand.100"
+//                       fontWeight={500}
+//                       onClick={onClose}
+//                       fontSize={15}
+//                       px="30px"
+//                     >
+//                       Cancel
+//                     </Button>
+//                     <Button
+//                       bg="brand.100"
+//                       fontWeight={500}
+//                       color="brand.200"
+//                       px="40px"
+//                       type="submit"
+//                     >
+//                       {loading ? <Spinner /> : 'Save'}
+//                     </Button>
+//                   </Flex>
+//                 </Box>
+//               </Stack>
+//             </Form>
+//           );
+//         }}
+//       </Formik>
+//     </CustomModal>
+//   );
+// };
+
+// export default AddPaymentModal;
+
 import {
   Heading,
   Text,
@@ -27,46 +358,127 @@ interface AddPaymentModalProps {
   isOpen: boolean;
   onClose: () => void;
   instalmentId: string;
-  dueDates: any[];
+  dueDate: string | Date;
+  clientId: string;
 }
 
 const AddPaymentModal = ({
   isOpen,
   onClose,
   instalmentId,
-  dueDates,
+  dueDate,
+  clientId,
 }: AddPaymentModalProps) => {
   const toast = useToast();
   const [loading, setLoading] = React.useState(false);
   const [commission, setCommission] = React.useState<string>('');
   const [instalmentAmount, setInstalmentAmount] = React.useState<string>('');
+
   const initialValues = {
-    schedule_id: '',
+    due_date: '',
     amount: 0,
     payment_date: '',
     commission: 0,
     payment_status: 'paid',
   };
 
+  // More robust date parsing that handles multiple formats
+  const parsedDueDate = React.useMemo(() => {
+    if (!dueDate) return null;
+
+    // If it's already a Date object, use it
+    if (dueDate instanceof Date) {
+      return moment(dueDate).isValid() ? moment(dueDate).toDate() : null;
+    }
+
+    // Try parsing as ISO string first
+    let parsed = moment(dueDate);
+
+    // If that fails, try the specific format you mentioned
+    if (!parsed.isValid()) {
+      parsed = moment(dueDate, 'YYYY-MM-DD HH:mm:ss');
+    }
+
+    // If still invalid, try other common formats
+    if (!parsed.isValid()) {
+      parsed = moment(dueDate, [
+        'YYYY-MM-DD',
+        'DD/MM/YYYY',
+        'MM/DD/YYYY',
+        'YYYY-MM-DD HH:mm:ss',
+      ]);
+    }
+
+    return parsed.isValid() ? parsed.toDate() : null;
+  }, [dueDate]);
+
   const validationSchema = yup.object({
-    schedule_id: yup.string().required('Schedule ID is required'),
-    amount: yup.number().required('Amount is required'),
-    payment_date: yup.date().required('Payment date is required'),
-    commission: yup.number().required('Commission is required'),
-    payment_status: yup.string().required('Payment status is required'),
+    due_date: yup
+      .date()
+      .typeError('Invalid date format')
+      .required('Due date is required')
+      .test(
+        'min-date',
+        `Due date cannot be earlier than ${
+          parsedDueDate
+            ? moment(parsedDueDate).format('MMMM DD, YYYY')
+            : 'the specified date'
+        }`,
+        function (value) {
+          if (!parsedDueDate) return true;
+          if (!value) return true;
+          return moment(value).isSameOrAfter(parsedDueDate, 'day');
+        }
+      ),
+
+    amount: yup
+      .number()
+      .typeError('Amount must be a number')
+      .positive('Amount must be greater than 0')
+      .required('Amount is required'),
+
+    payment_date: yup
+      .date()
+      .typeError('Invalid payment date')
+      .when('payment_status', {
+        is: 'completed',
+        then: (schema) =>
+          schema.required('Payment date is required when payment is completed'),
+        otherwise: (schema) => schema.notRequired(),
+      }),
+
+    commission: yup
+      .number()
+      .typeError('Commission must be a number')
+      .min(0, 'Commission cannot be negative')
+      .when('payment_status', {
+        is: 'completed',
+        then: (schema) =>
+          schema.required('Commission is required when payment is completed'),
+        otherwise: (schema) => schema.notRequired(),
+      }),
+
+    payment_status: yup
+      .string()
+      .oneOf(['pending', 'completed'], 'Invalid payment status')
+      .required('Payment status is required'),
   });
+
 
   const handleSubmit = async (values: any) => {
     const formData = {
       property_sale_id: instalmentId,
-      schedule_id: values.schedule_id,
-      amount: Number(values.amount),
+      client_id: clientId,
+      amount_paid: Number(values.amount),
       payment_date: values.payment_date,
+      due_date: values.due_date,
       commission: Number(values.commission),
       payment_status: values.payment_status,
     };
+
     console.log(formData);
     setLoading(true);
+
     try {
       await AddPaymentToInstalmentProperty(formData);
       toast({
@@ -76,6 +488,11 @@ const AddPaymentModal = ({
         isClosable: true,
         position: 'top-right',
       });
+
+      // Reset local state
+      setCommission('');
+      setInstalmentAmount('');
+
       onClose();
     } catch (error) {
       console.log(error);
@@ -86,11 +503,13 @@ const AddPaymentModal = ({
         isClosable: true,
         position: 'top',
       });
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
-  console.log(dueDates, 'due dates');
+  console.log('Due Date (prop):', dueDate);
+  console.log('Parsed Due Date:', parsedDueDate);
 
   return (
     <CustomModal size="xl" isOpen={isOpen} onClose={onClose}>
@@ -106,24 +525,16 @@ const AddPaymentModal = ({
                 <Heading fontSize={20} fontWeight={600}>
                   Add Instalment Payment
                 </Heading>
-                {/* <Box>
-                  <Flex alignItems="center" gap="32px">
-                    <Stack spacing="6px">
-                      <Heading fontSize={16} fontWeight={600} color="brand.600">
-                        Paid Instalment
-                      </Heading>
-                      <Text fontSize={16} fontWeight={500} color="brand.400">
-                        {FormatAmount(Number(paidInstalment))}
-                      </Text>
-                    </Stack>
-                    <Stack spacing="6px">
-                      <Heading fontSize={16} fontWeight={600} color="brand.600">
-                        Months Paid
-                      </Heading>
-                      <Text>{monthsPaid}</Text>
-                    </Stack>
-                  </Flex>
-                </Box> */}
+
+                {parsedDueDate && (
+                  <Box bg="blue.50" p="12px" borderRadius="8px">
+                    <Text fontSize={14} color="blue.700">
+                      <strong>Note:</strong> Due date must be on or after{' '}
+                      {moment(parsedDueDate).format('MMMM DD, YYYY')}
+                    </Text>
+                  </Box>
+                )}
+
                 <Box>
                   <Stack spacing="20px">
                     <FormControl
@@ -154,13 +565,14 @@ const AddPaymentModal = ({
                         <option value="completed">Completed</option>
                       </Field>
                       <FormErrorMessage>
-                        {errors.payment_status &&
-                          touched.payment_status &&
-                          errors.payment_status}
+                        {typeof errors.payment_status === 'string'
+                          ? errors.payment_status
+                          : ''}
                       </FormErrorMessage>
                     </FormControl>
+
                     <FormControl
-                      isInvalid={!!errors.schedule_id && touched.schedule_id}
+                      isInvalid={!!errors.due_date && touched.due_date}
                     >
                       <FormLabel
                         fontSize={16}
@@ -170,8 +582,9 @@ const AddPaymentModal = ({
                         Instalment Due Date
                       </FormLabel>
                       <Field
-                        as={Select}
-                        placeholder="Select Schedule Date"
+                        as={Input}
+                        type="date"
+                        placeholder="dd/mm/yyyy"
                         rounded="50px"
                         color="brand.800"
                         outline="none"
@@ -179,25 +592,20 @@ const AddPaymentModal = ({
                         border="1px solid"
                         borderColor="border.200"
                         _focus={{ border: 'none', outline: 'none' }}
-                        name="schedule_id"
-                      >
-                        {dueDates?.map((item: any) => (
-                          <option
-                            key={item?.schedule_id}
-                            value={item?.schedule_id}
-                          >
-                            {moment(item?.due_date).format(
-                              'dddd, MMMM Do YYYY'
-                            )}
-                          </option>
-                        ))}
-                      </Field>
+                        name="due_date"
+                        min={
+                          parsedDueDate
+                            ? moment(parsedDueDate).format('YYYY-MM-DD')
+                            : undefined
+                        }
+                      />
                       <FormErrorMessage>
-                        {errors.schedule_id &&
-                          touched.schedule_id &&
-                          errors.schedule_id}
+                        {typeof errors.due_date === 'string'
+                          ? errors.due_date
+                          : ''}
                       </FormErrorMessage>
                     </FormControl>
+
                     <FormControl
                       isInvalid={!!errors.payment_date && touched.payment_date}
                     >
@@ -220,13 +628,15 @@ const AddPaymentModal = ({
                         borderColor="border.200"
                         _focus={{ border: 'none', outline: 'none' }}
                         name="payment_date"
+                        isDisabled={values.payment_status === 'pending'}
                       />
                       <FormErrorMessage>
-                        {errors.payment_date &&
-                          touched.payment_date &&
-                          errors.payment_date}
+                        {typeof errors.payment_date === 'string'
+                          ? errors.payment_date
+                          : ''}
                       </FormErrorMessage>
                     </FormControl>
+
                     <FormControl isInvalid={!!errors.amount && touched.amount}>
                       <FormLabel
                         fontSize={16}
@@ -254,11 +664,12 @@ const AddPaymentModal = ({
                         name="amount"
                       />
                       <FormErrorMessage>
-                        {errors.amount && touched.amount && errors.amount}
+                        {typeof errors.amount === 'string' ? errors.amount : ''}
                       </FormErrorMessage>
                     </FormControl>
+
                     <FormControl
-                      isInvalid={!!errors.payment_date && touched.payment_date}
+                      isInvalid={!!errors.commission && touched.commission}
                     >
                       <FormLabel
                         fontSize={16}
@@ -284,15 +695,17 @@ const AddPaymentModal = ({
                         borderColor="border.200"
                         _focus={{ border: 'none', outline: 'none' }}
                         name="commission"
+                        isDisabled={values.payment_status === 'pending'}
                       />
                       <FormErrorMessage>
-                        {errors.commission &&
-                          touched.commission &&
-                          errors.commission}
+                        {typeof errors.commission === 'string'
+                          ? errors.commission
+                          : ''}
                       </FormErrorMessage>
                     </FormControl>
                   </Stack>
                 </Box>
+
                 <Box>
                   <Flex
                     alignItems="center"
@@ -315,8 +728,9 @@ const AddPaymentModal = ({
                       color="brand.200"
                       px="40px"
                       type="submit"
+                      isLoading={loading}
                     >
-                      {loading ? <Spinner /> : 'Save'}
+                      Save
                     </Button>
                   </Flex>
                 </Box>

@@ -173,9 +173,10 @@ export const CreateInstalmentPropertyPayment = async (
 
 export const AddPaymentToInstalmentProperty = async (data: {
   property_sale_id: string;
-  schedule_id: string;
-  amount: number;
-  payment_date: string;
+  client_id: string;
+  amount_paid: number;
+  payment_date: string | Date;
+  due_date: string | Date;
   commission: number;
   payment_status: string;
 }) => {
