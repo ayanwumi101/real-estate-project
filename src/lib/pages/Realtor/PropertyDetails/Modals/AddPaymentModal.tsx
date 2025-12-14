@@ -605,37 +605,40 @@ const AddPaymentModal = ({
                           : ''}
                       </FormErrorMessage>
                     </FormControl>
-
-                    <FormControl
-                      isInvalid={!!errors.payment_date && touched.payment_date}
-                    >
-                      <FormLabel
-                        fontSize={16}
-                        fontWeight={600}
-                        color="brand.300"
+                    {values.payment_status === 'completed' && (
+                      <FormControl
+                        isInvalid={
+                          !!errors.payment_date && touched.payment_date
+                        }
                       >
-                        Payment Date
-                      </FormLabel>
-                      <Field
-                        as={Input}
-                        type="date"
-                        placeholder="dd/mm/yyyy"
-                        rounded="50px"
-                        color="brand.800"
-                        outline="none"
-                        h="50px"
-                        border="1px solid"
-                        borderColor="border.200"
-                        _focus={{ border: 'none', outline: 'none' }}
-                        name="payment_date"
-                        isDisabled={values.payment_status === 'pending'}
-                      />
-                      <FormErrorMessage>
-                        {typeof errors.payment_date === 'string'
-                          ? errors.payment_date
-                          : ''}
-                      </FormErrorMessage>
-                    </FormControl>
+                        <FormLabel
+                          fontSize={16}
+                          fontWeight={600}
+                          color="brand.300"
+                        >
+                          Payment Date
+                        </FormLabel>
+                        <Field
+                          as={Input}
+                          type="date"
+                          placeholder="dd/mm/yyyy"
+                          rounded="50px"
+                          color="brand.800"
+                          outline="none"
+                          h="50px"
+                          border="1px solid"
+                          borderColor="border.200"
+                          _focus={{ border: 'none', outline: 'none' }}
+                          name="payment_date"
+                          // isDisabled={values.payment_status === 'pending'}
+                        />
+                        <FormErrorMessage>
+                          {typeof errors.payment_date === 'string'
+                            ? errors.payment_date
+                            : ''}
+                        </FormErrorMessage>
+                      </FormControl>
+                    )}
 
                     <FormControl isInvalid={!!errors.amount && touched.amount}>
                       <FormLabel
@@ -667,42 +670,46 @@ const AddPaymentModal = ({
                         {typeof errors.amount === 'string' ? errors.amount : ''}
                       </FormErrorMessage>
                     </FormControl>
-
-                    <FormControl
-                      isInvalid={!!errors.commission && touched.commission}
-                    >
-                      <FormLabel
-                        fontSize={16}
-                        fontWeight={600}
-                        color="brand.300"
+                    {values.payment_status === 'completed' && (
+                      <FormControl
+                        isInvalid={!!errors.commission && touched.commission}
                       >
-                        Commission
-                      </FormLabel>
-                      <Input
-                        type="text"
-                        value={formatCurrency(commission)}
-                        onChange={(e) => {
-                          const rawValue = e.target.value.replace(/[^\d]/g, '');
-                          setCommission(rawValue);
-                          setFieldValue('commission', rawValue);
-                        }}
-                        placeholder="Enter commission received"
-                        rounded="50px"
-                        color="brand.800"
-                        outline="none"
-                        h="50px"
-                        border="1px solid"
-                        borderColor="border.200"
-                        _focus={{ border: 'none', outline: 'none' }}
-                        name="commission"
-                        isDisabled={values.payment_status === 'pending'}
-                      />
-                      <FormErrorMessage>
-                        {typeof errors.commission === 'string'
-                          ? errors.commission
-                          : ''}
-                      </FormErrorMessage>
-                    </FormControl>
+                        <FormLabel
+                          fontSize={16}
+                          fontWeight={600}
+                          color="brand.300"
+                        >
+                          Commission
+                        </FormLabel>
+                        <Input
+                          type="text"
+                          value={formatCurrency(commission)}
+                          onChange={(e) => {
+                            const rawValue = e.target.value.replace(
+                              /[^\d]/g,
+                              ''
+                            );
+                            setCommission(rawValue);
+                            setFieldValue('commission', rawValue);
+                          }}
+                          placeholder="Enter commission received"
+                          rounded="50px"
+                          color="brand.800"
+                          outline="none"
+                          h="50px"
+                          border="1px solid"
+                          borderColor="border.200"
+                          _focus={{ border: 'none', outline: 'none' }}
+                          name="commission"
+                          // isDisabled={values.payment_status === 'pending'}
+                        />
+                        <FormErrorMessage>
+                          {typeof errors.commission === 'string'
+                            ? errors.commission
+                            : ''}
+                        </FormErrorMessage>
+                      </FormControl>
+                    )}
                   </Stack>
                 </Box>
 

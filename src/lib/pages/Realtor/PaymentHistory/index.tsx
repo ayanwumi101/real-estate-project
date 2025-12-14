@@ -13,6 +13,10 @@ import useNavigate from '~/lib/utils/useNavigate';
 import { ChevronLeftIcon } from '~/lib/components/Icons/Icons';
 import { useRouter } from 'next/navigation';
 import InstalmentPropertyPaymentHistory from './components/InstalmentPropertyPaymentHistory';
+import {
+  findClosestPaymentDueDate,
+  getAssetWithEarliestPaymentDue, getPropertyWithEarliestPaymentDue
+} from '~/lib/utils/findClosestDueAsset';
 
 const index = () => {
   const { id } = useParams();
@@ -35,6 +39,12 @@ const index = () => {
   useEffect(() => {
     getPaymentHistory();
   }, [id]);
+  
+  const assetWithEarliestPaymentDue = getPropertyWithEarliestPaymentDue(
+    paymentHistory?.payment_history
+  );
+
+
   return (
     <RealtorDashboardLayout
       title={
@@ -95,7 +105,7 @@ const index = () => {
             noOfSales={paymentHistory?.number_of_sales}
             propertyType={paymentHistory.payment_type}
             outstandingBalance={paymentHistory?.outstanding_balance}
-            nextDueDate={paymentHistory?.next_due_date}
+            nextDueDate={assetWithEarliestPaymentDue?.date}
           />
           {paymentHistory?.payment_type === 'instalment' ? (
             <Box w="full">

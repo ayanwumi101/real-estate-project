@@ -149,7 +149,7 @@ const PaymentStats = ({
                 Next Due Payment
               </Text>
               <Heading fontSize={24} fontWeight={500}>
-                {moment(nextDueDate).format('do, dd mm yyyy')}
+                {nextDueDate ? moment(nextDueDate).format('ddd, DD MMM YYYY') : 'N/A'}
               </Heading>
             </Box>
           </Box>

@@ -15,18 +15,16 @@ import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 import {
   MyAssetsIcon,
-  MyPortfolioIcon,
-  TransactionsIcon,
-  HelpAndSupportIcon,
   SettingsIcon,
   LogoutIcon,
   ManagedAssetsIcon,
-  ChevronDownIcon,
-  ChevronUpIcon,
   RealtorClientsIcon,
   RealtorSecuritiesIcon,
   RealtorTeamsIcon,
   RealtorTransactionsIcon,
+  CollapsibleSidebarIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
 } from '~/lib/components/Icons/Icons';
 import useNavigate from '~/lib/utils/useNavigate';
 
@@ -78,12 +76,17 @@ const CollapsibleSidebarItem = ({
     <Box
       py="10px"
       w="full"
-      px="70px"
+      px="20px"
       bg={isActive ? '#EDEDFF' : 'none'}
       onClick={onClick}
+      _hover={{ bg: '#EDEDFF' }}
     >
       <Link href={href}>
-        <Text color={isActive ? '#4040A0' : '#2E353F'} fontWeight={500}>
+        <Text
+          color={isActive ? '#4040A0' : '#2E353F'}
+          _hover={{ color: '#4040A0' }}
+          fontWeight={500}
+        >
           {label}
         </Text>
       </Link>
@@ -155,14 +158,14 @@ const RealtorSidebar = () => {
               justifyContent="flex-start"
               leftIcon={
                 <ManagedAssetsIcon
-                  isActive={pathname.includes('/realtor/managed-assets')}
+                  isActive={pathname.includes('/realtor/managed-assets') || isOpen}
                 />
               }
               fontWeight={500}
               fontSize={15}
               bg="none"
               color={
-                pathname.includes('/realtor/managed-assets')
+                pathname.includes('/realtor/managed-assets') || isOpen
                   ? '#4040A0'
                   : '#2E353F'
               }
@@ -175,21 +178,29 @@ const RealtorSidebar = () => {
                   <ChevronDownIcon isActive={pathname.includes('/realtor/managed-assets')} />
                 )
               }
+              
               _hover={{ bg: 'none' }}
             >
               Managed Assets
             </Button>
             <Collapse in={isOpen} animateOpacity style={{ width: '100%' }}>
-              <CollapsibleSidebarItem
-                label="Investors"
-                isActive={pathname === '/realtor/managed-assets/investors'}
-                href="/realtor/managed-assets/investors"
-              />
-              <CollapsibleSidebarItem
-                label="Assets"
-                isActive={pathname === '/realtor/managed-assets/assets'}
-                href="/realtor/managed-assets/assets"
-              />
+              <Flex alignItems="flex-start" w="full" gap='2'>
+                <Box as="span" ml="10" mt="1">
+                  <CollapsibleSidebarIcon />
+                </Box>
+                <Stack spacing={0} w="full">
+                  <CollapsibleSidebarItem
+                    label="Investors"
+                    isActive={pathname === '/realtor/managed-assets/investors'}
+                    href="/realtor/managed-assets/investors"
+                  />
+                  <CollapsibleSidebarItem
+                    label="Assets"
+                    isActive={pathname === '/realtor/managed-assets/assets'}
+                    href="/realtor/managed-assets/assets"
+                  />
+                </Stack>
+              </Flex>
             </Collapse>
             <SideBarItem
               label="Transactions"
