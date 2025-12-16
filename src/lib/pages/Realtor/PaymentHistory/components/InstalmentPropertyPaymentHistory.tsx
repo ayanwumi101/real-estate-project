@@ -9,6 +9,7 @@ import {
   Tbody,
   Td,
   Badge,
+  Stack,
 } from '@chakra-ui/react';
 import useNavigate from '~/lib/utils/useNavigate';
 import moment from 'moment';
@@ -26,11 +27,13 @@ import { Fragment } from 'react';
 interface InstalmentpropertyPaymentHistoryProps {
   paymentHistory: any[];
   activeTab: 'completed' | 'pending';
+  outstandingBalance: number;
 }
 
 const InstalmentPropertyPaymentHistory = ({
   paymentHistory,
   activeTab,
+  outstandingBalance,
 }: InstalmentpropertyPaymentHistoryProps) => {
   const newPayments =
     activeTab === 'completed'
@@ -73,16 +76,18 @@ const InstalmentPropertyPaymentHistory = ({
                 fontSize={14}
                 textTransform="capitalize"
               >
-                Amount Paid
+                {activeTab === 'completed' ? 'Amount Paid' : 'Amount'}
               </Th>
-              <Th
-                color="#222222"
-                fontWeight={500}
-                fontSize={14}
-                textTransform="capitalize"
-              >
-                Commission
-              </Th>
+              {activeTab === 'completed' && (
+                <Th
+                  color="#222222"
+                  fontWeight={500}
+                  fontSize={14}
+                  textTransform="capitalize"
+                >
+                  Commission
+                </Th>
+              )}
               <Th
                 color="#222222"
                 fontWeight={500}
@@ -100,8 +105,9 @@ const InstalmentPropertyPaymentHistory = ({
             </Tr>
           </Thead>
           <Tbody color="#222222" maxH="450px" overflow="auto">
-            {newPayments?.slice((page - 1) * limit, page * limit)
-            ?.map((payment) => {
+            {newPayments
+              ?.slice((page - 1) * limit, page * limit)
+              ?.map((payment) => {
                 return (
                   <Tr
                     key={payment?.id}
@@ -122,9 +128,11 @@ const InstalmentPropertyPaymentHistory = ({
                     <Td fontWeight={500} fontSize={14}>
                       {FormatAmount(Number(payment?.amount))}
                     </Td>
-                    <Td fontWeight={500} fontSize={14}>
-                      {FormatAmount(Number(payment?.commission))}
-                    </Td>
+                    {activeTab === 'completed' && (
+                      <Td fontWeight={500} fontSize={14}>
+                        {FormatAmount(Number(payment?.commission))}
+                      </Td>
+                    )}
                     <Td
                       fontWeight={500}
                       fontSize={14}
@@ -197,8 +205,22 @@ const InstalmentPropertyPaymentHistory = ({
           </Tbody>
         </Table>
         {newPayments?.length > 0 && (
-          <Box w="full" bg="white" py="10px">
-            <Flex alignItems="center" justifyContent="center" gap="13px">
+          <Box
+            w="full"
+            bg="white"
+            py="10px"
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            px="16px"
+          >
+            {/* pagination button */}
+            <Flex
+              alignItems="center"
+              w="full"
+              justifyContent="center"
+              gap="13px"
+            >
               <Button
                 onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
                 isDisabled={page === 1}
@@ -227,6 +249,19 @@ const InstalmentPropertyPaymentHistory = ({
                 <NextPageIcon />
               </Button>
             </Flex>
+            {/* Total pending banner */}
+            {activeTab === 'pending' && (
+              <Box py="8px" px="16px" rounded="10px" bg="bg.200">
+                <Stack spacing="2px">
+                  <Text fontSize={12} fontWeight={500} color="brand.600">
+                    Total Outstanding{' '}
+                  </Text>
+                  <Text fontWeight={500} fontSize={16}>
+                    {FormatAmount(Number(outstandingBalance))}
+                  </Text>
+                </Stack>
+              </Box>
+            )}
           </Box>
         )}
       </TableContainer>

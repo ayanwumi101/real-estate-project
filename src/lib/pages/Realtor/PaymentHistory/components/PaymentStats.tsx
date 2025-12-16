@@ -35,7 +35,6 @@ import {
 } from '~/lib/components/Icons/Icons';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 
-
 const PaymentStats = ({
   salesPrice,
   totalAmountPaid,
@@ -63,10 +62,11 @@ const PaymentStats = ({
           gap="10px"
           overflow="auto"
           pb="2"
+          flexWrap="wrap"
         >
           {/* first card */}
           <Box
-            minW={['260px', '20%']}
+            minW={['260px', '24%']}
             h="auto"
             rounded="5px"
             border="1px solid"
@@ -84,7 +84,7 @@ const PaymentStats = ({
           </Box>
           {/* second card */}
           <Box
-            minW={['260px', '20%']}
+            minW={['260px', '24%']}
             h="auto"
             rounded="5px"
             border="1px solid"
@@ -93,7 +93,7 @@ const PaymentStats = ({
             <Box px="16px" py="12px">
               {' '}
               <Text mb="16px" fontSize={16} fontWeight={500} color="brand.600">
-                Total Payments
+                Total Paid
               </Text>
               <Heading fontSize={24} fontWeight={500}>
                 {totalAmountPaid ? FormatAmount(totalAmountPaid) : '₦0.00'}
@@ -102,7 +102,7 @@ const PaymentStats = ({
           </Box>
           {/* third card */}
           <Box
-            minW={['260px', '20%']}
+            minW={['260px', '24%']}
             h="auto"
             rounded="5px"
             border="1px solid"
@@ -111,7 +111,7 @@ const PaymentStats = ({
             <Box px="16px" py="12px">
               {' '}
               <Text mb="16px" fontSize={16} fontWeight={500} color="brand.600">
-                Total Pending
+                Outstanding
               </Text>
               <Heading fontSize={24} fontWeight={500}>
                 {totalCommission ? FormatAmount(outstandingBalance) : '₦0.00'}
@@ -120,7 +120,7 @@ const PaymentStats = ({
           </Box>
           {/* third card */}
           <Box
-            minW={['260px', '20%']}
+            minW={['260px', '24%']}
             h="auto"
             rounded="5px"
             border="1px solid"
@@ -137,7 +137,7 @@ const PaymentStats = ({
             </Box>
           </Box>
           <Box
-            minW={['260px', '20%']}
+            minW={['260px', '24%']}
             h="auto"
             rounded="5px"
             border="1px solid"
@@ -149,7 +149,9 @@ const PaymentStats = ({
                 Next Due Payment
               </Text>
               <Heading fontSize={24} fontWeight={500}>
-                {nextDueDate ? moment(nextDueDate).format('ddd, DD MMM YYYY') : 'N/A'}
+                {nextDueDate
+                  ? moment(nextDueDate).format('ddd, DD MMM YYYY')
+                  : 'N/A'}
               </Heading>
             </Box>
           </Box>

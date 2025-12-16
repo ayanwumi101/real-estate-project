@@ -39,7 +39,7 @@ const index = () => {
   useEffect(() => {
     getPaymentHistory();
   }, [id]);
-  
+
   const assetWithEarliestPaymentDue = getPropertyWithEarliestPaymentDue(
     paymentHistory?.payment_history
   );
@@ -147,6 +147,7 @@ const index = () => {
                 <InstalmentPropertyPaymentHistory
                   paymentHistory={paymentHistory?.payment_history}
                   activeTab={activeTab}
+                  outstandingBalance={paymentHistory?.outstanding_balance}
                 />
               </Stack>
             </Box>

@@ -14,7 +14,6 @@ import {
   GetInstalmentPropertyPaymentHistory,
   UpdateProperty,
 } from '~/lib/api/services/propertiesService';
-import InstalmentPropertyDetails from './components/InstalmentPropertyDetails';
 import SalesHistory from './components/SalesHistory';
 
 const index = () => {
@@ -124,22 +123,14 @@ const index = () => {
         />
         {activeTab === 'Details' && (
           <Box p={['20px', '20px']}>
-            <Flex
-              // alignItems="flex-start"
-              flexWrap={['wrap', 'nowrap']}
-              gap="40px"
-              w="full"
-            >
-              {/* {propertyType === 'available' && ( */}
+            <Flex flexWrap={['wrap', 'nowrap']} gap="40px" w="full">
               <AvailableAssetDetails
                 propertyDetails={availablePropertyDetails}
               />
-              {/* )} */}
               <Notes notes={availablePropertyDetails?.comment} />
             </Flex>
           </Box>
         )}
-        {/* <Fragment> */}
         {activeTab === 'Sales History' && (
           <Box>
             <SalesHistory
@@ -148,9 +139,7 @@ const index = () => {
             />
           </Box>
         )}
-        {/* </Fragment> */}
       </Stack>
-      {/* )} */}
     </RealtorDashboardLayout>
   );
 };
