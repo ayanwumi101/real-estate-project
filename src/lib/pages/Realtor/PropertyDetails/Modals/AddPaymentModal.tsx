@@ -109,6 +109,19 @@ const AddPaymentModal = ({
     payment_date: yup
       .date()
       .typeError('Invalid payment date')
+      .test(
+        'min-date',
+        `Payment date cannot be earlier than ${
+          parsedDueDate
+            ? moment(parsedDueDate).format('MMMM DD, YYYY')
+            : 'the specified date'
+        }`,
+        function (value) {
+          if (!parsedDueDate) return true;
+          if (!value) return true;
+          return moment(value).isSameOrAfter(parsedDueDate, 'day');
+        }
+      )
       .when('payment_status', {
         is: 'completed',
         then: (schema) =>
@@ -132,7 +145,6 @@ const AddPaymentModal = ({
       .oneOf(['pending', 'completed'], 'Invalid payment status')
       .required('Payment status is required'),
   });
-
 
   const handleSubmit = async (values: any) => {
     const formData = {
