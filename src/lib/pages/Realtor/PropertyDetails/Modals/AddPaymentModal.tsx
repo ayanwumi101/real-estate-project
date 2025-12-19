@@ -349,8 +349,8 @@ const AddPaymentModal = ({
                           name="payment_date"
                           // isDisabled={values.payment_status === 'pending'}
                           min={
-                            parsedNextPaymentDate
-                              ? moment(parsedNextPaymentDate).format('YYYY-MM-DD')
+                            parsedDueDate
+                              ? moment(parsedDueDate).format('YYYY-MM-DD')
                               : undefined
                           }
                         />
