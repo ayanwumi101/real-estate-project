@@ -286,6 +286,7 @@ const PropertyListTable = ({ properties }: { properties: any[] }) => {
           selectedProperty?.first_payment_date
         }
         clientId={selectedProperty?.client_id}
+        nextPaymentDate={selectedProperty?.next_instalment_date}
       />
     </Fragment>
   );

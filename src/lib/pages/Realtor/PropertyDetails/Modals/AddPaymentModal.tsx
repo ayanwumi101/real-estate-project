@@ -29,6 +29,7 @@ interface AddPaymentModalProps {
   instalmentId: string;
   dueDate: string | Date;
   clientId: string;
+  nextPaymentDate: string | Date;
 }
 
 const AddPaymentModal = ({
@@ -37,6 +38,7 @@ const AddPaymentModal = ({
   instalmentId,
   dueDate,
   clientId,
+  nextPaymentDate,
 }: AddPaymentModalProps) => {
   const toast = useToast();
   const [loading, setLoading] = React.useState(false);
@@ -81,6 +83,35 @@ const AddPaymentModal = ({
     return parsed.isValid() ? parsed.toDate() : null;
   }, [dueDate]);
 
+   const parsedNextPaymentDate = React.useMemo(() => {
+     if (!nextPaymentDate) return null;
+
+     // If it's already a Date object, use it
+     if (nextPaymentDate instanceof Date) {
+       return moment(nextPaymentDate).isValid() ? moment(nextPaymentDate).toDate() : null;
+     }
+
+     // Try parsing as ISO string first
+     let parsed = moment(nextPaymentDate);
+
+     // If that fails, try the specific format you mentioned
+     if (!parsed.isValid()) {
+       parsed = moment(nextPaymentDate, 'YYYY-MM-DD HH:mm:ss');
+     }
+
+     // If still invalid, try other common formats
+     if (!parsed.isValid()) {
+       parsed = moment(nextPaymentDate, [
+         'YYYY-MM-DD',
+         'DD/MM/YYYY',
+         'MM/DD/YYYY',
+         'YYYY-MM-DD HH:mm:ss',
+       ]);
+     }
+
+     return parsed.isValid() ? parsed.toDate() : null;
+   }, [nextPaymentDate]);
+
   const validationSchema = yup.object({
     due_date: yup
       .date()
@@ -109,23 +140,31 @@ const AddPaymentModal = ({
     payment_date: yup
       .date()
       .typeError('Invalid payment date')
-      .test(
-        'min-date',
-        `Payment date cannot be earlier than ${
-          parsedDueDate
-            ? moment(parsedDueDate).format('MMMM DD, YYYY')
-            : 'the specified date'
-        }`,
-        function (value) {
-          if (!parsedDueDate) return true;
-          if (!value) return true;
-          return moment(value).isSameOrAfter(parsedDueDate, 'day');
-        }
-      )
       .when('payment_status', {
         is: 'completed',
         then: (schema) =>
-          schema.required('Payment date is required when payment is completed'),
+          schema
+            .required('Payment date is required when payment is completed')
+            .test(
+              'min-payment-date',
+              `Payment date cannot be earlier than ${
+                parsedNextPaymentDate
+                  ? moment(parsedNextPaymentDate).format('MMMM DD, YYYY')
+                  : 'the next payment date'
+              }`,
+              function (value) {
+                // If nextPaymentDate is invalid, skip validation
+                if (!parsedNextPaymentDate) return true;
+
+                // Let required() handle empty values
+                if (!value) return true;
+
+                return moment(value).isSameOrAfter(
+                  parsedNextPaymentDate,
+                  'day'
+                );
+              }
+            ),
         otherwise: (schema) => schema.notRequired(),
       }),
 
@@ -309,6 +348,11 @@ const AddPaymentModal = ({
                           _focus={{ border: 'none', outline: 'none' }}
                           name="payment_date"
                           // isDisabled={values.payment_status === 'pending'}
+                          min={
+                            parsedNextPaymentDate
+                              ? moment(parsedNextPaymentDate).format('YYYY-MM-DD')
+                              : undefined
+                          }
                         />
                         <FormErrorMessage>
                           {typeof errors.payment_date === 'string'
