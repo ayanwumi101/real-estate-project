@@ -50,7 +50,7 @@ const LoginForm = () => {
       setLoading(true);
       const formData = {
         email: user?.email,
-        otp: Number(values.otp),
+        otp: values.otp,
       };
       try {
         const response = await ValidateOtp(formData);
@@ -135,7 +135,7 @@ const LoginForm = () => {
           OTP verification
         </Heading>
         <Text fontSize={18} color="#2E353F" fontWeight={500}>
-          Enter the 6 digit code sent to your email address to verify your
+          Enter the 4 digit code sent to your email address to verify your
           account
         </Text>
       </Box>
@@ -159,6 +159,9 @@ const LoginForm = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.otp}
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
               />
             </FormControl>
             <Box w="100%">
