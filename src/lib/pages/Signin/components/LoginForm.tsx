@@ -100,8 +100,11 @@ const LoginForm = () => {
           });
           Cookies.set('vestier-token', JSON.stringify(response.data.token));
           Cookies.set('vestier-user', JSON.stringify(response.data.user));
-          Cookies.set('vestier-user-role', JSON.stringify(response.data.user.role));
-          if(response.data.user.role === 'realtor'){
+          Cookies.set(
+            'vestier-user-role',
+            JSON.stringify(response.data.user.role)
+          );
+          if (response.data.user.role === 'realtor') {
             navigate('/realtor/properties');
           } else {
             navigate('/user/dashboard');
@@ -120,7 +123,17 @@ const LoginForm = () => {
         }
       } catch (error: any) {
         setLoading(false);
-        console.log(error);
+        if (error.response.data.message === 'Please verified your email before proceeding') {
+          toast({
+            title: error.response.data.message as string,
+            description: 'Login unsuccessful',
+            duration: 3000,
+            position: 'top-right',
+            isClosable: true,
+            status: 'error',
+          });
+          navigate('/signup/verify-email');
+        }
         toast({
           title: error.response.data.message as string,
           description: 'Login unsuccessful',

@@ -148,10 +148,10 @@ export const Footer = () => {
             </Box>
             <Box>
               <Flex gap="50px" flexDir={['column', 'row']}>
-                <Stack spacing="10px">
+                {/* <Stack spacing="10px">
                   <Text>E-mail: app@company.com</Text>
                   <Text>Phone: 09123456789</Text>
-                </Stack>
+                </Stack> */}
                 <Stack spacing="10px">
                   <Text>Support</Text>
                   <Text
