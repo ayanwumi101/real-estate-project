@@ -150,7 +150,7 @@ const RealtorMobileSidebar = ({
             href="/realtor/properties"
             onClick={() => setOpenSideNav(false)}
           />
-          {/* <Button
+          <Button
             onClick={onToggle}
             rounded="0px"
             py="10px"
@@ -184,7 +184,7 @@ const RealtorMobileSidebar = ({
             _hover={{ bg: 'none' }}
           >
             Managed Assets
-          </Button> */}
+          </Button>
           <Collapse in={isOpen} animateOpacity style={{ width: '100%' }}>
             <CollapsibleSidebarItem
               label="Investors"
@@ -197,13 +197,13 @@ const RealtorMobileSidebar = ({
               href="/realtor/managed-assets/assets"
             />
           </Collapse>
-          {/* <SideBarItem
+          <SideBarItem
             label="Transactions"
             Icon={RealtorTransactionsIcon}
             isActive={pathname === '/realtor/transactions'}
             href="/realtor/transactions"
             onClick={() => setOpenSideNav(false)}
-          /> */}
+          />
           <SideBarItem
             label="Clients"
             Icon={RealtorClientsIcon}
@@ -211,20 +211,20 @@ const RealtorMobileSidebar = ({
             href="/realtor/clients"
             onClick={() => setOpenSideNav(false)}
           />
-          {/* <SideBarItem
+          <SideBarItem
             label="Securities"
             Icon={RealtorSecuritiesIcon}
             isActive={pathname === '/realtor/securities'}
             href="/realtor/securities"
             onClick={() => setOpenSideNav(false)}
-          /> */}
-          {/* <SideBarItem
+          />
+          <SideBarItem
             label="Team"
             Icon={RealtorTeamsIcon}
             isActive={pathname === '/realtor/team'}
             href="/realtor/team"
             onClick={() => setOpenSideNav(false)}
-          /> */}
+          />
           <SideBarItem
             label="Settings"
             Icon={SettingsIcon}
