@@ -1,9 +1,33 @@
-import React from 'react'
+'use client';
+
+import { Flex, Text, Stack } from '@chakra-ui/react';
+import React from 'react';
+import { BsChevronRight } from 'react-icons/bs';
+import RealtorDashboardLayout from '~/lib/layout/components/RealtorDashboardHeader';
+import ComingSoon from '~/lib/components/ComingSoon';
 
 const index = () => {
   return (
-    <div>index</div>
-  )
-}
+    <RealtorDashboardLayout
+      title={
+        <Flex alignItems="center" gap="8px">
+          <Text fontSize={16} fontWeight={600} color="brand.400">
+            Managed Assets
+          </Text>
+          <BsChevronRight size={15} fontWeight={900} />
+          <Text fontSize={16} fontWeight={600} color="brand.800">
+            Assets
+          </Text>
+        </Flex>
+      }
+    >
+      {/* <Stack spacing="20px">
+        <NavigationTab />
+        <InvestorsList />
+      </Stack> */}
+      <ComingSoon />
+    </RealtorDashboardLayout>
+  );
+};
 
-export default index
+export default index;

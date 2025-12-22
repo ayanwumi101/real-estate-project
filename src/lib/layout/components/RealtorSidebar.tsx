@@ -149,7 +149,7 @@ const RealtorSidebar = () => {
               isActive={pathname === '/realtor/properties'}
               href="/realtor/properties"
             />
-            {/* <Button
+            <Button
               onClick={onToggle}
               rounded="0px"
               py="10px"
@@ -158,7 +158,9 @@ const RealtorSidebar = () => {
               justifyContent="flex-start"
               leftIcon={
                 <ManagedAssetsIcon
-                  isActive={pathname.includes('/realtor/managed-assets') || isOpen}
+                  isActive={
+                    pathname.includes('/realtor/managed-assets') || isOpen
+                  }
                 />
               }
               fontWeight={500}
@@ -175,16 +177,17 @@ const RealtorSidebar = () => {
                     isActive={pathname.includes('/realtor/managed-assets')}
                   />
                 ) : (
-                  <ChevronDownIcon isActive={pathname.includes('/realtor/managed-assets')} />
+                  <ChevronDownIcon
+                    isActive={pathname.includes('/realtor/managed-assets')}
+                  />
                 )
               }
-              
               _hover={{ bg: 'none' }}
             >
               Managed Assets
-            </Button> */}
+            </Button>
             <Collapse in={isOpen} animateOpacity style={{ width: '100%' }}>
-              <Flex alignItems="flex-start" w="full" gap='2'>
+              <Flex alignItems="flex-start" w="full" gap="2">
                 <Box as="span" ml="10" mt="1">
                   <CollapsibleSidebarIcon />
                 </Box>
@@ -202,19 +205,19 @@ const RealtorSidebar = () => {
                 </Stack>
               </Flex>
             </Collapse>
-            {/* <SideBarItem
+            <SideBarItem
               label="Transactions"
               Icon={RealtorTransactionsIcon}
               isActive={pathname === '/realtor/transactions'}
               href="/realtor/transactions"
-            /> */}
+            />
             <SideBarItem
               label="Clients"
               Icon={RealtorClientsIcon}
               isActive={pathname === '/realtor/clients'}
               href="/realtor/clients"
             />
-            {/* <SideBarItem
+            <SideBarItem
               label="Securities"
               Icon={RealtorSecuritiesIcon}
               isActive={pathname === '/realtor/securities'}
@@ -225,7 +228,7 @@ const RealtorSidebar = () => {
               Icon={RealtorTeamsIcon}
               isActive={pathname === '/realtor/team'}
               href="/realtor/team"
-            /> */}
+            />
             <SideBarItem
               label="Settings"
               Icon={SettingsIcon}

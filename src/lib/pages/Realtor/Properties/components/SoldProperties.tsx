@@ -120,8 +120,6 @@ const PropertyListTable = ({
               {properties
                 ?.slice((page - 1) * limit, page * limit)
                 ?.map((asset) => {
-                  console.log(asset);
-
                   return (
                     <Tr
                       key={asset}

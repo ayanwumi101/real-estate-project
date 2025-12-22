@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { Flex, Text, Stack } from '@chakra-ui/react';
 import React from 'react';
@@ -6,6 +6,7 @@ import { BsChevronRight } from 'react-icons/bs';
 import RealtorDashboardLayout from '~/lib/layout/components/RealtorDashboardHeader';
 import NavigationTab from './components/NavigationTab';
 import InvestorsList from './components/InvestorsList';
+import ComingSoon from '~/lib/components/ComingSoon';
 
 const index = () => {
   return (
@@ -17,15 +18,16 @@ const index = () => {
           </Text>
           <BsChevronRight size={15} fontWeight={900} />
           <Text fontSize={16} fontWeight={600} color="brand.800">
-            Investor (7)
+            Investor
           </Text>
         </Flex>
       }
     >
-      <Stack spacing='20px'>
+      {/* <Stack spacing="20px">
         <NavigationTab />
         <InvestorsList />
-      </Stack>
+      </Stack> */}
+      <ComingSoon />
     </RealtorDashboardLayout>
   );
 };
