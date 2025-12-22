@@ -29,196 +29,230 @@ import {
   NextPageIcon,
   ChevronDownIcon,
 } from '~/lib/components/Icons/Icons';
+import SkeletonLoader from '~/lib/components/SkeletonLoader';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
 
-const PropertyListTable = ({ properties }: { properties: any[] }) => {
+const PropertyListTable = ({
+  properties,
+  loading,
+}: {
+  properties: any[];
+  loading: boolean;
+}) => {
   const navigate = useNavigate();
   const [page, setPage] = React.useState(1);
   const [limit, setLimit] = React.useState(8);
   const assets = Array.from({ length: 10 }, (_, i) => ({ id: i + 1 }));
   return (
-    <TableContainer border="1px solid #E4E4E4" borderRadius="10px">
-      <Table>
-        <Thead color="#222222" bg="#F5F5F5" py="22px" h="53px" border="none">
-          <Tr border="none">
-            <Th
+    <Box>
+      {loading ? (
+        <SkeletonLoader />
+      ) : (
+        <TableContainer border="1px solid #E4E4E4" borderRadius="10px">
+          <Table>
+            <Thead
               color="#222222"
-              fontWeight={500}
-              fontSize={14}
-              textTransform="capitalize"
+              bg="#F5F5F5"
+              py="22px"
+              h="53px"
+              border="none"
             >
-              Property Name
-            </Th>
-            <Th
-              color="#222222"
-              fontWeight={500}
-              fontSize={14}
-              textTransform="capitalize"
-            >
-              property Type
-            </Th>
-            <Th
-              color="#222222"
-              fontWeight={500}
-              fontSize={14}
-              textTransform="capitalize"
-            >
-              Client
-            </Th>
-            <Th
-              color="#222222"
-              fontWeight={500}
-              fontSize={14}
-              textTransform="capitalize"
-            >
-              Date Sold
-            </Th>
-            <Th
-              color="#222222"
-              fontWeight={500}
-              fontSize={14}
-              textTransform="capitalize"
-            >
-              Sale Price
-            </Th>
+              <Tr border="none">
+                <Th
+                  color="#222222"
+                  fontWeight={500}
+                  fontSize={14}
+                  textTransform="capitalize"
+                >
+                  Property Name
+                </Th>
+                <Th
+                  color="#222222"
+                  fontWeight={500}
+                  fontSize={14}
+                  textTransform="capitalize"
+                >
+                  property Type
+                </Th>
+                <Th
+                  color="#222222"
+                  fontWeight={500}
+                  fontSize={14}
+                  textTransform="capitalize"
+                >
+                  Client
+                </Th>
+                <Th
+                  color="#222222"
+                  fontWeight={500}
+                  fontSize={14}
+                  textTransform="capitalize"
+                >
+                  Date Sold
+                </Th>
+                <Th
+                  color="#222222"
+                  fontWeight={500}
+                  fontSize={14}
+                  textTransform="capitalize"
+                >
+                  Sale Price
+                </Th>
 
-            <Th
-              color="#222222"
-              fontWeight={500}
-              fontSize={14}
-              textTransform="capitalize"
-            >
-              Commission
-            </Th>
-            <Th
-              color="#222222"
-              fontWeight={500}
-              fontSize={14}
-              textTransform="capitalize"
-            ></Th>
-          </Tr>
-        </Thead>
-        <Tbody color="#222222" maxH="450px" overflow="auto">
-          {properties?.slice((page - 1) * limit, page * limit)?.map((asset) => {
-            console.log(asset);
-
-            return (
-              <Tr key={asset} border="none" cursor="pointer">
-                <Td fontSize={15} color="#222222" fontWeight={600}>
-                  {asset?.property_name}
-                </Td>
-                <Td fontWeight={500} fontSize={14} color="#8295AA">
-                  {asset?.property_type}
-                </Td>
-                <Td fontWeight={500} fontSize={14} color="#8295AA">
-                  {asset?.client?.firstname} {asset?.client?.lastname}
-                </Td>
-                <Td fontWeight={500} fontSize={14} color="#8295AA">
-                  {moment(asset?.payment_date).format('ddd, Do MMMM YYYY')}
-                </Td>
-                <Td fontWeight={500} fontSize={14} color="#8295AA">
-                  {FormatAmount(Number(asset?.amount_sold))}
-                </Td>
-                <Td fontWeight={500} fontSize={14} color="#8295AA">
-                  {FormatAmount(Number(asset?.commission))}
-                </Td>
-                <Td>
-                  <Menu>
-                    <MenuButton as={Button} rounded="5px" bg="bg.200">
-                      <VerticalEllipsisIcon />
-                    </MenuButton>
-                    <Portal>
-                      <MenuList py="0px" rounded="16px">
-                        <MenuItem
-                          py="12px"
-                          px="16px"
-                          _hover={{ bg: 'border.100' }}
-                          fontSize={14}
-                          color="color.100"
-                          fontWeight={500}
-                          onClick={() =>
-                            navigate(
-                              `/realtor/properties/${asset?.property_id}?type=sold`
-                            )
-                          }
-                          icon={<ViewpropertyIcon />}
-                        >
-                          View property
-                        </MenuItem>
-                        <MenuItem
-                          py="12px"
-                          px="16px"
-                          _hover={{ bg: 'border.100' }}
-                          fontSize={14}
-                          color="color.100"
-                          fontWeight={500}
-                          icon={<PaymentHistoryIcon />}
-                          onClick={() =>
-                            navigate(
-                              `/realtor/properties/payment-history/${asset?.property_sale_id}`
-                            )
-                          }
-                        >
-                          View payment history
-                        </MenuItem>
-                        <MenuItem
-                          py="12px"
-                          px="16px"
-                          _hover={{ bg: 'border.100' }}
-                          fontSize={14}
-                          color="color.100"
-                          fontWeight={500}
-                          icon={<RealtorClientsIcon />}
-                          onClick={() =>
-                            navigate(`/realtor/clients/${asset?.client?.id}`)
-                          }
-                        >
-                          View client
-                        </MenuItem>
-                      </MenuList>
-                    </Portal>
-                  </Menu>
-                </Td>
+                <Th
+                  color="#222222"
+                  fontWeight={500}
+                  fontSize={14}
+                  textTransform="capitalize"
+                >
+                  Commission
+                </Th>
+                <Th
+                  color="#222222"
+                  fontWeight={500}
+                  fontSize={14}
+                  textTransform="capitalize"
+                ></Th>
               </Tr>
-            );
-          })}
-        </Tbody>
-      </Table>
-      {properties?.length > 0 && (
-        <Box w="full" bg="white" py="10px">
-          <Flex alignItems="center" justifyContent="center" gap="13px">
-            <Button
-              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-              isDisabled={page === 1}
-              border="1px solid #E4E4E4"
-              rounded="6px"
-              variant="outline"
-              p="8px"
-            >
-              <PreviousPageIcon />
-            </Button>
-            <Text fontWeight={600} fontSize={17}>
-              {page}
-            </Text>
-            <Button
-              border="1px solid #E4E4E4"
-              rounded="6px"
-              variant="outline"
-              p="8px"
-              onClick={() =>
-                setPage((prev) =>
-                  prev < Math.ceil(assets.length / limit) ? prev + 1 : prev
-                )
-              }
-              isDisabled={page >= Math.ceil(assets.length / limit)}
-            >
-              <NextPageIcon />
-            </Button>
-          </Flex>
-        </Box>
+            </Thead>
+            <Tbody color="#222222" maxH="450px" overflow="auto">
+              {properties
+                ?.slice((page - 1) * limit, page * limit)
+                ?.map((asset) => {
+                  console.log(asset);
+
+                  return (
+                    <Tr
+                      key={asset}
+                      border="none"
+                      cursor="pointer"
+                      onClick={() =>
+                        navigate(
+                          `/realtor/properties/${asset?.property_id}?type=sold`
+                        )
+                      }
+                    >
+                      <Td fontSize={15} color="#222222" fontWeight={600}>
+                        {asset?.property_name}
+                      </Td>
+                      <Td fontWeight={500} fontSize={14} color="#8295AA">
+                        {asset?.property_type}
+                      </Td>
+                      <Td fontWeight={500} fontSize={14} color="#8295AA">
+                        {asset?.client?.firstname} {asset?.client?.lastname}
+                      </Td>
+                      <Td fontWeight={500} fontSize={14} color="#8295AA">
+                        {moment(asset?.payment_date).format(
+                          'ddd, Do MMMM YYYY'
+                        )}
+                      </Td>
+                      <Td fontWeight={500} fontSize={14} color="#8295AA">
+                        {FormatAmount(Number(asset?.amount_sold))}
+                      </Td>
+                      <Td fontWeight={500} fontSize={14} color="#8295AA">
+                        {FormatAmount(Number(asset?.commission))}
+                      </Td>
+                      <Td>
+                        <Menu>
+                          <MenuButton as={Button} rounded="5px" bg="bg.200">
+                            <VerticalEllipsisIcon />
+                          </MenuButton>
+                          <Portal>
+                            <MenuList py="0px" rounded="16px">
+                              <MenuItem
+                                py="12px"
+                                px="16px"
+                                _hover={{ bg: 'border.100' }}
+                                fontSize={14}
+                                color="color.100"
+                                fontWeight={500}
+                                onClick={() =>
+                                  navigate(
+                                    `/realtor/properties/${asset?.property_id}?type=sold`
+                                  )
+                                }
+                                icon={<ViewpropertyIcon />}
+                              >
+                                View property
+                              </MenuItem>
+                              <MenuItem
+                                py="12px"
+                                px="16px"
+                                _hover={{ bg: 'border.100' }}
+                                fontSize={14}
+                                color="color.100"
+                                fontWeight={500}
+                                icon={<PaymentHistoryIcon />}
+                                onClick={() =>
+                                  navigate(
+                                    `/realtor/properties/payment-history/${asset?.property_sale_id}`
+                                  )
+                                }
+                              >
+                                View payment history
+                              </MenuItem>
+                              <MenuItem
+                                py="12px"
+                                px="16px"
+                                _hover={{ bg: 'border.100' }}
+                                fontSize={14}
+                                color="color.100"
+                                fontWeight={500}
+                                icon={<RealtorClientsIcon />}
+                                onClick={() =>
+                                  navigate(
+                                    `/realtor/clients/${asset?.client?.id}`
+                                  )
+                                }
+                              >
+                                View client
+                              </MenuItem>
+                            </MenuList>
+                          </Portal>
+                        </Menu>
+                      </Td>
+                    </Tr>
+                  );
+                })}
+            </Tbody>
+          </Table>
+          {properties?.length > 0 && (
+            <Box w="full" bg="white" py="10px">
+              <Flex alignItems="center" justifyContent="center" gap="13px">
+                <Button
+                  onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                  isDisabled={page === 1}
+                  border="1px solid #E4E4E4"
+                  rounded="6px"
+                  variant="outline"
+                  p="8px"
+                >
+                  <PreviousPageIcon />
+                </Button>
+                <Text fontWeight={600} fontSize={17}>
+                  {page}
+                </Text>
+                <Button
+                  border="1px solid #E4E4E4"
+                  rounded="6px"
+                  variant="outline"
+                  p="8px"
+                  onClick={() =>
+                    setPage((prev) =>
+                      prev < Math.ceil(assets.length / limit) ? prev + 1 : prev
+                    )
+                  }
+                  isDisabled={page >= Math.ceil(assets.length / limit)}
+                >
+                  <NextPageIcon />
+                </Button>
+              </Flex>
+            </Box>
+          )}
+        </TableContainer>
       )}
-    </TableContainer>
+    </Box>
   );
 };
 
@@ -398,7 +432,13 @@ const PropertyStats = ({
   );
 };
 
-const SoldProperties = ({ properties }: { properties: any }) => {
+const SoldProperties = ({
+  properties,
+  loading,
+}: {
+  properties: any;
+  loading: boolean;
+}) => {
   return (
     <Box>
       <Stack spacing="20px">
@@ -407,7 +447,10 @@ const SoldProperties = ({ properties }: { properties: any }) => {
           totalProperties={properties?.totals?.total_properties}
           totalSoldPrice={properties?.totals?.total_sold_price}
         />
-        <PropertyListTable properties={properties?.payments} />
+        <PropertyListTable
+          properties={properties?.payments}
+          loading={loading}
+        />
       </Stack>
     </Box>
   );

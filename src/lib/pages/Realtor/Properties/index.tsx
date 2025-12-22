@@ -18,6 +18,7 @@ const PropertiesContent = () => {
   const searchParams = useSearchParams();
   const tab = searchParams.get('tab');
   const tabs = ['available', 'sold', 'instalment'];
+  const [loading, setLoading] = React.useState<boolean>(false);
   const [properties, setProperties] = React.useState([]);
   const [filteredProperties, setFilteredProperties] = React.useState([]);
   const [soldProperties, setSoldProperties] = React.useState<any>([]);
@@ -28,11 +29,14 @@ const PropertiesContent = () => {
   );
   const [filteredInstalmentProperties, setFilteredInstalmentProperties] =
     useState<any>([]);
-  const [activeTab, setActiveTab] = React.useState<'available' | 'sold' | 'instalment'>('available');
+  const [activeTab, setActiveTab] = React.useState<
+    'available' | 'sold' | 'instalment'
+  >('available');
   const [searchQuery, setSearchQuery] = React.useState<string>('');
 
   useEffect(() => {
     const fetchProperties = async () => {
+      setLoading(true);
       try {
         const [availableProperties, soldProperties, instalmentProperties] =
           await Promise.all([
@@ -48,6 +52,8 @@ const PropertiesContent = () => {
         setFilteredInstalmentProperties(instalmentProperties || []);
       } catch (error) {
         console.error('Error fetching properties:', error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchProperties();
@@ -121,20 +127,28 @@ const PropertiesContent = () => {
         />
         <Box>
           {activeTab === 'available' && (
-            <AvailableProperties properties={filteredProperties} />
+            <AvailableProperties
+              loading={loading}
+              properties={filteredProperties}
+            />
           )}
           {activeTab === 'sold' && (
-            <SoldProperties properties={filteredSoldProperties} />
+            <SoldProperties
+              loading={loading}
+              properties={filteredSoldProperties}
+            />
           )}
           {activeTab === 'instalment' && (
-            <InstalmentProperties properties={filteredInstalmentProperties} />
+            <InstalmentProperties
+              loading={loading}
+              properties={filteredInstalmentProperties}
+            />
           )}
         </Box>
       </Stack>
     </RealtorDashboardLayout>
   );
 };
-
 
 const Index = () => {
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import {
   Text,
   Flex,
@@ -21,6 +21,7 @@ import { formatCurrency } from '~/lib/utils/formatAmount';
 import { CreateInstalmentPropertyPayment } from '~/lib/api/services/propertiesService';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import AddClientModal from './Modals/AddClientModal';
 
 const PropertySaleContext = React.createContext<any>(null);
 
@@ -153,7 +154,13 @@ const DeliveryStatus = ({ loading }: { loading: boolean }) => {
   );
 };
 
-const RegisterProperty = ({ onNext }: { onNext: () => void }) => {
+const RegisterProperty = ({
+  onNext,
+  fetchClients,
+}: {
+  onNext: () => void;
+  fetchClients: () => void;
+}) => {
   const {
     errors,
     clients,
@@ -164,6 +171,7 @@ const RegisterProperty = ({ onNext }: { onNext: () => void }) => {
     setFieldTouched,
     values,
   } = React.useContext(PropertySaleContext);
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const [amountSold, setAmountSold] = useState<string>(values.amountSold || '');
   const [firstDeposit, setFirstDeposit] = useState<string>(
     values.firstDeposit || ''
@@ -221,231 +229,18 @@ const RegisterProperty = ({ onNext }: { onNext: () => void }) => {
   }, [values.paymentPlan, values.firstPaymentDate, setFieldValue]);
 
   return (
-    <Stack spacing="20px">
-      <Heading fontSize={24} fontWeight={600} color="brand.100">
-        Register property sale as instalment
-      </Heading>
-      <FormControl isInvalid={!!errors.clientName && touched.clientName}>
-        <FormLabel fontWeight={600} fontSize={15} color="brand.400">
-          Client's Name
-        </FormLabel>
-        <Field
-          as={Select}
-          placeholder="Select from client list"
-          rounded="50px"
-          color="brand.800"
-          outline="none"
-          h="50px"
-          border="1px solid"
-          borderColor="border.200"
-          bg="brand.700"
-          mb="10px"
-          name="clientName"
-        >
-          {clients.map((client: any) => (
-            <option key={client?.id} value={client?.id}>
-              {client?.firstname} - {client?.lastname}
-            </option>
-          ))}
-        </Field>
-        <FormErrorMessage>
-          {typeof errors.clientName === 'string' ? errors.clientName : ''}
-        </FormErrorMessage>
-        <Flex alignItems="center" gap="5px">
-          <Text fontWeight={500} fontSize={14} color="brand.400">
-            Can’t find the client?{' '}
-            <Box as="span" color="brand.100" cursor="pointer">
-              Create client profile
-            </Box>
-          </Text>
-        </Flex>
-      </FormControl>
-      <Flex alignItems="center" gap="24px" flexWrap={['wrap', 'nowrap']}>
-        <FormControl isInvalid={!!errors.amountSold && touched.amountSold}>
+    <Fragment>
+      <Stack spacing="20px">
+        <Heading fontSize={24} fontWeight={600} color="brand.100">
+          Register property sale as instalment
+        </Heading>
+        <FormControl isInvalid={!!errors.clientName && touched.clientName}>
           <FormLabel fontWeight={600} fontSize={15} color="brand.400">
-            Amount Sold
-          </FormLabel>
-          <Input
-            type="text"
-            placeholder="₦ 0. 00"
-            value={formatCurrency(amountSold)}
-            onChange={(e) => {
-              const rawValue = e.target.value.replace(/[^\d]/g, '');
-              setAmountSold(rawValue);
-              setFieldValue('amountSold', rawValue);
-            }}
-            name="amountSold"
-            rounded="50px"
-            color="brand.800"
-            outline="none"
-            h="50px"
-            border="1px solid"
-            borderColor="border.200"
-            bg="brand.700"
-            mb="10px"
-          />
-          <FormErrorMessage>
-            {typeof errors.amountSold === 'string' ? errors.amountSold : ''}
-          </FormErrorMessage>
-        </FormControl>
-        <FormControl isInvalid={!!errors.firstDeposit && touched.firstDeposit}>
-          <FormLabel fontWeight={600} fontSize={15} color="brand.400">
-            First Deposit
-          </FormLabel>
-          <Input
-            type="text"
-            placeholder="₦ 0. 00"
-            value={formatCurrency(firstDeposit)}
-            onChange={(e) => {
-              const rawValue = e.target.value.replace(/[^\d]/g, '');
-              setFirstDeposit(rawValue);
-              setFieldValue('firstDeposit', rawValue);
-            }}
-            name="firstDeposit"
-            rounded="50px"
-            color="brand.800"
-            outline="none"
-            h="50px"
-            border="1px solid"
-            borderColor="border.200"
-            bg="brand.700"
-            mb="10px"
-          />
-          <FormErrorMessage>
-            {typeof errors.firstDeposit === 'string' ? errors.firstDeposit : ''}
-          </FormErrorMessage>
-        </FormControl>
-      </Flex>
-      <FormControl
-        isInvalid={!!errors.paymentDuration && touched.paymentDuration}
-      >
-        <FormLabel fontWeight={600} fontSize={15} color="brand.400">
-          Duration of Payment in Month
-        </FormLabel>
-        <Field
-          as={Input}
-          placeholder="Input payment duration. e.g 5 months"
-          rounded="50px"
-          color="brand.800"
-          outline="none"
-          h="50px"
-          border="1px solid"
-          borderColor="border.200"
-          bg="brand.700"
-          mb="10px"
-          name="paymentDuration"
-          type="number"
-        />
-        <FormErrorMessage>
-          {typeof errors.paymentDuration === 'string'
-            ? errors.paymentDuration
-            : ''}
-        </FormErrorMessage>
-      </FormControl>
-      <Flex alignItems="center" gap="24px" flexWrap={['wrap', 'nowrap']}>
-        <FormControl
-          isInvalid={!!errors.instalmentAmount && touched.instalmentAmount}
-        >
-          <FormLabel fontWeight={600} fontSize={15} color="brand.400">
-            Instalment Amount
-          </FormLabel>
-          <Input
-            type="text"
-            placeholder="₦ 0. 00"
-            value={formatCurrency(instalmentAmount)}
-            onChange={(e) => {
-              const rawValue = e.target.value.replace(/[^\d]/g, '');
-              setInstalmentAmount(rawValue);
-              setFieldValue('instalmentAmount', rawValue);
-            }}
-            name="instalmentAmount"
-            rounded="50px"
-            color="brand.800"
-            outline="none"
-            h="50px"
-            border="1px solid"
-            borderColor="border.200"
-            bg="brand.700"
-            mb="10px"
-          />
-          <FormErrorMessage>
-            {typeof errors.instalmentAmount === 'string'
-              ? errors.instalmentAmount
-              : ''}
-          </FormErrorMessage>
-        </FormControl>
-        <FormControl
-          isInvalid={!!errors.commissionReceived && touched.commissionReceived}
-        >
-          <FormLabel fontWeight={600} fontSize={15} color="brand.400">
-            Commission Received
-          </FormLabel>
-          <Input
-            type="text"
-            placeholder="₦ 0. 00"
-            value={formatCurrency(commissionReceived)}
-            onChange={(e) => {
-              const rawValue = e.target.value.replace(/[^\d]/g, '');
-              setCommissionReceived(rawValue);
-              setFieldValue('commissionReceived', rawValue);
-            }}
-            name="commissionReceived"
-            rounded="50px"
-            color="brand.800"
-            outline="none"
-            h="50px"
-            border="1px solid"
-            borderColor="border.200"
-            bg="brand.700"
-            mb="10px"
-          />
-          <FormErrorMessage>
-            {typeof errors.commissionReceived === 'string'
-              ? errors.commissionReceived
-              : ''}
-          </FormErrorMessage>
-        </FormControl>
-      </Flex>
-      <FormControl
-        mb="10px"
-        isInvalid={!!errors.paymentPlan && touched.paymentPlan}
-      >
-        <FormLabel fontWeight={600} fontSize={15} color="brand.400">
-          Payment Plan
-        </FormLabel>
-        <Field
-          as={Select}
-          placeholder="Select payment plan"
-          rounded="50px"
-          color="brand.800"
-          outline="none"
-          h="50px"
-          border="1px solid"
-          borderColor="border.200"
-          bg="brand.700"
-          name="paymentPlan"
-        >
-          <option value="monthly">Monthly</option>
-          <option value="weekly">Weekly</option>
-          <option value="quarterly">Quarterly</option>
-          <option value="yearly">Yearly</option>
-        </Field>
-        <FormErrorMessage>
-          {typeof errors.paymentPlan === 'string' ? errors.paymentPlan : ''}
-        </FormErrorMessage>
-      </FormControl>
-
-      <Flex alignItems="center" gap="24px" flexWrap={['wrap', 'nowrap']}>
-        <FormControl
-          isInvalid={!!errors.firstPaymentDate && touched.firstPaymentDate}
-        >
-          <FormLabel fontWeight={600} fontSize={15} color="brand.400">
-            First payment date
+            Client's Name
           </FormLabel>
           <Field
-            as={Input}
-            type="date"
-            name="firstPaymentDate"
+            as={Select}
+            placeholder="Select from client list"
             rounded="50px"
             color="brand.800"
             outline="none"
@@ -454,73 +249,306 @@ const RegisterProperty = ({ onNext }: { onNext: () => void }) => {
             borderColor="border.200"
             bg="brand.700"
             mb="10px"
-          />
-          <FormErrorMessage>
-            {typeof errors.firstPaymentDate === 'string'
-              ? errors.firstPaymentDate
-              : ''}
-          </FormErrorMessage>
-        </FormControl>
-
-        <FormControl
-          isInvalid={!!errors.nextPaymentDate && touched.nextPaymentDate}
-        >
-          <FormLabel fontWeight={600} fontSize={15} color="brand.400">
-            Next payment date
-          </FormLabel>
-          <Field
-            as={Input}
-            type="date"
-            name="nextPaymentDate"
-            rounded="50px"
-            color="brand.800"
-            outline="none"
-            h="50px"
-            border="1px solid"
-            borderColor="border.200"
-            bg="brand.700"
-            mb="10px"
-          />
-          <FormErrorMessage>
-            {typeof errors.nextPaymentDate === 'string'
-              ? errors.nextPaymentDate
-              : ''}
-          </FormErrorMessage>
-        </FormControl>
-      </Flex>
-      <Flex alignItems="center" justifyContent="space-between">
-        <Link href="/realtor/properties">
-          <Button
-            variant="ghost"
-            color="brand.100"
-            fontWeight={500}
-            leftIcon={<CloseIcon />}
+            name="clientName"
           >
-            Cancel
-          </Button>
-        </Link>
-        <Button
-          px="40px"
-          fontWeight={500}
-          fontSize={15}
-          color="brand.200"
-          bg="brand.100"
-          minW="180px"
-          onClick={onNext}
+            {clients.map((client: any) => (
+              <option key={client?.id} value={client?.id}>
+                {client?.firstname} - {client?.lastname}
+              </option>
+            ))}
+          </Field>
+          <FormErrorMessage>
+            {typeof errors.clientName === 'string' ? errors.clientName : ''}
+          </FormErrorMessage>
+          <Flex alignItems="center" gap="5px">
+            <Text fontWeight={500} fontSize={14} color="brand.400">
+              Can’t find the client?{' '}
+              <Box
+                onClick={() => setOpenModal(true)}
+                as="span"
+                color="brand.100"
+                cursor="pointer"
+              >
+                Create client profile
+              </Box>
+            </Text>
+          </Flex>
+        </FormControl>
+        <Flex alignItems="center" gap="24px" flexWrap={['wrap', 'nowrap']}>
+          <FormControl isInvalid={!!errors.amountSold && touched.amountSold}>
+            <FormLabel fontWeight={600} fontSize={15} color="brand.400">
+              Amount Sold
+            </FormLabel>
+            <Input
+              type="text"
+              placeholder="₦ 0. 00"
+              value={formatCurrency(amountSold)}
+              onChange={(e) => {
+                const rawValue = e.target.value.replace(/[^\d]/g, '');
+                setAmountSold(rawValue);
+                setFieldValue('amountSold', rawValue);
+              }}
+              name="amountSold"
+              rounded="50px"
+              color="brand.800"
+              outline="none"
+              h="50px"
+              border="1px solid"
+              borderColor="border.200"
+              bg="brand.700"
+              mb="10px"
+            />
+            <FormErrorMessage>
+              {typeof errors.amountSold === 'string' ? errors.amountSold : ''}
+            </FormErrorMessage>
+          </FormControl>
+          <FormControl
+            isInvalid={!!errors.firstDeposit && touched.firstDeposit}
+          >
+            <FormLabel fontWeight={600} fontSize={15} color="brand.400">
+              First Deposit
+            </FormLabel>
+            <Input
+              type="text"
+              placeholder="₦ 0. 00"
+              value={formatCurrency(firstDeposit)}
+              onChange={(e) => {
+                const rawValue = e.target.value.replace(/[^\d]/g, '');
+                setFirstDeposit(rawValue);
+                setFieldValue('firstDeposit', rawValue);
+              }}
+              name="firstDeposit"
+              rounded="50px"
+              color="brand.800"
+              outline="none"
+              h="50px"
+              border="1px solid"
+              borderColor="border.200"
+              bg="brand.700"
+              mb="10px"
+            />
+            <FormErrorMessage>
+              {typeof errors.firstDeposit === 'string'
+                ? errors.firstDeposit
+                : ''}
+            </FormErrorMessage>
+          </FormControl>
+        </Flex>
+        <FormControl
+          isInvalid={!!errors.paymentDuration && touched.paymentDuration}
         >
-          Next
-        </Button>
-      </Flex>
-    </Stack>
+          <FormLabel fontWeight={600} fontSize={15} color="brand.400">
+            Duration of Payment in Month
+          </FormLabel>
+          <Field
+            as={Input}
+            placeholder="Input payment duration. e.g 5 months"
+            rounded="50px"
+            color="brand.800"
+            outline="none"
+            h="50px"
+            border="1px solid"
+            borderColor="border.200"
+            bg="brand.700"
+            mb="10px"
+            name="paymentDuration"
+            type="number"
+          />
+          <FormErrorMessage>
+            {typeof errors.paymentDuration === 'string'
+              ? errors.paymentDuration
+              : ''}
+          </FormErrorMessage>
+        </FormControl>
+        <Flex alignItems="center" gap="24px" flexWrap={['wrap', 'nowrap']}>
+          <FormControl
+            isInvalid={!!errors.instalmentAmount && touched.instalmentAmount}
+          >
+            <FormLabel fontWeight={600} fontSize={15} color="brand.400">
+              Instalment Amount
+            </FormLabel>
+            <Input
+              type="text"
+              placeholder="₦ 0. 00"
+              value={formatCurrency(instalmentAmount)}
+              onChange={(e) => {
+                const rawValue = e.target.value.replace(/[^\d]/g, '');
+                setInstalmentAmount(rawValue);
+                setFieldValue('instalmentAmount', rawValue);
+              }}
+              name="instalmentAmount"
+              rounded="50px"
+              color="brand.800"
+              outline="none"
+              h="50px"
+              border="1px solid"
+              borderColor="border.200"
+              bg="brand.700"
+              mb="10px"
+            />
+            <FormErrorMessage>
+              {typeof errors.instalmentAmount === 'string'
+                ? errors.instalmentAmount
+                : ''}
+            </FormErrorMessage>
+          </FormControl>
+          <FormControl
+            isInvalid={
+              !!errors.commissionReceived && touched.commissionReceived
+            }
+          >
+            <FormLabel fontWeight={600} fontSize={15} color="brand.400">
+              Commission Received
+            </FormLabel>
+            <Input
+              type="text"
+              placeholder="₦ 0. 00"
+              value={formatCurrency(commissionReceived)}
+              onChange={(e) => {
+                const rawValue = e.target.value.replace(/[^\d]/g, '');
+                setCommissionReceived(rawValue);
+                setFieldValue('commissionReceived', rawValue);
+              }}
+              name="commissionReceived"
+              rounded="50px"
+              color="brand.800"
+              outline="none"
+              h="50px"
+              border="1px solid"
+              borderColor="border.200"
+              bg="brand.700"
+              mb="10px"
+            />
+            <FormErrorMessage>
+              {typeof errors.commissionReceived === 'string'
+                ? errors.commissionReceived
+                : ''}
+            </FormErrorMessage>
+          </FormControl>
+        </Flex>
+        <FormControl
+          mb="10px"
+          isInvalid={!!errors.paymentPlan && touched.paymentPlan}
+        >
+          <FormLabel fontWeight={600} fontSize={15} color="brand.400">
+            Payment Plan
+          </FormLabel>
+          <Field
+            as={Select}
+            placeholder="Select payment plan"
+            rounded="50px"
+            color="brand.800"
+            outline="none"
+            h="50px"
+            border="1px solid"
+            borderColor="border.200"
+            bg="brand.700"
+            name="paymentPlan"
+          >
+            <option value="monthly">Monthly</option>
+            <option value="weekly">Weekly</option>
+            <option value="quarterly">Quarterly</option>
+            <option value="yearly">Yearly</option>
+          </Field>
+          <FormErrorMessage>
+            {typeof errors.paymentPlan === 'string' ? errors.paymentPlan : ''}
+          </FormErrorMessage>
+        </FormControl>
+
+        <Flex alignItems="center" gap="24px" flexWrap={['wrap', 'nowrap']}>
+          <FormControl
+            isInvalid={!!errors.firstPaymentDate && touched.firstPaymentDate}
+          >
+            <FormLabel fontWeight={600} fontSize={15} color="brand.400">
+              First payment date
+            </FormLabel>
+            <Field
+              as={Input}
+              type="date"
+              name="firstPaymentDate"
+              rounded="50px"
+              color="brand.800"
+              outline="none"
+              h="50px"
+              border="1px solid"
+              borderColor="border.200"
+              bg="brand.700"
+              mb="10px"
+            />
+            <FormErrorMessage>
+              {typeof errors.firstPaymentDate === 'string'
+                ? errors.firstPaymentDate
+                : ''}
+            </FormErrorMessage>
+          </FormControl>
+
+          <FormControl
+            isInvalid={!!errors.nextPaymentDate && touched.nextPaymentDate}
+          >
+            <FormLabel fontWeight={600} fontSize={15} color="brand.400">
+              Next payment date
+            </FormLabel>
+            <Field
+              as={Input}
+              type="date"
+              name="nextPaymentDate"
+              rounded="50px"
+              color="brand.800"
+              outline="none"
+              h="50px"
+              border="1px solid"
+              borderColor="border.200"
+              bg="brand.700"
+              mb="10px"
+            />
+            <FormErrorMessage>
+              {typeof errors.nextPaymentDate === 'string'
+                ? errors.nextPaymentDate
+                : ''}
+            </FormErrorMessage>
+          </FormControl>
+        </Flex>
+        <Flex alignItems="center" justifyContent="space-between">
+          <Link href="/realtor/properties">
+            <Button
+              variant="ghost"
+              color="brand.100"
+              fontWeight={500}
+              leftIcon={<CloseIcon />}
+            >
+              Cancel
+            </Button>
+          </Link>
+          <Button
+            px="40px"
+            fontWeight={500}
+            fontSize={15}
+            color="brand.200"
+            bg="brand.100"
+            minW="180px"
+            onClick={onNext}
+          >
+            Next
+          </Button>
+        </Flex>
+      </Stack>
+      <AddClientModal
+        isOpen={openModal}
+        fetchClients={fetchClients}
+        onClose={() => setOpenModal(false)}
+      />
+    </Fragment>
   );
 };
 
 const InstalmentPaymentProperty = ({
   clients,
   propertyId,
+  fetchClients,
 }: {
   clients: any[];
   propertyId: string;
+  fetchClients: () => void;
 }) => {
   const router = useRouter();
   const toast = useToast();
@@ -659,6 +687,7 @@ const InstalmentPaymentProperty = ({
               >
                 {step === 1 && (
                   <RegisterProperty
+                    fetchClients={fetchClients}
                     onNext={async () => {
                       // Mark all step-1 fields as touched so errors show
                       setTouched({

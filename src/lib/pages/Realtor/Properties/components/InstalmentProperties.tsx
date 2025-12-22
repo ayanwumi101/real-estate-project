@@ -36,8 +36,15 @@ import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
 import AddPaymentModal from '../../PropertyDetails/Modals/AddPaymentModal';
 import { GetPropertyDueDates } from '~/lib/api/services/propertiesService';
+import SkeletonLoader from '~/lib/components/SkeletonLoader';
 
-const PropertyListTable = ({ properties }: { properties: any[] }) => {
+const PropertyListTable = ({
+  properties,
+  loading,
+}: {
+  properties: any[];
+  loading: boolean;
+}) => {
   const navigate = useNavigate();
   const [page, setPage] = React.useState(1);
   const [limit, setLimit] = React.useState(8);
@@ -63,232 +70,255 @@ const PropertyListTable = ({ properties }: { properties: any[] }) => {
   }, [selectedProperty]);
 
   return (
-    <Fragment>
-      <TableContainer border="1px solid #E4E4E4" borderRadius="10px">
-        <Table>
-          <Thead color="#222222" bg="#F5F5F5" py="22px" h="53px" border="none">
-            <Tr border="none">
-              <Th
+    <Box>
+      {loading ? (
+        <SkeletonLoader />
+      ) : (
+        <Fragment>
+          <TableContainer border="1px solid #E4E4E4" borderRadius="10px">
+            <Table>
+              <Thead
                 color="#222222"
-                fontWeight={500}
-                fontSize={14}
-                textTransform="capitalize"
+                bg="#F5F5F5"
+                py="22px"
+                h="53px"
+                border="none"
               >
-                Property Name
-              </Th>
-              <Th
-                color="#222222"
-                fontWeight={500}
-                fontSize={14}
-                textTransform="capitalize"
-              >
-                property Type
-              </Th>
-              <Th
-                color="#222222"
-                fontWeight={500}
-                fontSize={14}
-                textTransform="capitalize"
-              >
-                Client
-              </Th>
-              <Th
-                color="#222222"
-                fontWeight={500}
-                fontSize={14}
-                textTransform="capitalize"
-              >
-                Sale Price
-              </Th>
-              <Th
-                color="#222222"
-                fontWeight={500}
-                fontSize={14}
-                textTransform="capitalize"
-              >
-                Amount Paid
-              </Th>
-              <Th
-                color="#222222"
-                fontWeight={500}
-                fontSize={14}
-                textTransform="capitalize"
-              >
-                Commission
-              </Th>
-              <Th
-                color="#222222"
-                fontWeight={500}
-                fontSize={14}
-                textTransform="capitalize"
-              ></Th>
-            </Tr>
-          </Thead>
-          <Tbody color="#222222" maxH="450px" overflow="auto">
-            {properties
-              ?.slice((page - 1) * limit, page * limit)
-              ?.map((asset) => {
-                return (
-                  <Tr key={asset} border="none" cursor="pointer">
-                    <Td fontSize={15} color="#222222" fontWeight={600}>
-                      {asset?.property_name}
-                    </Td>
-                    <Td fontWeight={500} fontSize={14} color="#8295AA">
-                      {asset?.property_type}
-                    </Td>
-                    <Td fontWeight={500} fontSize={14} color="#8295AA">
-                      {asset?.client_name}
-                    </Td>
-                    <Td fontWeight={500} fontSize={14} color="#8295AA">
-                      {FormatAmount(Number(asset?.sale_price))}
-                    </Td>
-                    <Td fontWeight={500} fontSize={14} color="#8295AA">
-                      {FormatAmount(Number(asset?.total_amount_paid))}
-                    </Td>
-                    <Td fontWeight={500} fontSize={14} color="#8295AA">
-                      {FormatAmount(Number(asset?.commission))}
-                    </Td>
-                    <Td>
-                      <Menu>
-                        <MenuButton as={Button} rounded="5px" bg="bg.200">
-                          <VerticalEllipsisIcon />
-                        </MenuButton>
-                        <Portal>
-                          <MenuList py="0px" rounded="16px">
-                            <MenuItem
-                              py="12px"
-                              px="16px"
-                              _hover={{ bg: 'border.100' }}
-                              fontSize={14}
-                              color="color.100"
-                              fontWeight={500}
-                              onClick={() =>
-                                navigate(
-                                  `/realtor/properties/${asset?.property_id}?type=instalment`
-                                )
-                              }
-                              icon={<ViewpropertyIcon />}
-                            >
-                              View property
-                            </MenuItem>
-                            <MenuItem
-                              py="12px"
-                              px="16px"
-                              _hover={{ bg: 'border.100' }}
-                              fontSize={14}
-                              color="color.100"
-                              fontWeight={500}
-                              icon={<PaymentHistoryIcon />}
-                              onClick={() =>
-                                navigate(
-                                  `/realtor/properties/payment-history/${asset?.property_sale_id}`
-                                )
-                              }
-                            >
-                              View payment history
-                            </MenuItem>
-                            <MenuItem
-                              py="12px"
-                              px="16px"
-                              _hover={{ bg: 'border.100' }}
-                              fontSize={14}
-                              color="color.100"
-                              fontWeight={500}
-                              icon={<AddPaymentIcon />}
-                              onClick={() => {
-                                setOpenModal(true);
-                                setSelectedProperty(asset);
-                              }}
-                            >
-                              Add new payment
-                            </MenuItem>
-                            <MenuItem
-                              py="12px"
-                              px="16px"
-                              _hover={{ bg: 'border.100' }}
-                              fontSize={14}
-                              color="color.100"
-                              fontWeight={500}
-                              icon={<RealtorClientsIcon />}
-                              onClick={() =>
-                                navigate(`/realtor/clients/${asset?.client_id}`)
-                              }
-                            >
-                              View client
-                            </MenuItem>
-                            <MenuItem
-                              py="12px"
-                              px="16px"
-                              _hover={{ bg: 'border.100' }}
-                              fontSize={14}
-                              color="color.100"
-                              fontWeight={500}
-                              icon={<RegisterSaleIcon />}
-                              onClick={() =>
-                                navigate(
-                                  `/realtor/properties/${asset?.property_id}/register-sale?type=fully_sold`
-                                )
-                              }
-                            >
-                              Change property status to fully sold
-                            </MenuItem>
-                          </MenuList>
-                        </Portal>
-                      </Menu>
-                    </Td>
-                  </Tr>
-                );
-              })}
-          </Tbody>
-        </Table>
-        {properties?.length > 0 && (
-          <Box w="full" bg="white" py="10px">
-            <Flex alignItems="center" justifyContent="center" gap="13px">
-              <Button
-                onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-                isDisabled={page === 1}
-                border="1px solid #E4E4E4"
-                rounded="6px"
-                variant="outline"
-                p="8px"
-              >
-                <PreviousPageIcon />
-              </Button>
-              <Text fontWeight={600} fontSize={17}>
-                {page}
-              </Text>
-              <Button
-                border="1px solid #E4E4E4"
-                rounded="6px"
-                variant="outline"
-                p="8px"
-                onClick={() =>
-                  setPage((prev) =>
-                    prev < Math.ceil(properties.length / limit)
-                      ? prev + 1
-                      : prev
-                  )
-                }
-                isDisabled={page >= Math.ceil(properties.length / limit)}
-              >
-                <NextPageIcon />
-              </Button>
-            </Flex>
-          </Box>
-        )}
-      </TableContainer>
-      <AddPaymentModal
-        isOpen={openModal}
-        onClose={() => setOpenModal(false)}
-        instalmentId={selectedProperty?.property_sale_id}
-        dueDate={
-          selectedProperty?.next_instalment_date ||
-          selectedProperty?.first_payment_date
-        }
-        clientId={selectedProperty?.client_id}
-        nextPaymentDate={selectedProperty?.next_instalment_date}
-      />
-    </Fragment>
+                <Tr border="none">
+                  <Th
+                    color="#222222"
+                    fontWeight={500}
+                    fontSize={14}
+                    textTransform="capitalize"
+                  >
+                    Property Name
+                  </Th>
+                  <Th
+                    color="#222222"
+                    fontWeight={500}
+                    fontSize={14}
+                    textTransform="capitalize"
+                  >
+                    property Type
+                  </Th>
+                  <Th
+                    color="#222222"
+                    fontWeight={500}
+                    fontSize={14}
+                    textTransform="capitalize"
+                  >
+                    Client
+                  </Th>
+                  <Th
+                    color="#222222"
+                    fontWeight={500}
+                    fontSize={14}
+                    textTransform="capitalize"
+                  >
+                    Sale Price
+                  </Th>
+                  <Th
+                    color="#222222"
+                    fontWeight={500}
+                    fontSize={14}
+                    textTransform="capitalize"
+                  >
+                    Amount Paid
+                  </Th>
+                  <Th
+                    color="#222222"
+                    fontWeight={500}
+                    fontSize={14}
+                    textTransform="capitalize"
+                  >
+                    Commission
+                  </Th>
+                  <Th
+                    color="#222222"
+                    fontWeight={500}
+                    fontSize={14}
+                    textTransform="capitalize"
+                  ></Th>
+                </Tr>
+              </Thead>
+              <Tbody color="#222222" maxH="450px" overflow="auto">
+                {properties
+                  ?.slice((page - 1) * limit, page * limit)
+                  ?.map((asset) => {
+                    return (
+                      <Tr
+                        key={asset}
+                        border="none"
+                        cursor="pointer"
+                        onClick={() =>
+                          navigate(
+                            `/realtor/properties/${asset?.property_id}?type=instalment`
+                          )
+                        }
+                      >
+                        <Td fontSize={15} color="#222222" fontWeight={600}>
+                          {asset?.property_name}
+                        </Td>
+                        <Td fontWeight={500} fontSize={14} color="#8295AA">
+                          {asset?.property_type}
+                        </Td>
+                        <Td fontWeight={500} fontSize={14} color="#8295AA">
+                          {asset?.client_name}
+                        </Td>
+                        <Td fontWeight={500} fontSize={14} color="#8295AA">
+                          {FormatAmount(Number(asset?.sale_price))}
+                        </Td>
+                        <Td fontWeight={500} fontSize={14} color="#8295AA">
+                          {FormatAmount(Number(asset?.total_amount_paid))}
+                        </Td>
+                        <Td fontWeight={500} fontSize={14} color="#8295AA">
+                          {FormatAmount(Number(asset?.commission))}
+                        </Td>
+                        <Td>
+                          <Menu>
+                            <MenuButton as={Button} rounded="5px" bg="bg.200">
+                              <VerticalEllipsisIcon />
+                            </MenuButton>
+                            <Portal>
+                              <MenuList py="0px" rounded="16px">
+                                <MenuItem
+                                  py="12px"
+                                  px="16px"
+                                  _hover={{ bg: 'border.100' }}
+                                  fontSize={14}
+                                  color="color.100"
+                                  fontWeight={500}
+                                  onClick={() =>
+                                    navigate(
+                                      `/realtor/properties/${asset?.property_id}?type=instalment`
+                                    )
+                                  }
+                                  icon={<ViewpropertyIcon />}
+                                >
+                                  View property
+                                </MenuItem>
+                                <MenuItem
+                                  py="12px"
+                                  px="16px"
+                                  _hover={{ bg: 'border.100' }}
+                                  fontSize={14}
+                                  color="color.100"
+                                  fontWeight={500}
+                                  icon={<PaymentHistoryIcon />}
+                                  onClick={() =>
+                                    navigate(
+                                      `/realtor/properties/payment-history/${asset?.property_sale_id}`
+                                    )
+                                  }
+                                >
+                                  View payment history
+                                </MenuItem>
+                                <MenuItem
+                                  py="12px"
+                                  px="16px"
+                                  _hover={{ bg: 'border.100' }}
+                                  fontSize={14}
+                                  color="color.100"
+                                  fontWeight={500}
+                                  icon={<AddPaymentIcon />}
+                                  onClick={() => {
+                                    setOpenModal(true);
+                                    setSelectedProperty(asset);
+                                  }}
+                                >
+                                  Add new payment
+                                </MenuItem>
+                                <MenuItem
+                                  py="12px"
+                                  px="16px"
+                                  _hover={{ bg: 'border.100' }}
+                                  fontSize={14}
+                                  color="color.100"
+                                  fontWeight={500}
+                                  icon={<RealtorClientsIcon />}
+                                  onClick={() =>
+                                    navigate(
+                                      `/realtor/clients/${asset?.client_id}`
+                                    )
+                                  }
+                                >
+                                  View client
+                                </MenuItem>
+                                <MenuItem
+                                  py="12px"
+                                  px="16px"
+                                  _hover={{ bg: 'border.100' }}
+                                  fontSize={14}
+                                  color="color.100"
+                                  fontWeight={500}
+                                  icon={<RegisterSaleIcon />}
+                                  onClick={() =>
+                                    navigate(
+                                      `/realtor/properties/${asset?.property_id}/register-sale?type=fully_sold`
+                                    )
+                                  }
+                                >
+                                  Change property status to fully sold
+                                </MenuItem>
+                              </MenuList>
+                            </Portal>
+                          </Menu>
+                        </Td>
+                      </Tr>
+                    );
+                  })}
+              </Tbody>
+            </Table>
+            {properties?.length > 0 && (
+              <Box w="full" bg="white" py="10px">
+                <Flex alignItems="center" justifyContent="center" gap="13px">
+                  <Button
+                    onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                    isDisabled={page === 1}
+                    border="1px solid #E4E4E4"
+                    rounded="6px"
+                    variant="outline"
+                    p="8px"
+                  >
+                    <PreviousPageIcon />
+                  </Button>
+                  <Text fontWeight={600} fontSize={17}>
+                    {page}
+                  </Text>
+                  <Button
+                    border="1px solid #E4E4E4"
+                    rounded="6px"
+                    variant="outline"
+                    p="8px"
+                    onClick={() =>
+                      setPage((prev) =>
+                        prev < Math.ceil(properties.length / limit)
+                          ? prev + 1
+                          : prev
+                      )
+                    }
+                    isDisabled={page >= Math.ceil(properties.length / limit)}
+                  >
+                    <NextPageIcon />
+                  </Button>
+                </Flex>
+              </Box>
+            )}
+          </TableContainer>
+          <AddPaymentModal
+            isOpen={openModal}
+            onClose={() => setOpenModal(false)}
+            instalmentId={selectedProperty?.property_sale_id}
+            dueDate={
+              selectedProperty?.next_instalment_date ||
+              selectedProperty?.first_payment_date
+            }
+            clientId={selectedProperty?.client_id}
+            nextPaymentDate={selectedProperty?.next_instalment_date}
+          />
+        </Fragment>
+      )}
+    </Box>
   );
 };
 
@@ -498,7 +528,13 @@ const PropertyStats = ({
   );
 };
 
-const InstalmentProperties = ({ properties }: { properties: any }) => {
+const InstalmentProperties = ({
+  properties,
+  loading,
+}: {
+  properties: any;
+  loading: boolean;
+}) => {
   return (
     <Box>
       <Stack spacing="20px">
@@ -510,6 +546,7 @@ const InstalmentProperties = ({ properties }: { properties: any }) => {
         />
         <PropertyListTable
           properties={properties?.data?.instalment_properties}
+          loading={loading}
         />
       </Stack>
     </Box>

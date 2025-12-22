@@ -29,16 +29,16 @@ const index = () => {
     }
   }, [searchParams, id]);
 
-   const fetchClients = async () => {
-     try {
-       const data = await GetRealtorClients();
-       setClients(data?.data || []);
-     } catch (error) {
-       console.error('Error fetching clients:', error);
-     }
-   };
+  const fetchClients = async () => {
+    try {
+      const data = await GetRealtorClients();
+      setClients(data?.data || []);
+    } catch (error) {
+      console.error('Error fetching clients:', error);
+    }
+  };
 
-  React.useEffect(() => {  
+  React.useEffect(() => {
     fetchClients();
   }, []);
 
@@ -74,11 +74,16 @@ const index = () => {
       }
     >
       {paymentType === 'fully_sold' ? (
-        <FullySoldProperty fetchClients={fetchClients} propertyId={id as string} clients={clients} />
+        <FullySoldProperty
+          fetchClients={fetchClients}
+          propertyId={id as string}
+          clients={clients}
+        />
       ) : (
         <InstalmentPaymentProperty
           clients={clients}
           propertyId={id as string}
+          fetchClients={fetchClients}
         />
       )}
     </RealtorDashboardLayout>

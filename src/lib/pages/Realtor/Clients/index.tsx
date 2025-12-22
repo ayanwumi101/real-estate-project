@@ -8,15 +8,19 @@ import ClientsList from './components/ClientsList';
 import { GetRealtorClients } from '~/lib/api/services/clientsService';
 
 const index = () => {
+  const [loading, setLoading] = React.useState(false);
   const [clients, setClients] = React.useState([]);
 
   React.useEffect(() => {
     const fetchClients = async () => {
+      setLoading(true);
       try {
         const data = await GetRealtorClients();
         setClients(data?.data || []);
       } catch (error) {
         console.error('Error fetching clients:', error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchClients();
@@ -25,7 +29,7 @@ const index = () => {
     <RealtorDashboardLayout title="Clients">
       <Stack spacing="30px" px={['10px', 0]}>
         <NavigationTab />
-        <ClientsList clients={clients} />
+        <ClientsList loading={loading} clients={clients} />
       </Stack>
     </RealtorDashboardLayout>
   );

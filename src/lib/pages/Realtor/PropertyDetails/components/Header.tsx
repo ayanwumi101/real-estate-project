@@ -208,7 +208,7 @@ const Header = ({
                         fontWeight={500}
                         icon={<RegisterSaleIcon />}
                       >
-                        Register sale as Outright payment
+                        Register Outright Sale
                       </MenuItem>
                     </Link>
                     <Link
@@ -223,7 +223,7 @@ const Header = ({
                         fontWeight={500}
                         icon={<RegisterSaleIcon />}
                       >
-                        Register sale as Instalment payment
+                        Register Instalment Sale
                       </MenuItem>
                     </Link>
                   </MenuList>
