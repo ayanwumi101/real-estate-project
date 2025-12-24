@@ -164,7 +164,7 @@ const SignupForm = () => {
   });
 
   return (
-    <Box px={['24px', '44px']} pb="60px" pt="30px">
+    <Box px={['24px', '44px']} pb="60px" pt="30px" maxW="700px" mx="auto">
       <Box mb="40px">
         <Link href="/">
           <Image
@@ -447,7 +447,7 @@ const SignupForm = () => {
                   _placeholder={{ color: '#8295AA' }}
                   h="50px"
                   name="confirmPassword"
-                  fontSize={20}
+                  // fontSize={20}
                 />
                 <InputRightElement w="4rem" mt="1.5">
                   <Button

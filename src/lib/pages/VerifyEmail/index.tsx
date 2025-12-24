@@ -5,7 +5,7 @@ import { Flex, Box } from '@chakra-ui/react';
 
 const index = () => {
   return (
-    <Box as="section">
+    <Box w="full" as="section">
       <Flex>
         <Box w={['100%', '50%']}>
           <VerifyEmail />

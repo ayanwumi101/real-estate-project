@@ -123,7 +123,10 @@ const LoginForm = () => {
         }
       } catch (error: any) {
         setLoading(false);
-        if (error.response.data.message === 'Please verified your email before proceeding') {
+        if (
+          error.response.data.message ===
+          'Please verified your email before proceeding'
+        ) {
           toast({
             title: error.response.data.message as string,
             description: 'Login unsuccessful',
@@ -149,7 +152,7 @@ const LoginForm = () => {
   });
 
   return (
-    <Box px={['24px', '44px']} pb="60px" pt="30px">
+    <Box px={['24px', '44px']} pb="60px" pt="30px" maxW="700px" mx="auto">
       <Box mb="45px">
         <Link href="/">
           <Image

@@ -91,6 +91,8 @@ const ResetPassword = () => {
               pb="60px"
               pt="30px"
               h={['auto', '100vh']}
+              maxW="700px"
+              mx="auto"
             >
               <Box mb="45px">
                 <Link href="/">

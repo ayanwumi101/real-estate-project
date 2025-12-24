@@ -11,9 +11,9 @@ const SideImage = () => {
       alignItems="center"
       justifyContent="center"
       bg="#F5F5F5"
-      h='100%'
+      h="100%"
     >
-      <Box>
+      <Box maxW="700px" mx="auto">
         <Stack spacing="24px" textAlign="center">
           <Image
             src="/assets/svgs/login-house.svg"

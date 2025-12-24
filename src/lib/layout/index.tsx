@@ -299,7 +299,7 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
 
 export const HomeLayout = ({ children }: LayoutProps) => {
   return (
-    <Box maxWidth="1440px" mx="auto">
+    <Box w="full" mx="auto">
       <Header />
       <Box as="main">{children}</Box>
       <Footer />

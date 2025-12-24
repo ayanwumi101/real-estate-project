@@ -1,6 +1,5 @@
-import { Box, Image, Heading, Text, Stack } from '@chakra-ui/react'
-import React from 'react'
-
+import { Box, Image, Heading, Text, Stack } from '@chakra-ui/react';
+import React from 'react';
 
 const SideImage = () => {
   return (
@@ -11,9 +10,9 @@ const SideImage = () => {
       alignItems="center"
       justifyContent="center"
       bg="#F5F5F5"
-      h='100%'
+      h="100%"
     >
-      <Box>
+      <Box maxW="700px" mx="auto">
         <Stack spacing="24px" textAlign="center">
           <Image
             src="/assets/svgs/login-house.svg"
@@ -33,6 +32,6 @@ const SideImage = () => {
       </Box>
     </Box>
   );
-}
+};
 
-export default SideImage
+export default SideImage;

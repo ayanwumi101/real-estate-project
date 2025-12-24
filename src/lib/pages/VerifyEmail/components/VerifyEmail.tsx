@@ -16,7 +16,8 @@ import {
   Icon,
   Stack,
   InputGroup,
-  InputRightElement, FormErrorMessage,
+  InputRightElement,
+  FormErrorMessage,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import {
@@ -119,7 +120,7 @@ const VerifyEmail = () => {
   // };
 
   return (
-    <Box px={['24px', '44px']} pb="60px" pt="30px">
+    <Box px={['24px', '44px']} pb="60px" pt="30px" maxW="700px" mx="auto">
       <Box mb="45px">
         <Link href="/">
           <Image

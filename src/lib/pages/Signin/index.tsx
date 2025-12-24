@@ -1,12 +1,11 @@
-import React from 'react'
-import SideImage from './components/SideImage'
-import LoginForm from './components/LoginForm'
-import { Flex, Box } from '@chakra-ui/react'
-
+import React from 'react';
+import SideImage from './components/SideImage';
+import LoginForm from './components/LoginForm';
+import { Flex, Box } from '@chakra-ui/react';
 
 const index = () => {
   return (
-    <Box as="section">
+    <Box w="full" mx="auto" as="section">
       <Flex>
         <Box w={['100%', '50%']}>
           <LoginForm />
@@ -17,6 +16,6 @@ const index = () => {
       </Flex>
     </Box>
   );
-}
+};
 
-export default index
+export default index;
