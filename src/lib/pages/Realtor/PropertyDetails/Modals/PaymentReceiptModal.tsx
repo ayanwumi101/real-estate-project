@@ -132,7 +132,7 @@ const PaymentReceiptModal = ({
               <Text fontSize={15} fontWeight={500} color="brand.400">
                 {moment(
                   selectedPayment?.date || selectedPayment?.payment_date
-                ).format('DD MMM YYYY, h:mm A')}
+                ).format('DD MMM YYYY')}
               </Text>
             </Stack>
           </Flex>

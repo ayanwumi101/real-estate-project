@@ -1,38 +1,11 @@
 import {
   Box,
   Flex,
-  Stack,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableContainer,
-  Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
   Heading,
   Text,
-  Badge,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  FormLabel,
-  Select,
 } from '@chakra-ui/react';
 import moment from 'moment';
 import React from 'react';
-import {
-  VerticalEllipsisIcon,
-  ViewpropertyIcon,
-  ViewPaymentIcon,
-  PreviousPageIcon,
-  NextPageIcon,
-  InputSearchIcon,
-} from '~/lib/components/Icons/Icons';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 
 const PaymentStats = ({

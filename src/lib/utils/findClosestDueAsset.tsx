@@ -40,24 +40,59 @@ export function findClosestPaymentDueDate(data: any[]) {
   });
 }
 
-export function getPropertyWithEarliestPaymentDue(assets: any[]) {
-  if (!assets || assets.length === 0) return null;
+// export function getPropertyWithEarliestPaymentDue(assets: any[]) {
+//   if (!assets || assets.length === 0) return null;
 
-  const now = new Date().getTime();
+//   const now = new Date().getTime();
 
-  // Step 1 & 2: Filter out null and past dates
+//   // Step 1 & 2: Filter out null and past dates
+//   const validFutureAssets = assets.filter((asset) => {
+//     if (!asset?.date) return false;
+//     const dueDate = new Date(asset?.date).getTime();
+//     return dueDate >= now;
+//   });
+
+//   if (validFutureAssets.length === 0) return null;
+
+//   // Step 3: Reduce to the one with the closest upcoming due date
+//   return validFutureAssets.reduce((closest, current) => {
+//     const closestDate = new Date(closest.cashflow_payment_due).getTime();
+//     const currentDate = new Date(current.cashflow_payment_due).getTime();
+//     return currentDate < closestDate ? current : closest;
+//   });
+// }
+
+export function getPropertyWithEarliestPaymentDue(assets: any[] = []) {
+  if (!Array.isArray(assets) || assets.length === 0) return null;
+
+  // If only one item exists, just return it
+  if (assets.length === 1) return assets[0];
+
+  const now = Date.now();
+
+  // Helper to extract date field
+  const getDueDate = (asset: any) =>
+    asset?.cashflow_payment_due ?? asset?.date ?? null;
+
+  // Filter out null / invalid / past dates
   const validFutureAssets = assets.filter((asset) => {
-    if (!asset?.date) return false;
-    const dueDate = new Date(asset?.date).getTime();
-    return dueDate >= now;
+    const due = getDueDate(asset);
+    if (!due) return false;
+
+    const ts = new Date(due).getTime();
+    return !isNaN(ts) && ts >= now;
   });
 
   if (validFutureAssets.length === 0) return null;
 
-  // Step 3: Reduce to the one with the closest upcoming due date
+  // If only one valid future asset, return it
+  if (validFutureAssets.length === 1) return validFutureAssets[0];
+
+  // Find the earliest upcoming due date
   return validFutureAssets.reduce((closest, current) => {
-    const closestDate = new Date(closest.cashflow_payment_due).getTime();
-    const currentDate = new Date(current.cashflow_payment_due).getTime();
+    const closestDate = new Date(getDueDate(closest)!).getTime();
+    const currentDate = new Date(getDueDate(current)!).getTime();
     return currentDate < closestDate ? current : closest;
   });
 }
+

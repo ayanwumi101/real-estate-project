@@ -19,6 +19,7 @@ import {
   VerticalEllipsisIcon,
   RegisterSaleIcon,
   EditPropertyIcon,
+  AddPaymentIcon,
 } from '~/lib/components/Icons/Icons';
 import useNavigate from '~/lib/utils/useNavigate';
 import AddPaymentModal from '../Modals/AddPaymentModal';
@@ -35,6 +36,7 @@ interface Headerprops {
   activeTab: 'Details' | 'Sales History';
   propertyType: 'available' | 'instalment' | 'sold';
   noOfSales: number;
+  selectedProperty: any;
 }
 
 interface NavigationTabsProps {
@@ -78,28 +80,29 @@ const Header = ({
   setActiveTab,
   propertyType,
   noOfSales,
+  selectedProperty,
 }: Headerprops) => {
   const router = useRouter();
   const navigate = useNavigate();
   const { id } = useParams();
   const [openAddPaymentModal, setOpenAddPaymentModal] = React.useState(false);
-  const [selectedProperty, setSelectedProperty] = React.useState<any>(null);
-  const [dueDates, setDueDates] = React.useState<any>([]);
+  // const [dueDates, setDueDates] = React.useState<any>([]);
 
-  const GetDueDates = async () => {
-    if (propertyType === 'instalment' && id) {
-      try {
-        const res = await GetPropertyDueDates(id as string);
-        setDueDates(res?.data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
+  // const GetDueDates = async () => {
+  //   if (propertyType === 'instalment' && id) {
+  //     try {
+  //       const res = await GetPropertyDueDates(id as string);
+  //       setDueDates(res?.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
 
-  useEffect(() => {
-    GetDueDates();
-  }, [id]);
+  // useEffect(() => {
+  //   GetDueDates();
+  // }, [id]);
+
   return (
     <Box
       px={['20px', '20px']}
@@ -190,7 +193,7 @@ const Header = ({
                   Edit Property
                 </Button>
               </Link>
-              {propertyType === 'available' && (
+              {propertyType === 'available' ? (
                 <Menu>
                   <MenuButton as={Button} rounded="5px" bg="bg.200">
                     <VerticalEllipsisIcon />
@@ -228,6 +231,41 @@ const Header = ({
                     </Link>
                   </MenuList>
                 </Menu>
+              ) : (
+                <Menu>
+                  <MenuButton as={Button} rounded="5px" bg="bg.200">
+                    <VerticalEllipsisIcon />
+                  </MenuButton>
+                  <MenuList py="0px">
+                    <MenuItem
+                      py="12px"
+                      px="16px"
+                      _hover={{ bg: 'border.100' }}
+                      fontSize={14}
+                      color="color.100"
+                      fontWeight={500}
+                      icon={<AddPaymentIcon />}
+                      onClick={() => setOpenAddPaymentModal(true)}
+                    >
+                      Add New Payment
+                    </MenuItem>
+                    {/* <Link
+                      href={`/realtor/properties/${id}/register-sale?type=instalment`}
+                    >
+                      <MenuItem
+                        py="12px"
+                        px="16px"
+                        _hover={{ bg: 'border.100' }}
+                        fontSize={14}
+                        color="color.100"
+                        fontWeight={500}
+                        icon={<RegisterSaleIcon />}
+                      >
+                        Delete Property
+                      </MenuItem>
+                    </Link> */}
+                  </MenuList>
+                </Menu>
               )}
             </Flex>
           </Box>
@@ -239,12 +277,17 @@ const Header = ({
           noOfSales={noOfSales}
         />
       </Stack>
-      {/* <AddPaymentModal
+      <AddPaymentModal
         isOpen={openAddPaymentModal}
         onClose={() => setOpenAddPaymentModal(false)}
-        instalmentId={id as string}
-        dueDates={dueDates}
-      /> */}
+        instalmentId={selectedProperty?.property_sale_id}
+        dueDate={
+          selectedProperty?.next_instalment_date ||
+          selectedProperty?.first_payment_date
+        }
+        clientId={selectedProperty?.client_id}
+        nextPaymentDate={selectedProperty?.next_instalment_date}
+      />
     </Box>
   );
 };

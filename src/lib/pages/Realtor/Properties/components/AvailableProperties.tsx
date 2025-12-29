@@ -31,7 +31,6 @@ import { FormatAmount } from '~/lib/utils/formatAmount';
 import EmptyState from '../../EmptyState';
 import SkeletonLoader from '~/lib/components/SkeletonLoader';
 
-
 const AvailableProperties = ({
   properties,
   loading,
@@ -138,7 +137,11 @@ const AvailableProperties = ({
                           <Td fontWeight={500} fontSize={14} color="#8295AA">
                             {FormatAmount(Number(property?.property_cost))}
                           </Td>
-                          <Td>
+                          <Td
+                            onClick={(e) => {
+                              e.stopPropagation();
+                            }}
+                          >
                             <Menu>
                               <MenuButton as={Button} rounded="5px" bg="bg.200">
                                 <VerticalEllipsisIcon />

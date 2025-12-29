@@ -120,6 +120,7 @@ const index = () => {
           setActiveTab={setActiveTab}
           propertyName={availablePropertyDetails?.property_name}
           location={`${availablePropertyDetails?.house_number} ${availablePropertyDetails?.street_name} ${availablePropertyDetails?.city_name}`}
+          selectedProperty={availablePropertyDetails}
         />
         {activeTab === 'Details' && (
           <Box p={['20px', '20px']}>

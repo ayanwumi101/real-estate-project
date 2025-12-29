@@ -151,7 +151,9 @@ const PropertyListTable = ({
                       <Td fontWeight={500} fontSize={14} color="#8295AA">
                         {FormatAmount(Number(asset?.commission))}
                       </Td>
-                      <Td>
+                      <Td onClick={(e) => {
+                        e.stopPropagation();
+                      }}>
                         <Menu>
                           <MenuButton as={Button} rounded="5px" bg="bg.200">
                             <VerticalEllipsisIcon />
