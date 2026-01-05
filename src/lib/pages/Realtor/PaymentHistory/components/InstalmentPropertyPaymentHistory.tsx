@@ -28,12 +28,20 @@ interface InstalmentpropertyPaymentHistoryProps {
   paymentHistory: any[];
   activeTab: 'completed' | 'pending';
   outstandingBalance: number;
+  propertyName: string;
+  clientName: string;
+  clientPhone: string;
+  clientEmail: string;
 }
 
 const InstalmentPropertyPaymentHistory = ({
   paymentHistory,
   activeTab,
   outstandingBalance,
+  propertyName,
+  clientName,
+  clientPhone,
+  clientEmail,
 }: InstalmentpropertyPaymentHistoryProps) => {
   const newPayments =
     activeTab === 'completed'
@@ -269,6 +277,10 @@ const InstalmentPropertyPaymentHistory = ({
         isOpen={openReceiptModal}
         onClose={() => setOpenReceiptModal(false)}
         selectedPayment={selectedPayment}
+        propertyName={propertyName}
+        clientName={clientName}
+        clientPhone={clientPhone}
+        clientEmail={clientEmail}
       />
     </Fragment>
   );

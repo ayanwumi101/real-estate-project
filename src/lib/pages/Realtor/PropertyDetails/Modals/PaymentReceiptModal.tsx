@@ -20,10 +20,18 @@ const PaymentReceiptModal = ({
   isOpen,
   onClose,
   selectedPayment,
+  clientEmail,
+  clientName,
+  clientPhone,
+  propertyName,
 }: {
   isOpen: boolean;
   onClose: () => void;
   selectedPayment: any;
+  clientName: string;
+  propertyName: string;
+  clientPhone: string;
+  clientEmail: string;
 }) => {
   return (
     <CustomModal size="lg" isOpen={isOpen} onClose={onClose}>
@@ -46,12 +54,12 @@ const PaymentReceiptModal = ({
         </Box>
         <Box>
           <Heading fontSize={16} mb="6px" fontWeight={600}>
-            Samantha Evans
+            {clientName || 'Samantha Evans'}
           </Heading>
           <Flex alignItems="center" gap="6px" fontSize={13} color="brand.800">
-            <Text>+226-795-552-31</Text>{' '}
+            <Text>{clientPhone || '+226-795-552-31'}</Text>{' '}
             <Box w="4px" h="4px" rounded="full" bg="#C0C0C0"></Box>{' '}
-            <Text>manhhachkt08@gmail.com</Text>
+            <Text>{clientEmail || 'manhhachkt08@gmail.com'}</Text>
           </Flex>
         </Box>
         <Box
@@ -72,7 +80,9 @@ const PaymentReceiptModal = ({
                 Asset Name
               </Text>
               <Text fontSize={15} fontWeight={500} color="brand.400">
-                {selectedPayment?.property_name || 'Skyline Residences'}
+                {propertyName ||
+                  selectedPayment?.property_name ||
+                  'Skyline Residences'}
               </Text>
             </Stack>
             <Stack w="50%">

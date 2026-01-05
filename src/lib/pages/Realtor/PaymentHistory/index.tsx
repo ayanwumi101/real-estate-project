@@ -148,6 +148,10 @@ const index = () => {
                   paymentHistory={paymentHistory?.payment_history}
                   activeTab={activeTab}
                   outstandingBalance={paymentHistory?.outstanding_balance}
+                  propertyName={paymentHistory?.property_name}
+                  clientName={paymentHistory?.client_name}
+                  clientPhone={paymentHistory?.client_phone}
+                  clientEmail={paymentHistory?.client_email}
                 />
               </Stack>
             </Box>
