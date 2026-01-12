@@ -35,7 +35,7 @@ const PaymentStats = ({
           gap="10px"
           overflow="auto"
           pb="2"
-          flexWrap="wrap"
+          // flexWrap="wrap"
         >
           {/* first card */}
           <Box

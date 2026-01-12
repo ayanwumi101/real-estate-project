@@ -43,7 +43,7 @@ const index = () => {
     paymentHistory?.payment_history
   );
 
-  console.log(paymentHistory);
+  // console.log(paymentHistory);
 
   return (
     <RealtorDashboardLayout
@@ -107,7 +107,12 @@ const index = () => {
             <Box w="full">
               <Stack spacing="20px" w="full">
                 {/* navigation tab goes here */}
-                <Flex alignItems="center" justifyContent="space-between">
+                <Flex
+                  alignItems="center"
+                  justifyContent="space-between"
+                  flexDirection={['column', 'row']}
+                  gap={['20px', 0]}
+                >
                   <Flex alignItems="center" gap="10px">
                     {[
                       {
@@ -147,6 +152,7 @@ const index = () => {
                     fontWeight={500}
                     fontSize={15}
                     onClick={() => setOpenModal(true)}
+                    w={['full', 'auto']}
                   >
                     Add new payment
                   </Button>

@@ -143,9 +143,9 @@ const ClientsList = ({
                             {client?.email}
                           </Td>
                           <Td fontWeight={500} fontSize={14} color="#8295AA">
-                            {client?.phone?.startsWith('234')
+                            {client?.phone === null ? 'N/A' : client?.phone?.startsWith('234')
                               ? `+${client.phone}`
-                              : 'N/A'}
+                              : `+${client.phone}`}
                           </Td>
                           <Td fontWeight={500} fontSize={14} color="#8295AA">
                             {client.address}
