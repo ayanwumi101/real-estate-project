@@ -33,6 +33,9 @@ const PaymentHistoryTable = ({ payments }: { payments: any[] }) => {
   const [openReceiptModal, setOpenReceiptModal] =
     React.useState<boolean>(false);
   const [selectedPayment, setSelectedPayment] = React.useState<any>(null);
+
+  // console.log(selectedPayment);
+  
   return (
     <Fragment>
       <TableContainer w="full" border="1px solid #E4E4E4" borderRadius="10px">
@@ -147,22 +150,6 @@ const PaymentHistoryTable = ({ payments }: { payments: any[] }) => {
                           <VerticalEllipsisIcon />
                         </MenuButton>
                         <MenuList py="10px" rounded="16px">
-                          {/* <MenuItem
-                        py="12px"
-                        px="16px"
-                        _hover={{ bg: 'border.100' }}
-                        fontSize={14}
-                        color="color.100"
-                        fontWeight={500}
-                        onClick={() =>
-                          navigate(
-                            `/realtor/properties/${assetId}/payment-history/${payment?.id}`
-                          )
-                        }
-                        icon={<ViewPaymentIcon />}
-                      >
-                        View payment history
-                      </MenuItem> */}
                           <MenuItem
                             py="12px"
                             px="16px"

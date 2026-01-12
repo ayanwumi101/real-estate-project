@@ -28,10 +28,10 @@ const PaymentReceiptModal = ({
   isOpen: boolean;
   onClose: () => void;
   selectedPayment: any;
-  clientName: string;
-  propertyName: string;
-  clientPhone: string;
-  clientEmail: string;
+  clientName?: string;
+  propertyName?: string;
+  clientPhone?: string;
+  clientEmail?: string;
 }) => {
   return (
     <CustomModal size="lg" isOpen={isOpen} onClose={onClose}>

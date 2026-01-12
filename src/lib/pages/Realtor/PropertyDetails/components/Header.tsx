@@ -193,7 +193,7 @@ const Header = ({
                   Edit Property
                 </Button>
               </Link>
-              {propertyType === 'available' ? (
+              {propertyType === 'available' && (
                 <Menu>
                   <MenuButton as={Button} rounded="5px" bg="bg.200">
                     <VerticalEllipsisIcon />
@@ -229,41 +229,6 @@ const Header = ({
                         Register Instalment Sale
                       </MenuItem>
                     </Link>
-                  </MenuList>
-                </Menu>
-              ) : (
-                <Menu>
-                  <MenuButton as={Button} rounded="5px" bg="bg.200">
-                    <VerticalEllipsisIcon />
-                  </MenuButton>
-                  <MenuList py="0px">
-                    <MenuItem
-                      py="12px"
-                      px="16px"
-                      _hover={{ bg: 'border.100' }}
-                      fontSize={14}
-                      color="color.100"
-                      fontWeight={500}
-                      icon={<AddPaymentIcon />}
-                      onClick={() => setOpenAddPaymentModal(true)}
-                    >
-                      Add New Payment
-                    </MenuItem>
-                    {/* <Link
-                      href={`/realtor/properties/${id}/register-sale?type=instalment`}
-                    >
-                      <MenuItem
-                        py="12px"
-                        px="16px"
-                        _hover={{ bg: 'border.100' }}
-                        fontSize={14}
-                        color="color.100"
-                        fontWeight={500}
-                        icon={<RegisterSaleIcon />}
-                      >
-                        Delete Property
-                      </MenuItem>
-                    </Link> */}
                   </MenuList>
                 </Menu>
               )}

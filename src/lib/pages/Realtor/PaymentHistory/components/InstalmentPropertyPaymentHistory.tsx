@@ -55,6 +55,9 @@ const InstalmentPropertyPaymentHistory = ({
   const [openReceiptModal, setOpenReceiptModal] =
     React.useState<boolean>(false);
   const [selectedPayment, setSelectedPayment] = React.useState<any>(null);
+
+  // console.log(paymentHistory);
+  
   return (
     <Fragment>
       <TableContainer w="full" border="1px solid #E4E4E4" borderRadius="10px">

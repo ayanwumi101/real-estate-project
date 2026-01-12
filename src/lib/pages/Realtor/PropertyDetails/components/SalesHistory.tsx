@@ -16,7 +16,6 @@ import {
   MenuItem,
   Heading,
   Text,
-  Badge,
   Input,
   InputGroup,
   InputLeftElement,
@@ -27,16 +26,16 @@ import moment from 'moment';
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   VerticalEllipsisIcon,
-  ViewpropertyIcon,
-  ViewPaymentIcon,
   PreviousPageIcon,
   NextPageIcon,
   InputSearchIcon,
   RealtorClientsIcon,
   PaymentHistoryIcon,
+  AddPaymentIcon,
 } from '~/lib/components/Icons/Icons';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
+import AddPaymentModal from '../Modals/AddPaymentModal';
 
 const PaymentListTable = ({
   payments,
@@ -51,6 +50,9 @@ const PaymentListTable = ({
   const assets = Array.from({ length: payments?.length }, (_, i) => ({
     id: i + 1,
   }));
+  const [openModal, setOpenModal] = React.useState<boolean>(false);
+  const [selectedProperty, setSelectedProperty] = React.useState<any>(null);
+
   return (
     <TableContainer border="1px solid #E4E4E4" borderRadius="10px">
       <Table>
@@ -195,6 +197,21 @@ const PaymentListTable = ({
                       >
                         View client profile
                       </MenuItem>
+                      <MenuItem
+                        py="12px"
+                        px="16px"
+                        _hover={{ bg: 'border.100' }}
+                        fontSize={14}
+                        color="color.100"
+                        fontWeight={500}
+                        onClick={() => {
+                          setOpenModal(true);
+                          setSelectedProperty(payment);
+                        }}
+                        icon={<AddPaymentIcon />}
+                      >
+                        Add new payment
+                      </MenuItem>
                     </MenuList>
                   </Menu>
                 </Td>
@@ -236,6 +253,14 @@ const PaymentListTable = ({
           </Flex>
         </Box>
       )}
+      <AddPaymentModal
+        isOpen={openModal}
+        onClose={() => setOpenModal(false)}
+        instalmentId={selectedProperty?.property_sale_id}
+        dueDate={selectedProperty?.last_payment}
+        clientId={selectedProperty?.client_id}
+        nextPaymentDate={selectedProperty?.next_instalment_date}
+      />
     </TableContainer>
   );
 };

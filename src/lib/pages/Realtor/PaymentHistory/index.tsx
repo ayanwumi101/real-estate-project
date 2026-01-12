@@ -13,10 +13,8 @@ import useNavigate from '~/lib/utils/useNavigate';
 import { ChevronLeftIcon } from '~/lib/components/Icons/Icons';
 import { useRouter } from 'next/navigation';
 import InstalmentPropertyPaymentHistory from './components/InstalmentPropertyPaymentHistory';
-import {
-  findClosestPaymentDueDate,
-  getAssetWithEarliestPaymentDue, getPropertyWithEarliestPaymentDue
-} from '~/lib/utils/findClosestDueAsset';
+import { getPropertyWithEarliestPaymentDue } from '~/lib/utils/findClosestDueAsset';
+import AddPaymentModal from '../PropertyDetails/Modals/AddPaymentModal';
 
 const index = () => {
   const { id } = useParams();
@@ -26,6 +24,7 @@ const index = () => {
   const [activeTab, setActiveTab] = React.useState<'completed' | 'pending'>(
     'completed'
   );
+  const [openModal, setOpenModal] = React.useState<boolean>(false);
 
   const getPaymentHistory = async () => {
     try {
@@ -44,15 +43,12 @@ const index = () => {
     paymentHistory?.payment_history
   );
 
+  console.log(paymentHistory);
 
   return (
     <RealtorDashboardLayout
       title={
-        <Flex
-          alignItems="center"
-          gap={['5px', '8px']}
-          // flexWrap={['wrap', 'nowrap']}
-        >
+        <Flex alignItems="center" gap={['5px', '8px']}>
           <Text fontSize={[15, 16]} fontWeight={600} color="brand.400">
             Clients
           </Text>
@@ -111,38 +107,49 @@ const index = () => {
             <Box w="full">
               <Stack spacing="20px" w="full">
                 {/* navigation tab goes here */}
-                <Flex alignItems="center" gap="10px">
-                  {[
-                    {
-                      label: 'Completed Payments',
-                      value: 'completed',
-                    },
-                    {
-                      label: 'Pending Payments',
-                      value: 'pending',
-                    },
-                  ].map((tab) => (
-                    <Button
-                      key={tab.value}
-                      onClick={() =>
-                        setActiveTab(tab.value as 'completed' | 'pending')
-                      }
-                      border="none"
-                      rounded="50px"
-                      h="40px"
-                      bg={activeTab === tab.value ? 'brand.500' : 'none'}
-                      color={
-                        activeTab === tab.value ? 'brand.100' : 'brand.800'
-                      }
-                      fontSize={15}
-                      fontWeight={600}
-                      px="22px"
-                      py="16px"
-                      textTransform={'capitalize'}
-                    >
-                      {tab.label}
-                    </Button>
-                  ))}
+                <Flex alignItems="center" justifyContent="space-between">
+                  <Flex alignItems="center" gap="10px">
+                    {[
+                      {
+                        label: 'Completed Payments',
+                        value: 'completed',
+                      },
+                      {
+                        label: 'Pending Payments',
+                        value: 'pending',
+                      },
+                    ].map((tab) => (
+                      <Button
+                        key={tab.value}
+                        onClick={() =>
+                          setActiveTab(tab.value as 'completed' | 'pending')
+                        }
+                        border="none"
+                        rounded="50px"
+                        h="40px"
+                        bg={activeTab === tab.value ? 'brand.500' : 'none'}
+                        color={
+                          activeTab === tab.value ? 'brand.100' : 'brand.800'
+                        }
+                        fontSize={15}
+                        fontWeight={600}
+                        px="22px"
+                        py="16px"
+                        textTransform={'capitalize'}
+                      >
+                        {tab.label}
+                      </Button>
+                    ))}
+                  </Flex>
+                  <Button
+                    bg="brand.100"
+                    color="brand.200"
+                    fontWeight={500}
+                    fontSize={15}
+                    onClick={() => setOpenModal(true)}
+                  >
+                    Add new payment
+                  </Button>
                 </Flex>
                 <InstalmentPropertyPaymentHistory
                   paymentHistory={paymentHistory?.payment_history}
@@ -159,6 +166,17 @@ const index = () => {
             <PaymentHistoryTable payments={paymentHistory?.payment_history} />
           )}
         </Stack>
+        <AddPaymentModal
+          isOpen={openModal}
+          onClose={() => setOpenModal(false)}
+          instalmentId={paymentHistory?.property_sale_id}
+          dueDate={
+            paymentHistory?.next_instalment_date ||
+            paymentHistory?.first_payment_date
+          }
+          clientId={paymentHistory?.client_id}
+          nextPaymentDate={paymentHistory?.next_instalment_date}
+        />
       </Box>
     </RealtorDashboardLayout>
   );
