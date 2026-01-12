@@ -317,11 +317,11 @@ const InstalmentPropertyDetails = ({
           </Box>
         )}
       </TableContainer>
-      <PaymentReceiptModal
+      {/* <PaymentReceiptModal
         isOpen={openReceiptModal}
         onClose={() => setOpenReceiptModal(false)}
         selectedPayment={selectedPayment}
-      />
+      /> */}
     </Stack>
   );
 };

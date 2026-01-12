@@ -12,9 +12,10 @@ import AvailableAssetDetails from './components/AvailableAssetDetails';
 import {
   GetAvailablePropertyDetails,
   GetInstalmentPropertyPaymentHistory,
-  UpdateProperty,
 } from '~/lib/api/services/propertiesService';
 import SalesHistory from './components/SalesHistory';
+import SoldAssetDetails from './components/SoldAssetDetails';
+import InstalmentAssetDetails from './components/InstalmentAssetDetails';
 
 const index = () => {
   const { id } = useParams();
@@ -102,15 +103,6 @@ const index = () => {
         </Flex>
       }
     >
-      {/* {propertyType !== 'available' ? (
-        <InstalmentPropertyDetails
-          totalSalePrice={propertyPaymentHistory?.total_sale_price}
-          totalCommission={propertyPaymentHistory?.total_commission_received}
-          totalPayment={propertyPaymentHistory?.total_payment}
-          payments={propertyPaymentHistory?.sales}
-          propertyId={id as string}
-        />
-      ) : ( */}
       <Stack w="full" spacing="12px">
         <Header
           tabs={tabs}
@@ -124,10 +116,22 @@ const index = () => {
         />
         {activeTab === 'Details' && (
           <Box p={['20px', '20px']}>
-            <Flex flexWrap={['wrap', 'nowrap']} gap="40px" w="full">
-              <AvailableAssetDetails
-                propertyDetails={availablePropertyDetails}
-              />
+            <Flex flexWrap={['wrap', 'nowrap']} gap="40px" alignItems='flex-start' w="full">
+              <Box>
+                {propertyType === 'available' ? (
+                  <AvailableAssetDetails
+                    propertyDetails={availablePropertyDetails}
+                  />
+                ) : propertyType === 'instalment' ? (
+                  <InstalmentAssetDetails
+                    propertyDetails={availablePropertyDetails}
+                  />
+                ) : (
+                  <SoldAssetDetails
+                    propertyDetails={availablePropertyDetails}
+                  />
+                )}
+              </Box>
               <Notes notes={availablePropertyDetails?.comment} />
             </Flex>
           </Box>

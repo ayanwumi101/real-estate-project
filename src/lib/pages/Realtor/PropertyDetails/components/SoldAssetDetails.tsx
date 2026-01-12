@@ -37,6 +37,7 @@ const AssetDetailsItem = ({
 };
 
 const SoldAssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
+  console.log(propertyDetails);
   return (
     <Box>
       <Stack spacing="32px">
