@@ -4,7 +4,8 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  Flex, Select
+  Flex,
+  Select,
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import React from 'react';
@@ -16,12 +17,16 @@ interface NavigationTabProps {
   >;
   activeTab: 'assets' | 'transactions' | 'securities' | 'analytics';
   tabs: string[];
+  assetsCount: number;
+  transactionsCount: number;
 }
 
 const NavigationTab: React.FC<NavigationTabProps> = ({
   setActiveTab,
   activeTab,
   tabs,
+  assetsCount,
+  transactionsCount,
 }) => {
   return (
     <Box borderBottom="1px solid" borderColor="border.100" pb="20px">
@@ -46,16 +51,25 @@ const NavigationTab: React.FC<NavigationTabProps> = ({
               py="16px"
               textTransform={'capitalize'}
             >
-              {`${tab} (10)`}
+              {tab === 'assets'
+                ? `${tab} (${assetsCount})`
+                : tab === 'transactions'
+                  ? `${tab} (${transactionsCount})`
+                  : `${tab}`}
             </Button>
           ))}
         </Flex>
 
         <Flex alignItems="center" gap="10px">
-          <Select w='160px' rounded='50px' border='1px solid' borderColor='border.100'>
-              <option value="all">All</option>
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
+          <Select
+            w="160px"
+            rounded="50px"
+            border="1px solid"
+            borderColor="border.100"
+          >
+            <option value="all">All</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
           </Select>
           <InputGroup w="325px">
             <InputLeftElement pointerEvents="none">

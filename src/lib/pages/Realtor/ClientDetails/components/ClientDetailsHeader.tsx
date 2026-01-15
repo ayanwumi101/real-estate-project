@@ -21,13 +21,16 @@ const ClientDetailsHeader = ({ client }: { client: any }) => {
     <Box py="25px">
       <Flex alignItems="flex-start" gap="25px">
         <Avatar
-          name="James Brown"
+          name={`${client?.firstname} ${client?.lastname}`}
           src="/path/to/avatar.jpg"
-          w="110px"
-          h="110px"
+          w="90px"
+          h="90px"
           rounded="full"
           bg="brand.100"
           color="brand.200"
+          fontSize={45}
+          fontWeight={600}
+          size='xl'
         />
         <Box w="full">
           <Stack spacing="12px">

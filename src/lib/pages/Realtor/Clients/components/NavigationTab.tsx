@@ -19,7 +19,13 @@ interface NavigationTabProps {
   tabs: string[];
 }
 
-const NavigationTab = () => {
+const NavigationTab = ({
+  searchQuery,
+  setSearchQuery,
+}: {
+  searchQuery: string;
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+}) => {
   const navigate = useNavigate();
   return (
     <Box borderBottom="1px solid" borderColor="border.100" pb="20px">
@@ -35,6 +41,8 @@ const NavigationTab = () => {
             fontSize={14}
             _placeholder={{ color: 'gray.500' }}
             pl="40px"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
         </InputGroup>
         <Button

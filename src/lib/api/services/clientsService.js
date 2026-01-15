@@ -16,3 +16,13 @@ export const GetClientDetails = async (clientId) => {
     const response = await axiosInstance.get(`${API_ROUTES.GET_CLIENT_DETAILS}/${clientId}`);
     return response.data;
 }
+
+export const GetClientTransactions = async (clientId) => {
+    const response = await axiosInstance.get(`${API_ROUTES.GET_CLIENT_DETAILS}/${clientId}/transactions`);
+    return response.data;
+}
+
+export const GetClientAnalytics = async (clientId) => {
+    const response = await axiosInstance.get(`${API_ROUTES.GET_CLIENT_DETAILS}/${clientId}/analytics`);
+    return response.data;
+}

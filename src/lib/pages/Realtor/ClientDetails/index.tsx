@@ -10,7 +10,11 @@ import AssetsList from './components/AssetsList';
 import TransactionsList from './components/TransactionsList';
 import Securities from './components/Securities';
 import Analytics from './components/Analytics';
-import { GetClientDetails } from '~/lib/api/services/clientsService';
+import {
+  GetClientDetails,
+  GetClientTransactions,
+  GetClientAnalytics,
+} from '~/lib/api/services/clientsService';
 import { useParams } from 'next/navigation';
 
 const index = () => {
@@ -20,18 +24,34 @@ const index = () => {
     'assets' | 'transactions' | 'securities' | 'analytics'
   >('assets');
   const [clientDetails, setClientDetails] = React.useState<any>({} as any);
+  const [clientTransactions, setClientTransactions] = React.useState<any>([]);
+  const [clientAnalytics, setClientAnalytics] = React.useState<any>([]);
+  const [loading, setLoading] = React.useState<boolean>(false);
 
-  const getClientDetails = async () => {
+  const GetClientProfileDetails = async () => {
     try {
-      const response = await GetClientDetails(id);
-      setClientDetails(response?.data);
+      setLoading(true);
+      const [
+        clientDetailsResponse,
+        clientTransactionsResponse,
+        clientAnalyticsResponse,
+      ] = await Promise.all([
+        GetClientDetails(id),
+        GetClientTransactions(id),
+        GetClientAnalytics(id),
+      ]);
+      setClientDetails(clientDetailsResponse?.data);
+      setClientTransactions(clientTransactionsResponse?.data);
+      setClientAnalytics(clientAnalyticsResponse?.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   React.useEffect(() => {
-    getClientDetails();
+    GetClientProfileDetails();
   }, [id]);
 
   return (
@@ -54,12 +74,23 @@ const index = () => {
           tabs={tabs}
           activeTab={activeTab}
           setActiveTab={setActiveTab}
+          assetsCount={clientDetails?.assets?.length || 0}
+          transactionsCount={clientTransactions?.transactions?.length || 0}
         />
         <Box>
-          {activeTab === 'assets' && <AssetsList />}
-          {activeTab === 'transactions' && <TransactionsList />}
+          {activeTab === 'assets' && (
+            <AssetsList loading={loading} assets={clientDetails?.assets} />
+          )}
+          {activeTab === 'transactions' && (
+            <TransactionsList
+              loading={loading}
+              transactions={clientTransactions?.transactions}
+            />
+          )}
           {activeTab === 'securities' && <Securities />}
-          {activeTab === 'analytics' && <Analytics />}
+          {activeTab === 'analytics' && (
+            <Analytics loading={loading} analytics={clientAnalytics} />
+          )}
         </Box>
       </Stack>
     </RealtorDashboardLayout>

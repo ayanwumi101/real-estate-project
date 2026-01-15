@@ -137,6 +137,8 @@ const Header = ({
                   px="10px"
                   py="4px"
                   rounded="50px"
+                  fontSize={12}
+                  fontWeight={500}
                   bg={
                     propertyType === 'instalment'
                       ? '#F6EDDF'
@@ -144,8 +146,6 @@ const Header = ({
                         ? '#E7F5EC'
                         : 'bg.200'
                   }
-                  fontSize={12}
-                  fontWeight={500}
                   color={
                     propertyType === 'instalment'
                       ? '#E1A101'
