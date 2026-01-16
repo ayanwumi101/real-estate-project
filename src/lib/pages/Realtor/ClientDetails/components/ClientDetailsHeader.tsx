@@ -19,7 +19,11 @@ import {
 const ClientDetailsHeader = ({ client }: { client: any }) => {
   return (
     <Box py="25px">
-      <Flex alignItems="flex-start" gap="25px">
+      <Flex
+        alignItems={['center', 'flex-start']}
+        gap="25px"
+        flexDirection={['column', 'row']}
+      >
         <Avatar
           name={`${client?.firstname} ${client?.lastname}`}
           src="/path/to/avatar.jpg"
@@ -28,16 +32,24 @@ const ClientDetailsHeader = ({ client }: { client: any }) => {
           rounded="full"
           bg="brand.100"
           color="brand.200"
-          fontSize={45}
           fontWeight={600}
-          size='xl'
+          size={['lg', 'xl']}
         />
         <Box w="full">
           <Stack spacing="12px">
             <Box>
               <Flex alignItems="center" justifyContent="space-between">
-                <Stack spacing="12px">
-                  <Heading fontWeight={500} fontSize={30} color="brand.300">
+                <Stack
+                  w={['full', 'auto']}
+                  spacing="12px"
+                  justifyContent={['center', 'flex-start']}
+                  alignItems={['center', 'flex-start']}
+                >
+                  <Heading
+                    fontWeight={500}
+                    fontSize={[24, 30]}
+                    color="brand.300"
+                  >
                     {client?.firstname} {client?.lastname}
                   </Heading>
                   <Flex alignItems="center" gap="10px">
@@ -57,7 +69,7 @@ const ClientDetailsHeader = ({ client }: { client: any }) => {
                     </Badge>
                   </Flex>
                 </Stack>
-                <Flex alignItems="center" gap="10px">
+                <Flex alignItems="center" gap="10px" display={['none', 'flex']}>
                   <Button
                     fontWeight={600}
                     bg="brand.500"
@@ -79,17 +91,25 @@ const ClientDetailsHeader = ({ client }: { client: any }) => {
             </Box>
             <Divider />
             <Box>
-              <Flex alignItems="center" justifyContent="space-between">
+              <Flex alignItems="flex-start" justifyContent="space-between">
                 <Stack spacing="16px">
                   <Flex alignItems="center" gap="10px">
                     <LocationIcon />
-                    <Text fontWeight={500} color="brand.300">
+                    <Text
+                      fontWeight={500}
+                      fontSize={[14, 16]}
+                      color="brand.300"
+                    >
                       {client?.address}
                     </Text>
                   </Flex>
                   <Flex alignItems="center" gap="10px">
                     <EmailIcon />
-                    <Text fontWeight={500} color="brand.300">
+                    <Text
+                      fontWeight={500}
+                      fontSize={[14, 16]}
+                      color="brand.300"
+                    >
                       {client?.email}
                     </Text>
                   </Flex>
@@ -97,21 +117,51 @@ const ClientDetailsHeader = ({ client }: { client: any }) => {
                 <Stack spacing="16px">
                   <Flex alignItems="center" gap="10px">
                     <TelephoneIcon />
-                    <Text fontWeight={500} color="brand.300">
+                    <Text
+                      fontWeight={500}
+                      fontSize={[14, 16]}
+                      color="brand.300"
+                    >
                       {client?.phone?.startsWith('234')
                         ? `+${client?.phone}`
                         : client?.phone}
                     </Text>
                   </Flex>
-                  <Flex alignItems="center" gap="10px">
+                  {/* <Flex alignItems="center" gap="10px">
                     <LocationIcon />
-                    <Text fontWeight={500} color="brand.300">
+                    <Text
+                      fontWeight={500}
+                      fontSize={[14, 16]}
+                      color="brand.300"
+                    >
                       {client?.address}
                     </Text>
-                  </Flex>
+                  </Flex> */}
                 </Stack>
               </Flex>
             </Box>
+            <Flex
+              alignItems="center"
+              justifyContent="space-between"
+              display={['flex', 'none']}
+            >
+              <Button
+                fontWeight={600}
+                bg="brand.500"
+                color="brand.100"
+                fontSize={14}
+              >
+                Add New Payment
+              </Button>
+              <Button
+                bg="brand.100"
+                color="brand.200"
+                fontWeight={600}
+                fontSize={14}
+              >
+                Add Property to Client
+              </Button>
+            </Flex>
           </Stack>
         </Box>
       </Flex>

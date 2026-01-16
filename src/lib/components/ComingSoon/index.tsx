@@ -67,7 +67,7 @@ const textVariants = {
 
 const ComingSoon = () => {
   return (
-    <Box w="full" h={['65vh', '75vh']} px='4'>
+    <Box w="full" h={['60vh', '70vh']} px='4'>
       <Flex w="full" h="full" alignItems="center" justifyContent="center">
         <motion.div
           initial="hidden"
