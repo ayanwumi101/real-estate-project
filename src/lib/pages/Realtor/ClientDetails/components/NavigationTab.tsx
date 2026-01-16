@@ -35,8 +35,8 @@ const NavigationTab: React.FC<NavigationTabProps> = ({
       <Flex
         alignItems="center"
         justifyContent="space-between"
-        flexWrap={['wrap', 'nowrap']}
-        gap={['20px', '0']}
+        flexWrap={['wrap-reverse', 'nowrap']}
+        gap={['30px', '0']}
       >
         <Flex alignItems="center" gap="7px" overflow="auto">
           {tabs.map((tab) => (

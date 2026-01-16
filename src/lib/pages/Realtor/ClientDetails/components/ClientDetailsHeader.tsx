@@ -36,7 +36,7 @@ const ClientDetailsHeader = ({ client }: { client: any }) => {
           size={['lg', 'xl']}
         />
         <Box w="full">
-          <Stack spacing="12px">
+          <Stack spacing={['18px',"12px"]}>
             <Box>
               <Flex alignItems="center" justifyContent="space-between">
                 <Stack
@@ -52,7 +52,7 @@ const ClientDetailsHeader = ({ client }: { client: any }) => {
                   >
                     {client?.firstname} {client?.lastname}
                   </Heading>
-                  <Flex alignItems="center" gap="10px">
+                  {/* <Flex alignItems="center" gap="10px">
                     <Text fontWeight={500} color="brand.300">
                       Manager:{' '}
                     </Text>
@@ -67,7 +67,7 @@ const ClientDetailsHeader = ({ client }: { client: any }) => {
                     >
                       Brooklyn Simons
                     </Badge>
-                  </Flex>
+                  </Flex> */}
                 </Stack>
                 <Flex alignItems="center" gap="10px" display={['none', 'flex']}>
                   <Button
@@ -142,8 +142,9 @@ const ClientDetailsHeader = ({ client }: { client: any }) => {
             </Box>
             <Flex
               alignItems="center"
-              justifyContent="space-between"
+              justifyContent={'center'}
               display={['flex', 'none']}
+              gap="10px"
             >
               <Button
                 fontWeight={600}

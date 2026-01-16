@@ -68,7 +68,7 @@ const index = () => {
         </Flex>
       }
     >
-      <Stack spacing="20px" px={["3", "0"]}>
+      <Stack spacing="20px" px={["16px", "0"]}>
         <ClientDetailsHeader client={clientDetails?.client} />
         <NavigationTab
           tabs={tabs}
