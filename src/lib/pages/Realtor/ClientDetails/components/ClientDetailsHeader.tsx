@@ -33,7 +33,7 @@ const ClientDetailsHeader = ({ client }: { client: any }) => {
           bg="brand.100"
           color="brand.200"
           fontWeight={600}
-          size={['lg', 'xl']}
+          size='xl'
         />
         <Box w="full">
           <Stack spacing={['18px',"12px"]}>
