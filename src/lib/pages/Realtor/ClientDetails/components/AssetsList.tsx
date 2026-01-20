@@ -169,7 +169,9 @@ const AssetsList = ({ assets, loading }: { assets: any[], loading: boolean }) =>
                             color="color.100"
                             fontWeight={500}
                             onClick={() =>
-                              navigate(`/realtor/properties/hfjrhu4884`)
+                              navigate(
+                                `/realtor/properties/${asset?.property_id}`
+                              )
                             }
                             icon={<ViewpropertyIcon />}
                           >
@@ -183,13 +185,15 @@ const AssetsList = ({ assets, loading }: { assets: any[], loading: boolean }) =>
                             color="color.100"
                             fontWeight={500}
                             onClick={() =>
-                              navigate(`/realtor/properties/hfjrhu4884`)
+                              navigate(
+                                `/realtor/properties/payment-history/${asset?.property_sale_id}`
+                              )
                             }
                             icon={<PaymentHistoryIcon />}
                           >
                             View payment history
                           </MenuItem>
-                          <MenuItem
+                          {/* <MenuItem
                             py="12px"
                             px="16px"
                             _hover={{ bg: 'border.100' }}
@@ -220,7 +224,7 @@ const AssetsList = ({ assets, loading }: { assets: any[], loading: boolean }) =>
                             }
                           >
                             Update asset status
-                          </MenuItem>
+                          </MenuItem> */}
                         </MenuList>
                       </Menu>
                     </Td>

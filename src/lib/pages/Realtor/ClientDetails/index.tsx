@@ -16,6 +16,7 @@ import {
   GetClientAnalytics,
 } from '~/lib/api/services/clientsService';
 import { useParams } from 'next/navigation';
+import Link from 'next/link';
 
 const index = () => {
   const { id } = useParams();
@@ -57,18 +58,20 @@ const index = () => {
   return (
     <RealtorDashboardLayout
       title={
-        <Flex alignItems="center" gap="8px">
-          <Text fontSize={16} fontWeight={600} color="brand.400">
-            Clients
-          </Text>
-          <BsChevronRight size={15} fontWeight={900} />
-          <Text fontSize={16} fontWeight={600} color="brand.800">
-            {`${clientDetails?.client?.firstname} ${clientDetails?.client?.lastname}`}
-          </Text>
-        </Flex>
+        <Link style={{ padding: 0, margin: 0 }} href="/realtor/clients">
+          <Flex alignItems="center" gap="8px">
+            <Text fontSize={16} fontWeight={600} color="brand.400">
+              Clients
+            </Text>
+            <BsChevronRight size={15} fontWeight={900} />
+            <Text fontSize={16} fontWeight={600} color="brand.800">
+              {`${clientDetails?.client?.firstname} ${clientDetails?.client?.lastname}`}
+            </Text>
+          </Flex>
+        </Link>
       }
     >
-      <Stack spacing="20px" px={["16px", "0"]}>
+      <Stack spacing="20px" px={['16px', '0']}>
         <ClientDetailsHeader client={clientDetails?.client} />
         <NavigationTab
           tabs={tabs}

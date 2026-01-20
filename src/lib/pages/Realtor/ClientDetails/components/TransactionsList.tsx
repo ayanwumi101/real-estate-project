@@ -32,9 +32,13 @@ import PaymentDetailsModal from '../Modals/PaymentDetailsModal';
 import moment from 'moment';
 import SkeletonLoader from '~/lib/components/SkeletonLoader';
 
-
-
-const TransactionsList = ({ transactions, loading }: { transactions: any[], loading: boolean }) => {
+const TransactionsList = ({
+  transactions,
+  loading,
+}: {
+  transactions: any[];
+  loading: boolean;
+}) => {
   const navigate = useNavigate();
   const [page, setPage] = React.useState(1);
   const [limit, setLimit] = React.useState(8);
@@ -123,6 +127,8 @@ const TransactionsList = ({ transactions, loading }: { transactions: any[], load
               {transactions
                 ?.slice((page - 1) * limit, page * limit)
                 ?.map((transaction) => {
+                  console.log(transaction);
+
                   return (
                     <Tr
                       key={transaction?.transaction_id}
@@ -145,7 +151,7 @@ const TransactionsList = ({ transactions, loading }: { transactions: any[], load
                         )}
                       </Td>
                       <Td fontWeight={500} fontSize={14} color="#8295AA">
-                        {FormatAmount(Number(transaction?.amount_sold))}
+                        {FormatAmount(Number(transaction?.amount_paid || 0))}
                       </Td>
                       <Td fontWeight={500} fontSize={14} color="#8295AA">
                         {FormatAmount(Number(transaction?.commission))}

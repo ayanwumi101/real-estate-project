@@ -69,7 +69,7 @@ const ClientDetailsHeader = ({ client }: { client: any }) => {
                     </Badge>
                   </Flex> */}
                 </Stack>
-                <Flex alignItems="center" gap="10px" display={['none', 'flex']}>
+                {/* <Flex alignItems="center" gap="10px" display={['none', 'flex']}>
                   <Button
                     fontWeight={600}
                     bg="brand.500"
@@ -86,7 +86,7 @@ const ClientDetailsHeader = ({ client }: { client: any }) => {
                   >
                     Add Property to Client
                   </Button>
-                </Flex>
+                </Flex> */}
               </Flex>
             </Box>
             <Divider />
@@ -140,7 +140,7 @@ const ClientDetailsHeader = ({ client }: { client: any }) => {
                 </Stack>
               </Flex>
             </Box>
-            <Flex
+            {/* <Flex
               alignItems="center"
               justifyContent={'center'}
               display={['flex', 'none']}
@@ -162,7 +162,7 @@ const ClientDetailsHeader = ({ client }: { client: any }) => {
               >
                 Add Property to Client
               </Button>
-            </Flex>
+            </Flex> */}
           </Stack>
         </Box>
       </Flex>
