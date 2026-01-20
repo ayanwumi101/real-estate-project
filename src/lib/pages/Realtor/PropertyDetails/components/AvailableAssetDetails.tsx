@@ -42,14 +42,15 @@ const AvailableAssetDetails = ({
   propertyDetails: any;
 }) => {
   return (
-    <Box w={['full', '60%']}>
-      <Stack spacing="32px">
+    <Box w={['full', '645px']}>
+      <Stack spacing="32px" w="full">
         {/* basic details section */}
         <Box
           border="1px solid"
           borderColor="border.100"
           p="32px"
           borderRadius="8px"
+          w="full"
         >
           <Heading
             pb="12px"

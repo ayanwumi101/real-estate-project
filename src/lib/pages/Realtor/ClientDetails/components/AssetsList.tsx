@@ -32,10 +32,13 @@ import useNavigate from '~/lib/utils/useNavigate';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import SkeletonLoader from '~/lib/components/SkeletonLoader';
 
-
-
-
-const AssetsList = ({ assets, loading }: { assets: any[], loading: boolean }) => {
+const AssetsList = ({
+  assets,
+  loading,
+}: {
+  assets: any[];
+  loading: boolean;
+}) => {
   const navigate = useNavigate();
   const [page, setPage] = React.useState(1);
   const [limit, setLimit] = React.useState(8);
@@ -170,7 +173,7 @@ const AssetsList = ({ assets, loading }: { assets: any[], loading: boolean }) =>
                             fontWeight={500}
                             onClick={() =>
                               navigate(
-                                `/realtor/properties/${asset?.property_id}`
+                                `/realtor/properties/${asset?.property_id}?type=${asset?.status}`
                               )
                             }
                             icon={<ViewpropertyIcon />}
