@@ -281,7 +281,7 @@ const PaymentStats = ({
   );
 };
 
-const PaymentHistory = ({
+const SoldPropertyPaymentHistory = ({
   payments,
   assetId,
   salesPrice,
@@ -391,4 +391,4 @@ const PaymentHistory = ({
   );
 };
 
-export default PaymentHistory;
+export default SoldPropertyPaymentHistory;

@@ -14,6 +14,7 @@ import {
 import moment from 'moment';
 import React from 'react';
 import { FormatAmount } from '~/lib/utils/formatAmount';
+import { InstalmentPropertyDetails } from '~/lib/utils/types';
 
 const AssetDetailsItem = ({
   label,
@@ -39,7 +40,7 @@ const AssetDetailsItem = ({
 const InstalmentAssetDetails = ({
   propertyDetails,
 }: {
-  propertyDetails: any;
+  propertyDetails: InstalmentPropertyDetails;
 }) => {
   return (
     <Box>
@@ -67,15 +68,17 @@ const InstalmentAssetDetails = ({
             <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
               <AssetDetailsItem
                 label="Property Size"
-                labelValue={propertyDetails?.size || 'N/A'}
+                labelValue={propertyDetails?.property?.size || 'N/A'}
               />
               <AssetDetailsItem
                 label="Property Type"
-                labelValue={propertyDetails?.property_type || 'N/A'}
+                labelValue={propertyDetails?.property?.property_type || 'N/A'}
               />
               <AssetDetailsItem
                 label="Sales Price"
-                labelValue={FormatAmount(propertyDetails?.sale_price || 0.0)}
+                labelValue={FormatAmount(
+                  Number(propertyDetails?.sale_information?.sale_price || 0.0)
+                )}
               />
             </Flex>
           </Box>
@@ -103,41 +106,52 @@ const InstalmentAssetDetails = ({
             <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
               <AssetDetailsItem
                 label="Payment Plan"
-                labelValue={propertyDetails?.payment_plan}
+                labelValue={
+                  propertyDetails?.sale_information?.payment_plan || 'N/A'
+                }
               />
               <AssetDetailsItem
                 label="Duration of Payment"
-                labelValue={`${propertyDetails?.payment_duration ? propertyDetails?.payment_duration : 0} Months`}
+                labelValue={`${propertyDetails?.sale_information?.duration ? propertyDetails?.sale_information?.duration : 0} Months`}
               />
               <AssetDetailsItem
                 label="Amount Paid"
                 labelValue={FormatAmount(
-                  Number(propertyDetails?.amount_paid_total) || 0.0
+                  Number(propertyDetails?.payment_details?.total_amount_paid) ||
+                    0.0
                 )}
               />
               <AssetDetailsItem
                 label="Outstanding Balance"
                 labelValue={FormatAmount(
-                  Number(propertyDetails?.outstanding_balance) || 0.0
+                  Number(
+                    propertyDetails?.payment_details?.outstanding_balance
+                  ) || 0.0
                 )}
               />
               <AssetDetailsItem
                 label="Instalment Payment"
-                labelValue={propertyDetails?.instalment_payment || 'N/A'}
+                labelValue={FormatAmount(
+                  Number(
+                    propertyDetails?.payment_details?.instalment_payments
+                  ) || 0.0
+                )}
               />
               <AssetDetailsItem
                 label="Total Commission Earned"
                 labelValue={FormatAmount(
-                  Number(propertyDetails?.total_commission) || 0.0
+                  Number(
+                    propertyDetails?.payment_details?.total_commissioned_earned
+                  ) || 0.0
                 )}
               />
               <AssetDetailsItem
                 label="Last Instalment Payment"
                 labelValue={
                   propertyDetails?.last_instalment_payment
-                    ? moment(propertyDetails?.last_instalment_payment).format(
-                        'ddd, Do MMMM YYYY'
-                      )
+                    ? moment(
+                        propertyDetails?.last_instalment_payment?.payment_date
+                      ).format('ddd, Do MMMM YYYY')
                     : 'N/A'
                 }
               />
@@ -145,9 +159,9 @@ const InstalmentAssetDetails = ({
                 label="Next Instalment Payment"
                 labelValue={
                   propertyDetails?.next_instalment_payment
-                    ? moment(propertyDetails?.next_instalment_payment).format(
-                        'ddd, Do MMMM YYYY'
-                      )
+                    ? moment(
+                        propertyDetails?.next_instalment_payment?.due_date
+                      ).format('ddd, Do MMMM YYYY')
                     : 'N/A'
                 }
               />
@@ -178,14 +192,17 @@ const InstalmentAssetDetails = ({
             <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
               <AssetDetailsItem
                 label="Client Name"
-                labelValue={propertyDetails?.client_name || 'N/A'}
+                labelValue={
+                  `${propertyDetails?.client?.firstname} ${propertyDetails?.client?.lastname}` ||
+                  'N/A'
+                }
               />
               <AssetDetailsItem
                 label="Phone Number"
                 labelValue={
-                  propertyDetails?.client_phone?.startsWith('234')
-                    ? `+${propertyDetails?.client_phone}`
-                    : propertyDetails?.client_phone || 'N/A'
+                  propertyDetails?.client?.phone?.startsWith('234')
+                    ? `+${propertyDetails?.client?.phone}`
+                    : propertyDetails?.client?.phone || 'N/A'
                 }
               />
             </Flex>
@@ -193,7 +210,7 @@ const InstalmentAssetDetails = ({
         </Box>
 
         {/* Delivery details */}
-        <Box
+        {/* <Box
           border="1px solid"
           borderColor="border.100"
           p="32px"
@@ -217,30 +234,30 @@ const InstalmentAssetDetails = ({
               <AssetDetailsItem
                 label="Allocation Status"
                 labelValue={
-                  propertyDetails?.allocation_status
-                    ? propertyDetails?.allocation_status
+                  propertyDetails?.delivery_status?.allocation_status
+                    ? propertyDetails?.delivery_status?.allocation_status
                     : 'N/A'
                 }
               />
               <AssetDetailsItem
                 label="Documentation Status"
                 labelValue={
-                  propertyDetails?.documentation_status
-                    ? propertyDetails?.documentation_status
+                  propertyDetails?.delivery_status?.documentation_status
+                    ? propertyDetails?.delivery_status?.documentation_status
                     : 'N/A'
                 }
               />
               <AssetDetailsItem
                 label="Handover Status"
                 labelValue={
-                  propertyDetails?.handover_status
-                    ? propertyDetails?.handover_status
+                  propertyDetails?.delivery_status?.handover_status
+                    ? propertyDetails?.delivery_status?.handover_status
                     : 'N/A'
                 }
               />
             </Flex>
           </Box>
-        </Box>
+        </Box> */}
       </Stack>
     </Box>
   );

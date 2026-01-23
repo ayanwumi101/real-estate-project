@@ -121,7 +121,7 @@ const AvailableProperties = ({
                           cursor="pointer"
                           onClick={() =>
                             navigate(
-                              `/realtor/properties/${property.id}?type=available`
+                              `/realtor/properties/${property?.id}?type=available`
                             )
                           }
                         >

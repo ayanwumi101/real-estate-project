@@ -42,7 +42,8 @@ export interface SoldPropertyDetails {
       id: string,
       amount_sold: string,
       status: string,
-      date_sold: string
+      date_sold: string,
+      comment: string
     },
     delivery_details: {
       allocation_status: string,
@@ -67,29 +68,56 @@ export interface SoldPropertyDetails {
 
 
 export interface InstalmentPropertyDetails {
-    next_due_payment: string,
+    property_sale_id: string,
     property: {
       id: string,
       property_name: string,
       property_type: string,
       size: string,
-      status: string,
-      house_number: string,
-      street_name: string,
-      city_name: string,
-      property_cost: string,
-      state_name: string
+      location: string
     },
-    instalment_details: {
+    client: {
       id: string,
+      firstname: string,
+      lastname: string,
+      email: string,
+      phone: string | null
+    },
+    sale_information: {
       sale_price: string,
       first_deposit: string,
       payment_plan: string,
-      status: string,
-      total_paid: number,
-      outstanding_balance: number,
       first_payment_date: string,
-      next_instalment_date: string
+      next_instalment_date: string,
+      status: string,
+      comment: string | null,
+      duration: string | null
     },
-    payments: SoldPropertyPayment[]
+    payment_details: {
+      total_amount_paid: number,
+      total_commissioned_earned: number,
+      outstanding_balance: number,
+      instalment_payments: {
+          id: number,
+          amount: string,
+          payment_date: string,
+          commission: string,
+          type: string,
+          status: string,
+          schedule_id: string
+        }[
+      ]
+    },
+    last_instalment_payment: {
+      id: number,
+      amount: string,
+      payment_date: string,
+      commission: string
+    },
+    next_instalment_payment: {
+      schedule_id: string,
+      amount_due: string,
+      due_date: string,
+      status: string
+    }
 }

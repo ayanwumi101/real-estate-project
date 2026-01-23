@@ -19,7 +19,9 @@ import SalesHistory from './components/SalesHistory';
 import InstalmentAssetDetails from './components/InstalmentAssetDetails';
 import SoldPropertyDetails from './components/SoldPropertyDetails';
 import { SoldPropertyDetails as SoldPropertyDetailsType } from '~/lib/utils/types';
-import PaymentHistory from './components/PaymentHistory';
+import { InstalmentPropertyDetails } from '~/lib/utils/types';
+import SoldPropertyPaymentHistory from './components/SoldPropertyPaymentHistory';
+import InstalmentPropertyPaymentHistory from './components/InstalmentPropertyPaymentHistory';
 
 const index = () => {
   const { id } = useParams();
@@ -41,7 +43,7 @@ const index = () => {
   const [soldPropertyDetails, setSoldPropertyDetails] =
     React.useState<SoldPropertyDetailsType>({} as SoldPropertyDetailsType);
   const [instalmentPropertyDetails, setInstalmentPropertyDetails] =
-    React.useState<any>([]);
+    React.useState<InstalmentPropertyDetails>({} as InstalmentPropertyDetails);
   const [propertyPaymentHistory, setPropertyPaymentHistory] =
     React.useState<any>([]);
 
@@ -58,6 +60,15 @@ const index = () => {
     try {
       const res = await GetSoldPropertyDetails(id as string);
       setSoldPropertyDetails(res?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getInstlamentPropertyDetails = async () => {
+    try {
+      const res = await GetInstalmentPropertyDetails(id as string);
+      setInstalmentPropertyDetails(res?.data);
     } catch (error) {
       console.log(error);
     }
@@ -95,7 +106,7 @@ const index = () => {
         break;
 
       case 'instalment':
-        GetInstalmentPropertyDetails(id as string);
+        getInstlamentPropertyDetails();
         break;
 
       default:
@@ -106,7 +117,9 @@ const index = () => {
   const propertyAddress =
     propertyType === 'available'
       ? `${availablePropertyDetails?.house_number} ${availablePropertyDetails?.street_name} ${availablePropertyDetails?.city_name}`
-      : `${soldPropertyDetails?.property?.house_number} ${soldPropertyDetails?.property?.street_name} ${soldPropertyDetails?.property?.city_name}`;
+      : propertyType === 'sold'
+        ? `${soldPropertyDetails?.property?.house_number} ${soldPropertyDetails?.property?.street_name} ${soldPropertyDetails?.property?.city_name}`
+        : `${instalmentPropertyDetails?.property?.location}`;
 
   return (
     <RealtorDashboardLayout
@@ -142,7 +155,9 @@ const index = () => {
           >
             {propertyType === 'available'
               ? availablePropertyDetails?.property_name
-              : soldPropertyDetails?.property?.property_name}
+              : propertyType === 'sold'
+                ? soldPropertyDetails?.property?.property_name
+                : instalmentPropertyDetails?.property?.property_name}
           </Text>
         </Flex>
       }
@@ -153,7 +168,10 @@ const index = () => {
           noOfSales={
             propertyType === 'available'
               ? propertyPaymentHistory?.number_of_sales
-              : soldPropertyDetails?.totals?.total_payments
+              : propertyType === 'sold'
+                ? soldPropertyDetails?.totals?.total_payments
+                : instalmentPropertyDetails?.payment_details
+                    ?.instalment_payments?.length
           }
           activeTab={activeTab}
           propertyType={propertyType || 'available'}
@@ -161,7 +179,9 @@ const index = () => {
           propertyName={
             propertyType === 'available'
               ? availablePropertyDetails?.property_name
-              : soldPropertyDetails?.property?.property_name
+              : propertyType === 'sold'
+                ? soldPropertyDetails?.property?.property_name
+                : instalmentPropertyDetails?.property?.property_name
           }
           location={propertyAddress}
           selectedProperty={availablePropertyDetails}
@@ -181,7 +201,7 @@ const index = () => {
                   />
                 ) : propertyType === 'instalment' ? (
                   <InstalmentAssetDetails
-                    propertyDetails={availablePropertyDetails}
+                    propertyDetails={instalmentPropertyDetails}
                   />
                 ) : (
                   <SoldPropertyDetails propertyDetails={soldPropertyDetails} />
@@ -191,7 +211,9 @@ const index = () => {
                 notes={
                   propertyType === 'available'
                     ? availablePropertyDetails?.comment
-                    : soldPropertyDetails?.property?.status
+                    : propertyType === 'sold'
+                      ? soldPropertyDetails?.sale_info?.comment
+                      : instalmentPropertyDetails?.sale_information?.comment
                 }
               />
             </Flex>
@@ -205,13 +227,43 @@ const index = () => {
             />
           </Box>
         )}
-        {activeTab === 'Payment History' && (
+        {activeTab === 'Payment History' && propertyType === 'sold' && (
           <Box>
-            <PaymentHistory
+            <SoldPropertyPaymentHistory
               payments={soldPropertyDetails?.payments}
               assetId={id as string}
               salesPrice={soldPropertyDetails?.sale_info?.amount_sold}
               commissionReceived={soldPropertyDetails?.totals?.total_commission}
+            />
+          </Box>
+        )}
+        {activeTab === 'Payment History' && propertyType === 'instalment' && (
+          <Box>
+            <InstalmentPropertyPaymentHistory
+              salesPrice={Number(
+                instalmentPropertyDetails?.sale_information?.sale_price
+              )}
+              totalAmountPaid={
+                instalmentPropertyDetails?.payment_details?.total_amount_paid
+              }
+              outstandingBalance={
+                instalmentPropertyDetails?.payment_details?.outstanding_balance
+              }
+              totalCommission={
+                instalmentPropertyDetails?.payment_details
+                  ?.total_commissioned_earned
+              }
+              nextDuePaymentDate={
+                instalmentPropertyDetails?.next_instalment_payment?.due_date
+              }
+              payments={
+                instalmentPropertyDetails?.payment_details?.instalment_payments
+              }
+              propertyName={instalmentPropertyDetails?.property?.property_name}
+              clientName={`${instalmentPropertyDetails?.client?.firstname} ${instalmentPropertyDetails?.client?.lastname}`}
+              clientEmail={instalmentPropertyDetails?.client?.email}
+              clientPhone={instalmentPropertyDetails?.client?.phone ?? ''}
+              assetId={id as string}
             />
           </Box>
         )}
