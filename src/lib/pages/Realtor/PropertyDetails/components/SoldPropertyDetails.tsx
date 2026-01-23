@@ -163,7 +163,7 @@ const SoldPropertyDetails = ({
                 labelValue={
                   propertyDetails?.client?.phone?.startsWith('234')
                     ? `+${propertyDetails?.client?.phone}`
-                    : propertyDetails?.client?.phone || 'N/A'
+                    : `+${propertyDetails?.client?.phone}` || 'N/A'
                 }
               />
             </Flex>
