@@ -173,7 +173,7 @@ const AssetsList = ({
                             fontWeight={500}
                             onClick={() =>
                               navigate(
-                                `/realtor/properties/${asset?.property_id}?type=${asset?.status}`
+                                `/realtor/properties/${asset?.status === 'sold' || asset?.status === 'instalment' ? asset?.property_sale_id : asset?.property_id}?type=${asset?.status}`
                               )
                             }
                             icon={<ViewpropertyIcon />}
