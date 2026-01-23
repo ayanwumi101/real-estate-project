@@ -93,6 +93,7 @@ export interface InstalmentPropertyDetails {
       comment: string | null,
       duration: string | null
     },
+    duration_in_months: number,
     payment_details: {
       total_amount_paid: number,
       total_commissioned_earned: number,
