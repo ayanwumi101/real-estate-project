@@ -157,7 +157,7 @@ const AvailableProperties = ({
                                     fontWeight={500}
                                     onClick={() =>
                                       navigate(
-                                        `/realtor/properties/${property.id}?type=available`
+                                        `/realtor/properties/${property?.id}?type=available`
                                       )
                                     }
                                     icon={<ViewpropertyIcon />}

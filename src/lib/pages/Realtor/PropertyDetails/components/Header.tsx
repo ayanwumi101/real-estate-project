@@ -31,9 +31,9 @@ interface Headerprops {
   location: string;
   tabs: string[];
   setActiveTab: React.Dispatch<
-    React.SetStateAction<'Details' | 'Sales History'>
+    React.SetStateAction<'Details' | 'Sales History' | 'Payment History'>
   >;
-  activeTab: 'Details' | 'Sales History';
+  activeTab: 'Details' | 'Sales History' | 'Payment History';
   propertyType: 'available' | 'instalment' | 'sold';
   noOfSales: number;
   selectedProperty: any;
@@ -41,9 +41,9 @@ interface Headerprops {
 
 interface NavigationTabsProps {
   tabs: string[];
-  activeTab: 'Details' | 'Sales History';
+  activeTab: 'Details' | 'Sales History' | 'Payment History';
   setActiveTab: React.Dispatch<
-    React.SetStateAction<'Details' | 'Sales History'>
+    React.SetStateAction<'Details' | 'Sales History' | 'Payment History'>
   >;
   noOfSales: number;
 }

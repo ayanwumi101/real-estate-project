@@ -14,6 +14,7 @@ import {
 import moment from 'moment';
 import React from 'react';
 import { FormatAmount } from '~/lib/utils/formatAmount';
+import { SoldPropertyDetails as SoldPropertiesDetailsType } from '~/lib/utils/types';
 
 const AssetDetailsItem = ({
   label,
@@ -36,7 +37,11 @@ const AssetDetailsItem = ({
   );
 };
 
-const SoldAssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
+const SoldPropertyDetails = ({
+  propertyDetails,
+}: {
+  propertyDetails: SoldPropertiesDetailsType;
+}) => {
   console.log(propertyDetails);
   return (
     <Box>
@@ -64,16 +69,15 @@ const SoldAssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
             <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
               <AssetDetailsItem
                 label="Property Size"
-                labelValue={propertyDetails?.property_size || 'N/A'}
+                labelValue={propertyDetails?.property?.size || 'N/A'}
               />
               <AssetDetailsItem
                 label="Property Type"
-                labelValue={propertyDetails?.property_type || 'N/A'}
+                labelValue={propertyDetails?.property?.property_type || 'N/A'}
               />
             </Flex>
           </Box>
         </Box>
-
         {/* Payment Details */}
         <Box
           border="1px solid"
@@ -93,27 +97,31 @@ const SoldAssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
             Payment Details
           </Heading>
           <Box>
-            <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
+            <Flex alignItems="center" flexWrap="wrap" rowGap="25px">
               <AssetDetailsItem
                 label="Date of Sale"
                 labelValue={
-                  propertyDetails?.payment_details?.sold_date
-                    ? moment(
-                        propertyDetails?.payment_details?.sold_date
-                      ).format('ddd, Do MMMM YYYY')
+                  propertyDetails?.sale_info?.date_sold
+                    ? moment(propertyDetails?.sale_info?.date_sold).format(
+                        'ddd, Do MMMM YYYY'
+                      )
                     : 'N/A'
                 }
               />
               <AssetDetailsItem
                 label="Sales Price"
                 labelValue={FormatAmount(
-                  propertyDetails?.payment_details?.amount_sold || 0.0
+                  Number(
+                    propertyDetails?.sale_info?.amount_sold ||
+                      propertyDetails?.sale_info?.amount_sold ||
+                      0.0
+                  )
                 )}
               />
               <AssetDetailsItem
                 label="Total Commission Earned"
                 labelValue={FormatAmount(
-                  propertyDetails?.payment_details?.commission || 0.0
+                  propertyDetails?.totals?.total_commission || 0.0
                 )}
               />
             </Flex>
@@ -144,17 +152,18 @@ const SoldAssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
               <AssetDetailsItem
                 label="Client Name"
                 labelValue={
-                  propertyDetails?.client_details?.client_name || 'N/A'
+                  propertyDetails?.client?.firstname &&
+                  propertyDetails?.client?.lastname
+                    ? `${propertyDetails?.client?.firstname} ${propertyDetails?.client?.lastname}`
+                    : 'N/A'
                 }
               />
               <AssetDetailsItem
                 label="Phone Number"
                 labelValue={
-                  propertyDetails?.client_details?.client_phone?.startsWith(
-                    '234'
-                  )
-                    ? `+${propertyDetails?.client_details?.client_phone}`
-                    : propertyDetails?.client_details?.client_phone || 'N/A'
+                  propertyDetails?.client?.phone?.startsWith('234')
+                    ? `+${propertyDetails?.client?.phone}`
+                    : propertyDetails?.client?.phone || 'N/A'
                 }
               />
             </Flex>
@@ -184,29 +193,31 @@ const SoldAssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
             <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
               <AssetDetailsItem
                 label="Payment Status"
-                labelValue={propertyDetails?.payment_status || 'N/A'}
+                labelValue={
+                  propertyDetails?.delivery_details?.payment_status || 'N/A'
+                }
               />
               <AssetDetailsItem
                 label="Allocation Status"
                 labelValue={
-                  propertyDetails?.allocation_status
-                    ? propertyDetails?.allocation_status
+                  propertyDetails?.delivery_details?.allocation_status
+                    ? propertyDetails?.delivery_details?.allocation_status
                     : 'N/A'
                 }
               />
               <AssetDetailsItem
                 label="Documentation Status"
                 labelValue={
-                  propertyDetails?.documentation_status
-                    ? propertyDetails?.documentation_status
+                  propertyDetails?.delivery_details?.documentation_status
+                    ? propertyDetails?.delivery_details?.documentation_status
                     : 'N/A'
                 }
               />
               <AssetDetailsItem
                 label="Handover Status"
                 labelValue={
-                  propertyDetails?.handover_status
-                    ? propertyDetails?.handover_status
+                  propertyDetails?.delivery_details?.handover_status
+                    ? propertyDetails?.delivery_details?.handover_status
                     : 'N/A'
                 }
               />
@@ -218,4 +229,4 @@ const SoldAssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
   );
 };
 
-export default SoldAssetDetails;
+export default SoldPropertyDetails;

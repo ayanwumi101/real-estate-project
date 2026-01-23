@@ -12,10 +12,14 @@ import AvailableAssetDetails from './components/AvailableAssetDetails';
 import {
   GetAvailablePropertyDetails,
   GetInstalmentPropertyPaymentHistory,
+  GetSoldPropertyDetails,
+  GetInstalmentPropertyDetails,
 } from '~/lib/api/services/propertiesService';
 import SalesHistory from './components/SalesHistory';
-import SoldAssetDetails from './components/SoldAssetDetails';
 import InstalmentAssetDetails from './components/InstalmentAssetDetails';
+import SoldPropertyDetails from './components/SoldPropertyDetails';
+import { SoldPropertyDetails as SoldPropertyDetailsType } from '~/lib/utils/types';
+import PaymentHistory from './components/PaymentHistory';
 
 const index = () => {
   const { id } = useParams();
@@ -23,13 +27,20 @@ const index = () => {
   const searchParams = useSearchParams();
   const [propertyType, setPropertyType] = React.useState<
     'available' | 'instalment' | 'sold'
-  >('available');
+  >();
 
-  const tabs = ['Details', 'Sales History'];
-  const [activeTab, setActiveTab] = React.useState<'Details' | 'Sales History'>(
-    'Details'
-  );
+  const tabs =
+    propertyType !== 'available'
+      ? ['Details', 'Payment History']
+      : ['Details', 'Sales History'];
+  const [activeTab, setActiveTab] = React.useState<
+    'Details' | 'Sales History' | 'Payment History'
+  >('Details');
   const [availablePropertyDetails, setAvailablePropertyDetails] =
+    React.useState<any>([]);
+  const [soldPropertyDetails, setSoldPropertyDetails] =
+    React.useState<SoldPropertyDetailsType>({} as SoldPropertyDetailsType);
+  const [instalmentPropertyDetails, setInstalmentPropertyDetails] =
     React.useState<any>([]);
   const [propertyPaymentHistory, setPropertyPaymentHistory] =
     React.useState<any>([]);
@@ -38,6 +49,15 @@ const index = () => {
     try {
       const res = await GetAvailablePropertyDetails(id as string);
       setAvailablePropertyDetails(res?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getSoldPropertyDetails = async () => {
+    try {
+      const res = await GetSoldPropertyDetails(id as string);
+      setSoldPropertyDetails(res?.data);
     } catch (error) {
       console.log(error);
     }
@@ -59,12 +79,34 @@ const index = () => {
     } else {
       setPropertyType('available');
     }
-  }, [id, propertyType]);
+  }, [searchParams]);
 
   useEffect(() => {
-    getAvailablePropertyDetails();
-    getPropertyPaymentHistory();
-  }, [searchParams, id, propertyType]);
+    if (propertyType === null) return;
+
+    switch (propertyType) {
+      case 'available':
+        getAvailablePropertyDetails();
+        getPropertyPaymentHistory();
+        break;
+
+      case 'sold':
+        getSoldPropertyDetails();
+        break;
+
+      case 'instalment':
+        GetInstalmentPropertyDetails(id as string);
+        break;
+
+      default:
+        break;
+    }
+  }, [propertyType, id]);
+
+  const propertyAddress =
+    propertyType === 'available'
+      ? `${availablePropertyDetails?.house_number} ${availablePropertyDetails?.street_name} ${availablePropertyDetails?.city_name}`
+      : `${soldPropertyDetails?.property?.house_number} ${soldPropertyDetails?.property?.street_name} ${soldPropertyDetails?.property?.city_name}`;
 
   return (
     <RealtorDashboardLayout
@@ -98,7 +140,9 @@ const index = () => {
             color="brand.800"
             noOfLines={[1, 2, 3]}
           >
-            {availablePropertyDetails?.property_name}
+            {propertyType === 'available'
+              ? availablePropertyDetails?.property_name
+              : soldPropertyDetails?.property?.property_name}
           </Text>
         </Flex>
       }
@@ -106,17 +150,30 @@ const index = () => {
       <Stack w="full" spacing="12px">
         <Header
           tabs={tabs}
-          noOfSales={propertyPaymentHistory?.number_of_sales ?? 0}
+          noOfSales={
+            propertyType === 'available'
+              ? propertyPaymentHistory?.number_of_sales
+              : soldPropertyDetails?.totals?.total_payments
+          }
           activeTab={activeTab}
-          propertyType={propertyType}
+          propertyType={propertyType || 'available'}
           setActiveTab={setActiveTab}
-          propertyName={availablePropertyDetails?.property_name}
-          location={`${availablePropertyDetails?.house_number} ${availablePropertyDetails?.street_name} ${availablePropertyDetails?.city_name}`}
+          propertyName={
+            propertyType === 'available'
+              ? availablePropertyDetails?.property_name
+              : soldPropertyDetails?.property?.property_name
+          }
+          location={propertyAddress}
           selectedProperty={availablePropertyDetails}
         />
         {activeTab === 'Details' && (
           <Box p={['20px', '20px']}>
-            <Flex flexWrap={['wrap', 'nowrap']} gap="40px" alignItems='flex-start' w="full">
+            <Flex
+              flexWrap={['wrap', 'nowrap']}
+              gap="40px"
+              alignItems="flex-start"
+              w="full"
+            >
               <Box>
                 {propertyType === 'available' ? (
                   <AvailableAssetDetails
@@ -127,12 +184,16 @@ const index = () => {
                     propertyDetails={availablePropertyDetails}
                   />
                 ) : (
-                  <SoldAssetDetails
-                    propertyDetails={availablePropertyDetails}
-                  />
+                  <SoldPropertyDetails propertyDetails={soldPropertyDetails} />
                 )}
               </Box>
-              <Notes notes={availablePropertyDetails?.comment} />
+              <Notes
+                notes={
+                  propertyType === 'available'
+                    ? availablePropertyDetails?.comment
+                    : soldPropertyDetails?.property?.status
+                }
+              />
             </Flex>
           </Box>
         )}
@@ -141,6 +202,16 @@ const index = () => {
             <SalesHistory
               payments={propertyPaymentHistory}
               assetId={id as string}
+            />
+          </Box>
+        )}
+        {activeTab === 'Payment History' && (
+          <Box>
+            <PaymentHistory
+              payments={soldPropertyDetails?.payments}
+              assetId={id as string}
+              salesPrice={soldPropertyDetails?.sale_info?.amount_sold}
+              commissionReceived={soldPropertyDetails?.totals?.total_commission}
             />
           </Box>
         )}

@@ -67,7 +67,7 @@ const InstalmentAssetDetails = ({
             <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
               <AssetDetailsItem
                 label="Property Size"
-                labelValue={propertyDetails?.property_size || 'N/A'}
+                labelValue={propertyDetails?.size || 'N/A'}
               />
               <AssetDetailsItem
                 label="Property Type"

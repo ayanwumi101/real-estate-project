@@ -43,6 +43,7 @@ export const GetAvailablePropertyDetails = async (propertyId: string) => {
   return response.data;
 };
 
+
 export const GetInstalmentPropertyPaymentHistory = async (
   propertyId: string
 ) => {
@@ -54,7 +55,7 @@ export const GetInstalmentPropertyPaymentHistory = async (
 
 export const GetSoldPropertyDetails = async (propertyId: string) => {
   const response = await axiosInstance.get(
-    `/realtor/property-payments/sold/${propertyId}`
+    `/realtor/property-payments/sold/${propertyId}/details`
   );
   return response.data;
 };
@@ -66,7 +67,7 @@ export const GetSoldPropertyPayments = async (propertyId: string) => {
   return response.data;
 };
 
-export const GetInstalmentPropertyPayments = async (propertyId: string) => {
+export const GetInstalmentPropertyDetails = async (propertyId: string) => {
   const response = await axiosInstance.get(
     `/realtor/property-payments/instalments/payment/${propertyId}/details`
   );

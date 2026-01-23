@@ -169,7 +169,7 @@ const PropertyListTable = ({
                                 fontWeight={500}
                                 onClick={() =>
                                   navigate(
-                                    `/realtor/properties/${asset?.property_id}?type=sold`
+                                    `/realtor/properties/${asset?.property_sale_id}?type=sold`
                                   )
                                 }
                                 icon={<ViewpropertyIcon />}
