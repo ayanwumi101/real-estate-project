@@ -146,7 +146,6 @@ const SoldPropertyDetails = ({
           >
             Client Details
           </Heading>
-
           <Box>
             <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
               <AssetDetailsItem
