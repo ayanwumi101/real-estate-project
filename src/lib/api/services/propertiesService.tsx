@@ -152,6 +152,7 @@ interface InstalmentPropertyPayment {
   amount_sold: number;
   first_deposit: number;
   duration: string;
+  payment_duration: string;
   instalment_amount: number;
   commission: number;
   payment_plan: string;
