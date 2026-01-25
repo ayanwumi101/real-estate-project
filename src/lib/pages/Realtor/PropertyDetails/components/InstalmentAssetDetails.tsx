@@ -112,7 +112,7 @@ const InstalmentAssetDetails = ({
               />
               <AssetDetailsItem
                 label="Duration of Payment"
-                labelValue={`${propertyDetails?.duration_in_months || 0} Months`}
+                labelValue={`${propertyDetails?.sale_information?.duration || propertyDetails?.duration_in_months || 0} Months`}
               />
               <AssetDetailsItem
                 label="Amount Paid"
