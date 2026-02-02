@@ -7,7 +7,7 @@ export const FormatAmount = (amount: number) => {
 
 
 export const formatCurrency = (value: string) => {
-  const numericValue = value.replace(/[^\d]/g, ''); // remove non-digit characters
+  const numericValue = value?.replace(/[^\d]/g, ''); // remove non-digit characters
   if (!numericValue) return '';
   return '₦ ' + Number(numericValue).toLocaleString();
 };

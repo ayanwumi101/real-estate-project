@@ -43,7 +43,6 @@ export const GetAvailablePropertyDetails = async (propertyId: string) => {
   return response.data;
 };
 
-
 export const GetInstalmentPropertyPaymentHistory = async (
   propertyId: string
 ) => {
@@ -220,6 +219,52 @@ export const UpdateProperty = async (
 ) => {
   const response = await axiosInstance.put(
     `/realtor/properties/${propertyId}`,
+    propertyData
+  );
+  return response.data;
+};
+
+export const UpdateInstalmentPropertyDetails = async (
+  propertySaleId: string,
+  propertyData: {
+    first_payment_date: string;
+    next_instalment_date: string;
+    payment_plan: string;
+    duration: string;
+    amount_sold: number;
+    first_deposit: number;
+    payment_status: string;
+    client_id: string;
+    property_cost: string;
+    bought_date: string;
+    allocation_status: string;
+    documentation_status: string;
+    handover_status: string;
+    comment: string;
+  }
+) => {
+  const response = await axiosInstance.put(
+    `/realtor/property-payments/instalments/${propertySaleId}`,
+    propertyData
+  );
+  return response.data;
+};
+
+
+export const UpdateSoldPropertyDetails = async (
+  propertySaleId: string,
+  propertyData: {
+    client_id: string;
+    amount_sold: number;
+    commission: number;
+    date_sold: string;
+    allocation_status: string;
+    documentation_status: string;
+    handover_status: string;
+  }
+) => {
+  const response = await axiosInstance.put(
+    `/realtor/property-payments/sold/${propertySaleId}`,
     propertyData
   );
   return response.data;

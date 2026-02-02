@@ -72,6 +72,7 @@ const NavigationTabs = ({
   );
 };
 
+
 const Header = ({
   propertyName,
   location,
@@ -86,23 +87,6 @@ const Header = ({
   const navigate = useNavigate();
   const { id } = useParams();
   const [openAddPaymentModal, setOpenAddPaymentModal] = React.useState(false);
-  // const [dueDates, setDueDates] = React.useState<any>([]);
-
-  // const GetDueDates = async () => {
-  //   if (propertyType === 'instalment' && id) {
-  //     try {
-  //       const res = await GetPropertyDueDates(id as string);
-  //       setDueDates(res?.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   GetDueDates();
-  // }, [id]);
-
   return (
     <Box
       px={['20px', '20px']}
