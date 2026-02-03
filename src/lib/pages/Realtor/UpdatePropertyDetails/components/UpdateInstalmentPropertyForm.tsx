@@ -526,7 +526,7 @@ const UpdateInstalmentPropertyForm = ({
                 </FormErrorMessage>
               </FormControl>
               <Flex justifyContent="space-between" alignItems="center">
-                <Link href="/realtor/properties">
+                <Link href={`/realtor/properties?tab=${propertyType}`}>
                   {' '}
                   <Button
                     leftIcon={<ChevronLeftIcon />}
