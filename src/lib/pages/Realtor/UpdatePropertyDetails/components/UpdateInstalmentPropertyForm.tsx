@@ -182,7 +182,7 @@ const UpdateInstalmentPropertyForm = ({
                     : ''}
                 </FormErrorMessage>
               </FormControl>
-              <FormControl
+              {/* <FormControl
                 isInvalid={!!errors.property_cost && !!touched.property_cost}
               >
                 <FormLabel fontWeight={600} fontSize={16} color="#222222">
@@ -208,7 +208,7 @@ const UpdateInstalmentPropertyForm = ({
                     ? errors.property_cost
                     : ''}
                 </FormErrorMessage>
-              </FormControl>
+              </FormControl> */}
               <FormControl isInvalid={!!errors.duration && touched.duration}>
                 <FormLabel fontWeight={600} fontSize={15} color="brand.400">
                   Duration of Payment in Month
