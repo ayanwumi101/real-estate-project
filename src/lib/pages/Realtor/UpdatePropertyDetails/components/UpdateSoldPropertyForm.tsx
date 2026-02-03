@@ -76,7 +76,7 @@ const UpdateSoldPropertyForm = ({
     const formData = {
       client_id: propertyDetails?.client?.id,
       amount_sold: Number(values.propertyName),
-      commission: Number(values.propertyType),
+      commission: Number(values.commission),
       date_sold: values.dateSold,
       allocation_status: values.allocationStatus,
       documentation_status: values.documentationStatus,
