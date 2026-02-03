@@ -46,9 +46,11 @@ const UpdateInstalmentPropertyForm = ({
 
   const initialValues = {
     first_payment_date:
-      propertyDetails?.sale_information?.first_payment_date || '',
+      propertyDetails?.sale_information?.first_payment_date?.split(' ')[0] ||
+      '',
     next_instalment_date:
-      propertyDetails?.sale_information?.next_instalment_date || '',
+      propertyDetails?.sale_information?.next_instalment_date?.split(' ')[0] ||
+      '',
     payment_plan: propertyDetails?.sale_information?.payment_plan || '',
     duration:
       propertyDetails?.sale_information?.duration ||
@@ -59,7 +61,9 @@ const UpdateInstalmentPropertyForm = ({
     payment_status: propertyDetails?.next_instalment_payment?.status,
     client_id: propertyDetails?.client?.id,
     property_cost: propertyDetails?.sale_information?.sale_price || '',
-    bought_date: propertyDetails?.sale_information?.first_payment_date || '',
+    bought_date:
+      propertyDetails?.sale_information?.first_payment_date?.split(' ')[0] ||
+      '',
     allocation_status: 'pending',
     documentation_status: 'pending',
     handover_status: 'pending',

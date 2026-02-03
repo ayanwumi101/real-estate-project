@@ -48,7 +48,7 @@ const UpdateSoldPropertyForm = ({
   const initialValues = {
     amountSold: propertyDetails?.sale_info?.amount_sold || '',
     commission: propertyDetails?.totals?.total_commission || '',
-    dateSold: propertyDetails?.sale_info?.date_sold,
+    dateSold: propertyDetails?.sale_info?.date_sold?.split('T')[0],
     allocationStatus: propertyDetails?.delivery_details?.allocation_status,
     documentationStatus:
       propertyDetails?.delivery_details?.documentation_status,
@@ -194,7 +194,7 @@ const UpdateSoldPropertyForm = ({
                 </FormErrorMessage>
               </FormControl>
               <FormControl
-                mb="10px" ///////////b
+                mb="10px"
                 isInvalid={
                   !!errors.allocationStatus && !!touched.allocationStatus
                 }
@@ -285,7 +285,7 @@ const UpdateSoldPropertyForm = ({
                 </FormErrorMessage>
               </FormControl>
               <Flex justifyContent="space-between" alignItems="center">
-                <Link href="/realtor/properties">
+                <Link href={`/realtor/properties?tab=${propertyType}`}>
                   {' '}
                   <Button
                     leftIcon={<ChevronLeftIcon />}

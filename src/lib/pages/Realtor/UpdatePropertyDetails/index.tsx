@@ -87,9 +87,6 @@ const index = () => {
     }
   }, [propertyType, id]);
 
-  console.log(id, instalmentPropertyDetails?.property_sale_id);
-  
-
   return (
     <RealtorDashboardLayout
       title={
@@ -117,27 +114,29 @@ const index = () => {
         </Flex>
       }
     >
-      {propertyType === 'available' && (
-        <UpdateAvailablePropertyForm
-          id={id as string}
-          propertyType={propertyType}
-          propertyDetails={propertyDetails}
-        />
-      )}
-      {propertyType === 'sold' && (
-        <UpdateSoldPropertyForm
-          id={id as string}
-          propertyType={propertyType}
-          propertyDetails={soldPropertyDetails}
-        />
-      )}
-      {propertyType === 'instalment' && (
-        <UpdateInstalmentPropertyForm
-          id={id as string}
-          propertyType={propertyType}
-          propertyDetails={instalmentPropertyDetails}
-        />
-      )}
+      <Box px={['20px', 0]}>
+        {propertyType === 'available' && (
+          <UpdateAvailablePropertyForm
+            id={id as string}
+            propertyType={propertyType}
+            propertyDetails={propertyDetails}
+          />
+        )}
+        {propertyType === 'sold' && (
+          <UpdateSoldPropertyForm
+            id={id as string}
+            propertyType={propertyType}
+            propertyDetails={soldPropertyDetails}
+          />
+        )}
+        {propertyType === 'instalment' && (
+          <UpdateInstalmentPropertyForm
+            id={id as string}
+            propertyType={propertyType}
+            propertyDetails={instalmentPropertyDetails}
+          />
+        )}
+      </Box>
     </RealtorDashboardLayout>
   );
 };
