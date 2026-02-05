@@ -93,6 +93,12 @@ export interface InstalmentPropertyDetails {
       comment: string | null,
       duration: string | null
     },
+   delivery_details: {
+            allocation_status: string,
+            documentation_status: string,
+            handover_status: string,
+            payment_status: string
+        },
     duration_in_months: number,
     payment_details: {
       total_amount_paid: number,

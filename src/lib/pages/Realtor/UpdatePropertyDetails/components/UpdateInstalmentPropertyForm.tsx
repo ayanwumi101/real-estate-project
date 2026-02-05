@@ -64,9 +64,9 @@ const UpdateInstalmentPropertyForm = ({
     bought_date:
       propertyDetails?.sale_information?.first_payment_date?.split(' ')[0] ||
       '',
-    allocation_status: 'pending',
-    documentation_status: 'pending',
-    handover_status: 'pending',
+    allocation_status: propertyDetails?.delivery_details?.allocation_status,
+    documentation_status: propertyDetails?.delivery_details?.documentation_status,
+    handover_status: propertyDetails?.delivery_details?.handover_status,
     comment: propertyDetails?.sale_information?.comment || '',
   };
 
@@ -355,7 +355,7 @@ const UpdateInstalmentPropertyForm = ({
                   </FormErrorMessage>
                 </FormControl>
               </Flex>
-              <Flex
+              {/* <Flex
                 alignItems="center"
                 gap="24px"
                 flexWrap={['wrap', 'nowrap']}
@@ -414,7 +414,7 @@ const UpdateInstalmentPropertyForm = ({
                       : ''}
                   </FormErrorMessage>
                 </FormControl>
-              </Flex>
+              </Flex> */}
               <FormControl
                 mb="10px"
                 isInvalid={

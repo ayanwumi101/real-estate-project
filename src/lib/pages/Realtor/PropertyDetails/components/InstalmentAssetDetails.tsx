@@ -210,7 +210,7 @@ const InstalmentAssetDetails = ({
         </Box>
 
         {/* Delivery details */}
-        {/* <Box
+        <Box
           border="1px solid"
           borderColor="border.100"
           p="32px"
@@ -230,34 +230,41 @@ const InstalmentAssetDetails = ({
 
           <Box>
             <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
-              <AssetDetailsItem label="Payment Status" labelValue={'Ongoing'} />
+              <AssetDetailsItem
+                label="Payment Status"
+                labelValue={
+                  propertyDetails?.delivery_details?.payment_status
+                    ? propertyDetails?.delivery_details?.payment_status
+                    : 'N/A'
+                }
+              />
               <AssetDetailsItem
                 label="Allocation Status"
                 labelValue={
-                  propertyDetails?.delivery_status?.allocation_status
-                    ? propertyDetails?.delivery_status?.allocation_status
+                  propertyDetails?.delivery_details?.allocation_status
+                    ? propertyDetails?.delivery_details?.allocation_status
                     : 'N/A'
                 }
               />
               <AssetDetailsItem
                 label="Documentation Status"
                 labelValue={
-                  propertyDetails?.delivery_status?.documentation_status
-                    ? propertyDetails?.delivery_status?.documentation_status
+                  propertyDetails?.delivery_details?.documentation_status
+                    ? propertyDetails?.delivery_details?.documentation_status
                     : 'N/A'
                 }
               />
               <AssetDetailsItem
                 label="Handover Status"
                 labelValue={
-                  propertyDetails?.delivery_status?.handover_status
-                    ? propertyDetails?.delivery_status?.handover_status
+                  propertyDetails?.delivery_details?.handover_status
+                    ? propertyDetails?.delivery_details?.handover_status
                     : 'N/A'
                 }
               />
             </Flex>
           </Box>
-        </Box> */}
+        </Box>
       </Stack>
     </Box>
   );
