@@ -96,7 +96,7 @@ const UpdateSoldPropertyForm = ({
       }
     } catch (error: any) {
       toast({
-        title: error.response.data.message,
+        title: error.response.data.message || error.response.data.error.message,
         status: 'error',
         duration: 3000,
         isClosable: true,
@@ -129,9 +129,9 @@ const UpdateSoldPropertyForm = ({
                   onChange={(e) => {
                     const rawValue = e.target.value.replace(/[^\d]/g, '');
                     setAmountSold(rawValue);
-                    setFieldValue('propertyCost', rawValue);
+                    setFieldValue('amountSold', rawValue);
                   }}
-                  name="propertyCost"
+                  name="amountSold"
                   bg="#FBFBFB"
                   border="1px solid #C0C0C0"
                   borderRadius="50px"

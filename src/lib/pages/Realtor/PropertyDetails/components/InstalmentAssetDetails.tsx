@@ -122,6 +122,13 @@ const InstalmentAssetDetails = ({
                 )}
               />
               <AssetDetailsItem
+                label="First Deposit"
+                labelValue={FormatAmount(
+                  Number(propertyDetails?.sale_information?.first_deposit) ||
+                    0.0
+                )}
+              />
+              <AssetDetailsItem
                 label="Outstanding Balance"
                 labelValue={FormatAmount(
                   Number(
