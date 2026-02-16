@@ -47,7 +47,7 @@ const AssetsList = ({
       {loading ? (
         <SkeletonLoader />
       ) : (
-        <TableContainer border="1px solid #E4E4E4" borderRadius="10px">
+        <TableContainer border="1px solid #E4E4E4" borderRadius="10px" mt='2'>
           <Table>
             <Thead
               color="#222222"

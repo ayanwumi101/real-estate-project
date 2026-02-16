@@ -19,7 +19,7 @@ import {
   Portal,
 } from '@chakra-ui/react';
 import moment from 'moment';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   VerticalEllipsisIcon,
   ViewpropertyIcon,
@@ -29,6 +29,7 @@ import {
   NextPageIcon,
   ChevronDownIcon,
 } from '~/lib/components/Icons/Icons';
+import PropertyFilter from '~/lib/components/PropertyFilter';
 import SkeletonLoader from '~/lib/components/SkeletonLoader';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
@@ -151,9 +152,11 @@ const PropertyListTable = ({
                       <Td fontWeight={500} fontSize={14} color="#8295AA">
                         {FormatAmount(Number(asset?.commission))}
                       </Td>
-                      <Td onClick={(e) => {
-                        e.stopPropagation();
-                      }}>
+                      <Td
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
+                      >
                         <Menu>
                           <MenuButton as={Button} rounded="5px" bg="bg.200">
                             <VerticalEllipsisIcon />
@@ -439,6 +442,101 @@ const SoldProperties = ({
   properties: any;
   loading: boolean;
 }) => {
+  const [filteredProperties, setFilteredProperties] = useState<any[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+
+  // Additional filter states for PropertyFilter component
+  const [salesType, setSalesType] = useState<string>('');
+  const [handoverStatus, setHandoverStatus] = useState<string>('');
+  const [allocationStatus, setAllocationStatus] = useState<string>('');
+  const [documentationStatus, setDocumentationStatus] = useState<string>('');
+
+  // Handle search input change
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
+  useEffect(() => {
+    const propertySearchFilter = properties?.payments?.filter(
+      (property: any) => {
+        return property?.property_name
+          ?.toLowerCase()
+          .includes(searchQuery.toLowerCase());
+      }
+    );
+    setFilteredProperties(propertySearchFilter);
+  }, [searchQuery]);
+
+  // Handle filter changes
+  const handleSalesTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSalesType(e.target.value);
+  };
+
+  useEffect(() => {
+    if (salesType === 'all') {
+      setFilteredProperties(properties?.payments);
+      return;
+    }
+    const filteredProperties = properties?.payments?.filter((property: any) => {
+      return property?.status === salesType;
+    });
+    setFilteredProperties(filteredProperties);
+  }, [salesType]);
+
+  const handleHandoverStatusChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setHandoverStatus(e.target.value);
+  };
+
+  useEffect(() => {
+    if (handoverStatus === 'all') {
+      setFilteredProperties(properties?.payments);
+      return;
+    }
+    const filteredProperties = properties?.payments?.filter((property: any) => {
+      return property?.handover_status === handoverStatus;
+    });
+    setFilteredProperties(filteredProperties);
+  }, [handoverStatus]);
+
+  const handleAllocationStatusChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setAllocationStatus(e.target.value);
+  };
+
+  useEffect(() => {
+    if (allocationStatus === 'all') {
+      setFilteredProperties(properties?.payments);
+      return;
+    }
+    const filteredProperties = properties?.payments?.filter((property: any) => {
+      return property?.allocation_status === allocationStatus;
+    });
+    setFilteredProperties(filteredProperties);
+  }, [allocationStatus]);
+
+  const handleDocumentationStatusChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setDocumentationStatus(e.target.value);
+  };
+
+  useEffect(() => {
+    if (documentationStatus === 'all') {
+      setFilteredProperties(properties?.payments);
+      return;
+    }
+    const filteredProperties = properties?.payments?.filter((property: any) => {
+      return property?.documentation_status === documentationStatus;
+    });
+    setFilteredProperties(filteredProperties);
+  }, [documentationStatus]);
+
+  useEffect(() => {
+    setFilteredProperties(properties?.payments);
+  }, [properties]);
   return (
     <Box>
       <Stack spacing="20px">
@@ -447,10 +545,19 @@ const SoldProperties = ({
           totalProperties={properties?.totals?.total_properties}
           totalSoldPrice={properties?.totals?.total_sold_price}
         />
-        <PropertyListTable
-          properties={properties?.payments}
-          loading={loading}
+        <PropertyFilter
+          searchQuery={searchQuery}
+          handleSearchChange={handleSearchChange}
+          salesType={salesType}
+          handleSalesTypeChange={handleSalesTypeChange}
+          handoverStatus={handoverStatus}
+          handleHandoverStatusChange={handleHandoverStatusChange}
+          allocationStatus={allocationStatus}
+          handleAllocationStatusChange={handleAllocationStatusChange}
+          documentationStatus={documentationStatus}
+          handleDocumentationStatusChange={handleDocumentationStatusChange}
         />
+        <PropertyListTable properties={filteredProperties} loading={loading} />
       </Stack>
     </Box>
   );

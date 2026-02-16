@@ -36,6 +36,7 @@ import {
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
 import AddPaymentModal from '../Modals/AddPaymentModal';
+import PropertyFilter from '~/lib/components/PropertyFilter';
 
 const PaymentListTable = ({
   payments,
@@ -292,48 +293,99 @@ const SoldPropertyPaymentHistory = ({
   salesPrice: string | number;
   commissionReceived: string | number;
 }) => {
-  const [searchKeyword, setSearchKeyword] = useState<string>('');
-  const [propertySaleFilter, setPropertySaleFilter] = useState<
-    'all' | 'outright' | 'instalment'
-  >('all');
   const [filteredPayments, setFilteredPayments] = useState<any[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
-  // Filter payments based on search keyword and sale type
-  const filterPayments = useCallback(() => {
-    if (!payments) return [];
-
-    return payments.filter((payment: any) => {
-      // Filter by sale type
-      const matchesSaleType =
-        propertySaleFilter === 'all' || payment?.type === propertySaleFilter;
-
-      // Filter by search keyword (client name)
-      const matchesSearch =
-        !searchKeyword ||
-        (payment?.client_name?.toLowerCase() || '').includes(
-          searchKeyword.toLowerCase()
-        );
-
-      return matchesSaleType && matchesSearch;
-    });
-  }, [payments, propertySaleFilter, searchKeyword]);
-
-  // Update filtered payments when filters or search changes
-  useEffect(() => {
-    const filtered = filterPayments();
-    setFilteredPayments(filtered);
-  }, [filterPayments]);
+  // Additional filter states for PropertyFilter component
+  const [salesType, setSalesType] = useState<string>('');
+  const [handoverStatus, setHandoverStatus] = useState<string>('');
+  const [allocationStatus, setAllocationStatus] = useState<string>('');
+  const [documentationStatus, setDocumentationStatus] = useState<string>('');
 
   // Handle search input change
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchKeyword(e.target.value);
+    setSearchQuery(e.target.value);
   };
 
-  // Handle sale type filter change
-  const handleSaleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setPropertySaleFilter(e.target.value as 'all' | 'outright' | 'instalment');
+  useEffect(() => {
+    const propertySearchFilter = payments?.filter((payment: any) => {
+      return payment?.client_name
+        ?.toLowerCase()
+        .includes(searchQuery.toLowerCase());
+    });
+    setFilteredPayments(propertySearchFilter);
+  }, [searchQuery]);
+
+  // Handle filter changes
+  const handleSalesTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSalesType(e.target.value);
   };
 
+  useEffect(() => {
+    if (salesType === 'all') {
+      setFilteredPayments(payments);
+      return;
+    }
+    const filteredPayments = payments?.filter((payment: any) => {
+      return payment?.sale_type === salesType;
+    });
+    setFilteredPayments(filteredPayments);
+  }, [salesType]);
+
+  const handleHandoverStatusChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setHandoverStatus(e.target.value);
+  };
+
+  useEffect(() => {
+    if (handoverStatus === 'all') {
+      setFilteredPayments(payments);
+      return;
+    }
+    const filteredPayments = payments?.filter((payment: any) => {
+      return payment?.handover_status === handoverStatus;
+    });
+    setFilteredPayments(filteredPayments);
+  }, [handoverStatus]);
+
+  const handleAllocationStatusChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setAllocationStatus(e.target.value);
+  };
+
+  useEffect(() => {
+    if (allocationStatus === 'all') {
+      setFilteredPayments(payments);
+      return;
+    }
+    const filteredPayments = payments?.filter((payment: any) => {
+      return payment?.allocation_status === allocationStatus;
+    });
+    setFilteredPayments(filteredPayments);
+  }, [allocationStatus]);
+
+  const handleDocumentationStatusChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setDocumentationStatus(e.target.value);
+  };
+
+  useEffect(() => {
+    if (documentationStatus === 'all') {
+      setFilteredPayments(payments);
+      return;
+    }
+    const filteredPayments = payments?.filter((payment: any) => {
+      return payment?.documentation_status === documentationStatus;
+    });
+    setFilteredPayments(filteredPayments);
+  }, [documentationStatus]);
+
+  useEffect(() => {
+    setFilteredPayments(payments);
+  }, [payments]);
   return (
     <Box py="20px" px={['20px', '0px']}>
       <Stack spacing="20px">
@@ -341,50 +393,19 @@ const SoldPropertyPaymentHistory = ({
           salesPrice={Number(salesPrice)}
           totalCommission={Number(commissionReceived)}
         />
-        <Flex
-          alignItems="center"
-          justifyContent="space-between"
-          flexWrap={['wrap', 'nowrap']}
-          gap={['20px', '0px']}
-          w="full"
-        >
-          <InputGroup w={['full', '325px']}>
-            <InputLeftElement pointerEvents="none">
-              <InputSearchIcon />
-            </InputLeftElement>
-            <Input
-              type="text"
-              placeholder="Search client..."
-              rounded="50px"
-              fontSize={14}
-              w="full"
-              _placeholder={{ color: 'gray.500' }}
-              value={searchKeyword}
-              onChange={handleSearchChange}
-            />
-          </InputGroup>
 
-          <Box w={['full', '250px']}>
-            <Flex
-              alignItems="center"
-              gap={['0px', '5px']}
-              flexWrap={['wrap', 'nowrap']}
-            >
-              <FormLabel fontSize={[15, 16]}>Sale Type:</FormLabel>
-              <Select
-                value={propertySaleFilter}
-                onChange={handleSaleTypeChange}
-                w={['full', '140px']}
-                fontSize={14}
-                rounded="50px"
-              >
-                <option value="all">All</option>
-                <option value="outright">Outright</option>
-                <option value="instalment">Instalment</option>
-              </Select>
-            </Flex>
-          </Box>
-        </Flex>
+        <PropertyFilter
+          searchQuery={searchQuery}
+          handleSearchChange={handleSearchChange}
+          salesType={salesType}
+          handleSalesTypeChange={handleSalesTypeChange}
+          handoverStatus={handoverStatus}
+          handleHandoverStatusChange={handleHandoverStatusChange}
+          allocationStatus={allocationStatus}
+          handleAllocationStatusChange={handleAllocationStatusChange}
+          documentationStatus={documentationStatus}
+          handleDocumentationStatusChange={handleDocumentationStatusChange}
+        />
         <PaymentListTable assetId={assetId} payments={filteredPayments} />
       </Stack>
     </Box>

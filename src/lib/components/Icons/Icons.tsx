@@ -2729,3 +2729,42 @@ export const CollapsibleSidebarIcon = () => {
     </svg>
   );
 }
+
+
+export const FilterPropertiesIcon = () => {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 18 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M3.85728 14.7857V10.2857M3.85728 7.71429V3.21429M9.00014 14.7857V9.00001M9.00014 6.42858V3.21429M14.143 14.7857V11.5714M14.143 9.00001V3.21429M1.92871 10.2857H5.78585M7.07157 6.42858H10.9287M12.2144 11.5714H16.0716"
+        stroke="#2E353F"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export const ShowFilterPropertiesIcon = () => {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 18 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M3.85728 14.7857V10.2857M3.85728 7.71429V3.21429M9.00014 14.7857V9.00001M9.00014 6.42858V3.21429M14.143 14.7857V11.5714M14.143 9.00001V3.21429M1.92871 10.2857H5.78585M7.07157 6.42858H10.9287M12.2144 11.5714H16.0716"
+        stroke="#000080"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}

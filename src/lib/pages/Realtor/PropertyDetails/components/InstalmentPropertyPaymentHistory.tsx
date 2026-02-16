@@ -137,7 +137,9 @@ const InstalmentPropertyPaymentHistoryTable = ({
                       {payment?.type || 'Instalment'}
                     </Td>
                     <Td fontWeight={500} fontSize={14}>
-                      {moment(payment?.payment_date).format('ddd, Do MMMM YYYY')}
+                      {moment(payment?.payment_date).format(
+                        'ddd, Do MMMM YYYY'
+                      )}
                     </Td>
                     <Td fontWeight={500} fontSize={14}>
                       {FormatAmount(Number(payment?.amount))}
