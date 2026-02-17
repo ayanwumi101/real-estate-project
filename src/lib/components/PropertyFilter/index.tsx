@@ -8,6 +8,8 @@ import {
   Select,
   Divider,
   InputLeftElement,
+  FormControl,
+  FormLabel,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import {
@@ -48,16 +50,16 @@ const PropertyFilter = ({
   const [showFilterDropdowns, setShowFilterDropdowns] =
     useState<boolean>(false);
   return (
-    <Box>
-      <Stack spacing="16px" borderBottom="1px solid #E4E4E4" py="12px">
+    <Box w="full">
+      <Stack w="full" spacing="25px" borderBottom="1px solid #E4E4E4" py="12px">
+        {/* search input and filter button section */}
         <Flex
           alignItems="center"
           justifyContent="space-between"
-          flexWrap={['wrap', 'nowrap']}
-          gap={['20px', '0px']}
+          gap={['10px', '0px']}
           w="full"
         >
-          <InputGroup w="60%">
+          <InputGroup w={['full', '60%']}>
             <InputLeftElement pointerEvents="none">
               <InputSearchIcon />
             </InputLeftElement>
@@ -93,69 +95,115 @@ const PropertyFilter = ({
             Filter
           </Button>
         </Flex>
+        {/* filter dropdowns section */}
         {showFilterDropdowns && (
-          <Flex alignItems="center" gap="16px">
-            <Select
-              placeholder="Select sales type"
-              py="12px"
-              rounded="50px"
-              border="1px solid"
-              borderColor="#C0C0C0"
-              h="46px"
-              _placeholder={{ color: '#8295AA', fontWeight: 500, fontSize: 14 }}
-              value={salesType}
-              onChange={handleSalesTypeChange}
-            >
-              <option value="all">All</option>
-              <option value="sold">Sold</option>
-              <option value="outright">Outright</option>
-              <option value="instalment">Instalment</option>
-            </Select>
-            <Select
-              placeholder="Select handover status"
-              py="12px"
-              rounded="50px"
-              border="1px solid"
-              borderColor="#C0C0C0"
-              h="46px"
-              _placeholder={{ color: '#8295AA', fontWeight: 500, fontSize: 14 }}
-              value={handoverStatus}
-              onChange={handleHandoverStatusChange}
-            >
-              <option value="all">All</option>
-              <option value="pending">Pending</option>
-              <option value="completed">Completed</option>
-            </Select>
-            <Select
-              placeholder="Select allocation status"
-              py="12px"
-              rounded="50px"
-              border="1px solid"
-              borderColor="#C0C0C0"
-              h="46px"
-              _placeholder={{ color: '#8295AA', fontWeight: 500, fontSize: 14 }}
-              value={allocationStatus}
-              onChange={handleAllocationStatusChange}
-            >
-              <option value="all">All</option>
-              <option value="pending">Pending</option>
-              <option value="completed">Completed</option>
-            </Select>
-            <Select
-              placeholder="Select documentation status"
-              py="12px"
-              rounded="50px"
-              border="1px solid"
-              borderColor="#C0C0C0"
-              h="46px"
-              _placeholder={{ color: '#8295AA', fontWeight: 500, fontSize: 14 }}
-              value={documentationStatus}
-              onChange={handleDocumentationStatusChange}
-            >
-              <option value="all">All</option>
-              <option value="pending">Pending</option>
-              <option value="completed">Completed</option>
-            </Select>
+          <Flex alignItems="center" gap="16px" overflow="auto" w="full">
+            <FormControl>
+              <FormLabel fontSize={14} my="0" fontWeight={600}>
+                Sales Type
+              </FormLabel>
+              <Select
+                placeholder="Select sales type"
+                py="12px"
+                rounded="50px"
+                border="1px solid"
+                borderColor="#C0C0C0"
+                h="46px"
+                _placeholder={{
+                  color: '#8295AA',
+                  fontWeight: 500,
+                  fontSize: 14,
+                }}
+                value={salesType}
+                onChange={handleSalesTypeChange}
+                w={['250px', 'auto']}
+              >
+                <option value="all">All</option>
+                {/* <option value="sold">Sold</option> */}
+                <option value="outright">Outright</option>
+                <option value="instalment">Instalment</option>
+              </Select>
+            </FormControl>
+            <FormControl>
+              <FormLabel fontSize={14} my="0" fontWeight={600}>
+                Handover Status
+              </FormLabel>
+              <Select
+                placeholder="Select handover status"
+                py="12px"
+                rounded="50px"
+                border="1px solid"
+                borderColor="#C0C0C0"
+                h="46px"
+                _placeholder={{
+                  color: '#8295AA',
+                  fontWeight: 500,
+                  fontSize: 14,
+                }}
+                value={handoverStatus}
+                onChange={handleHandoverStatusChange}
+                w={['250px', 'auto']}
+              >
+                <option value="all">All</option>
+                <option value="pending">Pending</option>
+                <option value="ongoing">Ongoing</option>
+                <option value="completed">Completed</option>
+              </Select>
+            </FormControl>
+
+            <FormControl>
+              <FormLabel fontSize={14} my="0" fontWeight={600}>
+                Allocation Status
+              </FormLabel>
+              <Select
+                placeholder="Select allocation status"
+                py="12px"
+                rounded="50px"
+                border="1px solid"
+                borderColor="#C0C0C0"
+                h="46px"
+                _placeholder={{
+                  color: '#8295AA',
+                  fontWeight: 500,
+                  fontSize: 14,
+                }}
+                value={allocationStatus}
+                onChange={handleAllocationStatusChange}
+                w={['250px', 'auto']}
+              >
+                <option value="all">All</option>
+                <option value="pending">Pending</option>
+                <option value="ongoing">Ongoing</option>
+                <option value="completed">Completed</option>
+              </Select>
+            </FormControl>
+
+            <FormControl>
+              <FormLabel fontSize={14} my="0" fontWeight={600}>
+                Documentation Status
+              </FormLabel>
+              <Select
+                placeholder="Select documentation status"
+                py="12px"
+                rounded="50px"
+                border="1px solid"
+                borderColor="#C0C0C0"
+                h="46px"
+                _placeholder={{
+                  color: '#8295AA',
+                  fontWeight: 500,
+                  fontSize: 14,
+                }}
+                value={documentationStatus}
+                onChange={handleDocumentationStatusChange}
+                w={['250px', 'auto']}
+              >
+                <option value="all">All</option>
+                <option value="pending">Pending</option>
+                <option value="ongoing">Ongoing</option>
+                <option value="completed">Completed</option>
+              </Select>
+            </FormControl>
           </Flex>
         )}
       </Stack>
