@@ -29,7 +29,7 @@ import {
   NextPageIcon,
   ChevronDownIcon,
 } from '~/lib/components/Icons/Icons';
-import PropertyFilter from '~/lib/components/PropertyFilter';
+import { PropertyFilterWithLocation } from '~/lib/components/PropertyFilter';
 import SkeletonLoader from '~/lib/components/SkeletonLoader';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
@@ -450,6 +450,8 @@ const SoldProperties = ({
   const [handoverStatus, setHandoverStatus] = useState<string>('');
   const [allocationStatus, setAllocationStatus] = useState<string>('');
   const [documentationStatus, setDocumentationStatus] = useState<string>('');
+  const [location, setLocation] = useState<string>('');
+  const [locations, setLocations] = useState<string[]>([]);
 
   // Handle search input change
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -534,8 +536,26 @@ const SoldProperties = ({
     setFilteredProperties(filteredProperties);
   }, [documentationStatus]);
 
+  const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setLocation(e.target.value);
+  };
+
+  useEffect(() => {
+    if (location === 'all') {
+      setFilteredProperties(properties?.payments);
+      return;
+    }
+    const filteredProperties = properties?.payments?.filter((property: any) => {
+      return property?.property_address === location;
+    });
+    setFilteredProperties(filteredProperties);
+  }, [location]);
+
   useEffect(() => {
     setFilteredProperties(properties?.payments);
+    setLocations(
+      properties?.payments?.map((property: any) => property?.property_address)
+    );
   }, [properties]);
   return (
     <Box>
@@ -545,7 +565,7 @@ const SoldProperties = ({
           totalProperties={properties?.totals?.total_properties}
           totalSoldPrice={properties?.totals?.total_sold_price}
         />
-        <PropertyFilter
+        <PropertyFilterWithLocation
           searchQuery={searchQuery}
           handleSearchChange={handleSearchChange}
           salesType={salesType}
@@ -556,6 +576,9 @@ const SoldProperties = ({
           handleAllocationStatusChange={handleAllocationStatusChange}
           documentationStatus={documentationStatus}
           handleDocumentationStatusChange={handleDocumentationStatusChange}
+          location={location}
+          handleLocationChange={handleLocationChange}
+          locations={locations}
         />
         <PropertyListTable properties={filteredProperties} loading={loading} />
       </Stack>

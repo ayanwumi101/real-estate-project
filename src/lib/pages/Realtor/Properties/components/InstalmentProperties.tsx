@@ -37,7 +37,7 @@ import useNavigate from '~/lib/utils/useNavigate';
 import AddPaymentModal from '../../PropertyDetails/Modals/AddPaymentModal';
 import { GetPropertyDueDates } from '~/lib/api/services/propertiesService';
 import SkeletonLoader from '~/lib/components/SkeletonLoader';
-import PropertyFilter from '~/lib/components/PropertyFilter';
+import { PropertyFilterWithLocation } from '~/lib/components/PropertyFilter';
 
 const PropertyListTable = ({
   properties,
@@ -544,6 +544,8 @@ const InstalmentProperties = ({
   const [handoverStatus, setHandoverStatus] = useState<string>('');
   const [allocationStatus, setAllocationStatus] = useState<string>('');
   const [documentationStatus, setDocumentationStatus] = useState<string>('');
+  const [location, setLocation] = useState<string>('');
+  const [locations, setLocations] = useState<string[]>([]);
 
   // Handle search input change
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -589,9 +591,11 @@ const InstalmentProperties = ({
       setFilteredProperties(properties?.data?.instalment_properties);
       return;
     }
-    const filteredProperties = properties?.data?.instalment_properties?.filter((property: any) => {
-      return property?.handover_status === handoverStatus;
-    });
+    const filteredProperties = properties?.data?.instalment_properties?.filter(
+      (property: any) => {
+        return property?.handover_status === handoverStatus;
+      }
+    );
     setFilteredProperties(filteredProperties);
   }, [handoverStatus]);
 
@@ -606,9 +610,11 @@ const InstalmentProperties = ({
       setFilteredProperties(properties?.data?.instalment_properties);
       return;
     }
-    const filteredProperties = properties?.data?.instalment_properties?.filter((property: any) => {
-      return property?.allocation_status === allocationStatus;
-    });
+    const filteredProperties = properties?.data?.instalment_properties?.filter(
+      (property: any) => {
+        return property?.allocation_status === allocationStatus;
+      }
+    );
     setFilteredProperties(filteredProperties);
   }, [allocationStatus]);
 
@@ -623,14 +629,36 @@ const InstalmentProperties = ({
       setFilteredProperties(properties?.data?.instalment_properties);
       return;
     }
-    const filteredProperties = properties?.data?.instalment_properties?.filter((property: any) => {
-      return property?.documentation_status === documentationStatus;
-    });
+    const filteredProperties = properties?.data?.instalment_properties?.filter(
+      (property: any) => {
+        return property?.documentation_status === documentationStatus;
+      }
+    );
     setFilteredProperties(filteredProperties);
   }, [documentationStatus]);
 
+  const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setLocation(e.target.value);
+  };
+
+  useEffect(() => {
+    if (location === 'all') {
+      setFilteredProperties(properties?.data?.instalment_properties);
+      return;
+    }
+    const filteredProperties = properties?.data?.instalment_properties?.filter(
+      (property: any) => {
+        return property?.property_address === location;
+      }
+    );
+    setFilteredProperties(filteredProperties);
+  }, [location]);
+
   useEffect(() => {
     setFilteredProperties(properties?.data?.instalment_properties);
+    setLocations(
+      properties?.data?.instalment_properties?.map((property: any) => property?.property_address)
+    );
   }, [properties]);
   return (
     <Box>
@@ -641,7 +669,8 @@ const InstalmentProperties = ({
           totalCommission={properties?.data?.total_commission || 0}
           nextDueProperty={properties?.data?.next_due_date}
         />
-        <PropertyFilter
+
+        <PropertyFilterWithLocation
           searchQuery={searchQuery}
           handleSearchChange={handleSearchChange}
           salesType={salesType}
@@ -652,11 +681,11 @@ const InstalmentProperties = ({
           handleAllocationStatusChange={handleAllocationStatusChange}
           documentationStatus={documentationStatus}
           handleDocumentationStatusChange={handleDocumentationStatusChange}
+          location={location}
+          handleLocationChange={handleLocationChange}
+          locations={locations}
         />
-        <PropertyListTable
-          properties={filteredProperties}
-          loading={loading}
-        />
+        <PropertyListTable properties={filteredProperties} loading={loading} />
       </Stack>
     </Box>
   );

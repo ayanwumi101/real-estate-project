@@ -17,8 +17,7 @@ import {
 } from '~/lib/api/services/clientsService';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import PropertyFilter from '~/lib/components/PropertyFilter';
-
+import { PropertyFilterWithLocation } from '~/lib/components/PropertyFilter';
 
 const index = () => {
   const { id } = useParams();
@@ -30,14 +29,16 @@ const index = () => {
   const [clientTransactions, setClientTransactions] = React.useState<any>([]);
   const [clientAnalytics, setClientAnalytics] = React.useState<any>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
-   const [filteredProperties, setFilteredProperties] = useState<any[]>([]);
-   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [filteredProperties, setFilteredProperties] = useState<any[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
-   // Additional filter states for PropertyFilter component
-   const [salesType, setSalesType] = useState<string>('');
-   const [handoverStatus, setHandoverStatus] = useState<string>('');
-   const [allocationStatus, setAllocationStatus] = useState<string>('');
-   const [documentationStatus, setDocumentationStatus] = useState<string>('');
+  // Additional filter states for PropertyFilter component
+  const [salesType, setSalesType] = useState<string>('');
+  const [handoverStatus, setHandoverStatus] = useState<string>('');
+  const [allocationStatus, setAllocationStatus] = useState<string>('');
+  const [documentationStatus, setDocumentationStatus] = useState<string>('');
+  const [location, setLocation] = useState<string>('');
+  const [locations, setLocations] = useState<string[]>([]);
 
   const GetClientProfileDetails = async () => {
     try {
@@ -65,95 +66,120 @@ const index = () => {
     GetClientProfileDetails();
   }, [id]);
 
- 
-  
-    // Handle search input change
-    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setSearchQuery(e.target.value);
-    };
-  
-    useEffect(() => {
-      const propertySearchFilter =
-        clientDetails?.assets?.filter((property: any) => {
-          return property?.property_name
-            ?.toLowerCase()
-            .includes(searchQuery.toLowerCase());
-        });
-      setFilteredProperties(propertySearchFilter);
-    }, [searchQuery]);
-  
-    // Handle filter changes
-    const handleSalesTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-      setSalesType(e.target.value);
-    };
-  
-    useEffect(() => {
-      if (salesType === 'all') {
-        setFilteredProperties(clientDetails?.assets);
-        return;
+  // Handle search input change
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
+  useEffect(() => {
+    const propertySearchFilter = clientDetails?.assets?.filter(
+      (property: any) => {
+        return property?.property_name
+          ?.toLowerCase()
+          .includes(searchQuery.toLowerCase());
       }
-      const filteredProperties = clientDetails?.assets?.filter(
-        (property: any) => {
-          return property?.status === salesType;
-        }
-      );
-      setFilteredProperties(filteredProperties);
-    }, [salesType]);
-  
-    const handleHandoverStatusChange = (
-      e: React.ChangeEvent<HTMLSelectElement>
-    ) => {
-      setHandoverStatus(e.target.value);
-    };
-  
-    useEffect(() => {
-      if (handoverStatus === 'all') {
-        setFilteredProperties(clientDetails?.assets);
-        return;
-      }
-      const filteredProperties = clientDetails?.assets?.filter((property: any) => {
-        return property?.handover_status === handoverStatus;
-      });
-      setFilteredProperties(filteredProperties);
-    }, [handoverStatus]);
-  
-    const handleAllocationStatusChange = (
-      e: React.ChangeEvent<HTMLSelectElement>
-    ) => {
-      setAllocationStatus(e.target.value);
-    };
-  
-    useEffect(() => {
-      if (allocationStatus === 'all') {
-        setFilteredProperties(clientDetails?.assets);
-        return;
-      }
-      const filteredProperties = clientDetails?.assets?.filter((property: any) => {
-        return property?.allocation_status === allocationStatus;
-      });
-      setFilteredProperties(filteredProperties);
-    }, [allocationStatus]);
-  
-    const handleDocumentationStatusChange = (
-      e: React.ChangeEvent<HTMLSelectElement>
-    ) => {
-      setDocumentationStatus(e.target.value);
-    };
-  
-    useEffect(() => {
-      if (documentationStatus === 'all') {
-        setFilteredProperties(clientDetails?.assets);
-        return;
-      }
-      const filteredProperties = clientDetails?.assets?.filter((property: any) => {
-        return property?.documentation_status === documentationStatus;
-      });
-      setFilteredProperties(filteredProperties);
-    }, [documentationStatus]);
-  
-    useEffect(() => {
+    );
+    setFilteredProperties(propertySearchFilter);
+  }, [searchQuery]);
+
+  // Handle filter changes
+  const handleSalesTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSalesType(e.target.value);
+  };
+
+  useEffect(() => {
+    if (salesType === 'all') {
       setFilteredProperties(clientDetails?.assets);
-    }, [clientDetails]);
+      return;
+    }
+    const filteredProperties = clientDetails?.assets?.filter(
+      (property: any) => {
+        return property?.status === salesType;
+      }
+    );
+    setFilteredProperties(filteredProperties);
+  }, [salesType]);
+
+  const handleHandoverStatusChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setHandoverStatus(e.target.value);
+  };
+
+  useEffect(() => {
+    if (handoverStatus === 'all') {
+      setFilteredProperties(clientDetails?.assets);
+      return;
+    }
+    const filteredProperties = clientDetails?.assets?.filter(
+      (property: any) => {
+        return property?.handover_status === handoverStatus;
+      }
+    );
+    setFilteredProperties(filteredProperties);
+  }, [handoverStatus]);
+
+  const handleAllocationStatusChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setAllocationStatus(e.target.value);
+  };
+
+  useEffect(() => {
+    if (allocationStatus === 'all') {
+      setFilteredProperties(clientDetails?.assets);
+      return;
+    }
+    const filteredProperties = clientDetails?.assets?.filter(
+      (property: any) => {
+        return property?.allocation_status === allocationStatus;
+      }
+    );
+    setFilteredProperties(filteredProperties);
+  }, [allocationStatus]);
+
+  const handleDocumentationStatusChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setDocumentationStatus(e.target.value);
+  };
+
+  useEffect(() => {
+    if (documentationStatus === 'all') {
+      setFilteredProperties(clientDetails?.assets);
+      return;
+    }
+    const filteredProperties = clientDetails?.assets?.filter(
+      (property: any) => {
+        return property?.documentation_status === documentationStatus;
+      }
+    );
+    setFilteredProperties(filteredProperties);
+  }, [documentationStatus]);
+
+  const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setLocation(e.target.value);
+  };
+
+  useEffect(() => {
+    if (location === 'all') {
+      setFilteredProperties(clientDetails?.assets);
+      return;
+    }
+    const filteredProperties = clientDetails?.assets?.filter(
+      (property: any) => {
+        return property?.property_address === location;
+      }
+    );
+    setFilteredProperties(filteredProperties);
+  }, [location]);
+
+  useEffect(() => {
+    setFilteredProperties(clientDetails?.assets);
+    setLocations(
+      clientDetails?.assets?.map((property: any) => property?.property_address)
+    );
+  }, [clientDetails]);
 
   return (
     <RealtorDashboardLayout
@@ -182,7 +208,7 @@ const index = () => {
         />
         <Box>
           {activeTab === 'assets' && (
-            <PropertyFilter
+            <PropertyFilterWithLocation
               searchQuery={searchQuery}
               handleSearchChange={handleSearchChange}
               salesType={salesType}
@@ -193,6 +219,9 @@ const index = () => {
               handleAllocationStatusChange={handleAllocationStatusChange}
               documentationStatus={documentationStatus}
               handleDocumentationStatusChange={handleDocumentationStatusChange}
+              location={location}
+              handleLocationChange={handleLocationChange}
+              locations={locations}
             />
           )}
           {activeTab === 'assets' && (
