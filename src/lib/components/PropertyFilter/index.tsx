@@ -360,7 +360,7 @@ export const PropertyFilterWithLocation = ({
                 ))}
               </Select>
             </FormControl>
-            <FormControl>
+            {/* <FormControl>
               <FormLabel fontSize={14} my="0" fontWeight={600}>
                 Sales Type
               </FormLabel>
@@ -381,11 +381,11 @@ export const PropertyFilterWithLocation = ({
                 w={['250px', 'auto']}
               >
                 <option value="all">All</option>
-                {/* <option value="sold">Sold</option> */}
+                <option value="sold">Sold</option>
                 <option value="outright">Outright</option>
                 <option value="instalment">Instalment</option>
               </Select>
-            </FormControl>
+            </FormControl> */}
             <FormControl>
               <FormLabel fontSize={14} my="0" fontWeight={600}>
                 Handover Status
