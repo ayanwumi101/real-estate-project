@@ -545,7 +545,16 @@ const InstalmentProperties = ({
   const [allocationStatus, setAllocationStatus] = useState<string>('');
   const [documentationStatus, setDocumentationStatus] = useState<string>('');
   const [location, setLocation] = useState<string>('');
-  const [locations, setLocations] = useState<string[]>([]);
+  const [states, setStates] = useState<
+    {
+      id: string;
+      name: string;
+      state_code: string;
+      latitude: string;
+      longitude: string;
+      type: string;
+    }[]
+  >([]);
 
   // Handle search input change
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -648,7 +657,7 @@ const InstalmentProperties = ({
     }
     const filteredProperties = properties?.data?.instalment_properties?.filter(
       (property: any) => {
-        return property?.property_address === location;
+        return property?.lga?.state_id === location;
       }
     );
     setFilteredProperties(filteredProperties);
@@ -656,9 +665,6 @@ const InstalmentProperties = ({
 
   useEffect(() => {
     setFilteredProperties(properties?.data?.instalment_properties);
-    setLocations(
-      properties?.data?.instalment_properties?.map((property: any) => property?.property_address)
-    );
   }, [properties]);
   return (
     <Box>
@@ -683,7 +689,8 @@ const InstalmentProperties = ({
           handleDocumentationStatusChange={handleDocumentationStatusChange}
           location={location}
           handleLocationChange={handleLocationChange}
-          locations={locations}
+          states={states}
+          setStates={setStates}
         />
         <PropertyListTable properties={filteredProperties} loading={loading} />
       </Stack>

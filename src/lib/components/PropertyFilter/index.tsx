@@ -11,12 +11,13 @@ import {
   FormControl,
   FormLabel,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   InputSearchIcon,
   FilterPropertiesIcon,
   ShowFilterPropertiesIcon,
 } from '../Icons/Icons';
+import { GetCountryStates } from '~/lib/api/services/locationService';
 
 interface PropertyFilterType {
   searchQuery: string;
@@ -52,7 +53,24 @@ interface PropertyFilterWithLocationType {
   ) => void;
   location: string;
   handleLocationChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  locations: string[];
+  states: {
+    id: string;
+    name: string;
+    state_code: string;
+    latitude: string;
+    longitude: string;
+    type: string;
+  }[];
+  setStates: (
+    states: {
+      id: string;
+      name: string;
+      state_code: string;
+      latitude: string;
+      longitude: string;
+      type: string;
+    }[]
+  ) => void;
 }
 
 const PropertyFilter = ({
@@ -246,10 +264,25 @@ export const PropertyFilterWithLocation = ({
   handleDocumentationStatusChange,
   location,
   handleLocationChange,
-  locations,
+  states,
+  setStates,
 }: PropertyFilterWithLocationType) => {
   const [showFilterDropdowns, setShowFilterDropdowns] =
     useState<boolean>(false);
+
+  useEffect(() => {
+    const getCountryStates = async () => {
+      try {
+        const response = await GetCountryStates(
+          'da4e88a4-4c55-4724-8727-098b50731b96'
+        );
+        setStates(response?.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getCountryStates();
+  }, []);
   return (
     <Box w="full">
       <Stack w="full" spacing="25px" borderBottom="1px solid #E4E4E4" py="12px">
@@ -320,9 +353,9 @@ export const PropertyFilterWithLocation = ({
                 w={['250px', 'auto']}
               >
                 <option value="all">All</option>
-                {locations?.map((location) => (
-                  <option key={location} value={location}>
-                    {location}
+                {states?.map((state) => (
+                  <option key={state?.id} value={state?.id}>
+                    {state?.name}
                   </option>
                 ))}
               </Select>

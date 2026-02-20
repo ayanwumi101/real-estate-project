@@ -451,7 +451,16 @@ const SoldProperties = ({
   const [allocationStatus, setAllocationStatus] = useState<string>('');
   const [documentationStatus, setDocumentationStatus] = useState<string>('');
   const [location, setLocation] = useState<string>('');
-  const [locations, setLocations] = useState<string[]>([]);
+   const [states, setStates] = useState<
+      {
+        id: string;
+        name: string;
+        state_code: string;
+        latitude: string;
+        longitude: string;
+        type: string;
+      }[]
+    >([]);
 
   // Handle search input change
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -546,16 +555,13 @@ const SoldProperties = ({
       return;
     }
     const filteredProperties = properties?.payments?.filter((property: any) => {
-      return property?.property_address === location;
+      return property?.lga?.state_id === location;
     });
     setFilteredProperties(filteredProperties);
   }, [location]);
 
   useEffect(() => {
     setFilteredProperties(properties?.payments);
-    setLocations(
-      properties?.payments?.map((property: any) => property?.property_address)
-    );
   }, [properties]);
   return (
     <Box>
@@ -578,7 +584,8 @@ const SoldProperties = ({
           handleDocumentationStatusChange={handleDocumentationStatusChange}
           location={location}
           handleLocationChange={handleLocationChange}
-          locations={locations}
+          states={states}
+          setStates={setStates}
         />
         <PropertyListTable properties={filteredProperties} loading={loading} />
       </Stack>

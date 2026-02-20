@@ -38,7 +38,16 @@ const index = () => {
   const [allocationStatus, setAllocationStatus] = useState<string>('');
   const [documentationStatus, setDocumentationStatus] = useState<string>('');
   const [location, setLocation] = useState<string>('');
-  const [locations, setLocations] = useState<string[]>([]);
+  const [states, setStates] = useState<
+    {
+      id: string;
+      name: string;
+      state_code: string;
+      latitude: string;
+      longitude: string;
+      type: string;
+    }[]
+  >([]);
 
   const GetClientProfileDetails = async () => {
     try {
@@ -168,7 +177,7 @@ const index = () => {
     }
     const filteredProperties = clientDetails?.assets?.filter(
       (property: any) => {
-        return property?.property_address === location;
+        return property?.lga?.state_id === location;
       }
     );
     setFilteredProperties(filteredProperties);
@@ -176,9 +185,6 @@ const index = () => {
 
   useEffect(() => {
     setFilteredProperties(clientDetails?.assets);
-    setLocations(
-      clientDetails?.assets?.map((property: any) => property?.property_address)
-    );
   }, [clientDetails]);
 
   return (
@@ -221,7 +227,8 @@ const index = () => {
               handleDocumentationStatusChange={handleDocumentationStatusChange}
               location={location}
               handleLocationChange={handleLocationChange}
-              locations={locations}
+              states={states}
+              setStates={setStates}
             />
           )}
           {activeTab === 'assets' && (
