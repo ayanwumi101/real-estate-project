@@ -262,7 +262,7 @@ const UpdateInstalmentPropertyForm = ({
                     : ''}
                 </FormErrorMessage>
               </FormControl>
-              <FormControl
+              {/* <FormControl
                 isInvalid={!!errors.first_deposit && touched.first_deposit}
               >
                 <FormLabel fontWeight={600} fontSize={15} color="brand.400">
@@ -354,7 +354,7 @@ const UpdateInstalmentPropertyForm = ({
                       : ''}
                   </FormErrorMessage>
                 </FormControl>
-              </Flex>
+              </Flex> */}
               {/* <Flex
                 alignItems="center"
                 gap="24px"
