@@ -156,7 +156,7 @@ const PropertyFilter = ({
                 onChange={handleSalesTypeChange}
                 w={['250px', 'auto']}
               >
-                <option value="all">All</option>
+                <option value="">All</option>
                 {/* <option value="sold">Sold</option> */}
                 <option value="outright">Outright</option>
                 <option value="instalment">Instalment</option>
@@ -182,7 +182,7 @@ const PropertyFilter = ({
                 onChange={handleHandoverStatusChange}
                 w={['250px', 'auto']}
               >
-                <option value="all">All</option>
+                <option value="">All</option>
                 <option value="pending">Pending</option>
                 <option value="ongoing">Ongoing</option>
                 <option value="completed">Completed</option>
@@ -209,7 +209,7 @@ const PropertyFilter = ({
                 onChange={handleAllocationStatusChange}
                 w={['250px', 'auto']}
               >
-                <option value="all">All</option>
+                <option value="">All</option>
                 <option value="pending">Pending</option>
                 <option value="ongoing">Ongoing</option>
                 <option value="completed">Completed</option>
@@ -236,7 +236,7 @@ const PropertyFilter = ({
                 onChange={handleDocumentationStatusChange}
                 w={['250px', 'auto']}
               >
-                <option value="all">All</option>
+                <option value="">All</option>
                 <option value="pending">Pending</option>
                 <option value="ongoing">Ongoing</option>
                 <option value="completed">Completed</option>
@@ -406,7 +406,7 @@ export const PropertyFilterWithLocation = ({
                 onChange={handleHandoverStatusChange}
                 w={['250px', 'auto']}
               >
-                <option value="all">All</option>
+                <option value="">All</option>
                 <option value="pending">Pending</option>
                 <option value="ongoing">Ongoing</option>
                 <option value="completed">Completed</option>
@@ -433,7 +433,7 @@ export const PropertyFilterWithLocation = ({
                 onChange={handleAllocationStatusChange}
                 w={['250px', 'auto']}
               >
-                <option value="all">All</option>
+                <option value="">All</option>
                 <option value="pending">Pending</option>
                 <option value="ongoing">Ongoing</option>
                 <option value="completed">Completed</option>
@@ -460,7 +460,7 @@ export const PropertyFilterWithLocation = ({
                 onChange={handleDocumentationStatusChange}
                 w={['250px', 'auto']}
               >
-                <option value="all">All</option>
+                <option value="">All</option>
                 <option value="pending">Pending</option>
                 <option value="ongoing">Ongoing</option>
                 <option value="completed">Completed</option>
