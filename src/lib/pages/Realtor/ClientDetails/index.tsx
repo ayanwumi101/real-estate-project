@@ -209,8 +209,8 @@ const index = () => {
           tabs={tabs}
           activeTab={activeTab}
           setActiveTab={setActiveTab}
-          assetsCount={clientDetails?.assets?.length || 0}
-          transactionsCount={clientTransactions?.transactions?.length || 0}
+          assetsCount={clientDetails?.items?.length || 0}
+          transactionsCount={clientTransactions?.length || 0}
         />
         <Box>
           {activeTab === 'assets' && (
@@ -237,7 +237,7 @@ const index = () => {
           {activeTab === 'transactions' && (
             <TransactionsList
               loading={loading}
-              transactions={clientTransactions?.transactions}
+              transactions={clientTransactions}
             />
           )}
           {activeTab === 'securities' && <Securities />}
