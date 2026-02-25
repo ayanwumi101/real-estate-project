@@ -44,8 +44,8 @@ const PropertiesContent = () => {
             GetSoldRealtorProperties(),
             GetInstalmentRealtorProperties(),
           ]);
-        setProperties(availableProperties?.data || []);
-        setFilteredProperties(availableProperties?.data || []);
+        setProperties(availableProperties?.data?.items || []);
+        setFilteredProperties(availableProperties?.data?.items || []);
         setSoldProperties(soldProperties || []);
         setFilteredSoldProperties(soldProperties || []);
         setInstalmentProperties(instalmentProperties || []);

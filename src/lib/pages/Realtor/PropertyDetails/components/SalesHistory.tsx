@@ -1,4 +1,4 @@
-      import {
+import {
   Box,
   Flex,
   Stack,
@@ -37,6 +37,7 @@ import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
 import AddPaymentModal from '../Modals/AddPaymentModal';
 import PropertyFilter from '~/lib/components/PropertyFilter';
+import SkeletonLoader from '~/lib/components/SkeletonLoader';
 
 const PaymentListTable = ({
   payments,
@@ -364,50 +365,41 @@ const PaymentStats = ({
 };
 
 const SalesHistory = ({
+  loading,
   payments,
   assetId,
+  salesType,
+  allocationStatus,
+  handoverStatus,
+  documentationStatus,
+  setSalesType,
+  setAllocationStatus,
+  setHandoverStatus,
+  setDocumentationStatus,
 }: {
+  loading: boolean;
   payments: any;
   assetId: string;
+  salesType: string;
+  allocationStatus: string;
+  handoverStatus: string;
+  documentationStatus: string;
+  setSalesType: (value: string) => void;
+  setAllocationStatus: (value: string) => void;
+  setHandoverStatus: (value: string) => void;
+  setDocumentationStatus: (value: string) => void;
 }) => {
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [filteredPayments, setFilteredPayments] = useState<any[]>([]);
-
-  // Additional filter states for PropertyFilter component
-  const [salesType, setSalesType] = useState<string>('');
-  const [handoverStatus, setHandoverStatus] = useState<string>('');
-  const [allocationStatus, setAllocationStatus] = useState<string>('');
-  const [documentationStatus, setDocumentationStatus] = useState<string>('');
 
   // Handle search input change
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
 
-  useEffect(() => {
-    const propertySearchFilter = payments?.sales?.filter((payment: any) => {
-      return payment?.client_name
-        ?.toLowerCase()
-        .includes(searchQuery.toLowerCase());
-    });
-    setFilteredPayments(propertySearchFilter);
-  }, [searchQuery]);
-
   // Handle filter changes
   const handleSalesTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSalesType(e.target.value);
   };
-
-  useEffect(() => {
-    if (salesType === 'all') {
-      setFilteredPayments(payments?.sales);
-      return;
-    }
-    const filteredPayments = payments?.sales?.filter((payment: any) => {
-      return payment?.sale_type === salesType;
-    });
-    setFilteredPayments(filteredPayments);
-  }, [salesType]);
 
   const handleHandoverStatusChange = (
     e: React.ChangeEvent<HTMLSelectElement>
@@ -415,54 +407,17 @@ const SalesHistory = ({
     setHandoverStatus(e.target.value);
   };
 
-  useEffect(() => {
-    if (handoverStatus === 'all') {
-      setFilteredPayments(payments?.sales);
-      return;
-    }
-    const filteredPayments = payments?.sales?.filter((payment: any) => {
-      return payment?.handover_status === handoverStatus;
-    });
-    setFilteredPayments(filteredPayments);
-  }, [handoverStatus]);
-
   const handleAllocationStatusChange = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
     setAllocationStatus(e.target.value);
   };
 
-  useEffect(() => {
-    if (allocationStatus === 'all') {
-      setFilteredPayments(payments?.sales);
-      return;
-    }
-    const filteredPayments = payments?.sales?.filter((payment: any) => {
-      return payment?.allocation_status === allocationStatus;
-    });
-    setFilteredPayments(filteredPayments);
-  }, [allocationStatus]);
-
   const handleDocumentationStatusChange = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
     setDocumentationStatus(e.target.value);
   };
-
-  useEffect(() => {
-    if (documentationStatus === 'all') {
-      setFilteredPayments(payments?.sales);
-      return;
-    }
-    const filteredPayments = payments?.sales?.filter((payment: any) => {
-      return payment?.documentation_status === documentationStatus;
-    });
-    setFilteredPayments(filteredPayments);
-  }, [documentationStatus]);
-
-  useEffect(() => {
-    setFilteredPayments(payments?.sales);
-  }, [payments]);
 
   return (
     <Box py="20px" px={['20px', '0px']}>
@@ -485,7 +440,11 @@ const SalesHistory = ({
           documentationStatus={documentationStatus}
           handleDocumentationStatusChange={handleDocumentationStatusChange}
         />
-        <PaymentListTable assetId={assetId} payments={filteredPayments} />
+        {loading ? (
+          <SkeletonLoader />
+        ) : (
+          <PaymentListTable assetId={assetId} payments={payments?.items} />
+        )}
       </Stack>
     </Box>
   );

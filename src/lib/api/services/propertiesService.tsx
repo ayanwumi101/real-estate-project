@@ -44,11 +44,28 @@ export const GetAvailablePropertyDetails = async (propertyId: string) => {
 };
 
 export const GetInstalmentPropertyPaymentHistory = async (
-  propertyId: string
+  propertyId: string,
+  filters: {
+    sale_type?: string;
+    payment_status?: string;
+    allocation_status?: string;
+    documentation_status?: string;
+    handover_status?: string;
+  }
 ) => {
-  const response = await axiosInstance.get(
-    `/realtor/properties/${propertyId}/sales-history`
+  const cleanedParams = Object.fromEntries(
+    Object.entries(filters).filter(
+      ([_, value]) => value !== undefined && value !== null && value !== ''
+    )
   );
+
+  const response = await axiosInstance.get(
+    `/realtor/properties/${propertyId}/sales-history`,
+    {
+      params: cleanedParams,
+    }
+  );
+
   return response.data;
 };
 
@@ -249,7 +266,6 @@ export const UpdateInstalmentPropertyDetails = async (
   );
   return response.data;
 };
-
 
 export const UpdateSoldPropertyDetails = async (
   propertySaleId: string,

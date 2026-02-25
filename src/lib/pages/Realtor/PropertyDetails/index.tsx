@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect, Fragment, useState } from 'react';
 import Notes from './components/Notes';
 import Header from './components/Header';
 import { Box, Stack, Flex, Text } from '@chakra-ui/react';
@@ -25,7 +25,6 @@ import InstalmentPropertyPaymentHistory from './components/InstalmentPropertyPay
 
 const index = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const searchParams = useSearchParams();
   const [propertyType, setPropertyType] = React.useState<
     'available' | 'instalment' | 'sold'
@@ -46,41 +45,59 @@ const index = () => {
     React.useState<InstalmentPropertyDetails>({} as InstalmentPropertyDetails);
   const [propertyPaymentHistory, setPropertyPaymentHistory] =
     React.useState<any>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [salesType, setSalesType] = useState<string>('');
+  const [handoverStatus, setHandoverStatus] = useState<string>('');
+  const [allocationStatus, setAllocationStatus] = useState<string>('');
+  const [documentationStatus, setDocumentationStatus] = useState<string>('');
 
   const getAvailablePropertyDetails = async () => {
+    setLoading(true);
     try {
       const res = await GetAvailablePropertyDetails(id as string);
       setAvailablePropertyDetails(res?.data);
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   const getSoldPropertyDetails = async () => {
+    setLoading(true);
     try {
       const res = await GetSoldPropertyDetails(id as string);
       setSoldPropertyDetails(res?.data);
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   const getInstlamentPropertyDetails = async () => {
+    setLoading(true);
     try {
       const res = await GetInstalmentPropertyDetails(id as string);
       setInstalmentPropertyDetails(res?.data);
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   const getPropertyPaymentHistory = async () => {
+    setLoading(true);
     try {
-      const res = await GetInstalmentPropertyPaymentHistory(id as string);
+      const res = await GetInstalmentPropertyPaymentHistory(id as string, {
+        sale_type: salesType,
+        documentation_status: documentationStatus,
+        allocation_status: allocationStatus,
+        handover_status: handoverStatus,
+      });
       setPropertyPaymentHistory(res?.data);
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -94,7 +111,6 @@ const index = () => {
 
   useEffect(() => {
     if (propertyType === null) return;
-
     switch (propertyType) {
       case 'available':
         getAvailablePropertyDetails();
@@ -103,16 +119,25 @@ const index = () => {
 
       case 'sold':
         getSoldPropertyDetails();
+
         break;
 
       case 'instalment':
         getInstlamentPropertyDetails();
+
         break;
 
       default:
         break;
     }
-  }, [propertyType, id]);
+  }, [
+    propertyType,
+    id,
+    salesType,
+    allocationStatus,
+    documentationStatus,
+    handoverStatus,
+  ]);
 
   const propertyAddress =
     propertyType === 'available'
@@ -124,11 +149,7 @@ const index = () => {
   return (
     <RealtorDashboardLayout
       title={
-        <Flex
-          alignItems="center"
-          gap={['5px', '8px']}
-          // flexWrap={['wrap', 'nowrap']}
-        >
+        <Flex alignItems="center" gap={['5px', '8px']}>
           <Text fontSize={[15, 16]} fontWeight={600} color="brand.400">
             Properties
           </Text>
@@ -164,14 +185,15 @@ const index = () => {
     >
       <Stack w="full" spacing="12px">
         <Header
+          loading={loading}
           tabs={tabs}
           noOfSales={
             propertyType === 'available'
-              ? propertyPaymentHistory?.number_of_sales
+              ? propertyPaymentHistory?.number_of_sales || 0
               : propertyType === 'sold'
-                ? soldPropertyDetails?.totals?.total_payments
+                ? soldPropertyDetails?.totals?.total_payments || 0
                 : instalmentPropertyDetails?.payment_details
-                    ?.instalment_payments?.length
+                    ?.instalment_payments?.length || 0
           }
           activeTab={activeTab}
           propertyType={propertyType || 'available'}
@@ -222,8 +244,17 @@ const index = () => {
         {activeTab === 'Sales History' && (
           <Box>
             <SalesHistory
+              loading={loading}
               payments={propertyPaymentHistory}
               assetId={id as string}
+              salesType={salesType}
+              allocationStatus={allocationStatus}
+              handoverStatus={handoverStatus}
+              documentationStatus={documentationStatus}
+              setSalesType={setSalesType}
+              setAllocationStatus={setAllocationStatus}
+              setHandoverStatus={setHandoverStatus}
+              setDocumentationStatus={setDocumentationStatus}
             />
           </Box>
         )}

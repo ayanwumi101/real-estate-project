@@ -10,6 +10,8 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  Skeleton,
+  SkeletonText,
 } from '@chakra-ui/react';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
@@ -21,7 +23,7 @@ import {
   EditPropertyIcon,
   AddPaymentIcon,
 } from '~/lib/components/Icons/Icons';
-import useNavigate from '~/lib/utils/useNavigate';
+
 import AddPaymentModal from '../Modals/AddPaymentModal';
 import { GetPropertyDueDates } from '~/lib/api/services/propertiesService';
 import Link from 'next/link';
@@ -37,6 +39,7 @@ interface Headerprops {
   propertyType: 'available' | 'instalment' | 'sold';
   noOfSales: number;
   selectedProperty: any;
+  loading: boolean;
 }
 
 interface NavigationTabsProps {
@@ -72,7 +75,6 @@ const NavigationTabs = ({
   );
 };
 
-
 const Header = ({
   propertyName,
   location,
@@ -82,9 +84,9 @@ const Header = ({
   propertyType,
   noOfSales,
   selectedProperty,
+  loading,
 }: Headerprops) => {
   const router = useRouter();
-  const navigate = useNavigate();
   const { id } = useParams();
   const [openAddPaymentModal, setOpenAddPaymentModal] = React.useState(false);
   return (
@@ -113,36 +115,66 @@ const Header = ({
         >
           <Box>
             <Stack spacing="10px">
-              <Flex alignItems="center" gap="10px">
-                <Heading fontSize={[20, 24]} fontWeight={500} color="#222222">
-                  {propertyName}
-                </Heading>
-                <Badge
-                  px="10px"
-                  py="4px"
-                  rounded="50px"
-                  fontSize={12}
-                  fontWeight={500}
-                  bg={
-                    propertyType === 'instalment'
-                      ? '#F6EDDF'
-                      : propertyType === 'sold'
-                        ? '#E7F5EC'
-                        : 'bg.200'
-                  }
-                  color={
-                    propertyType === 'instalment'
-                      ? '#E1A101'
-                      : propertyType === 'sold'
-                        ? '#1BD155'
-                        : 'brand.100'
-                  }
-                  textTransform="capitalize"
-                >
-                  {propertyType}
-                </Badge>
-              </Flex>
-              {location && (
+              {loading ? (
+                <Stack direction="row" gap="20px" alignItems="center">
+                  <Skeleton w="450px" height="30px" />
+                  <Skeleton w="120px" height="25px" rounded="24px" />
+                </Stack>
+              ) : (
+                <Flex alignItems="center" gap="10px">
+                  <Heading fontSize={[20, 24]} fontWeight={500} color="#222222">
+                    {propertyName}
+                  </Heading>
+                  <Badge
+                    px="10px"
+                    py="4px"
+                    rounded="50px"
+                    fontSize={12}
+                    fontWeight={500}
+                    bg={
+                      propertyType === 'instalment'
+                        ? '#F6EDDF'
+                        : propertyType === 'sold'
+                          ? '#E7F5EC'
+                          : 'bg.200'
+                    }
+                    color={
+                      propertyType === 'instalment'
+                        ? '#E1A101'
+                        : propertyType === 'sold'
+                          ? '#1BD155'
+                          : 'brand.100'
+                    }
+                    textTransform="capitalize"
+                  >
+                    {propertyType}
+                  </Badge>
+                </Flex>
+              )}
+
+              {loading ? (
+                <Flex alignItems="center" gap="10px">
+                  <LocationIcon />
+                  <Skeleton
+                    height="15px"
+                    rounded="12px"
+                    width="150px"
+                    noOfLines={1}
+                  />
+                  <Skeleton
+                    height="15px"
+                    rounded="12px"
+                    width="150px"
+                    noOfLines={1}
+                  />
+                  <Skeleton
+                    height="15px"
+                    rounded="12px"
+                    width="150px"
+                    noOfLines={1}
+                  />
+                </Flex>
+              ) : (
                 <Flex alignItems="center" gap="10px">
                   <LocationIcon />
                   <Text color="#2E353F" fontWeight={500} fontSize={[14, 16]}>
