@@ -62,7 +62,7 @@ const index = () => {
         GetClientAnalytics(id),
       ]);
       setClientDetails(clientDetailsResponse?.data);
-      setClientTransactions(clientTransactionsResponse?.data);
+      setClientTransactions(clientTransactionsResponse?.data?.items);
       setClientAnalytics(clientAnalyticsResponse?.data);
     } catch (error) {
       console.log(error);
@@ -120,7 +120,7 @@ const index = () => {
       setFilteredProperties(clientDetails?.assets);
       return;
     }
-    const filteredProperties = clientDetails?.assets?.filter(
+    const filteredProperties = clientDetails?.items?.filter(
       (property: any) => {
         return property?.handover_status === handoverStatus;
       }
@@ -184,7 +184,7 @@ const index = () => {
   }, [location]);
 
   useEffect(() => {
-    setFilteredProperties(clientDetails?.assets);
+    setFilteredProperties(clientDetails?.items);
   }, [clientDetails]);
 
   return (
