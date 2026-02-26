@@ -10,14 +10,14 @@ import AssetsList from './components/AssetsList';
 import TransactionsList from './components/TransactionsList';
 import Securities from './components/Securities';
 import Analytics from './components/Analytics';
+import { useParams } from 'next/navigation';
+import Link from 'next/link';
+import { PropertyFilterWithLocation } from '~/lib/components/PropertyFilter';
 import {
   GetClientDetails,
   GetClientTransactions,
   GetClientAnalytics,
 } from '~/lib/api/services/clientsService';
-import { useParams } from 'next/navigation';
-import Link from 'next/link';
-import { PropertyFilterWithLocation } from '~/lib/components/PropertyFilter';
 
 const index = () => {
   const { id } = useParams();
@@ -57,9 +57,14 @@ const index = () => {
         clientTransactionsResponse,
         clientAnalyticsResponse,
       ] = await Promise.all([
-        GetClientDetails(id),
-        GetClientTransactions(id),
-        GetClientAnalytics(id),
+        GetClientDetails(id as string, {
+          location: location,
+          allocation_status: allocationStatus,
+          documentation_status: documentationStatus,
+          handover_status: handoverStatus,
+        }),
+        GetClientTransactions(id as string),
+        GetClientAnalytics(id as string),
       ]);
       setClientDetails(clientDetailsResponse?.data);
       setClientTransactions(clientTransactionsResponse?.data?.items);
@@ -73,7 +78,14 @@ const index = () => {
 
   React.useEffect(() => {
     GetClientProfileDetails();
-  }, [id]);
+  }, [
+    id,
+    salesType,
+    location,
+    allocationStatus,
+    documentationStatus,
+    handoverStatus,
+  ]);
 
   // Handle search input change
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,37 +108,11 @@ const index = () => {
     setSalesType(e.target.value);
   };
 
-  useEffect(() => {
-    if (salesType === 'all') {
-      setFilteredProperties(clientDetails?.assets);
-      return;
-    }
-    const filteredProperties = clientDetails?.assets?.filter(
-      (property: any) => {
-        return property?.status === salesType;
-      }
-    );
-    setFilteredProperties(filteredProperties);
-  }, [salesType]);
-
   const handleHandoverStatusChange = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
     setHandoverStatus(e.target.value);
   };
-
-  useEffect(() => {
-    if (handoverStatus === 'all') {
-      setFilteredProperties(clientDetails?.assets);
-      return;
-    }
-    const filteredProperties = clientDetails?.items?.filter(
-      (property: any) => {
-        return property?.handover_status === handoverStatus;
-      }
-    );
-    setFilteredProperties(filteredProperties);
-  }, [handoverStatus]);
 
   const handleAllocationStatusChange = (
     e: React.ChangeEvent<HTMLSelectElement>
@@ -134,54 +120,15 @@ const index = () => {
     setAllocationStatus(e.target.value);
   };
 
-  useEffect(() => {
-    if (allocationStatus === 'all') {
-      setFilteredProperties(clientDetails?.assets);
-      return;
-    }
-    const filteredProperties = clientDetails?.assets?.filter(
-      (property: any) => {
-        return property?.allocation_status === allocationStatus;
-      }
-    );
-    setFilteredProperties(filteredProperties);
-  }, [allocationStatus]);
-
   const handleDocumentationStatusChange = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
     setDocumentationStatus(e.target.value);
   };
 
-  useEffect(() => {
-    if (documentationStatus === 'all') {
-      setFilteredProperties(clientDetails?.assets);
-      return;
-    }
-    const filteredProperties = clientDetails?.assets?.filter(
-      (property: any) => {
-        return property?.documentation_status === documentationStatus;
-      }
-    );
-    setFilteredProperties(filteredProperties);
-  }, [documentationStatus]);
-
   const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setLocation(e.target.value);
   };
-
-  useEffect(() => {
-    if (location === 'all') {
-      setFilteredProperties(clientDetails?.assets);
-      return;
-    }
-    const filteredProperties = clientDetails?.assets?.filter(
-      (property: any) => {
-        return property?.lga?.state_id === location;
-      }
-    );
-    setFilteredProperties(filteredProperties);
-  }, [location]);
 
   useEffect(() => {
     setFilteredProperties(clientDetails?.items);
@@ -232,7 +179,7 @@ const index = () => {
             />
           )}
           {activeTab === 'assets' && (
-            <AssetsList loading={loading} assets={filteredProperties} />
+            <AssetsList loading={loading} assets={clientDetails?.items} />
           )}
           {activeTab === 'transactions' && (
             <TransactionsList

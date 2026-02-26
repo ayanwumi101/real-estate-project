@@ -354,7 +354,7 @@ export const PropertyFilterWithLocation = ({
               >
                 <option value="all">All</option>
                 {states?.map((state) => (
-                  <option key={state?.id} value={state?.id}>
+                  <option key={state?.id} value={state?.name}>
                     {state?.name}
                   </option>
                 ))}
