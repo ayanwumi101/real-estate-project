@@ -670,10 +670,10 @@ const InstalmentProperties = ({
     <Box>
       <Stack spacing="20px">
         <PropertyStats
-          totalProperties={properties?.data?.total_instalment_property || 0}
-          totalInstalment={properties?.data?.total_instalment_payments || 0}
-          totalCommission={properties?.data?.total_commission || 0}
-          nextDueProperty={properties?.data?.next_due_date}
+          totalProperties={properties?.total_instalment_property || 0}
+          totalInstalment={properties?.total_instalment_payments || 0}
+          totalCommission={properties?.total_commission || 0}
+          nextDueProperty={properties?.next_due_date}
         />
 
         <PropertyFilterWithLocation
@@ -692,7 +692,7 @@ const InstalmentProperties = ({
           states={states}
           setStates={setStates}
         />
-        <PropertyListTable properties={filteredProperties} loading={loading} />
+        <PropertyListTable properties={properties?.items} loading={loading} />
       </Stack>
     </Box>
   );

@@ -38,7 +38,7 @@ const PropertiesContent = () => {
     const fetchProperties = async () => {
       setLoading(true);
       try {
-        const [availableProperties, soldProperties, instalmentProperties] =
+        const [availableProperties, soldPropertiesData, instalmentPropertiesData] =
           await Promise.all([
             GetRealtorProperties(),
             GetSoldRealtorProperties(),
@@ -46,10 +46,11 @@ const PropertiesContent = () => {
           ]);
         setProperties(availableProperties?.data?.items || []);
         setFilteredProperties(availableProperties?.data?.items || []);
-        setSoldProperties(soldProperties || []);
-        setFilteredSoldProperties(soldProperties || []);
-        setInstalmentProperties(instalmentProperties || []);
-        setFilteredInstalmentProperties(instalmentProperties || []);
+        setSoldProperties(soldPropertiesData?.data || []);
+        setFilteredSoldProperties(soldPropertiesData?.data || []);
+        setInstalmentProperties(instalmentPropertiesData?.data || []);
+        setFilteredInstalmentProperties(instalmentPropertiesData?.data || []);
+        
       } catch (error) {
         console.error('Error fetching properties:', error);
       } finally {
@@ -120,9 +121,9 @@ const PropertiesContent = () => {
           searchProperties={SearchProperties}
           activeTab={activeTab}
           availableCount={properties.length}
-          soldCount={soldProperties?.payments?.length}
+          soldCount={soldProperties?.items?.length}
           instalmentCount={
-            instalmentProperties?.data?.total_instalment_property
+            instalmentProperties?.items?.length
           }
         />
         <Box>

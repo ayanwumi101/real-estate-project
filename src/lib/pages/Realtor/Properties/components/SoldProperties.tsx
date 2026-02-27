@@ -563,13 +563,14 @@ const SoldProperties = ({
   useEffect(() => {
     setFilteredProperties(properties?.payments);
   }, [properties]);
+  
   return (
     <Box>
       <Stack spacing="20px">
         <PropertyStats
-          totalCommission={properties?.totals?.total_commission}
-          totalProperties={properties?.totals?.total_properties}
-          totalSoldPrice={properties?.totals?.total_sold_price}
+          totalCommission={properties?.total_commission}
+          totalProperties={properties?.total_payments}
+          totalSoldPrice={properties?.total_sold_price}
         />
         <PropertyFilterWithLocation
           searchQuery={searchQuery}
@@ -587,7 +588,7 @@ const SoldProperties = ({
           states={states}
           setStates={setStates}
         />
-        <PropertyListTable properties={filteredProperties} loading={loading} />
+        <PropertyListTable properties={properties?.items} loading={loading} />
       </Stack>
     </Box>
   );
