@@ -20,6 +20,7 @@ import {
 } from '@chakra-ui/react';
 import moment from 'moment';
 import React, { useState, useEffect } from 'react';
+import { GetSoldRealtorProperties } from '~/lib/api/services/propertiesService';
 import {
   VerticalEllipsisIcon,
   ViewpropertyIcon,
@@ -436,31 +437,51 @@ const PropertyStats = ({
 };
 
 const SoldProperties = ({
-  properties,
-  loading,
+  setSoldPropertiesCount,
 }: {
-  properties: any;
-  loading: boolean;
+  setSoldPropertiesCount: (count: number) => void;
 }) => {
-  const [filteredProperties, setFilteredProperties] = useState<any[]>([]);
+  const [properties, setProperties] = useState<any>();
+  const [filteredProperties, setFilteredProperties] = useState<any>();
   const [searchQuery, setSearchQuery] = useState<string>('');
-
+  const [loading, setLoading] = React.useState<boolean>(false);
   // Additional filter states for PropertyFilter component
-  const [salesType, setSalesType] = useState<string>('');
   const [handoverStatus, setHandoverStatus] = useState<string>('');
   const [allocationStatus, setAllocationStatus] = useState<string>('');
   const [documentationStatus, setDocumentationStatus] = useState<string>('');
   const [location, setLocation] = useState<string>('');
-   const [states, setStates] = useState<
-      {
-        id: string;
-        name: string;
-        state_code: string;
-        latitude: string;
-        longitude: string;
-        type: string;
-      }[]
-    >([]);
+  const [states, setStates] = useState<
+    {
+      id: string;
+      name: string;
+      state_code: string;
+      latitude: string;
+      longitude: string;
+      type: string;
+    }[]
+  >([]);
+
+  const fetchProperties = async () => {
+    setLoading(true);
+    try {
+      const soldPropertiesData = await GetSoldRealtorProperties({
+        location: location,
+        allocation_status: allocationStatus,
+        documentation_status: documentationStatus,
+        handover_status: handoverStatus,
+      });
+      setProperties(soldPropertiesData?.data || []);
+      setSoldPropertiesCount(soldPropertiesData?.data?.items?.length);
+      setFilteredProperties(soldPropertiesData?.data?.items || []);
+    } catch (error) {
+      console.error('Error fetching properties:', error);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchProperties();
+  }, [location, allocationStatus, handoverStatus, documentationStatus]);
 
   // Handle search input change
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -468,31 +489,19 @@ const SoldProperties = ({
   };
 
   useEffect(() => {
-    const propertySearchFilter = properties?.payments?.filter(
-      (property: any) => {
-        return property?.property_name
-          ?.toLowerCase()
-          .includes(searchQuery.toLowerCase());
-      }
-    );
-    setFilteredProperties(propertySearchFilter);
-  }, [searchQuery]);
-
-  // Handle filter changes
-  const handleSalesTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSalesType(e.target.value);
-  };
-
-  useEffect(() => {
-    if (salesType === 'all') {
-      setFilteredProperties(properties?.payments);
-      return;
+    if (searchQuery) {
+      const propertySearchFilter = filteredProperties?.filter(
+        (property: any) => {
+          return property?.property_name
+            ?.toLowerCase()
+            .includes(searchQuery.toLowerCase());
+        }
+      );
+      setFilteredProperties(propertySearchFilter);
+    } else {
+      setFilteredProperties(properties?.items);
     }
-    const filteredProperties = properties?.payments?.filter((property: any) => {
-      return property?.status === salesType;
-    });
-    setFilteredProperties(filteredProperties);
-  }, [salesType]);
+  }, [searchQuery]);
 
   const handleHandoverStatusChange = (
     e: React.ChangeEvent<HTMLSelectElement>
@@ -500,33 +509,11 @@ const SoldProperties = ({
     setHandoverStatus(e.target.value);
   };
 
-  useEffect(() => {
-    if (handoverStatus === 'all') {
-      setFilteredProperties(properties?.payments);
-      return;
-    }
-    const filteredProperties = properties?.payments?.filter((property: any) => {
-      return property?.handover_status === handoverStatus;
-    });
-    setFilteredProperties(filteredProperties);
-  }, [handoverStatus]);
-
   const handleAllocationStatusChange = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
     setAllocationStatus(e.target.value);
   };
-
-  useEffect(() => {
-    if (allocationStatus === 'all') {
-      setFilteredProperties(properties?.payments);
-      return;
-    }
-    const filteredProperties = properties?.payments?.filter((property: any) => {
-      return property?.allocation_status === allocationStatus;
-    });
-    setFilteredProperties(filteredProperties);
-  }, [allocationStatus]);
 
   const handleDocumentationStatusChange = (
     e: React.ChangeEvent<HTMLSelectElement>
@@ -534,36 +521,14 @@ const SoldProperties = ({
     setDocumentationStatus(e.target.value);
   };
 
-  useEffect(() => {
-    if (documentationStatus === 'all') {
-      setFilteredProperties(properties?.payments);
-      return;
-    }
-    const filteredProperties = properties?.payments?.filter((property: any) => {
-      return property?.documentation_status === documentationStatus;
-    });
-    setFilteredProperties(filteredProperties);
-  }, [documentationStatus]);
-
   const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setLocation(e.target.value);
   };
 
-  useEffect(() => {
-    if (location === 'all') {
-      setFilteredProperties(properties?.payments);
-      return;
-    }
-    const filteredProperties = properties?.payments?.filter((property: any) => {
-      return property?.lga?.state_id === location;
-    });
-    setFilteredProperties(filteredProperties);
-  }, [location]);
+  // useEffect(() => {
+  //   setFilteredProperties(properties?.data?.items);
+  // }, [properties]);
 
-  useEffect(() => {
-    setFilteredProperties(properties?.payments);
-  }, [properties]);
-  
   return (
     <Box>
       <Stack spacing="20px">
@@ -575,8 +540,6 @@ const SoldProperties = ({
         <PropertyFilterWithLocation
           searchQuery={searchQuery}
           handleSearchChange={handleSearchChange}
-          salesType={salesType}
-          handleSalesTypeChange={handleSalesTypeChange}
           handoverStatus={handoverStatus}
           handleHandoverStatusChange={handleHandoverStatusChange}
           allocationStatus={allocationStatus}
@@ -588,7 +551,7 @@ const SoldProperties = ({
           states={states}
           setStates={setStates}
         />
-        <PropertyListTable properties={properties?.items} loading={loading} />
+        <PropertyListTable properties={filteredProperties} loading={loading} />
       </Stack>
     </Box>
   );

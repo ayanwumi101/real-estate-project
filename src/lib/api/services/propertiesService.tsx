@@ -7,16 +7,46 @@ export const GetRealtorProperties = async () => {
   return response.data;
 };
 
-export const GetSoldRealtorProperties = async () => {
+export const GetSoldRealtorProperties = async (filters: {
+  location?: string;
+  payment_status?: string;
+  allocation_status?: string;
+  documentation_status?: string;
+  handover_status?: string;
+}) => {
+  const cleanedParams = Object.fromEntries(
+    Object.entries(filters).filter(
+      ([_, value]) => value !== undefined && value !== null && value !== ''
+    )
+  );
+
   const response = await axiosInstance.get(
-    `${API_ROUTES.GET_PROPERTY_PAYMENTS}`
+    `${API_ROUTES.GET_PROPERTY_PAYMENTS}`,
+    {
+      params: cleanedParams,
+    }
   );
   return response.data;
 };
 
-export const GetInstalmentRealtorProperties = async () => {
+export const GetInstalmentRealtorProperties = async (filters: {
+  location?: string;
+  payment_status?: string;
+  allocation_status?: string;
+  documentation_status?: string;
+  handover_status?: string;
+}) => {
+  const cleanedParams = Object.fromEntries(
+    Object.entries(filters).filter(
+      ([_, value]) => value !== undefined && value !== null && value !== ''
+    )
+  );
+
   const response = await axiosInstance.get(
-    `${API_ROUTES.GET_INSTALMENT_PROPERTIES}`
+    `${API_ROUTES.GET_INSTALMENT_PROPERTIES}`,
+    {
+      params: cleanedParams,
+    }
   );
   return response.data;
 };

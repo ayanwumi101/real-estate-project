@@ -164,8 +164,8 @@ const index = () => {
             <PropertyFilterWithLocation
               searchQuery={searchQuery}
               handleSearchChange={handleSearchChange}
-              salesType={salesType}
-              handleSalesTypeChange={handleSalesTypeChange}
+              // salesType={salesType}
+              // handleSalesTypeChange={handleSalesTypeChange}
               handoverStatus={handoverStatus}
               handleHandoverStatusChange={handleHandoverStatusChange}
               allocationStatus={allocationStatus}

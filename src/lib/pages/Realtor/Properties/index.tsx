@@ -21,36 +21,23 @@ const PropertiesContent = () => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [properties, setProperties] = React.useState([]);
   const [filteredProperties, setFilteredProperties] = React.useState([]);
-  const [soldProperties, setSoldProperties] = React.useState<any>([]);
-  const [filteredSoldProperties, setFilteredSoldProperties] =
-    React.useState<any>([]);
-  const [instalmentProperties, setInstalmentProperties] = React.useState<any>(
-    []
-  );
-  const [filteredInstalmentProperties, setFilteredInstalmentProperties] =
-    useState<any>([]);
   const [activeTab, setActiveTab] = React.useState<
     'available' | 'sold' | 'instalment'
   >('available');
   const [searchQuery, setSearchQuery] = React.useState<string>('');
+  const [soldPropertiesCount, setSoldPropertiesCount] = useState<number>(0);
+  const [instalmentPropertiesCount, setInstalmentPropertiesCount] =
+    useState<number>(0);
 
   useEffect(() => {
     const fetchProperties = async () => {
       setLoading(true);
       try {
-        const [availableProperties, soldPropertiesData, instalmentPropertiesData] =
-          await Promise.all([
-            GetRealtorProperties(),
-            GetSoldRealtorProperties(),
-            GetInstalmentRealtorProperties(),
-          ]);
+        const [availableProperties] = await Promise.all([
+          GetRealtorProperties(),
+        ]);
         setProperties(availableProperties?.data?.items || []);
         setFilteredProperties(availableProperties?.data?.items || []);
-        setSoldProperties(soldPropertiesData?.data || []);
-        setFilteredSoldProperties(soldPropertiesData?.data || []);
-        setInstalmentProperties(instalmentPropertiesData?.data || []);
-        setFilteredInstalmentProperties(instalmentPropertiesData?.data || []);
-        
       } catch (error) {
         console.error('Error fetching properties:', error);
       } finally {
@@ -64,10 +51,6 @@ const PropertiesContent = () => {
     if (searchQuery === '') {
       if (activeTab === 'available') {
         setFilteredProperties(properties);
-      } else if (activeTab === 'sold') {
-        setFilteredSoldProperties(soldProperties);
-      } else {
-        setFilteredInstalmentProperties(instalmentProperties);
       }
       return;
     }
@@ -77,26 +60,8 @@ const PropertiesContent = () => {
         property?.property_name?.toLowerCase().includes(searchLower)
       );
       setFilteredProperties(filtered);
-    } else if (activeTab === 'sold') {
-      const filtered = soldProperties?.payments?.filter((property: any) =>
-        property?.property_name?.toLowerCase().includes(searchLower)
-      );
-      setFilteredSoldProperties(filtered);
-    } else {
-      const filtered =
-        instalmentProperties?.data?.instalment_properties?.filter(
-          (property: any) =>
-            property?.property_name?.toLowerCase().includes(searchLower)
-        );
-      setFilteredInstalmentProperties(filtered);
     }
-  }, [
-    searchQuery,
-    activeTab,
-    properties,
-    soldProperties,
-    instalmentProperties,
-  ]);
+  }, [searchQuery, activeTab, properties]);
 
   useEffect(() => {
     SearchProperties();
@@ -121,10 +86,8 @@ const PropertiesContent = () => {
           searchProperties={SearchProperties}
           activeTab={activeTab}
           availableCount={properties.length}
-          soldCount={soldProperties?.items?.length}
-          instalmentCount={
-            instalmentProperties?.items?.length
-          }
+          soldCount={soldPropertiesCount}
+          instalmentCount={instalmentPropertiesCount}
         />
         <Box>
           {activeTab === 'available' && (
@@ -134,15 +97,11 @@ const PropertiesContent = () => {
             />
           )}
           {activeTab === 'sold' && (
-            <SoldProperties
-              loading={loading}
-              properties={filteredSoldProperties}
-            />
+            <SoldProperties setSoldPropertiesCount={setSoldPropertiesCount} />
           )}
           {activeTab === 'instalment' && (
             <InstalmentProperties
-              loading={loading}
-              properties={filteredInstalmentProperties}
+              setInstalmentPropertiesCount={setInstalmentPropertiesCount}
             />
           )}
         </Box>

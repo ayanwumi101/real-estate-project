@@ -39,8 +39,6 @@ interface PropertyFilterType {
 interface PropertyFilterWithLocationType {
   searchQuery: string;
   handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  salesType: string;
-  handleSalesTypeChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   handoverStatus: string;
   handleHandoverStatusChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   allocationStatus: string;
@@ -254,8 +252,6 @@ export default PropertyFilter;
 export const PropertyFilterWithLocation = ({
   searchQuery,
   handleSearchChange,
-  salesType,
-  handleSalesTypeChange,
   handoverStatus,
   handleHandoverStatusChange,
   allocationStatus,

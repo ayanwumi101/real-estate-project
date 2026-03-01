@@ -81,7 +81,7 @@ const NavigationTab: React.FC<NavigationTabProps> = ({
           gap={['15px', '10px']}
           flexWrap={['wrap', 'nowrap']}
         >
-          <InputGroup w={['100%', '325px']}>
+          {/* <InputGroup w={['100%', '325px']}>
             <InputLeftElement pointerEvents="none">
               <InputSearchIcon />
             </InputLeftElement>
@@ -98,7 +98,7 @@ const NavigationTab: React.FC<NavigationTabProps> = ({
                 searchProperties();
               }}
             />
-          </InputGroup>
+          </InputGroup> */}
 
           <Button
             leftIcon={<AddIcon />}

@@ -35,7 +35,10 @@ import { findClosestPaymentDueDate } from '~/lib/utils/findClosestDueAsset';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
 import AddPaymentModal from '../../PropertyDetails/Modals/AddPaymentModal';
-import { GetPropertyDueDates } from '~/lib/api/services/propertiesService';
+import {
+  GetInstalmentRealtorProperties,
+  GetPropertyDueDates,
+} from '~/lib/api/services/propertiesService';
 import SkeletonLoader from '~/lib/components/SkeletonLoader';
 import { PropertyFilterWithLocation } from '~/lib/components/PropertyFilter';
 
@@ -530,14 +533,14 @@ const PropertyStats = ({
 };
 
 const InstalmentProperties = ({
-  properties,
-  loading,
+  setInstalmentPropertiesCount,
 }: {
-  properties: any;
-  loading: boolean;
+  setInstalmentPropertiesCount: (count: number) => void;
 }) => {
-  const [filteredProperties, setFilteredProperties] = useState<any[]>([]);
+  const [properties, setProperties] = useState<any>();
+  const [filteredProperties, setFilteredProperties] = useState<any>();
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
   // Additional filter states for PropertyFilter component
   const [salesType, setSalesType] = useState<string>('');
@@ -556,57 +559,57 @@ const InstalmentProperties = ({
     }[]
   >([]);
 
+  const fetchProperties = async () => {
+    setLoading(true);
+    try {
+      const instalmentPropertiesData = await GetInstalmentRealtorProperties({
+        location: location,
+        allocation_status: allocationStatus,
+        documentation_status: documentationStatus,
+        handover_status: handoverStatus,
+      });
+      setProperties(instalmentPropertiesData?.data || []);
+      setInstalmentPropertiesCount(
+        instalmentPropertiesData?.data?.items?.length
+      );
+      setFilteredProperties(instalmentPropertiesData?.data?.items || []);
+    } catch (error) {
+      console.error('Error fetching properties:', error);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchProperties();
+  }, [location, allocationStatus, handoverStatus, documentationStatus]);
+
   // Handle search input change
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
 
   useEffect(() => {
-    const propertySearchFilter =
-      properties?.data?.instalment_properties?.filter((property: any) => {
-        return property?.property_name
-          ?.toLowerCase()
-          .includes(searchQuery.toLowerCase());
-      });
-    setFilteredProperties(propertySearchFilter);
+    if (searchQuery) {
+      const propertySearchFilter = filteredProperties?.filter(
+        (property: any) => {
+          return property?.property_name
+            ?.toLowerCase()
+            .includes(searchQuery.toLowerCase());
+        }
+      );
+      setFilteredProperties(propertySearchFilter);
+    } else {
+      setFilteredProperties(properties?.items);
+    }
   }, [searchQuery]);
 
+  
   // Handle filter changes
-  const handleSalesTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSalesType(e.target.value);
-  };
-
-  useEffect(() => {
-    if (salesType === 'all') {
-      setFilteredProperties(properties?.data?.instalment_properties);
-      return;
-    }
-    const filteredProperties = properties?.data?.instalment_properties?.filter(
-      (property: any) => {
-        return property?.status === salesType;
-      }
-    );
-    setFilteredProperties(filteredProperties);
-  }, [salesType]);
-
   const handleHandoverStatusChange = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
     setHandoverStatus(e.target.value);
   };
-
-  useEffect(() => {
-    if (handoverStatus === 'all') {
-      setFilteredProperties(properties?.data?.instalment_properties);
-      return;
-    }
-    const filteredProperties = properties?.data?.instalment_properties?.filter(
-      (property: any) => {
-        return property?.handover_status === handoverStatus;
-      }
-    );
-    setFilteredProperties(filteredProperties);
-  }, [handoverStatus]);
 
   const handleAllocationStatusChange = (
     e: React.ChangeEvent<HTMLSelectElement>
@@ -614,58 +617,19 @@ const InstalmentProperties = ({
     setAllocationStatus(e.target.value);
   };
 
-  useEffect(() => {
-    if (allocationStatus === 'all') {
-      setFilteredProperties(properties?.data?.instalment_properties);
-      return;
-    }
-    const filteredProperties = properties?.data?.instalment_properties?.filter(
-      (property: any) => {
-        return property?.allocation_status === allocationStatus;
-      }
-    );
-    setFilteredProperties(filteredProperties);
-  }, [allocationStatus]);
-
   const handleDocumentationStatusChange = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
     setDocumentationStatus(e.target.value);
   };
 
-  useEffect(() => {
-    if (documentationStatus === 'all') {
-      setFilteredProperties(properties?.data?.instalment_properties);
-      return;
-    }
-    const filteredProperties = properties?.data?.instalment_properties?.filter(
-      (property: any) => {
-        return property?.documentation_status === documentationStatus;
-      }
-    );
-    setFilteredProperties(filteredProperties);
-  }, [documentationStatus]);
-
   const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setLocation(e.target.value);
   };
 
-  useEffect(() => {
-    if (location === 'all') {
-      setFilteredProperties(properties?.data?.instalment_properties);
-      return;
-    }
-    const filteredProperties = properties?.data?.instalment_properties?.filter(
-      (property: any) => {
-        return property?.lga?.state_id === location;
-      }
-    );
-    setFilteredProperties(filteredProperties);
-  }, [location]);
-
-  useEffect(() => {
-    setFilteredProperties(properties?.data?.instalment_properties);
-  }, [properties]);
+  // useEffect(() => {
+  //   setFilteredProperties(properties?.data?.instalment_properties);
+  // }, [properties]);
   return (
     <Box>
       <Stack spacing="20px">
@@ -679,8 +643,6 @@ const InstalmentProperties = ({
         <PropertyFilterWithLocation
           searchQuery={searchQuery}
           handleSearchChange={handleSearchChange}
-          salesType={salesType}
-          handleSalesTypeChange={handleSalesTypeChange}
           handoverStatus={handoverStatus}
           handleHandoverStatusChange={handleHandoverStatusChange}
           allocationStatus={allocationStatus}
@@ -692,7 +654,7 @@ const InstalmentProperties = ({
           states={states}
           setStates={setStates}
         />
-        <PropertyListTable properties={properties?.items} loading={loading} />
+        <PropertyListTable properties={filteredProperties} loading={loading} />
       </Stack>
     </Box>
   );
