@@ -23,7 +23,7 @@ interface NavigationTabProps {
   instalmentCount?: number;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
-  searchProperties: () => void;
+  // searchProperties: () => void;
 }
 
 const NavigationTab: React.FC<NavigationTabProps> = ({
@@ -35,7 +35,7 @@ const NavigationTab: React.FC<NavigationTabProps> = ({
   instalmentCount = 0,
   searchQuery,
   setSearchQuery,
-  searchProperties,
+  // searchProperties,
 }) => {
   const navigate = useNavigate();
   const router = useRouter();

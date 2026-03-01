@@ -437,52 +437,44 @@ const PropertyStats = ({
 };
 
 const SoldProperties = ({
-  setSoldPropertiesCount,
+  loading,
+  properties,
+  filteredProperties,
+  location,
+  setLocation,
+  setProperties,
+  setFilteredProperties,
+  allocationStatus,
+  setAllocationStatus,
+  handoverStatus,
+  setHandoverStatus,
+  documentationStatus,
+  setDocumentationStatus,
+  states
 }: {
-  setSoldPropertiesCount: (count: number) => void;
+  loading: boolean;
+  properties: any;
+  filteredProperties: any;
+  location: string;
+  setLocation: (location: string) => void;
+  setProperties: (properties: any) => void;
+  setFilteredProperties: (filteredProperties: any) => void;
+  allocationStatus: string;
+  setAllocationStatus: (allocationStatus: string) => void;
+  handoverStatus: string;
+  setHandoverStatus: (handoverStatus: string) => void;
+  documentationStatus: string;
+  setDocumentationStatus: (documentationStatus: string) => void;
+  states: {
+    id: string;
+    name: string;
+    state_code: string;
+    latitude: string;
+    longitude: string;
+    type: string;
+  }[];
 }) => {
-  const [properties, setProperties] = useState<any>();
-  const [filteredProperties, setFilteredProperties] = useState<any>();
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [loading, setLoading] = React.useState<boolean>(false);
-  // Additional filter states for PropertyFilter component
-  const [handoverStatus, setHandoverStatus] = useState<string>('');
-  const [allocationStatus, setAllocationStatus] = useState<string>('');
-  const [documentationStatus, setDocumentationStatus] = useState<string>('');
-  const [location, setLocation] = useState<string>('');
-  const [states, setStates] = useState<
-    {
-      id: string;
-      name: string;
-      state_code: string;
-      latitude: string;
-      longitude: string;
-      type: string;
-    }[]
-  >([]);
-
-  const fetchProperties = async () => {
-    setLoading(true);
-    try {
-      const soldPropertiesData = await GetSoldRealtorProperties({
-        location: location,
-        allocation_status: allocationStatus,
-        documentation_status: documentationStatus,
-        handover_status: handoverStatus,
-      });
-      setProperties(soldPropertiesData?.data || []);
-      setSoldPropertiesCount(soldPropertiesData?.data?.items?.length);
-      setFilteredProperties(soldPropertiesData?.data?.items || []);
-    } catch (error) {
-      console.error('Error fetching properties:', error);
-    }
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchProperties();
-  }, [location, allocationStatus, handoverStatus, documentationStatus]);
-
   // Handle search input change
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -490,7 +482,7 @@ const SoldProperties = ({
 
   useEffect(() => {
     if (searchQuery) {
-      const propertySearchFilter = filteredProperties?.filter(
+      const propertySearchFilter = filteredProperties?.items?.filter(
         (property: any) => {
           return property?.property_name
             ?.toLowerCase()
@@ -549,9 +541,11 @@ const SoldProperties = ({
           location={location}
           handleLocationChange={handleLocationChange}
           states={states}
-          setStates={setStates}
         />
-        <PropertyListTable properties={filteredProperties} loading={loading} />
+        <PropertyListTable
+          properties={filteredProperties?.items}
+          loading={loading}
+        />
       </Stack>
     </Box>
   );

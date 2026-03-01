@@ -18,6 +18,8 @@ import {
   GetClientTransactions,
   GetClientAnalytics,
 } from '~/lib/api/services/clientsService';
+import { GetCountryStates } from '~/lib/api/services/locationService';
+
 
 const index = () => {
   const { id } = useParams();
@@ -86,6 +88,20 @@ const index = () => {
     documentationStatus,
     handoverStatus,
   ]);
+
+  useEffect(() => {
+      const getCountryStates = async () => {
+        try {
+          const response = await GetCountryStates(
+            'da4e88a4-4c55-4724-8727-098b50731b96'
+          );
+          setStates(response?.data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      getCountryStates();
+    }, []);
 
   // Handle search input change
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -175,7 +191,6 @@ const index = () => {
               location={location}
               handleLocationChange={handleLocationChange}
               states={states}
-              setStates={setStates}
             />
           )}
           {activeTab === 'assets' && (

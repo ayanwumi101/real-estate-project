@@ -59,16 +59,6 @@ interface PropertyFilterWithLocationType {
     longitude: string;
     type: string;
   }[];
-  setStates: (
-    states: {
-      id: string;
-      name: string;
-      state_code: string;
-      latitude: string;
-      longitude: string;
-      type: string;
-    }[]
-  ) => void;
 }
 
 const PropertyFilter = ({
@@ -261,24 +251,10 @@ export const PropertyFilterWithLocation = ({
   location,
   handleLocationChange,
   states,
-  setStates,
 }: PropertyFilterWithLocationType) => {
   const [showFilterDropdowns, setShowFilterDropdowns] =
     useState<boolean>(false);
 
-  useEffect(() => {
-    const getCountryStates = async () => {
-      try {
-        const response = await GetCountryStates(
-          'da4e88a4-4c55-4724-8727-098b50731b96'
-        );
-        setStates(response?.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getCountryStates();
-  }, []);
   return (
     <Box w="full">
       <Stack w="full" spacing="25px" borderBottom="1px solid #E4E4E4" py="12px">
