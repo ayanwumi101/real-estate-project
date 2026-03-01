@@ -12,7 +12,7 @@ import Securities from './components/Securities';
 import Analytics from './components/Analytics';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { PropertyFilterWithLocation } from '~/lib/components/PropertyFilter';
+import { PropertyFilterWithLocationAndSalesType } from '~/lib/components/PropertyFilter';
 import {
   GetClientDetails,
   GetClientTransactions,
@@ -60,6 +60,7 @@ const index = () => {
         clientAnalyticsResponse,
       ] = await Promise.all([
         GetClientDetails(id as string, {
+          sale_type: salesType,
           location: location,
           allocation_status: allocationStatus,
           documentation_status: documentationStatus,
@@ -177,11 +178,11 @@ const index = () => {
         />
         <Box>
           {activeTab === 'assets' && (
-            <PropertyFilterWithLocation
+            <PropertyFilterWithLocationAndSalesType
               searchQuery={searchQuery}
               handleSearchChange={handleSearchChange}
-              // salesType={salesType}
-              // handleSalesTypeChange={handleSalesTypeChange}
+              salesType={salesType}
+              handleSalesTypeChange={handleSalesTypeChange}
               handoverStatus={handoverStatus}
               handleHandoverStatusChange={handleHandoverStatusChange}
               allocationStatus={allocationStatus}
