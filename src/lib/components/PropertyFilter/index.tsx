@@ -324,7 +324,7 @@ export const PropertyFilterWithLocation = ({
                 onChange={handleLocationChange}
                 w={['250px', 'auto']}
               >
-                <option value="all">All</option>
+                <option value="">All</option>
                 {states?.map((state) => (
                   <option key={state?.id} value={state?.name}>
                     {state?.name}
