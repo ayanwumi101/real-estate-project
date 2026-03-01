@@ -450,7 +450,7 @@ const SoldProperties = ({
   setHandoverStatus,
   documentationStatus,
   setDocumentationStatus,
-  states
+  states,
 }: {
   loading: boolean;
   properties: any;
@@ -482,7 +482,7 @@ const SoldProperties = ({
 
   useEffect(() => {
     if (searchQuery) {
-      const propertySearchFilter = filteredProperties?.items?.filter(
+      const propertySearchFilter = properties?.items?.filter(
         (property: any) => {
           return property?.property_name
             ?.toLowerCase()
@@ -542,10 +542,7 @@ const SoldProperties = ({
           handleLocationChange={handleLocationChange}
           states={states}
         />
-        <PropertyListTable
-          properties={filteredProperties?.items}
-          loading={loading}
-        />
+        <PropertyListTable properties={filteredProperties} loading={loading} />
       </Stack>
     </Box>
   );

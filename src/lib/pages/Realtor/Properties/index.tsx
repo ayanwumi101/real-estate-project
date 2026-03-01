@@ -97,7 +97,7 @@ const PropertiesContent = () => {
           documentation_status: soldPropertiesDocumentationStatus,
         });
         setSoldProperties(soldPropertiesData?.data || []);
-        setFilteredSoldProperties(soldPropertiesData?.data || []);
+        setFilteredSoldProperties(soldPropertiesData?.data?.items || []);
       } catch (error) {
         console.error('Error fetching properties:', error);
       } finally {
@@ -123,7 +123,7 @@ const PropertiesContent = () => {
           documentation_status: instalmentPropertiesDocumentationStatus,
         });
         setInstalmentProperties(instalmentPropertiesData?.data || []);
-        setFilteredInstalmentProperties(instalmentPropertiesData?.data || []);
+        setFilteredInstalmentProperties(instalmentPropertiesData?.data?.items || []);
       } catch (error) {
         console.error('Error fetching properties:', error);
       } finally {

@@ -579,7 +579,7 @@ const InstalmentProperties = ({
 
   useEffect(() => {
     if (searchQuery) {
-      const propertySearchFilter = filteredProperties?.items?.filter(
+      const propertySearchFilter = properties?.items?.filter(
         (property: any) => {
           return property?.property_name
             ?.toLowerCase()
@@ -588,7 +588,7 @@ const InstalmentProperties = ({
       );
       setFilteredProperties(propertySearchFilter);
     } else {
-      setFilteredProperties(properties);
+      setFilteredProperties(properties?.items);
     }
   }, [searchQuery]);
 
@@ -619,8 +619,6 @@ const InstalmentProperties = ({
   //   setFilteredProperties(properties?.data?.instalment_properties);
   // }, [properties]);
 
-  console.log(properties, filteredProperties, 'instalment');
-
   return (
     <Box>
       <Stack spacing="20px">
@@ -645,7 +643,7 @@ const InstalmentProperties = ({
           states={states}
         />
         <PropertyListTable
-          properties={filteredProperties?.items}
+          properties={filteredProperties}
           loading={loading}
         />
       </Stack>
