@@ -91,7 +91,7 @@ const PropertiesContent = () => {
       setSoldPropertiesLoading(true);
       try {
         const soldPropertiesData = await GetSoldRealtorProperties({
-          location: soldPropertiesLocation,
+          state: soldPropertiesLocation,
           handover_status: soldPropertiesHandoverStatus,
           allocation_status: soldPropertiesAllocationStatus,
           documentation_status: soldPropertiesDocumentationStatus,
@@ -117,7 +117,7 @@ const PropertiesContent = () => {
       setInstalmentPropertiesLoading(true);
       try {
         const instalmentPropertiesData = await GetInstalmentRealtorProperties({
-          location: instalmentPropertiesLocation,
+          state: instalmentPropertiesLocation,
           handover_status: instalmentPropertiesHandoverStatus,
           allocation_status: instalmentPropertiesAllocationStatus,
           documentation_status: instalmentPropertiesDocumentationStatus,

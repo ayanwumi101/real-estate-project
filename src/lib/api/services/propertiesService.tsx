@@ -8,7 +8,7 @@ export const GetRealtorProperties = async () => {
 };
 
 export const GetSoldRealtorProperties = async (filters: {
-  location?: string;
+  state?: string;
   payment_status?: string;
   allocation_status?: string;
   documentation_status?: string;
@@ -30,7 +30,7 @@ export const GetSoldRealtorProperties = async (filters: {
 };
 
 export const GetInstalmentRealtorProperties = async (filters: {
-  location?: string;
+  state?: string;
   payment_status?: string;
   allocation_status?: string;
   documentation_status?: string;
