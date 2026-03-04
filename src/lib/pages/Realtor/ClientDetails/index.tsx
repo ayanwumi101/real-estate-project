@@ -61,7 +61,7 @@ const index = () => {
       ] = await Promise.all([
         GetClientDetails(id as string, {
           sale_type: salesType,
-          location: location,
+          state: location,
           allocation_status: allocationStatus,
           documentation_status: documentationStatus,
           handover_status: handoverStatus,

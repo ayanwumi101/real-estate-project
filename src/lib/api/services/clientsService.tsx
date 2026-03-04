@@ -13,7 +13,7 @@ export const AddRealtorClient = async (clientData: any) => {
 }
 
 export const GetClientDetails = async (clientId: string, filters: {
-    location: string;
+    state: string;
     sale_type?: string;
     payment_status?: string;
     allocation_status?: string;
