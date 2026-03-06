@@ -54,7 +54,7 @@ const ClientDetailsHeader = ({
                   alignItems="flex-start"
                   justifyContent="space-between"
                   flexWrap="wrap"
-                  gap="30px"
+                  gap="50px"
                 >
                   <Stack spacing="16px">
                     <Flex alignItems="center" gap="10px">
