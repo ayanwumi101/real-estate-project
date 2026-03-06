@@ -198,7 +198,7 @@ const PropertiesContent = () => {
           {activeTab === 'available' && (
             <AvailableProperties
               loading={loading}
-              properties={filteredProperties}
+              properties={properties}
             />
           )}
           {activeTab === 'sold' && (

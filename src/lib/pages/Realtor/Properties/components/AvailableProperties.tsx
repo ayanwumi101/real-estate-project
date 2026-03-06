@@ -129,7 +129,7 @@ const AvailableProperties = ({
                             {property.property_name}
                           </Td>
                           <Td fontWeight={500} fontSize={14} color="#8295AA">
-                            {`${property.house_number}, ${property.street_name}, ${property.city_name}`}
+                            {`${property.house_number || 'Nil'}, ${property.street_name || 'Nil'}, ${property.city_name || 'Nil'}`}
                           </Td>
                           <Td fontWeight={500} fontSize={14} color="#8295AA">
                             {property?.property_type}

@@ -168,7 +168,7 @@ const index = () => {
       }
     >
       <Stack spacing="20px" px={['16px', '0']}>
-        <ClientDetailsHeader client={clientDetails?.client} />
+        <ClientDetailsHeader loading={loading} client={clientDetails?.client} />
         <NavigationTab
           tabs={tabs}
           activeTab={activeTab}
