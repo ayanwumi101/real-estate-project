@@ -12,7 +12,7 @@ import Securities from './components/Securities';
 import Analytics from './components/Analytics';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { PropertyFilterWithLocationAndSalesType } from '~/lib/components/PropertyFilter';
+import { PropertyFilterWithLocationAndSoldSalesType } from '~/lib/components/PropertyFilter';
 import {
   GetClientDetails,
   GetClientTransactions,
@@ -178,7 +178,7 @@ const index = () => {
         />
         <Box>
           {activeTab === 'assets' && (
-            <PropertyFilterWithLocationAndSalesType
+            <PropertyFilterWithLocationAndSoldSalesType
               searchQuery={searchQuery}
               handleSearchChange={handleSearchChange}
               salesType={salesType}
