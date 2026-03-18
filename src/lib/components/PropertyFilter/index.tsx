@@ -10,12 +10,21 @@ import {
   InputLeftElement,
   FormControl,
   FormLabel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  MenuOptionGroup,
+  MenuItemOption,
+  MenuDivider,
+  Text,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import {
   InputSearchIcon,
   FilterPropertiesIcon,
   ShowFilterPropertiesIcon,
+  ChevronDownIcon,
 } from '../Icons/Icons';
 import { GetCountryStates } from '~/lib/api/services/locationService';
 
@@ -485,7 +494,7 @@ export const PropertyFilterWithLocationAndSalesType = ({
   handleLocationChange,
   states,
   salesType,
-  handleSalesTypeChange
+  handleSalesTypeChange,
 }: PropertyFilterWithLocationAndSalesType) => {
   const [showFilterDropdowns, setShowFilterDropdowns] =
     useState<boolean>(false);
@@ -936,6 +945,214 @@ export const PropertyFilterWithLocationAndSoldSalesType = ({
           </Flex>
         )}
       </Stack>
+    </Box>
+  );
+};
+
+export const RemittanceSortAndFilter = ({
+  searchQuery,
+  handleSearchChange,
+  status,
+  handleDurationChange,
+  handleStatusChange,
+  sort,
+  duration,
+  handleSortChange,
+  order,
+  handleOrderChange,
+}: {
+  searchQuery: string;
+  handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  status: string;
+  handleStatusChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  duration: string;
+  handleDurationChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  sort: string;
+  handleSortChange: (value: string | string[]) => void;
+  order: string;
+  handleOrderChange: (value: string | string[]) => void;
+}) => {
+  const [showFilterDropdowns, setShowFilterDropdowns] =
+    useState<boolean>(false);
+  return (
+    <Box w="full">
+      <Flex alignItems="center" justifyContent="space-between" mb="5">
+        <InputGroup w={['full', '50%']}>
+          <InputLeftElement pointerEvents="none">
+            <InputSearchIcon />
+          </InputLeftElement>
+          <Input
+            type="text"
+            placeholder="Search remittance..."
+            rounded="50px"
+            fontSize={14}
+            w="full"
+            _placeholder={{ color: 'gray.500' }}
+            value={searchQuery}
+            onChange={handleSearchChange}
+          />
+        </InputGroup>
+        <Flex alignItems="center" gap="20px">
+          <Flex alignItems="center">
+            <Menu closeOnSelect={false}>
+              <MenuButton
+                variant="outline"
+                w="200px"
+                fontWeight={500}
+                as={Button}
+                fontSize={14}
+              >
+                <Flex alignItems="center" justifyContent="space-between">
+                  <Text>Sort By</Text>
+                  <ChevronDownIcon />
+                </Flex>
+              </MenuButton>
+              <MenuList minWidth="240px">
+                <MenuOptionGroup
+                  defaultValue="all"
+                  title="Sort by"
+                  type="radio"
+                  fontSize={14}
+                  value={sort}
+                  onChange={handleSortChange}
+                >
+                  <MenuItemOption value="all">All</MenuItemOption>
+                  <MenuItemOption value="next-due-remittance">
+                    Next Due Remittance
+                  </MenuItemOption>
+                  <MenuItemOption value="no-of-payments">
+                    No of Payments
+                  </MenuItemOption>
+                  <MenuItemOption value="remittance-amount">
+                    Remittance Amount
+                  </MenuItemOption>
+                  <MenuItemOption value="total-remittance">
+                    Total Remittance
+                  </MenuItemOption>
+                </MenuOptionGroup>
+                <MenuDivider />
+                {sort === 'remittance-amount' || sort === 'total-remittance' ? (
+                  <MenuOptionGroup
+                    defaultValue="asc"
+                    fontSize={14}
+                    title="Order"
+                    type="radio"
+                    value={order}
+                    onChange={handleOrderChange}
+                  >
+                    <MenuItemOption value="desc">Highest-Lowest</MenuItemOption>
+                    <MenuItemOption value="asc">Lowest-Highest</MenuItemOption>
+                  </MenuOptionGroup>
+                ) : sort === 'no-of-payments' ? (
+                  <MenuOptionGroup
+                    defaultValue="asc"
+                    fontSize={14}
+                    title="Order"
+                    type="radio"
+                    value={order}
+                    onChange={handleOrderChange}
+                  >
+                    <MenuItemOption value="asc">Ascending</MenuItemOption>
+                    <MenuItemOption value="desc">Descending</MenuItemOption>
+                  </MenuOptionGroup>
+                ) : (
+                  <MenuOptionGroup
+                    defaultValue="asc"
+                    fontSize={14}
+                    title="Order"
+                    type="radio"
+                    value={order}
+                    onChange={handleOrderChange}
+                  >
+                    <MenuItemOption value="asc">
+                      Farthest-closest
+                    </MenuItemOption>
+                    <MenuItemOption value="desc">
+                      Closest-farthest
+                    </MenuItemOption>
+                  </MenuOptionGroup>
+                )}
+              </MenuList>
+            </Menu>
+          </Flex>
+          <Button
+            leftIcon={
+              showFilterDropdowns ? (
+                <ShowFilterPropertiesIcon />
+              ) : (
+                <FilterPropertiesIcon />
+              )
+            }
+            variant="ghost"
+            border="1px solid"
+            borderColor={showFilterDropdowns ? '#D8D8FF' : '#E4E4E4'}
+            fontWeight={500}
+            fontSize={14}
+            color="#2E353F"
+            onClick={() => setShowFilterDropdowns(!showFilterDropdowns)}
+            bg={showFilterDropdowns ? '#EDEDFF' : 'none'}
+          >
+            Filter
+          </Button>
+        </Flex>
+      </Flex>
+      {showFilterDropdowns && (
+        <Flex w="full" alignItems="center" justifyContent="flex-end" gap="20px">
+          <FormControl w="300px">
+            <FormLabel fontSize={14} my="0" fontWeight={500} color="#2E353F">
+              Status
+            </FormLabel>
+            <Select
+              placeholder="Select allocation status"
+              py="12px"
+              rounded="50px"
+              border="1px solid"
+              borderColor="#C0C0C0"
+              h="46px"
+              _placeholder={{
+                color: '#8295AA',
+                fontWeight: 500,
+                fontSize: 14,
+              }}
+              value={status}
+              onChange={handleStatusChange}
+              w="full"
+            >
+              <option value="">All</option>
+              <option value="pending">Pending</option>
+              <option value="completed">Completed</option>
+            </Select>
+          </FormControl>
+          <FormControl w="300px">
+            <FormLabel fontSize={14} my="0" fontWeight={500} color="#2E353F">
+              Duration
+            </FormLabel>
+            <Select
+              placeholder="Select documentation status"
+              py="12px"
+              rounded="50px"
+              border="1px solid"
+              borderColor="#C0C0C0"
+              h="46px"
+              _placeholder={{
+                color: '#8295AA',
+                fontWeight: 500,
+                fontSize: 14,
+              }}
+              value={duration}
+              onChange={handleDurationChange}
+              w="full"
+            >
+              <option value="">All</option>
+              <option value="annually">Annually</option>
+              <option value="quarterly">Quarterly</option>
+              <option value="monthly">Monthly</option>
+              <option value="weekly">Weekly</option>
+              <option value="daily">Daily</option>
+            </Select>
+          </FormControl>
+        </Flex>
+      )}
     </Box>
   );
 };
