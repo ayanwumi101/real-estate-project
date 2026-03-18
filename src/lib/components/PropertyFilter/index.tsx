@@ -1110,7 +1110,7 @@ export const RemittanceSortAndFilter = ({
               Status
             </FormLabel>
             <Select
-              placeholder="Select allocation status"
+              placeholder="Select payment status"
               py="12px"
               rounded="50px"
               border="1px solid"
@@ -1135,7 +1135,7 @@ export const RemittanceSortAndFilter = ({
               Duration
             </FormLabel>
             <Select
-              placeholder="Select documentation status"
+              placeholder="Select payment duration"
               py="12px"
               rounded="50px"
               border="1px solid"
