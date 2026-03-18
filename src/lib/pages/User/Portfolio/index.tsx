@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import { Box, Stack } from '@chakra-ui/react';
-import { GetUserAssets } from '~/lib/api/services/assetsService';
+import { GetUserAssetsWithFilter } from '~/lib/api/services/assetsService';
 import PropertyListTable from './components/PropertyDetails';
 import { RemittanceSortAndFilter } from '~/lib/components/PropertyFilter';
 
@@ -20,7 +20,7 @@ const index = () => {
   const GetAssets = async () => {
     setLoading(true);
     try {
-      const res = await GetUserAssets({
+      const res = await GetUserAssetsWithFilter({
         status: status,
         duration: duration,
         sort_by: sort,

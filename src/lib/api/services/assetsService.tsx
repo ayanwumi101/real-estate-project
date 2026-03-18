@@ -41,7 +41,12 @@ export const UpdateAssetCashflowDetails = async (
   return response.data;
 };
 
-export const GetUserAssets = async (filters: {
+export const GetUserAssets = async () => {
+  const response = await axiosInstance.get(API_ROUTES.GET_USER_ASSETS);
+  return response.data;
+};
+
+export const GetUserAssetsWithFilter = async (filters: {
   status: string;
   duration: string;
   sort_by: string;
