@@ -15,15 +15,32 @@ import {
   Tbody,
   Heading,
   Td,
+  Menu,
+  MenuItem,
+  MenuList,
+  MenuButton,
 } from '@chakra-ui/react';
-import { ArrowUpIcon, LocationIcon } from '~/lib/components/Icons/Icons';
+import {
+  ArrowUpIcon,
+  LocationIcon,
+  VerticalEllipsisIcon,
+  ViewRemittanceHistoryIcon,
+  AddPaymentIcon,
+} from '~/lib/components/Icons/Icons';
 import moment from 'moment';
 import Link from 'next/link';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import SkeletonLoader from '~/lib/components/SkeletonLoader';
+import useNavigate from '~/lib/utils/useNavigate';
 
-
-const PropertyListTable = ({ assets, loading }: { assets: any[], loading: boolean }) => {
+const PropertyListTable = ({
+  assets,
+  loading,
+}: {
+  assets: any[];
+  loading: boolean;
+}) => {
+  const navigate = useNavigate();
   return (
     <Fragment>
       {loading ? (
@@ -96,6 +113,14 @@ const PropertyListTable = ({ assets, loading }: { assets: any[], loading: boolea
                       color="#222222"
                       fontWeight={500}
                       fontSize={14}
+                      textTransform="none"
+                    >
+                      No of Payment
+                    </Th>
+                    <Th
+                      color="#222222"
+                      fontWeight={500}
+                      fontSize={14}
                       textTransform="capitalize"
                     >
                       Remittance Amount
@@ -158,10 +183,24 @@ const PropertyListTable = ({ assets, loading }: { assets: any[], loading: boolea
                             ? `${FormatAmount(Number(asset?.property_cost))}`
                             : 'N/A'}
                         </Td>
-                        <Td fontWeight={500} fontSize={13} px="0">
+                        <Td
+                          fontWeight={500}
+                          fontSize={13}
+                          px="0"
+                          color="#8295AA"
+                        >
                           {asset?.is_occupied === true
                             ? 'Occupied'
                             : 'Not Occupied'}
+                        </Td>
+                        <Td
+                          fontWeight={500}
+                          fontSize={13}
+                          px="0"
+                          textAlign="center"
+                          color="#8295AA"
+                        >
+                          {asset?.no_of_payments}
                         </Td>
                         <Td fontWeight={500} fontSize={14} color="#8295AA">
                           {asset?.cashflow_amount
@@ -176,16 +215,45 @@ const PropertyListTable = ({ assets, loading }: { assets: any[], loading: boolea
                             : 'N/A'}
                         </Td>
                         <Td fontWeight={400} fontSize={13} color="#8295AA">
-                          <Link href={`/user/portfolio/${asset?.id}`}>
-                            <Button
-                              bg="#ededff"
-                              _hover={{ bg: '#EDEDFF' }}
-                              fontWeight={500}
-                              fontSize={14}
-                            >
-                              View asset
-                            </Button>
-                          </Link>
+                          <Menu>
+                            <MenuButton as={Button} rounded="5px" bg="bg.200">
+                              <VerticalEllipsisIcon />
+                            </MenuButton>
+                            <MenuList py="0px">
+                              <MenuItem
+                                py="12px"
+                                px="16px"
+                                _hover={{ bg: 'border.100' }}
+                                fontSize={14}
+                                color="color.100"
+                                fontWeight={500}
+                                onClick={() =>
+                                  navigate(
+                                    `/user/my-assets/${asset?.id}/payments`
+                                  )
+                                }
+                                icon={<ViewRemittanceHistoryIcon />}
+                              >
+                                View remittance history
+                              </MenuItem>
+                              <MenuItem
+                                py="12px"
+                                px="16px"
+                                _hover={{ bg: 'border.100' }}
+                                fontSize={14}
+                                color="color.100"
+                                fontWeight={500}
+                                onClick={() =>
+                                  navigate(
+                                    `/user/my-assets/${asset?.id}/add-payment`
+                                  )
+                                }
+                                icon={<AddPaymentIcon />}
+                              >
+                                Add new payment
+                              </MenuItem>
+                            </MenuList>
+                          </Menu>
                         </Td>
                       </Tr>
                     );

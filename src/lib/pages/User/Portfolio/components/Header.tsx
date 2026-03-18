@@ -58,8 +58,8 @@ const RemittanceStatCards = ({ totalCashflowAsset, cashflowAssetsInNaira, nextDu
           py="32px"
           px="20px"
           border="1px solid #E4E4E4"
-          boxShadow="md"
-          h="140px"
+          // boxShadow="md"
+          h="130px"
         >
           <Stack spacing="16px">
             <Text color="#ABABFF" fontWeight={500}>

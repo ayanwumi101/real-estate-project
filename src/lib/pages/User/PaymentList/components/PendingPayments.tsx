@@ -157,7 +157,7 @@ const PendingPayments = ({
                               rounded="24px"
                               bg="#EEEEEE"
                             >
-                              {asset?.payment_status || 'N/A'}
+                              {asset?.status || 'N/A'}
                             </Badge>
                           </Td>
                           <Td>

@@ -57,7 +57,7 @@ const PaymentForm = ({
     setLoading(true);
     try {
       const response = await AddPaymentToAsset({
-        payment_due_date_id: values.paymentDueDate,
+        payment_due_date: values.paymentDueDate,
         property_id: assetId,
         amount: values.remittanceAmount,
         status: values.paymentStatus,
@@ -139,7 +139,7 @@ const PaymentForm = ({
                     : 'Installment Due Date'} */}
                   Payment Due Date
                 </FormLabel>
-                <Field
+                {/* <Field
                   as={Select}
                   type="date"
                   h="50px"
@@ -156,7 +156,19 @@ const PaymentForm = ({
                       {moment(dueDate.due_date).format('dddd Do MMM, YYYY')}
                     </option>
                   ))}
-                </Field>
+                </Field> */}
+                <Field
+                  as={Input}
+                  h="50px"
+                  rounded="40px"
+                  border="1px solid"
+                  borderColor="border.100"
+                  bg="brand.700"
+                  type="date"
+                  name="paymentDueDate"
+                  _placeholder={{ color: 'brand.800' }}
+                  placeholder="Select payment date"
+                />
                 <FormErrorMessage>{errors.paymentDueDate}</FormErrorMessage>
               </FormControl>
               <FormControl
