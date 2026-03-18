@@ -16,7 +16,7 @@ const index = () => {
 
   const getAssetDetails = async () => {
     try {
-      const res = await GetAssetDetails(id);
+      const res = await GetAssetDetails(id as string);
       const data = await res.data;
       setPropertyDetails(data);
     } catch (error) {

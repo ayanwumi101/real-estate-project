@@ -42,7 +42,7 @@ const index = () => {
   const getAssetDetails = async () => {
     setIsLoading(true);
     try {
-      const res = await GetAssetDetails(id);
+      const res = await GetAssetDetails(id as string);
       const data = await res.data;
       setAssetDetails(data);
     } catch (error) {
@@ -57,7 +57,7 @@ const index = () => {
 
   React.useEffect(() => {
     const fetchPaymentDueDates = async () => {
-      const dueDates = await GetAssetPaymentDueDates(id);
+      const dueDates = await GetAssetPaymentDueDates(id as string);
       setPaymentDueDates(dueDates.data.payment_due_dates);
     };
     fetchPaymentDueDates();

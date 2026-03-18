@@ -41,7 +41,7 @@ const index = () => {
 
   const getAssetDetails = async () => {
     try {
-      const res = await GetAssetDetails(id);
+      const res = await GetAssetDetails(id as string);
       const data = await res.data;
       setPropertyDetails(data);
     } catch (error) {
@@ -116,7 +116,7 @@ const index = () => {
         ? data
         : cashflowData;
     try {
-      const res = await UpdateAssetDetails(id, formData);
+      const res = await UpdateAssetDetails(id as string, formData);
       if (res.status) {
         getAssetDetails();
         toast({
