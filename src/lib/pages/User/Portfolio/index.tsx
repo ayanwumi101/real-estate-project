@@ -10,6 +10,7 @@ import { RemittanceSortAndFilter } from '~/lib/components/PropertyFilter';
 const index = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [assets, setAssets] = useState<any[]>([]);
+  const [filteredAssets, setFilteredAssets] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [order, setOrder] = useState<any>();
   const [sort, setSort] = useState<any>('all');
@@ -19,8 +20,14 @@ const index = () => {
   const GetAssets = async () => {
     setLoading(true);
     try {
-      const res = await GetUserAssets();
+      const res = await GetUserAssets({
+        status: status,
+        duration: duration,
+        sort_by: sort,
+        sort_order: order,
+      });
       setAssets(res.data);
+      setFilteredAssets(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -29,14 +36,22 @@ const index = () => {
 
   useEffect(() => {
     GetAssets();
-  }, []);
-  const cashflowAssets = assets?.filter(
+  }, [order, sort, status, duration]);
+
+  const cashflowAssets = filteredAssets?.filter(
     (asset) => asset?.asset_type === 'cashflow'
   );
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
+
+  useEffect(() => {
+    const newAssets = assets.filter((asset) =>
+      asset?.property_name?.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredAssets(newAssets);
+  }, [searchQuery]);
 
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setStatus(e.target.value);

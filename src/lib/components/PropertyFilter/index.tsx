@@ -1009,29 +1009,29 @@ export const RemittanceSortAndFilter = ({
               </MenuButton>
               <MenuList minWidth="240px">
                 <MenuOptionGroup
-                  defaultValue="all"
+                  defaultValue=""
                   title="Sort by"
                   type="radio"
                   fontSize={14}
                   value={sort}
                   onChange={handleSortChange}
                 >
-                  <MenuItemOption value="all">All</MenuItemOption>
-                  <MenuItemOption value="next-due-remittance">
+                  <MenuItemOption value="">All</MenuItemOption>
+                  <MenuItemOption value="next_due_remittance">
                     Next Due Remittance
                   </MenuItemOption>
-                  <MenuItemOption value="no-of-payments">
+                  <MenuItemOption value="no_of_payments">
                     No of Payments
                   </MenuItemOption>
-                  <MenuItemOption value="remittance-amount">
+                  <MenuItemOption value="remittance_amount">
                     Remittance Amount
                   </MenuItemOption>
-                  <MenuItemOption value="total-remittance">
+                  <MenuItemOption value="total_remittance">
                     Total Remittance
                   </MenuItemOption>
                 </MenuOptionGroup>
                 <MenuDivider />
-                {sort === 'remittance-amount' || sort === 'total-remittance' ? (
+                {sort === 'remittance_amount' || sort === 'total_remittance' ? (
                   <MenuOptionGroup
                     defaultValue="asc"
                     fontSize={14}
@@ -1144,7 +1144,7 @@ export const RemittanceSortAndFilter = ({
               w="full"
             >
               <option value="">All</option>
-              <option value="annually">Annually</option>
+              <option value="annual">Annually</option>
               <option value="quarterly">Quarterly</option>
               <option value="monthly">Monthly</option>
               <option value="weekly">Weekly</option>
