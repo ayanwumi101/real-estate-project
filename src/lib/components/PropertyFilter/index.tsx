@@ -976,7 +976,13 @@ export const RemittanceSortAndFilter = ({
     useState<boolean>(false);
   return (
     <Box w="full">
-      <Flex alignItems="center" justifyContent="space-between" mb="5">
+      <Flex
+        alignItems="center"
+        justifyContent="space-between"
+        mb="5"
+        flexWrap={['wrap', 'nowrap']}
+        gap={[4, 0]}
+      >
         <InputGroup w={['full', '50%']}>
           <InputLeftElement pointerEvents="none">
             <InputSearchIcon />
@@ -992,12 +998,12 @@ export const RemittanceSortAndFilter = ({
             onChange={handleSearchChange}
           />
         </InputGroup>
-        <Flex alignItems="center" gap="20px">
-          <Flex alignItems="center">
+        <Flex alignItems="center" justifyContent={['flex-start','flex-end']} gap={['0px',"20px"]} w='full'>
+          <Flex alignItems="center" w={['85%', 'auto']}>
             <Menu closeOnSelect={false}>
               <MenuButton
                 variant="outline"
-                w="200px"
+                w={['75%', '200px']}
                 fontWeight={500}
                 as={Button}
                 fontSize={14}
@@ -1091,6 +1097,7 @@ export const RemittanceSortAndFilter = ({
             color="#2E353F"
             onClick={() => setShowFilterDropdowns(!showFilterDropdowns)}
             bg={showFilterDropdowns ? '#EDEDFF' : 'none'}
+            w={['30%', 'auto']}
           >
             Filter
           </Button>
