@@ -24,7 +24,9 @@ const index = () => {
   const [propertyCost, setPropertyCost] = React.useState<string>('');
   const [paymentStatus, setPaymentStatus] = React.useState<string>('');
   const [cashflowSource, setCashflowSource] = React.useState<string>('');
-  const [isPropertyOccupied, setIsPropertyOccupied] = React.useState<boolean>();
+  const [isPropertyOccupied, setIsPropertyOccupied] = React.useState<
+    'yes' | 'no'
+  >();
   const [remittanceAmount, setRemittanceAmount] = React.useState<string>('');
   const [cashflowDuration, setCashflowDuration] = React.useState<string>('');
   const [lastRemittanceDate, setLastRemittanceDate] =
@@ -82,7 +84,7 @@ const index = () => {
       property_cost: propertyCost,
       payment_status: paymentStatus,
       cashflow_source: cashflowSource,
-      is_occupied: isPropertyOccupied,
+      is_occupied: isPropertyOccupied === 'no' ? false : true,
       cashflow_amount: remittanceAmount,
       cashflow_duration: cashflowDuration,
       last_cashflow_date: lastRemittanceDate,
@@ -99,7 +101,7 @@ const index = () => {
       property_cost: propertyCost,
       payment_status: paymentStatus,
       cashflow_source: cashflowSource,
-      is_occupied: isPropertyOccupied,
+      is_occupied: isPropertyOccupied === 'no' ? false : true,
       cashflow_amount: remittanceAmount,
       cashflow_duration: cashflowDuration,
       last_cashflow_date: lastRemittanceDate,
@@ -112,9 +114,7 @@ const index = () => {
       // comment: comment,
     };
     const formData =
-      propertyDetails?.asset_type === 'instalment'
-        ? data
-        : cashflowData;
+      propertyDetails?.asset_type === 'instalment' ? data : cashflowData;
     try {
       const res = await UpdateAssetDetails(id as string, formData);
       if (res.status) {
