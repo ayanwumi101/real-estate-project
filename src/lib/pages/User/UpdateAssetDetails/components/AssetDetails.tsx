@@ -144,24 +144,26 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                   onChange={(e) => setPropertyCost(e.target.value)}
                 />
               </FormControl>
-              <FormControl>
-                <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                  Payment Status
-                </FormLabel>
-                <Select
-                  h="50px"
-                  rounded="40px"
-                  border="1px solid"
-                  borderColor="border.200"
-                  value={paymentStatus}
-                  onChange={(e) => setPaymentStatus(e.target.value)}
-                  placeholder='Select payment status'
-                >
-                  <option value="Completed">Completed</option>
-                  <option value="Pending">Pending</option>
-                  <option value="Ongoing">Ongoing</option>
-                </Select>
-              </FormControl>
+              {propertyDetails?.asset_type === 'owned' && (
+                <FormControl>
+                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                    Payment Status
+                  </FormLabel>
+                  <Select
+                    h="50px"
+                    rounded="40px"
+                    border="1px solid"
+                    borderColor="border.200"
+                    value={paymentStatus}
+                    onChange={(e) => setPaymentStatus(e.target.value)}
+                    placeholder="Select payment status"
+                  >
+                    <option value="completed">Completed</option>
+                    <option value="pending">Pending</option>
+                    <option value="ongoing">Ongoing</option>
+                  </Select>
+                </FormControl>
+              )}
             </Flex>
           </Box>
         </Box>
@@ -481,7 +483,7 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                   borderColor="border.200"
                   value={paymentStatus}
                   onChange={(e) => setPaymentStatus(e.target.value)}
-                  placeholder='Select payment status'
+                  placeholder="Select payment status"
                 >
                   <option value="Completed">Completed</option>
                   <option value="Pending">Pending</option>
