@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
-import { Box, Stack } from '@chakra-ui/react';
+import { Box, Stack, Divider } from '@chakra-ui/react';
 import { GetUserAssetsWithFilter } from '~/lib/api/services/assetsService';
 import PropertyListTable from './components/PropertyDetails';
 import { RemittanceSortAndFilter } from '~/lib/components/PropertyFilter';
@@ -13,7 +13,7 @@ const index = () => {
   const [filteredAssets, setFilteredAssets] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [order, setOrder] = useState<any>();
-  const [sort, setSort] = useState<any>('all');
+  const [sort, setSort] = useState<any>('');
   const [status, setStatus] = useState<string>('');
   const [duration, setDuration] = useState<string>('');
 
@@ -21,7 +21,7 @@ const index = () => {
     setLoading(true);
     try {
       const res = await GetUserAssetsWithFilter({
-        status: status,
+        status: status === 'occupied' ? true : false,
         duration: duration,
         sort_by: sort,
         sort_order: order,
@@ -69,23 +69,34 @@ const index = () => {
     setOrder(value);
   };
 
+  console.log(cashflowAssets);
+
   return (
     <Box pb="50px">
       <Stack spacing="40px" w="100%" overflow="auto">
         <Header assets={cashflowAssets} />
-        <Stack px="10px" spacing="16px">
-          <RemittanceSortAndFilter
-            searchQuery={searchQuery}
-            order={order}
-            duration={duration}
-            status={status}
-            sort={sort}
-            handleSearchChange={handleSearchChange}
-            handleStatusChange={handleStatusChange}
-            handleDurationChange={handleDurationChange}
-            handleSortChange={handleSortChange}
-            handleOrderChange={handleOrderChange}
-          />
+        <Stack
+          // px="10px"
+          py="16px"
+          spacing="13px"
+          border="1px solid #E4E4E4"
+          rounded="10px"
+        >
+          <Box px="10px">
+            <RemittanceSortAndFilter
+              searchQuery={searchQuery}
+              order={order}
+              duration={duration}
+              status={status}
+              sort={sort}
+              handleSearchChange={handleSearchChange}
+              handleStatusChange={handleStatusChange}
+              handleDurationChange={handleDurationChange}
+              handleSortChange={handleSortChange}
+              handleOrderChange={handleOrderChange}
+            />
+          </Box>
+          <Divider />
           <PropertyListTable assets={cashflowAssets} loading={loading} />
         </Stack>
       </Stack>

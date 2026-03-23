@@ -26,12 +26,15 @@ import {
   VerticalEllipsisIcon,
   ViewRemittanceHistoryIcon,
   AddPaymentIcon,
+  PreviousPageIcon,
+  NextPageIcon,
 } from '~/lib/components/Icons/Icons';
 import moment from 'moment';
 import Link from 'next/link';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import SkeletonLoader from '~/lib/components/SkeletonLoader';
 import useNavigate from '~/lib/utils/useNavigate';
+import { GoLocation } from 'react-icons/go';
 
 const PropertyListTable = ({
   assets,
@@ -41,6 +44,8 @@ const PropertyListTable = ({
   loading: boolean;
 }) => {
   const navigate = useNavigate();
+  const [page, setPage] = React.useState(1);
+  const [limit, setLimit] = React.useState(8);
   return (
     <Fragment>
       {loading ? (
@@ -67,7 +72,11 @@ const PropertyListTable = ({
               </Stack>
             </Box>
           ) : (
-            <TableContainer border="1px solid #E4E4E4" borderRadius="10px">
+            <TableContainer
+              border="1px solid #E4E4E4"
+              borderBottom="none"
+              borderTop="none"
+            >
               <Table>
                 <Thead
                   color="#222222"
@@ -91,14 +100,6 @@ const PropertyListTable = ({
                       fontSize={14}
                       textTransform="capitalize"
                     >
-                      Property Type
-                    </Th>
-                    <Th
-                      color="#222222"
-                      fontWeight={500}
-                      fontSize={14}
-                      textTransform="capitalize"
-                    >
                       Amount Purchased
                     </Th>
                     <Th
@@ -107,15 +108,7 @@ const PropertyListTable = ({
                       fontSize={14}
                       textTransform="capitalize"
                     >
-                      Status
-                    </Th>
-                    <Th
-                      color="#222222"
-                      fontWeight={500}
-                      fontSize={14}
-                      textTransform="none"
-                    >
-                      No of Payment
+                      Remittance Amount
                     </Th>
                     <Th
                       color="#222222"
@@ -123,7 +116,32 @@ const PropertyListTable = ({
                       fontSize={14}
                       textTransform="capitalize"
                     >
-                      Remittance Amount
+                      Duration
+                    </Th>
+                    <Th
+                      color="#222222"
+                      fontWeight={500}
+                      fontSize={14}
+                      textTransform="none"
+                    >
+                      No of Payments
+                    </Th>
+                    <Th
+                      color="#222222"
+                      fontWeight={500}
+                      fontSize={14}
+                      textTransform="capitalize"
+                    >
+                      Total Remittance
+                    </Th>
+
+                    <Th
+                      color="#222222"
+                      fontWeight={500}
+                      fontSize={14}
+                      textTransform="capitalize"
+                    >
+                      Status
                     </Th>
                     <Th
                       color="#222222"
@@ -154,7 +172,7 @@ const PropertyListTable = ({
                       >
                         <Td fontSize={18} fontWeight={700}>
                           <Flex alignItems="center" gap="10px">
-                            <Stack spacing="3px">
+                            <Stack spacing="5px">
                               <Heading
                                 color="#2E353F"
                                 fontWeight={500}
@@ -162,8 +180,8 @@ const PropertyListTable = ({
                               >
                                 {asset?.property_name}
                               </Heading>
-                              <Flex alignItems="center" gap="3px">
-                                <LocationIcon />
+                              <Flex alignItems="center" gap="6px">
+                                <GoLocation size={13} />
                                 <Text
                                   color="#2E353F"
                                   fontWeight={400}
@@ -176,11 +194,24 @@ const PropertyListTable = ({
                           </Flex>
                         </Td>
                         <Td fontWeight={500} fontSize={14} color="#8295AA">
-                          {asset?.property_type}
-                        </Td>
-                        <Td fontWeight={500} fontSize={14} color="#8295AA">
                           {asset?.property_cost
                             ? `${FormatAmount(Number(asset?.property_cost))}`
+                            : 'N/A'}
+                        </Td>
+                        <Td fontWeight={500} fontSize={14} color="#8295AA">
+                          {asset?.cashflow_amount
+                            ? `${FormatAmount(Number(asset?.cashflow_amount))}`
+                            : 'N/A'}
+                        </Td>
+                        <Td fontWeight={500} fontSize={14} color="#8295AA">
+                          {asset?.cashflow_duration}
+                        </Td>
+                        <Td fontWeight={500} fontSize={14} color="#8295AA">
+                          {asset?.payments?.length}
+                        </Td>
+                        <Td fontWeight={500} fontSize={14} color="#8295AA">
+                          {asset?.total_payment_amount
+                            ? `${FormatAmount(Number(asset?.total_payment_amount))}`
                             : 'N/A'}
                         </Td>
                         <Td
@@ -200,9 +231,13 @@ const PropertyListTable = ({
                           textAlign="center"
                           color="#8295AA"
                         >
-                          {asset?.no_of_payments}
+                          {asset?.cashflow_payment_due
+                            ? moment(asset?.cashflow_payment_due).format(
+                                'ddd, Do MMMM YYYY'
+                              )
+                            : 'N/A'}
                         </Td>
-                        <Td fontWeight={500} fontSize={14} color="#8295AA">
+                        {/* <Td fontWeight={500} fontSize={14} color="#8295AA">
                           {asset?.cashflow_amount
                             ? `${FormatAmount(Number(asset?.cashflow_amount))}`
                             : 'N/A'}
@@ -213,7 +248,7 @@ const PropertyListTable = ({
                                 'ddd, Do MMMM YYYY'
                               )
                             : 'N/A'}
-                        </Td>
+                        </Td> */}
                         <Td fontWeight={400} fontSize={13} color="#8295AA">
                           <Menu>
                             <MenuButton as={Button} rounded="5px" bg="bg.200">
@@ -260,6 +295,41 @@ const PropertyListTable = ({
                   })}
                 </Tbody>
               </Table>
+              {assets?.length > 0 && (
+                <Box w="full" bg="white" pt="10px">
+                  <Flex alignItems="center" justifyContent="center" gap="13px">
+                    <Button
+                      onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                      isDisabled={page === 1}
+                      border="1px solid #E4E4E4"
+                      rounded="6px"
+                      variant="outline"
+                      p="8px"
+                    >
+                      <PreviousPageIcon />
+                    </Button>
+                    <Text fontWeight={600} fontSize={17}>
+                      {page}
+                    </Text>
+                    <Button
+                      border="1px solid #E4E4E4"
+                      rounded="6px"
+                      variant="outline"
+                      p="8px"
+                      onClick={() =>
+                        setPage((prev) =>
+                          prev < Math.ceil(assets.length / limit)
+                            ? prev + 1
+                            : prev
+                        )
+                      }
+                      isDisabled={page >= Math.ceil(assets.length / limit)}
+                    >
+                      <NextPageIcon />
+                    </Button>
+                  </Flex>
+                </Box>
+              )}
             </TableContainer>
           )}
         </Box>

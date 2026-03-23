@@ -47,7 +47,7 @@ export const GetUserAssets = async () => {
 };
 
 export const GetUserAssetsWithFilter = async (filters: {
-  status: string;
+  status: boolean;
   duration: string;
   sort_by: string;
   sort_order: string;

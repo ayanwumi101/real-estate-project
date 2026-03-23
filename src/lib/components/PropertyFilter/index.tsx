@@ -979,7 +979,7 @@ export const RemittanceSortAndFilter = ({
       <Flex
         alignItems="center"
         justifyContent="space-between"
-        mb="5"
+        // mb="5"
         flexWrap={['wrap', 'nowrap']}
         gap={[4, 0]}
       >
@@ -1104,7 +1104,7 @@ export const RemittanceSortAndFilter = ({
         </Flex>
       </Flex>
       {showFilterDropdowns && (
-        <Flex w="full" alignItems="center" justifyContent="flex-end" gap="20px">
+        <Flex w="full" alignItems="center" justifyContent="flex-end" gap="20px" mt='4'>
           <FormControl w="300px">
             <FormLabel fontSize={14} my="0" fontWeight={500} color="#2E353F">
               Status
@@ -1126,8 +1126,8 @@ export const RemittanceSortAndFilter = ({
               w="full"
             >
               <option value="">All</option>
-              <option value="pending">Pending</option>
-              <option value="completed">Completed</option>
+              <option value="occupied">Occupied</option>
+              <option value="not-occupied">Not Occupied</option>
             </Select>
           </FormControl>
           <FormControl w="300px">
