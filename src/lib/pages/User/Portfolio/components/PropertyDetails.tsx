@@ -73,7 +73,7 @@ const PropertyListTable = ({
             </Box>
           ) : (
             <TableContainer
-              border="1px solid #E4E4E4"
+              // border="1px solid #E4E4E4"
               borderBottom="none"
               borderTop="none"
             >
@@ -134,7 +134,6 @@ const PropertyListTable = ({
                     >
                       Total Remittance
                     </Th>
-
                     <Th
                       color="#222222"
                       fontWeight={500}
@@ -264,7 +263,7 @@ const PropertyListTable = ({
                                 fontWeight={500}
                                 onClick={() =>
                                   navigate(
-                                    `/user/my-assets/${asset?.id}/payments`
+                                    `/user/portfolio/${asset?.id}/payments`
                                   )
                                 }
                                 icon={<ViewRemittanceHistoryIcon />}

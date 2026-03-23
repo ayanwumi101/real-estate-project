@@ -69,8 +69,6 @@ const index = () => {
     setOrder(value);
   };
 
-  console.log(cashflowAssets);
-
   return (
     <Box pb="50px">
       <Stack spacing="40px" w="100%" overflow="auto">
