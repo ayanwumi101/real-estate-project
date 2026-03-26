@@ -98,11 +98,19 @@ const index = () => {
               loading={loading}
             />
           )}
-          {activeTab === 'Installment' && (
-            <Installment assets={installmentAssets} setAssets={setAssets} loading={loading} />
-          )}
           {activeTab === 'Cashflow' && (
-            <Cashflow assets={cashflowAssets} setAssets={setAssets} loading={loading} />
+            <Cashflow
+              assets={cashflowAssets}
+              setAssets={setAssets}
+              loading={loading}
+            />
+          )}
+          {activeTab === 'Installment' && (
+            <Installment
+              assets={installmentAssets}
+              setAssets={setAssets}
+              loading={loading}
+            />
           )}
         </Box>
       </Stack>

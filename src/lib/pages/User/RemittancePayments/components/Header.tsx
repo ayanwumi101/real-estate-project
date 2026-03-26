@@ -1,4 +1,12 @@
-import { Box, Stack, Button, Flex, Heading, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Stack,
+  Button,
+  Flex,
+  Heading,
+  Text,
+  Skeleton,
+} from '@chakra-ui/react';
 import React from 'react';
 import {
   AddIcon,
@@ -7,7 +15,13 @@ import {
 } from '~/lib/components/Icons/Icons';
 import useNavigate from '~/lib/utils/useNavigate';
 
-const Header = ({ assetDetails }: { assetDetails: any }) => {
+const Header = ({
+  assetDetails,
+  loading,
+}: {
+  assetDetails: any;
+  loading: boolean;
+}) => {
   const navigate = useNavigate();
   return (
     <Box py="30px" px={['20px', '40px']} borderY="1px solid #E4E4E4">
@@ -29,18 +43,25 @@ const Header = ({ assetDetails }: { assetDetails: any }) => {
           flexWrap={['wrap', 'wrap', 'nowrap']}
           w="full"
         >
-          <Box>
-            <Stack spacing="10px">
-              <Heading fontSize={[20, 24]} fontWeight={500} color="#222222">
-                {assetDetails?.property_name || 'Property Name'}
-              </Heading>
-              <Flex alignItems="center" gap="10px">
-                <LocationIcon />
-                <Text color="#2E353F" fontWeight={500}>
-                  {`${assetDetails?.house_number} ${assetDetails?.street_name}, ${assetDetails?.city_name}, ${assetDetails?.state_id}`}
-                </Text>
-              </Flex>
-            </Stack>
+          <Box w="full">
+            {loading ? (
+              <Stack spacing="10px" w="full">
+                <Skeleton w={['75%', '45%']} h="40px" />
+                <Skeleton w={['85%', '55%']} h="25px" />
+              </Stack>
+            ) : (
+              <Stack spacing="10px">
+                <Heading fontSize={[20, 24]} fontWeight={500} color="#222222">
+                  {assetDetails?.property_name || 'Property Name'}
+                </Heading>
+                <Flex alignItems="center" gap="10px">
+                  <LocationIcon />
+                  <Text color="#2E353F" fontWeight={500}>
+                    {`${assetDetails?.house_number} ${assetDetails?.street_name}, ${assetDetails?.city_name}, ${assetDetails?.state_id}`}
+                  </Text>
+                </Flex>
+              </Stack>
+            )}
           </Box>
           <Button
             bg="#000080"
@@ -49,10 +70,11 @@ const Header = ({ assetDetails }: { assetDetails: any }) => {
             fontWeight={500}
             fontSize={15}
             leftIcon={<AddIcon />}
-            h="48px"
+            h="46px"
             onClick={() =>
-              navigate(`/user/my-assets/${assetDetails?.id}/add-payment`)
+              navigate(`/user/portfolio/${assetDetails?.id}/add-payment`)
             }
+            w={['full', 'auto']}
           >
             Add new payment
           </Button>

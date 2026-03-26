@@ -15,8 +15,6 @@ import {
 } from '~/lib/components/Icons/Icons';
 import useNavigate from '~/lib/utils/useNavigate';
 
-
-
 export const SideBarItem = ({
   label,
   href,
@@ -119,7 +117,7 @@ const DashboardSidebar = () => {
             <SideBarItem
               label="Remittance"
               Icon={MyPortfolioIcon}
-              isActive={pathname === '/user/portfolio'}
+              isActive={pathname.includes('/user/portfolio')}
               href="/user/portfolio"
             />
             {/* <SideBarItem

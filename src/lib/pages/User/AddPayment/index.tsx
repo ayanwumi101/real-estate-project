@@ -1,44 +1,52 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import PaymentForm from './components/PaymentForm';
 import PropertyDetails from './components/PropertyDetails';
 import { Box, Button, Flex, Stack } from '@chakra-ui/react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { ChevronLeftIcon } from '~/lib/components/Icons/Icons';
-import useNavigate from '~/lib/utils/useNavigate';
-import { GetAssetDetails, GetAssetPaymentDueDates } from '~/lib/api/services/assetsService';
-
-
+import {
+  GetAssetDetails,
+  GetAssetPaymentDueDates,
+} from '~/lib/api/services/assetsService';
 
 const index = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
+
+  const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
   const [assetDetails, setAssetDetails] = React.useState<any>(null);
   const [paymentDueDates, setPaymentDueDates] = React.useState<any>([]);
 
   React.useEffect(() => {
     const fetchAssetDetails = async () => {
-      const details = await GetAssetDetails(id as string);
-      setAssetDetails(details.data);
+      setLoading(true);
+      try {
+        const details = await GetAssetDetails(id as string);
+        setAssetDetails(details.data);
+      } catch (error) {
+        console.log(error);
+      }
+      setLoading(false);
     };
     fetchAssetDetails();
   }, []);
 
-  React.useEffect(() => {
-    const fetchPaymentDueDates = async () => {
-      const dueDates = await GetAssetPaymentDueDates(id as string);
-      setPaymentDueDates(dueDates.data.payment_due_dates);
-    };
-    fetchPaymentDueDates();
-  }, [id]);
-  
+  // React.useEffect(() => {
+  //   const fetchPaymentDueDates = async () => {
+  //     const dueDates = await GetAssetPaymentDueDates(id as string);
+  //     setPaymentDueDates(dueDates.data.payment_due_dates);
+  //   };
+  //   fetchPaymentDueDates();
+  // }, [id]);
+
   return (
     <Box p={['20px', '40px']} borderTop="1px solid" borderColor="border.100">
       <Stack spacing="40px" alignItems="flex-start">
         {' '}
         <Button
-          onClick={() => navigate('/user/my-assets')}
+          onClick={() => router.back()}
           variant="ghost"
           leftIcon={<ChevronLeftIcon />}
           p="0"
@@ -53,8 +61,12 @@ const index = () => {
           w="full"
           flexWrap={['wrap', 'nowrap']}
         >
-          <PropertyDetails assetDetails={assetDetails} />
-          <PaymentForm paymentDueDates={paymentDueDates} assetId={assetDetails?.id} assetType={assetDetails?.asset_type} />
+          <PropertyDetails assetDetails={assetDetails} loading={loading} />
+          <PaymentForm
+            paymentDueDates={paymentDueDates}
+            assetId={assetDetails?.id}
+            assetType={assetDetails?.asset_type}
+          />
         </Flex>
       </Stack>
     </Box>

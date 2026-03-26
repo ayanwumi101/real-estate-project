@@ -18,7 +18,12 @@ import {
 } from '@chakra-ui/react';
 import moment from 'moment';
 import React, { Fragment, useState } from 'react';
-import { NextPageIcon, PreviousPageIcon } from '~/lib/components/Icons/Icons';
+import {
+  EmptyRemittanceIcon,
+  NextPageIcon,
+  PreviousPageIcon,
+  AddIcon,
+} from '~/lib/components/Icons/Icons';
 import SkeletonLoader from '~/lib/components/SkeletonLoader';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 
@@ -48,22 +53,28 @@ const PaymentsTable = ({
       ) : (
         <Box>
           {assetDetails?.payments?.length < 1 ? (
-            <Box maxW="465px" mx="auto" my="5">
+            <Box maxW="465px" mx="auto" my="5" py="5">
               <Stack spacing="15px" alignItems="center" textAlign="center">
                 {' '}
-                <Image src="/assets/images/briefcase.png" />
-                <Heading fontSize={18}>Your Payment list is empty</Heading>
-                <Text color="#2E353F">
-                  Easily{' '}
-                  <Link
-                    href={`/user/my-assets/${assetDetails?.id}/add-payment`}
-                    style={{ color: '#000080', textDecoration: 'underline' }}
-                  >
-                    add new payment
-                  </Link>{' '}
-                  and monitor all your properties in one place. Managing your
-                  portfolio has never been smoother!
+                <EmptyRemittanceIcon />
+                <Heading fontSize={17} textTransform="capitalize">
+                  No Payments Yet
+                </Heading>
+                <Text color="#2E353F" fontSize={15}>
+                  Payments you’ve received for this property will appear here
+                  once recorded.
                 </Text>
+                <Link href={`/user/portfolio/${assetDetails?.id}/add-payment`}>
+                  <Button
+                    bg="brand.100"
+                    fontWeight={500}
+                    fontSize={14}
+                    color="brand.200"
+                    leftIcon={<AddIcon />}
+                  >
+                    Add New Payment
+                  </Button>
+                </Link>
               </Stack>
             </Box>
           ) : (
@@ -108,14 +119,16 @@ const PaymentsTable = ({
                     >
                       Due Date
                     </Th>
-                    <Th
-                      color="#222222"
-                      fontWeight={500}
-                      fontSize={14}
-                      textTransform="capitalize"
-                    >
-                      Payment Date
-                    </Th>
+                    {activeTab === 'completed' && (
+                      <Th
+                        color="#222222"
+                        fontWeight={500}
+                        fontSize={14}
+                        textTransform="capitalize"
+                      >
+                        Payment Date
+                      </Th>
+                    )}
                     <Th
                       color="#222222"
                       fontWeight={500}
@@ -155,13 +168,15 @@ const PaymentsTable = ({
                               )
                             : 'N/A'}
                         </Td>
-                        <Td fontWeight={500} fontSize={14} color="#8295AA">
-                          {asset?.payment_date
-                            ? moment(asset?.payment_date).format(
-                                'ddd, Do MMMM YYYY'
-                              )
-                            : 'N/A'}
-                        </Td>
+                        {activeTab === 'completed' && (
+                          <Td fontWeight={500} fontSize={14} color="#8295AA">
+                            {asset?.payment_date
+                              ? moment(asset?.payment_date).format(
+                                  'ddd, Do MMMM YYYY'
+                                )
+                              : 'N/A'}
+                          </Td>
+                        )}
                         <Td fontWeight={500} fontSize={14} color="#8295AA">
                           {asset?.amount
                             ? `${FormatAmount(Number(asset?.amount))}`

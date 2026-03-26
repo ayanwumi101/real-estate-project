@@ -223,7 +223,7 @@ const Cashflow = ({
                               : 'N/A'}
                           </Td>
                           <Td fontWeight={500} fontSize={14} color="#8295AA">
-                            {asset?.payment_count ? asset?.payment_count : 0}
+                            {asset?.no_of_payments || 0}
                           </Td>
                           <Td fontWeight={500} fontSize={14} color="#8295AA">
                             {asset?.cashflow_payment_due

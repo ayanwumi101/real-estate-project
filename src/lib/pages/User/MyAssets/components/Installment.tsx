@@ -219,7 +219,7 @@ const Installment = ({
                             {FormatAmount(Number(asset?.amount_left))}
                           </Td>
                           <Td fontWeight={500} fontSize={14} color="#8295AA">
-                            {asset?.payment_count ? asset?.payment_count : 0}
+                            {asset?.no_of_payments || 0}
                           </Td>
                           <Td fontWeight={500} fontSize={14} color="#8295AA">
                             {asset?.due_date
@@ -245,7 +245,7 @@ const Installment = ({
                                     navigate(`/user/my-assets/${asset?.id}`)
                                   }
                                 >
-                                  View asset
+                                  View asset details
                                 </MenuItem>
                                 <MenuItem
                                   py="12px"
@@ -269,20 +269,6 @@ const Installment = ({
                                   fontSize={14}
                                   color="color.100"
                                   fontWeight={500}
-                                  // onClick={() => {
-                                  //   setIsOpen(true);
-                                  //   setSelectedAssetId(asset?.id);
-                                  // }}
-                                >
-                                  Change asset status
-                                </MenuItem>
-                                <MenuItem
-                                  py="12px"
-                                  px="16px"
-                                  _hover={{ bg: 'border.100' }}
-                                  fontSize={14}
-                                  color="color.100"
-                                  fontWeight={500}
                                   onClick={() =>
                                     navigate(
                                       `/user/my-assets/${asset?.id}/payments`
@@ -291,6 +277,21 @@ const Installment = ({
                                 >
                                   View payments
                                 </MenuItem>
+                                <MenuItem
+                                  py="12px"
+                                  px="16px"
+                                  _hover={{ bg: 'border.100' }}
+                                  fontSize={14}
+                                  color="color.100"
+                                  fontWeight={500}
+                                  // onClick={() => {
+                                  //   setIsOpen(true);
+                                  //   setSelectedAssetId(asset?.id);
+                                  // }}
+                                >
+                                  Change asset status
+                                </MenuItem>
+
                                 <MenuItem
                                   py="12px"
                                   px="16px"

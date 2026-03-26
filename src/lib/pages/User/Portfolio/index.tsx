@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Header from './components/Header';
 import { Box, Stack, Divider } from '@chakra-ui/react';
 import { GetUserAssetsWithFilter } from '~/lib/api/services/assetsService';
@@ -12,15 +12,18 @@ const index = () => {
   const [assets, setAssets] = useState<any[]>([]);
   const [filteredAssets, setFilteredAssets] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState<string>('');
   const [order, setOrder] = useState<any>();
   const [sort, setSort] = useState<any>('');
   const [status, setStatus] = useState<string>('');
   const [duration, setDuration] = useState<string>('');
+  const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const GetAssets = async () => {
     setLoading(true);
     try {
       const res = await GetUserAssetsWithFilter({
+        search: debouncedSearchQuery,
         status: status === 'occupied' ? true : false,
         duration: duration,
         sort_by: sort,
@@ -36,7 +39,29 @@ const index = () => {
 
   useEffect(() => {
     GetAssets();
-  }, [order, sort, status, duration]);
+  }, [order, sort, status, duration, debouncedSearchQuery]);
+
+  // Debounce effect for search query
+  useEffect(() => {
+    if (debounceTimeoutRef.current) {
+      clearTimeout(debounceTimeoutRef.current);
+    }
+
+    debounceTimeoutRef.current = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 2000);
+
+    return () => {
+      if (debounceTimeoutRef.current) {
+        clearTimeout(debounceTimeoutRef.current);
+      }
+    };
+  }, [searchQuery]);
+
+  // Initialize debounced search query on mount
+  useEffect(() => {
+    setDebouncedSearchQuery(searchQuery);
+  }, []);
 
   const cashflowAssets = filteredAssets?.filter(
     (asset) => asset?.asset_type === 'cashflow'
@@ -45,13 +70,6 @@ const index = () => {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
-
-  useEffect(() => {
-    const newAssets = assets.filter((asset) =>
-      asset?.property_name?.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setFilteredAssets(newAssets);
-  }, [searchQuery]);
 
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setStatus(e.target.value);
@@ -71,7 +89,7 @@ const index = () => {
 
   return (
     <Box pb="50px">
-      <Stack spacing="40px" w="100%" overflow="auto">
+      <Stack spacing="40px" w="100%" overflow="auto" px={['16px', 0]}>
         <Header assets={cashflowAssets} />
         <Stack
           // px="10px"

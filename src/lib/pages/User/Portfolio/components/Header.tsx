@@ -25,9 +25,7 @@ import next from 'next';
 import moment from 'moment';
 import { getAssetWithEarliestPaymentDue } from '~/lib/utils/findClosestDueAsset';
 
-
-
-interface IProps { 
+interface IProps {
   totalCashflowAsset?: number;
   cashflowAssetsInNaira?: string;
   nextDueRemittance?: {
@@ -36,24 +34,26 @@ interface IProps {
   };
 }
 
-
-const RemittanceStatCards = ({ totalCashflowAsset, cashflowAssetsInNaira, nextDueRemittance }: IProps) => {
-  
+const RemittanceStatCards = ({
+  totalCashflowAsset,
+  cashflowAssetsInNaira,
+  nextDueRemittance,
+}: IProps) => {
   return (
-    <Box py="40px" px="20px" overflow="auto">
-      <Flex alignItems="center" gap="16px" pb="3" overflow="auto" w="100%">
+    <Box py="40px" overflow="auto">
+      <Flex alignItems="center" gap="14px" pb="3" overflow="auto" w="100%">
         <PortfolioStatCard
           label="Total Cashflow Asset"
           balance={totalCashflowAsset || 0}
           showHideIcon={false}
         />
         <PortfolioStatCard
-          label="Total Cashflow in Naira"
+          label="Total Received Remittance"
           balance={FormatAmount(Number(cashflowAssetsInNaira) || 0)}
           showHideIcon={true}
         />
         <Box
-          minW={['300px', '350px']}
+          minW={['300px', '33%']}
           borderRadius="5px"
           py="32px"
           px="20px"
@@ -85,12 +85,17 @@ const RemittanceStatCards = ({ totalCashflowAsset, cashflowAssetsInNaira, nextDu
       </Flex>
     </Box>
   );
-}
+};
 
 const RemitttanceHeading = () => {
   return (
-    <Box py="30px" px="20px" borderBottom="1px solid #E4E4E4">
-      <Flex alignItems="center" justifyContent="space-between" rowGap={['20px', 0]} flexWrap={['wrap', 'nowrap']}>
+    <Box py="30px" borderBottom="1px solid #E4E4E4">
+      <Flex
+        alignItems="center"
+        justifyContent="space-between"
+        rowGap={['20px', 0]}
+        flexWrap={['wrap', 'nowrap']}
+      >
         <Stack spacing="10px">
           <Heading fontSize={24} fontWeight={500} color="#222222">
             Remittance
@@ -100,7 +105,7 @@ const RemitttanceHeading = () => {
           </Text>
         </Stack>
 
-        <Box>
+        {/* <Box>
           <Flex alignItems="center" gap="12px">
             <Link href="/user/my-assets/add-assets">
               <Button
@@ -118,27 +123,33 @@ const RemitttanceHeading = () => {
               </Button>
             </Link>
           </Flex>
-        </Box>
+        </Box> */}
       </Flex>
     </Box>
   );
-}
+};
 
-const Header = ({assets}: {assets: any[]}) => {
-  const [showFundWalletModal, setShowFundWalletModal] = React.useState(false);
-  const totalAssetsInNaira = assets?.reduce((acc, asset) => acc + Number(asset?.cashflow_amount), 0);
+const Header = ({ assets }: { assets: any[] }) => {
+  // const [showFundWalletModal, setShowFundWalletModal] = React.useState(false);
+  const totalAssetsInNaira = assets?.reduce(
+    (acc, asset) => acc + Number(asset?.total_payment_amount || 0),
+    0
+  );
   const closestDueAsset = getAssetWithEarliestPaymentDue(assets || []);
 
   const nextDueRemittance = {
     date: closestDueAsset?.cashflow_payment_due,
-    property: closestDueAsset?.property_name
-  }
-  
-  
+    property: closestDueAsset?.property_name,
+  };
+
   return (
-    <Box borderY="1px solid #E4E4E4" overflow='auto' w='100%'>
+    <Box borderY="1px solid #E4E4E4" overflow="auto" w="100%">
       <RemitttanceHeading />
-      <RemittanceStatCards totalCashflowAsset={assets?.length} cashflowAssetsInNaira={totalAssetsInNaira} nextDueRemittance={nextDueRemittance} />
+      <RemittanceStatCards
+        totalCashflowAsset={assets?.length}
+        cashflowAssetsInNaira={totalAssetsInNaira}
+        nextDueRemittance={nextDueRemittance}
+      />
     </Box>
   );
 };

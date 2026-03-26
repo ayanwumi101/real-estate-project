@@ -19,6 +19,7 @@ import {
   MenuItem,
   MenuList,
   MenuButton,
+  Portal,
 } from '@chakra-ui/react';
 import {
   ArrowUpIcon,
@@ -28,6 +29,7 @@ import {
   AddPaymentIcon,
   PreviousPageIcon,
   NextPageIcon,
+  EmptyRemittanceIcon,
 } from '~/lib/components/Icons/Icons';
 import moment from 'moment';
 import Link from 'next/link';
@@ -56,19 +58,23 @@ const PropertyListTable = ({
             <Box maxW="465px" mx="auto" my="5">
               <Stack spacing="15px" alignItems="center" textAlign="center">
                 {' '}
-                <Image src="/assets/images/briefcase.png" />
-                <Heading fontSize={18}>Your Asset list is empty</Heading>
-                <Text color="#2E353F">
-                  Easily{' '}
-                  <Link
-                    href="/user/my-assets/add-assets"
-                    style={{ color: '#000080', textDecoration: 'underline' }}
-                  >
-                    add new asset
-                  </Link>{' '}
-                  and monitor all your properties in one place. Managing your
-                  portfolio has never been smoother!
+                <EmptyRemittanceIcon />
+                <Heading fontSize={17}>No Remittances Yet</Heading>
+                <Text color="#2E353F" fontSize={15}>
+                  Cashflow properties will appear here once added, along with
+                  their remittance history. Add a cashflow property or update an
+                  existing asset to start tracking your income.
                 </Text>
+                <Link href={`/user/my-assets/add-assets`}>
+                  <Button
+                    bg="brand.100"
+                    fontWeight={500}
+                    fontSize={14}
+                    color="brand.200"
+                  >
+                    Add New Asset
+                  </Button>
+                </Link>
               </Stack>
             </Box>
           ) : (
@@ -226,8 +232,8 @@ const PropertyListTable = ({
                         <Td
                           fontWeight={500}
                           fontSize={13}
-                          px="0"
-                          textAlign="center"
+                          // px="0"
+                          // textAlign="center"
                           color="#8295AA"
                         >
                           {asset?.cashflow_payment_due
@@ -253,40 +259,42 @@ const PropertyListTable = ({
                             <MenuButton as={Button} rounded="5px" bg="bg.200">
                               <VerticalEllipsisIcon />
                             </MenuButton>
-                            <MenuList py="0px">
-                              <MenuItem
-                                py="12px"
-                                px="16px"
-                                _hover={{ bg: 'border.100' }}
-                                fontSize={14}
-                                color="color.100"
-                                fontWeight={500}
-                                onClick={() =>
-                                  navigate(
-                                    `/user/portfolio/${asset?.id}/payments`
-                                  )
-                                }
-                                icon={<ViewRemittanceHistoryIcon />}
-                              >
-                                View remittance history
-                              </MenuItem>
-                              <MenuItem
-                                py="12px"
-                                px="16px"
-                                _hover={{ bg: 'border.100' }}
-                                fontSize={14}
-                                color="color.100"
-                                fontWeight={500}
-                                onClick={() =>
-                                  navigate(
-                                    `/user/my-assets/${asset?.id}/add-payment`
-                                  )
-                                }
-                                icon={<AddPaymentIcon />}
-                              >
-                                Add new payment
-                              </MenuItem>
-                            </MenuList>
+                            <Portal>
+                              <MenuList py="0px">
+                                <MenuItem
+                                  py="12px"
+                                  px="16px"
+                                  _hover={{ bg: 'border.100' }}
+                                  fontSize={14}
+                                  color="color.100"
+                                  fontWeight={500}
+                                  onClick={() =>
+                                    navigate(
+                                      `/user/portfolio/${asset?.id}/payments`
+                                    )
+                                  }
+                                  icon={<ViewRemittanceHistoryIcon />}
+                                >
+                                  View remittance history
+                                </MenuItem>
+                                <MenuItem
+                                  py="12px"
+                                  px="16px"
+                                  _hover={{ bg: 'border.100' }}
+                                  fontSize={14}
+                                  color="color.100"
+                                  fontWeight={500}
+                                  onClick={() =>
+                                    navigate(
+                                      `/user/my-assets/${asset?.id}/add-payment`
+                                    )
+                                  }
+                                  icon={<AddPaymentIcon />}
+                                >
+                                  Add new payment
+                                </MenuItem>
+                              </MenuList>
+                            </Portal>
                           </Menu>
                         </Td>
                       </Tr>

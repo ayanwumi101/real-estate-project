@@ -11,7 +11,8 @@ import {
   Divider,
   Avatar,
   chakra,
-  VStack, Radio
+  VStack,
+  Radio,
 } from '@chakra-ui/react';
 import {
   LocationIcon,
@@ -140,19 +141,19 @@ export const FeatureCard = ({
   description: string;
 }) => {
   return (
-    <Box
-      w="360px"
-      border="1px solid #C0C0C0"
-      p="20px"
-      rounded='10px'
-    >
+    <Box w="360px" border="1px solid #C0C0C0" p="20px" rounded="10px">
       <Stack spacing="24px">
         <Icon />
         <Box>
           <Heading fontSize={19} color="#222222" fontWeight={700} mb="16px">
             {heading}
           </Heading>
-          <Text color="#2E353F" fontWeight={400} fontSize={15} letterSpacing='0.5px'>
+          <Text
+            color="#2E353F"
+            fontWeight={400}
+            fontSize={15}
+            letterSpacing="0.5px"
+          >
             {description}
           </Text>
         </Box>
@@ -249,7 +250,7 @@ export const PortfolioStatCard = ({
 }) => {
   return (
     <Box
-      minW={['300px', '350px']}
+      minW={['300px', '33%']}
       borderRadius="5px"
       py="32px"
       px="20px"
@@ -307,7 +308,7 @@ export const AssetStatCard = ({
       borderRadius="5px"
       py="25px"
       border="1px solid #E4E4E4"
-      boxShadow="sm"
+      // boxShadow="sm"
       px="22px"
       h={['auto', '120px']}
     >
@@ -509,7 +510,6 @@ export const AddAssetNextOfKinCard = ({
   );
 };
 
-
 export const OfferCard = ({
   image,
   title,
@@ -526,7 +526,7 @@ export const OfferCard = ({
       borderRadius="10px"
       py="30px"
       px="20px"
-      w={['100%','300px']}
+      w={['100%', '300px']}
     >
       <VStack alignItems="center" textAlign="center" spacing="20px">
         <Image

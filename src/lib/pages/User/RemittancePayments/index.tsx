@@ -30,9 +30,11 @@ const index = () => {
   }, [id]);
   return (
     <Box>
-      <Header assetDetails={assetDetails} />
-      <Stats assetDetails={assetDetails} />
-      <PaymentsTable assetDetails={assetDetails} loading={loading} />
+      <Header assetDetails={assetDetails} loading={loading} />
+      <Box px={['12px', 0]} w="full">
+        <Stats assetDetails={assetDetails} loading={loading} />
+        <PaymentsTable assetDetails={assetDetails} loading={loading} />
+      </Box>
     </Box>
   );
 };
