@@ -25,7 +25,7 @@ const Stats = ({
           ))}
         </Flex>
       ) : (
-        <Flex w="full" alignItems="center" gap="16px" overflow="auto" pb='2'>
+        <Flex w="full" alignItems="center" gap="16px" overflow="auto" pb="2">
           <Box
             minW={['270px', '20%']}
             p="20px 16px"
@@ -82,7 +82,9 @@ const Stats = ({
                 Remittance Duration
               </Text>
               <Heading fontSize={20} fontWeight={500}>
-                {assetDetails?.cashflow_duration || 'N/A'}
+                {assetDetails?.cashflow_duration ||
+                  assetDetails?.duration ||
+                  'N/A'}
               </Heading>
             </Stack>
           </Box>

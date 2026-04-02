@@ -10,6 +10,7 @@ import {
   FormControl,
   FormLabel,
   Select,
+  Skeleton,
 } from '@chakra-ui/react';
 import moment from 'moment';
 import React, { useContext } from 'react';
@@ -39,7 +40,13 @@ const AssetDetailsItem = ({
   );
 };
 
-const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
+const AssetDetails = ({
+  propertyDetails,
+  fetching,
+}: {
+  propertyDetails: any;
+  fetching: boolean;
+}) => {
   const {
     propertySize,
     setPropertySize,
@@ -73,109 +80,22 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
     setHandoverStatus,
   } = useContext(AssetDetailsContext);
   return (
-    <Box>
-      <Stack spacing="32px">
-        {/* basic details section */}
-        <Box
-          border="1px solid"
-          borderColor="border.100"
-          p="32px"
-          borderRadius="8px"
-          w={['100%', '700px']}
-        >
-          <Heading
-            pb="12px"
-            borderBottom="1px solid"
-            borderColor="border.100"
-            fontSize={16}
-            color="brand.400"
-            mb="32px"
-          >
-            Basic Details
-          </Heading>
-          <Box>
-            <Flex
-              alignItems="center"
-              gap="16px"
-              flexWrap={['wrap', 'nowrap']}
-              mb="16px"
-            >
-              <FormControl>
-                <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                  Property Size
-                </FormLabel>
-                <Input
-                  type="text"
-                  h="50px"
-                  rounded="40px"
-                  border="1px solid"
-                  borderColor="border.200"
-                  value={propertySize}
-                  onChange={(e) => setPropertySize(e.target.value)}
-                />
-              </FormControl>
-              <FormControl>
-                <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                  When was property bought
-                </FormLabel>
-                <Input
-                  type="date"
-                  h="50px"
-                  rounded="40px"
-                  border="1px solid"
-                  borderColor="border.200"
-                  value={boughtDate?.split(' ')[0]}
-                  onChange={(e) => setBoughtDate(e.target.value)}
-                />
-              </FormControl>
-            </Flex>
-            <Flex alignItems="center" gap="16px" flexWrap={['wrap', 'nowrap']}>
-              <FormControl>
-                <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                  Amount Purchased
-                </FormLabel>
-                <Input
-                  type="text"
-                  h="50px"
-                  rounded="40px"
-                  border="1px solid"
-                  borderColor="border.200"
-                  value={propertyCost}
-                  onChange={(e) => setPropertyCost(e.target.value)}
-                />
-              </FormControl>
-              {propertyDetails?.asset_type === 'owned' && (
-                <FormControl>
-                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                    Payment Status
-                  </FormLabel>
-                  <Select
-                    h="50px"
-                    rounded="40px"
-                    border="1px solid"
-                    borderColor="border.200"
-                    value={paymentStatus}
-                    onChange={(e) => setPaymentStatus(e.target.value)}
-                    placeholder="Select payment status"
-                  >
-                    <option value="completed">Completed</option>
-                    <option value="pending">Pending</option>
-                    <option value="ongoing">Ongoing</option>
-                  </Select>
-                </FormControl>
-              )}
-            </Flex>
-          </Box>
-        </Box>
-
-        {/* Cashflow details */}
-        {propertyDetails?.asset_type === 'cashflow' && (
+    <Box w={['full', '65%']}>
+      {fetching ? (
+        <Stack w="full" spacing="32px">
+          <Skeleton rounded="8px" w="full" h="270px"></Skeleton>
+          <Skeleton rounded="8px" w="full" h="270px"></Skeleton>
+          <Skeleton rounded="8px" w="full" h="270px"></Skeleton>
+        </Stack>
+      ) : (
+        <Stack spacing="32px" w="full">
+          {/* basic details section */}
           <Box
             border="1px solid"
             borderColor="border.100"
             p="32px"
             borderRadius="8px"
-            w={['100%', '700px']}
+            w="full"
           >
             <Heading
               pb="12px"
@@ -185,9 +105,8 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
               color="brand.400"
               mb="32px"
             >
-              Cashflow Details
+              Basic Details
             </Heading>
-
             <Box>
               <Flex
                 alignItems="center"
@@ -197,79 +116,21 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
               >
                 <FormControl>
                   <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                    Cashflow Source
-                  </FormLabel>
-                  <Select
-                    h="50px"
-                    rounded="40px"
-                    border="1px solid"
-                    borderColor="border.200"
-                    value={cashflowSource}
-                    onChange={(e) => setCashflowSource(e.target.value)}
-                  >
-                    <option value="rent">Rent</option>
-                    <option value="lease">Lease</option>
-                  </Select>
-                </FormControl>
-                <FormControl>
-                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                    Property Currently Occupied?
-                  </FormLabel>
-                  <Select
-                    h="50px"
-                    rounded="40px"
-                    border="1px solid"
-                    borderColor="border.200"
-                    value={isPropertyOccupied === true ? 'yes' : 'no'}
-                    onChange={(e) => setIsPropertyOccupied(e.target.value)}
-                  >
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                  </Select>
-                </FormControl>
-              </Flex>
-              <Flex
-                alignItems="center"
-                gap="16px"
-                flexWrap={['wrap', 'nowrap']}
-                mb="16px"
-              >
-                <FormControl>
-                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                    Remittance Value
+                    Property Size
                   </FormLabel>
                   <Input
+                    type="text"
                     h="50px"
                     rounded="40px"
                     border="1px solid"
                     borderColor="border.200"
-                    value={remittanceAmount}
-                    onChange={(e) => setRemittanceAmount(e.target.value)}
+                    value={propertySize}
+                    onChange={(e) => setPropertySize(e.target.value)}
                   />
                 </FormControl>
                 <FormControl>
                   <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                    Duration of Yield
-                  </FormLabel>
-                  <Input
-                    h="50px"
-                    rounded="40px"
-                    border="1px solid"
-                    borderColor="border.200"
-                    value={cashflowDuration}
-                    onChange={(e) => setCashflowDuration(e.target.value)}
-                  />
-                </FormControl>
-              </Flex>
-              <Flex
-                alignItems="center"
-                gap="16px"
-                flexWrap={['wrap', 'nowrap']}
-                mb="16px"
-              >
-                <FormControl>
-                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                    Last Remittance Payment
+                    When was property bought
                   </FormLabel>
                   <Input
                     type="date"
@@ -277,11 +138,168 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                     rounded="40px"
                     border="1px solid"
                     borderColor="border.200"
-                    value={lastRemittanceDate?.split(' ')[0]}
-                    onChange={(e) => setLastRemittanceDate(e.target.value)}
+                    value={boughtDate?.split(' ')[0]}
+                    onChange={(e) => setBoughtDate(e.target.value)}
                   />
                 </FormControl>
-                {/* <FormControl>
+              </Flex>
+              <Flex
+                alignItems="center"
+                gap="16px"
+                flexWrap={['wrap', 'nowrap']}
+              >
+                <FormControl>
+                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                    Amount Purchased
+                  </FormLabel>
+                  <Input
+                    type="text"
+                    h="50px"
+                    rounded="40px"
+                    border="1px solid"
+                    borderColor="border.200"
+                    value={propertyCost}
+                    onChange={(e) => setPropertyCost(e.target.value)}
+                  />
+                </FormControl>
+                {propertyDetails?.asset_type === 'owned' && (
+                  <FormControl>
+                    <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                      Payment Status
+                    </FormLabel>
+                    <Select
+                      h="50px"
+                      rounded="40px"
+                      border="1px solid"
+                      borderColor="border.200"
+                      value={paymentStatus}
+                      onChange={(e) => setPaymentStatus(e.target.value)}
+                      placeholder="Select payment status"
+                    >
+                      <option value="completed">Completed</option>
+                      <option value="pending">Pending</option>
+                      <option value="ongoing">Ongoing</option>
+                    </Select>
+                  </FormControl>
+                )}
+              </Flex>
+            </Box>
+          </Box>
+
+          {/* Cashflow details */}
+          {propertyDetails?.asset_type === 'cashflow' && (
+            <Box
+              border="1px solid"
+              borderColor="border.100"
+              p="32px"
+              borderRadius="8px"
+              w="full"
+            >
+              <Heading
+                pb="12px"
+                borderBottom="1px solid"
+                borderColor="border.100"
+                fontSize={16}
+                color="brand.400"
+                mb="32px"
+              >
+                Cashflow Details
+              </Heading>
+
+              <Box>
+                <Flex
+                  alignItems="center"
+                  gap="16px"
+                  flexWrap={['wrap', 'nowrap']}
+                  mb="16px"
+                >
+                  <FormControl>
+                    <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                      Cashflow Source
+                    </FormLabel>
+                    <Select
+                      h="50px"
+                      rounded="40px"
+                      border="1px solid"
+                      borderColor="border.200"
+                      value={cashflowSource}
+                      onChange={(e) => setCashflowSource(e.target.value)}
+                    >
+                      <option value="rent">Rent</option>
+                      <option value="lease">Lease</option>
+                    </Select>
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                      Property Currently Occupied?
+                    </FormLabel>
+                    <Select
+                      h="50px"
+                      rounded="40px"
+                      border="1px solid"
+                      borderColor="border.200"
+                      value={isPropertyOccupied === true ? 'yes' : 'no'}
+                      onChange={(e) => setIsPropertyOccupied(e.target.value)}
+                    >
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
+                    </Select>
+                  </FormControl>
+                </Flex>
+                <Flex
+                  alignItems="center"
+                  gap="16px"
+                  flexWrap={['wrap', 'nowrap']}
+                  mb="16px"
+                >
+                  <FormControl>
+                    <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                      Remittance Value
+                    </FormLabel>
+                    <Input
+                      h="50px"
+                      rounded="40px"
+                      border="1px solid"
+                      borderColor="border.200"
+                      value={remittanceAmount}
+                      onChange={(e) => setRemittanceAmount(e.target.value)}
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                      Duration of Yield
+                    </FormLabel>
+                    <Input
+                      h="50px"
+                      rounded="40px"
+                      border="1px solid"
+                      borderColor="border.200"
+                      value={cashflowDuration}
+                      onChange={(e) => setCashflowDuration(e.target.value)}
+                    />
+                  </FormControl>
+                </Flex>
+                <Flex
+                  alignItems="center"
+                  gap="16px"
+                  flexWrap={['wrap', 'nowrap']}
+                  mb="16px"
+                >
+                  <FormControl>
+                    <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                      Last Remittance Payment
+                    </FormLabel>
+                    <Input
+                      type="date"
+                      h="50px"
+                      rounded="40px"
+                      border="1px solid"
+                      borderColor="border.200"
+                      value={lastRemittanceDate?.split(' ')[0]}
+                      onChange={(e) => setLastRemittanceDate(e.target.value)}
+                    />
+                  </FormControl>
+                  {/* <FormControl>
                   <FormLabel fontWeight={600} fontSize={15} color="brand.300">
                     Equity Ownership
                   </FormLabel>
@@ -295,13 +313,13 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
                     onChange={(e) => setEquityOwnership(e.target.value)}
                   />
                 </FormControl> */}
-              </Flex>
+                </Flex>
+              </Box>
             </Box>
-          </Box>
-        )}
+          )}
 
-        {/* Payment Details */}
-        {/* {propertyDetails?.asset_type === 'instalment' && (
+          {/* Payment Details */}
+          {/* {propertyDetails?.asset_type === 'instalment' && (
           <Box
             border="1px solid"
             borderColor="border.100"
@@ -372,184 +390,193 @@ const AssetDetails = ({ propertyDetails }: { propertyDetails: any }) => {
           </Box>
         )} */}
 
-        {/* Realtor Details */}
-        <Box
-          border="1px solid"
-          borderColor="border.100"
-          p="32px"
-          borderRadius="8px"
-          w={['100%', '700px']}
-        >
-          <Heading
-            pb="12px"
-            borderBottom="1px solid"
+          {/* Realtor Details */}
+          <Box
+            border="1px solid"
             borderColor="border.100"
-            fontSize={16}
-            color="brand.400"
-            mb="32px"
+            p="32px"
+            borderRadius="8px"
+            w="full"
           >
-            Realtor Details
-          </Heading>
+            <Heading
+              pb="12px"
+              borderBottom="1px solid"
+              borderColor="border.100"
+              fontSize={16}
+              color="brand.400"
+              mb="32px"
+            >
+              Realtor Details
+            </Heading>
 
-          <Box>
-            <Flex alignItems="center" gap="16px" flexWrap={['wrap', 'nowrap']}>
-              <FormControl w={['100%', '50%']}>
-                <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                  Realtor Name
-                </FormLabel>
-                <Input
-                  type="text"
-                  h="50px"
-                  rounded="40px"
-                  border="1px solid"
-                  borderColor="border.200"
-                  value={realtorName}
-                  onChange={(e) => setRealtorName(e.target.value)}
-                />
-              </FormControl>
-              <FormControl w={['100%', '50%']}>
-                <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                  Phone Number
-                </FormLabel>
-                {/* {realtorPhone?.startsWith('234') ? ( */}
-                <PhoneInput
-                  value={realtorPhone}
-                  onChange={(value: string) => setRealtorPhone(value)}
-                  containerStyle={{
-                    border: '1px solid #C0C0C0',
-                    backgroundColor: '#FBFBFB',
-                    padding: '5px 14px 5px 14px',
-                    borderRadius: '24px',
-                    height: '50px',
-                    width: '100%',
-                  }}
-                  inputStyle={{
-                    border: 'none',
-                    paddingLeft: '50px',
-                    paddingTop: '5px',
-                    backgroundColor: '#FBFBFB',
-                    width: '100%',
-                  }}
-                  buttonStyle={{
-                    border: 'none',
-                    background: 'transparent',
-                  }}
-                />
-                {/* // ) : (
+            <Box>
+              <Flex
+                alignItems="center"
+                gap="16px"
+                flexWrap={['wrap', 'nowrap']}
+              >
+                <FormControl w={['100%', '50%']}>
+                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                    Realtor Name
+                  </FormLabel>
+                  <Input
+                    type="text"
+                    h="50px"
+                    rounded="40px"
+                    border="1px solid"
+                    borderColor="border.200"
+                    value={realtorName}
+                    onChange={(e) => setRealtorName(e.target.value)}
+                  />
+                </FormControl>
+                <FormControl w={['100%', '50%']}>
+                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                    Phone Number
+                  </FormLabel>
+                  {/* {realtorPhone?.startsWith('234') ? ( */}
+                  <PhoneInput
+                    value={realtorPhone}
+                    onChange={(value: string) => setRealtorPhone(value)}
+                    containerStyle={{
+                      border: '1px solid #C0C0C0',
+                      backgroundColor: '#FBFBFB',
+                      padding: '5px 14px 5px 14px',
+                      borderRadius: '24px',
+                      height: '50px',
+                      width: '100%',
+                    }}
+                    inputStyle={{
+                      border: 'none',
+                      paddingLeft: '50px',
+                      paddingTop: '5px',
+                      backgroundColor: '#FBFBFB',
+                      width: '100%',
+                    }}
+                    buttonStyle={{
+                      border: 'none',
+                      background: 'transparent',
+                    }}
+                  />
+                  {/* // ) : (
                 //   <Input
                 //     type="tel"
                 //     value={realtorPhone}
                 //     onChange={(e) => setRealtorPhone(e.target.value)}
                 //   />
                 // )} */}
-              </FormControl>
-            </Flex>
+                </FormControl>
+              </Flex>
+            </Box>
           </Box>
-        </Box>
 
-        {/* Delivery details */}
-        <Box
-          border="1px solid"
-          borderColor="border.100"
-          p="32px"
-          borderRadius="8px"
-          w={['100%', '700px']}
-        >
-          <Heading
-            pb="12px"
-            borderBottom="1px solid"
+          {/* Delivery details */}
+          <Box
+            border="1px solid"
             borderColor="border.100"
-            fontSize={16}
-            color="brand.400"
-            mb="32px"
+            p="32px"
+            borderRadius="8px"
+            w="full"
           >
-            Delivery Status
-          </Heading>
-          <Box>
-            <Flex
-              alignItems="center"
-              gap="16px"
-              flexWrap={['wrap', 'nowrap']}
-              mb="16px"
+            <Heading
+              pb="12px"
+              borderBottom="1px solid"
+              borderColor="border.100"
+              fontSize={16}
+              color="brand.400"
+              mb="32px"
             >
-              <FormControl>
-                <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                  Payment Status
-                </FormLabel>
-                <Select
-                  h="50px"
-                  rounded="40px"
-                  border="1px solid"
-                  borderColor="border.200"
-                  value={paymentStatus}
-                  onChange={(e) => setPaymentStatus(e.target.value)}
-                  placeholder="Select payment status"
-                >
-                  <option value="Completed">Completed</option>
-                  <option value="Pending">Pending</option>
-                  <option value="Ongoing">Ongoing</option>
-                </Select>
-              </FormControl>
-              <FormControl>
-                <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                  Allocation Status
-                </FormLabel>
-                <Select
-                  h="50px"
-                  rounded="40px"
-                  border="1px solid"
-                  borderColor="border.200"
-                  value={allocationStatus}
-                  onChange={(e) => setAllocationStatus(e.target.value)}
-                  placeholder="Select allocation status"
-                >
-                  <option value="Completed">Completed</option>
-                  <option value="Pending">Pending</option>
-                  <option value="Ongoing">Ongoing</option>
-                </Select>
-              </FormControl>
-            </Flex>
-            <Flex alignItems="center" gap="16px" flexWrap={['wrap', 'nowrap']}>
-              <FormControl>
-                <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                  Documentation Status
-                </FormLabel>
-                <Select
-                  h="50px"
-                  rounded="40px"
-                  border="1px solid"
-                  borderColor="border.200"
-                  value={documentationStatus}
-                  onChange={(e) => setDocumentationStatus(e.target.value)}
-                  placeholder="Select documentation status"
-                >
-                  <option value="Completed">Completed</option>
-                  <option value="Pending">Pending</option>
-                  <option value="Ongoing">Ongoing</option>
-                </Select>
-              </FormControl>
-              <FormControl>
-                <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                  Handover Status
-                </FormLabel>
-                <Select
-                  h="50px"
-                  rounded="40px"
-                  border="1px solid"
-                  borderColor="border.200"
-                  value={handoverStatus}
-                  onChange={(e) => setHandoverStatus(e.target.value)}
-                  placeholder="Select handover status"
-                >
-                  <option value="Completed">Completed</option>
-                  <option value="Pending">Pending</option>
-                  <option value="Ongoing">Ongoing</option>
-                </Select>
-              </FormControl>
-            </Flex>
+              Delivery Status
+            </Heading>
+            <Box>
+              <Flex
+                alignItems="center"
+                gap="16px"
+                flexWrap={['wrap', 'nowrap']}
+                mb="16px"
+              >
+                <FormControl>
+                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                    Payment Status
+                  </FormLabel>
+                  <Select
+                    h="50px"
+                    rounded="40px"
+                    border="1px solid"
+                    borderColor="border.200"
+                    value={paymentStatus}
+                    onChange={(e) => setPaymentStatus(e.target.value)}
+                    placeholder="Select payment status"
+                  >
+                    <option value="Completed">Completed</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Ongoing">Ongoing</option>
+                  </Select>
+                </FormControl>
+                <FormControl>
+                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                    Allocation Status
+                  </FormLabel>
+                  <Select
+                    h="50px"
+                    rounded="40px"
+                    border="1px solid"
+                    borderColor="border.200"
+                    value={allocationStatus}
+                    onChange={(e) => setAllocationStatus(e.target.value)}
+                    placeholder="Select allocation status"
+                  >
+                    <option value="Completed">Completed</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Ongoing">Ongoing</option>
+                  </Select>
+                </FormControl>
+              </Flex>
+              <Flex
+                alignItems="center"
+                gap="16px"
+                flexWrap={['wrap', 'nowrap']}
+              >
+                <FormControl>
+                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                    Documentation Status
+                  </FormLabel>
+                  <Select
+                    h="50px"
+                    rounded="40px"
+                    border="1px solid"
+                    borderColor="border.200"
+                    value={documentationStatus}
+                    onChange={(e) => setDocumentationStatus(e.target.value)}
+                    placeholder="Select documentation status"
+                  >
+                    <option value="Completed">Completed</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Ongoing">Ongoing</option>
+                  </Select>
+                </FormControl>
+                <FormControl>
+                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                    Handover Status
+                  </FormLabel>
+                  <Select
+                    h="50px"
+                    rounded="40px"
+                    border="1px solid"
+                    borderColor="border.200"
+                    value={handoverStatus}
+                    onChange={(e) => setHandoverStatus(e.target.value)}
+                    placeholder="Select handover status"
+                  >
+                    <option value="Completed">Completed</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Ongoing">Ongoing</option>
+                  </Select>
+                </FormControl>
+              </Flex>
+            </Box>
           </Box>
-        </Box>
-      </Stack>
+        </Stack>
+      )}
     </Box>
   );
 };

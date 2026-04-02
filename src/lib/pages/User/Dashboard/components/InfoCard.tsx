@@ -5,18 +5,21 @@ interface InfoCardProps {
   title: string;
   description: string;
   icon: React.ReactNode;
+  onClick: () => void;
 }
 
-const InfoCard = ({ icon, title, description }: InfoCardProps) => {
+const InfoCard = ({ icon, title, description, onClick }: InfoCardProps) => {
   return (
     <Box
-      w="257px"
+      w={['257px', '25%']}
       h="78px"
       py="16px"
       px="10px"
       border="1px solid"
       borderColor="brand.900"
       rounded="5px"
+      cursor="pointer"
+      onClick={onClick}
     >
       <Flex alignItems="center" gap="12px" h="100%">
         <Box as="span">{icon}</Box>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, createContext } from 'react';
+import React, { useEffect, createContext, useState } from 'react';
 import Notes from './components/Notes';
 import AssetDetails from './components/AssetDetails';
 import Header from './components/Header';
@@ -18,6 +18,7 @@ const index = () => {
   const toast = useToast();
   const { id } = useParams();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
   const [propertyDetails, setPropertyDetails] = React.useState<any>([]);
   const [propertySize, setPropertySize] = React.useState<string>('');
   const [boughtDate, setBoughtDate] = React.useState<string>('');
@@ -42,6 +43,7 @@ const index = () => {
   const [comment, setComment] = React.useState<string>('');
 
   const getAssetDetails = async () => {
+    setLoading(true);
     try {
       const res = await GetAssetDetails(id as string);
       const data = await res.data;
@@ -49,6 +51,7 @@ const index = () => {
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -185,6 +188,7 @@ const index = () => {
       <Box>
         <Stack>
           <Header
+            fetching={loading}
             updateAsset={UpdateAsset}
             loading={isLoading}
             propertyName={propertyDetails?.property_name}
@@ -196,7 +200,10 @@ const index = () => {
               flexWrap={['wrap', 'nowrap']}
               gap="40px"
             >
-              <AssetDetails propertyDetails={propertyDetails} />
+              <AssetDetails
+                fetching={loading}
+                propertyDetails={propertyDetails}
+              />
               {/* <Notes /> */}
             </Flex>
           </Box>

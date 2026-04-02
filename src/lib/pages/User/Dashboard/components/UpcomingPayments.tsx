@@ -115,7 +115,7 @@ const UpcomingPayments = ({
                           fontSize={14}
                           textTransform="capitalize"
                         >
-                          Payment Interval
+                          Payment Duration
                         </Th>
                         <Th
                           color="#222222"
@@ -211,11 +211,11 @@ const UpcomingPayments = ({
                                     fontSize={14}
                                     color="color.100"
                                     fontWeight={500}
-                                    // onClick={() =>
-                                    //   navigate(
-                                    //     `/user/my-assets/${asset?.id}/update-details`
-                                    //   )
-                                    // }
+                                    onClick={() =>
+                                      navigate(
+                                        `/user/my-assets/${asset?.id}/update-details`
+                                      )
+                                    }
                                   >
                                     Update asset details
                                   </MenuItem>
@@ -240,10 +240,10 @@ const UpcomingPayments = ({
                                     fontSize={14}
                                     color="color.100"
                                     fontWeight={500}
-                                    onClick={() => {
-                                      //   setIsOpen(true);
-                                      //   setSelectedAssetId(asset?.id);
-                                    }}
+                                    // onClick={() => {
+                                    //   //   setIsOpen(true);
+                                    //   //   setSelectedAssetId(asset?.id);
+                                    // }}
                                   >
                                     Delete asset
                                   </MenuItem>

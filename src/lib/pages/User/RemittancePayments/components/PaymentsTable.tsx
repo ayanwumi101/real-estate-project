@@ -46,6 +46,11 @@ const PaymentsTable = ({
 
   const payments =
     activeTab === 'pending' ? pendingPayments : completedPayments;
+  const pendingPaymentsSummation = pendingPayments?.reduce(
+    (acc: number, payment: any) => acc + Number(payment?.amount),
+    0
+  );
+
   return (
     <Fragment>
       {loading ? (
@@ -267,40 +272,63 @@ const PaymentsTable = ({
               </Table>
               {assetDetails?.payments?.length > 0 && (
                 <Box w="full" bg="white" pt="10px">
-                  <Flex alignItems="center" justifyContent="center" gap="13px">
-                    <Button
-                      onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-                      isDisabled={page === 1}
-                      border="1px solid #E4E4E4"
-                      rounded="6px"
-                      variant="outline"
-                      p="8px"
+                  <Flex alignItems="center" justifyContent="flex-end">
+                    <Flex
+                      alignItems="center"
+                      justifyContent="center"
+                      gap="13px"
+                      w="full"
                     >
-                      <PreviousPageIcon />
-                    </Button>
-                    <Text fontWeight={600} fontSize={17}>
-                      {page}
-                    </Text>
-                    <Button
-                      border="1px solid #E4E4E4"
-                      rounded="6px"
-                      variant="outline"
-                      p="8px"
-                      onClick={() =>
-                        setPage((prev) =>
-                          prev <
+                      <Button
+                        onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                        isDisabled={page === 1}
+                        border="1px solid #E4E4E4"
+                        rounded="6px"
+                        variant="outline"
+                        p="8px"
+                      >
+                        <PreviousPageIcon />
+                      </Button>
+                      <Text fontWeight={600} fontSize={17}>
+                        {page}
+                      </Text>
+                      <Button
+                        border="1px solid #E4E4E4"
+                        rounded="6px"
+                        variant="outline"
+                        p="8px"
+                        onClick={() =>
+                          setPage((prev) =>
+                            prev <
+                            Math.ceil(assetDetails?.payments?.length / limit)
+                              ? prev + 1
+                              : prev
+                          )
+                        }
+                        isDisabled={
+                          page >=
                           Math.ceil(assetDetails?.payments?.length / limit)
-                            ? prev + 1
-                            : prev
-                        )
-                      }
-                      isDisabled={
-                        page >=
-                        Math.ceil(assetDetails?.payments?.length / limit)
-                      }
-                    >
-                      <NextPageIcon />
-                    </Button>
+                        }
+                      >
+                        <NextPageIcon />
+                      </Button>
+                    </Flex>
+                    {activeTab === 'pending' && (
+                      <Box
+                        bg="#EDEDFF"
+                        p="8px 16px"
+                        rounded="10px"
+                        w="fit-content"
+                        mr="3"
+                      >
+                        <Text color="#ABABFF" fontSize={11} fontWeight={500}>
+                          Total Pending
+                        </Text>
+                        <Heading fontWeight={500} fontSize={14}>
+                          {FormatAmount(Number(pendingPaymentsSummation))}
+                        </Heading>
+                      </Box>
+                    )}
                   </Flex>
                 </Box>
               )}

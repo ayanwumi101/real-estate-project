@@ -158,3 +158,14 @@ export const AddPaymentToAsset = async (data: any) => {
   );
   return response.data;
 };
+
+export const ChangeAssetStatus = async (
+  propertyId: string,
+  data: { is_occupied: boolean }
+) => {
+  const response = await axiosInstance.put(
+    `/user/asset/status/${propertyId}`,
+    data
+  );
+  return response.data;
+};

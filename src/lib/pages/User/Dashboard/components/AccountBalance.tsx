@@ -7,7 +7,8 @@ import {
   Stack,
   Flex,
   Button,
-  Image,Skeleton
+  Image,
+  Skeleton,
 } from '@chakra-ui/react';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
@@ -26,10 +27,10 @@ import useNavigate from '~/lib/utils/useNavigate';
 const AccountBalance = ({
   totalInvestment,
   totalAssets,
-  assetsLoading
+  assetsLoading,
 }: {
   totalInvestment: number;
-    totalAssets: number;
+  totalAssets: number;
   assetsLoading: boolean;
 }) => {
   const { userDetails, isUserDetailsLoading } = useContext(AppContext);
@@ -54,10 +55,10 @@ const AccountBalance = ({
                 py={['10px', '16px']}
                 px={['15px', '20px']}
               >
-                <Stack h='full' justifyContent='space-between'>
+                <Stack h="full" justifyContent="space-between">
                   <Skeleton rounded="2px" h="10px" w="50%" />
                   <Skeleton rounded="2px" h="15px" w="75%" />
-                  <Skeleton w='150px' rounded='40px' h='42px' />
+                  <Skeleton w="150px" rounded="40px" h="42px" />
                 </Stack>
               </Box>
             ) : (
@@ -143,39 +144,41 @@ const AccountBalance = ({
               justifyContent="space-between"
               w="full"
               overflow="auto"
-              gap={['20px', '0px']}
+              gap={['20px', '20px']}
               pb={['4', '0']}
             >
-              <Link href="/user/my-assets/add-assets">
-                <InfoCard
-                  icon={<AddNewAssetIcon />}
-                  title="Add new asset"
-                  description="Register newly acquired property"
-                />
-              </Link>
-              <Link href="/user/my-assets">
-                <InfoCard
-                  icon={<RegisterPaymentIcon />}
-                  title="Register Payment"
-                  description="Add a recent payment made "
-                />
-              </Link>
-              <Link href="/user/nok/add">
-                {' '}
-                <InfoCard
-                  icon={<DashboardAddNextOfKinIcon />}
-                  title="Add next of kin"
-                  description="Register a new next of kin"
-                />
-              </Link>
-              <Link href="/user/my-assets/add-assets">
-                {' '}
-                <InfoCard
-                  icon={<AddNewAssetIcon />}
-                  title="Add new property"
-                  description="Just acquired a new asset?"
-                />
-              </Link>
+              {/* <Link href="/user/my-assets/add-assets"> */}
+              <InfoCard
+                icon={<AddNewAssetIcon />}
+                title="Add new asset"
+                description="Register newly acquired property"
+                onClick={() => navigate('/user/my-assets/add-assets')}
+              />
+              {/* </Link> */}
+              {/* <Link href="/user/my-assets"> */}
+              <InfoCard
+                icon={<RegisterPaymentIcon />}
+                title="Register Payment"
+                description="Add a recent payment made"
+                onClick={() => navigate('/user/my-assets')}
+              />
+              {/* </Link> */}
+              {/* <Link href="/user/nok/add"> */}{' '}
+              <InfoCard
+                icon={<DashboardAddNextOfKinIcon />}
+                title="Add next of kin"
+                description="Register a new next of kin"
+                onClick={() => navigate('/user/nok/add')}
+              />
+              {/* </Link> */}
+              {/* <Link href="/user/my-assets/add-assets"> */}{' '}
+              <InfoCard
+                icon={<AddNewAssetIcon />}
+                title="Add new property"
+                description="Just acquired a new asset?"
+                onClick={() => navigate('/user/my-assets/add-assets')}
+              />
+              {/* </Link> */}
             </Flex>
           </Box>
         </Stack>

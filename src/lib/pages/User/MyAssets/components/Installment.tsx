@@ -159,7 +159,7 @@ const Installment = ({
                       color="#222222"
                       fontWeight={500}
                       fontSize={14}
-                      textTransform="capitalize"
+                      textTransform="none"
                     >
                       No of Payments
                     </Th>
@@ -271,7 +271,7 @@ const Installment = ({
                                   fontWeight={500}
                                   onClick={() =>
                                     navigate(
-                                      `/user/my-assets/${asset?.id}/payments`
+                                      `/user/portfolio/${asset?.id}/payments`
                                     )
                                   }
                                 >
@@ -284,14 +284,28 @@ const Installment = ({
                                   fontSize={14}
                                   color="color.100"
                                   fontWeight={500}
-                                  // onClick={() => {
-                                  //   setIsOpen(true);
-                                  //   setSelectedAssetId(asset?.id);
-                                  // }}
+                                  onClick={() =>
+                                    navigate(
+                                      `/user/my-assets/${asset?.id}/add-payment`
+                                    )
+                                  }
+                                >
+                                  Add new payment
+                                </MenuItem>
+                                {/* <MenuItem
+                                  py="12px"
+                                  px="16px"
+                                  _hover={{ bg: 'border.100' }}
+                                  fontSize={14}
+                                  color="color.100"
+                                  fontWeight={500}
+                                  onClick={() => {
+                                    setIsOpen(true);
+                                    setSelectedAssetId(asset?.id);
+                                  }}
                                 >
                                   Change asset status
-                                </MenuItem>
-
+                                </MenuItem> */}
                                 <MenuItem
                                   py="12px"
                                   px="16px"

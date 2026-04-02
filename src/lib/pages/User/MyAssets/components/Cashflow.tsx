@@ -36,7 +36,6 @@ import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
 import DeleteAssetConfirmationModal from '../Modals/DeleteAssetConfirmationModal';
 
-
 const Cashflow = ({
   assets,
   setAssets,
@@ -54,37 +53,37 @@ const Cashflow = ({
   const [isOpen, setIsOpen] = React.useState(false);
   const [selectedAssetId, setSelectedAssetId] = React.useState<string>('');
 
-   const deleteAsset = async () => {
-     setIsLoading(true);
-     try {
-       const res = await DeleteAsset(selectedAssetId);
-       if (res.status) {
-         const res = await GetUserAssets();
-         setAssets(res.data);
-         setIsLoading(false);
-         setIsOpen(false);
-         toast({
-           title: 'Asset Deleted',
-           description: 'Asset has been deleted successfully',
-           status: 'success',
-           duration: 3000,
-           isClosable: true,
-           position: 'top-right',
-         });
-       }
-     } catch (error: any) {
-       console.error('Error deleting asset:', error);
-       setIsLoading(false);
-       toast({
-         title: 'Error Deleting Asset',
-         description: error?.response?.data?.message,
-         status: 'error',
-         duration: 3000,
-         isClosable: true,
-         position: 'top-right',
-       });
-     }
-   };
+  const deleteAsset = async () => {
+    setIsLoading(true);
+    try {
+      const res = await DeleteAsset(selectedAssetId);
+      if (res.status) {
+        const res = await GetUserAssets();
+        setAssets(res.data);
+        setIsLoading(false);
+        setIsOpen(false);
+        toast({
+          title: 'Asset Deleted',
+          description: 'Asset has been deleted successfully',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        });
+      }
+    } catch (error: any) {
+      console.error('Error deleting asset:', error);
+      setIsLoading(false);
+      toast({
+        title: 'Error Deleting Asset',
+        description: error?.response?.data?.message,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      });
+    }
+  };
 
   return (
     <Box>
@@ -145,7 +144,7 @@ const Cashflow = ({
                       fontSize={14}
                       textTransform="capitalize"
                     >
-                      Status
+                      Duration
                     </Th>
                     <Th
                       color="#222222"
@@ -163,6 +162,7 @@ const Cashflow = ({
                     >
                       No of Payments
                     </Th>
+
                     <Th
                       color="#222222"
                       fontWeight={500}
@@ -215,15 +215,19 @@ const Cashflow = ({
                               : 'N/A'}
                           </Td>
                           <Td fontWeight={500} fontSize={14} color="#8295AA">
-                            Completed
+                            {asset?.cashflow_duration
+                              ? `${asset?.cashflow_duration}`
+                              : 'N/A'}
                           </Td>
                           <Td fontWeight={500} fontSize={14} color="#8295AA">
                             {asset?.cashflow_amount
                               ? `${FormatAmount(Number(asset?.cashflow_amount))}`
-                              : 'N/A'}
+                              : 0}
                           </Td>
                           <Td fontWeight={500} fontSize={14} color="#8295AA">
-                            {asset?.no_of_payments || 0}
+                            {asset?.no_of_payments
+                              ? `${asset?.no_of_payments}`
+                              : 0}
                           </Td>
                           <Td fontWeight={500} fontSize={14} color="#8295AA">
                             {asset?.cashflow_payment_due
@@ -275,7 +279,7 @@ const Cashflow = ({
                                   fontWeight={500}
                                   onClick={() =>
                                     navigate(
-                                      `/user/my-assets/${asset?.id}/payments`
+                                      `/user/portfolio/${asset?.id}/payments`
                                     )
                                   }
                                 >
@@ -311,8 +315,8 @@ const Cashflow = ({
                       isDisabled={page === 1}
                       border="1px solid #E4E4E4"
                       rounded="6px"
-                          variant="outline"
-                          p='8px'
+                      variant="outline"
+                      p="8px"
                     >
                       <PreviousPageIcon />
                     </Button>
@@ -322,8 +326,8 @@ const Cashflow = ({
                     <Button
                       border="1px solid #E4E4E4"
                       rounded="6px"
-                          variant="outline"
-                          p='8px'
+                      variant="outline"
+                      p="8px"
                       onClick={() =>
                         setPage((prev) =>
                           prev < Math.ceil(assets.length / limit)

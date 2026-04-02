@@ -74,7 +74,8 @@ const Header = ({
             onClick={() =>
               navigate(`/user/portfolio/${assetDetails?.id}/add-payment`)
             }
-            w={['full', 'auto']}
+            w={['full', 'fit-content']}
+            px="30px"
           >
             Add new payment
           </Button>
