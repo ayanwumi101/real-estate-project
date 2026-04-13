@@ -24,7 +24,7 @@ const index = () => {
     try {
       const res = await GetUserAssetsWithFilter({
         search: debouncedSearchQuery,
-        status: status === 'occupied' ? true : false,
+        status: status === '' ? '' : status === 'occupied' ? true : false,
         duration: duration,
         sort_by: sort,
         sort_order: order,
@@ -49,7 +49,7 @@ const index = () => {
 
     debounceTimeoutRef.current = setTimeout(() => {
       setDebouncedSearchQuery(searchQuery);
-    }, 2000);
+    }, 1000);
 
     return () => {
       if (debounceTimeoutRef.current) {

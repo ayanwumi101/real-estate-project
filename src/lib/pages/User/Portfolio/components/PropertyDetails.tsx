@@ -212,7 +212,7 @@ const PropertyListTable = ({
                           {asset?.cashflow_duration}
                         </Td>
                         <Td fontWeight={500} fontSize={14} color="#8295AA">
-                          {asset?.payments?.length}
+                          {asset?.no_of_payments}
                         </Td>
                         <Td fontWeight={500} fontSize={14} color="#8295AA">
                           {asset?.total_payment_amount
