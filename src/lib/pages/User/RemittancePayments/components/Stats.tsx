@@ -99,10 +99,12 @@ const Stats = ({
                 Next Due Payment
               </Text>
               <Heading fontSize={20} fontWeight={500}>
-                {assetDetails?.cashflow_payment_due
-                  ? moment(assetDetails?.cashflow_payment_due).format(
-                      'ddd, Do MMM YYYY'
-                    )
+                {assetDetails?.cashflow_payment_due ||
+                assetDetails?.next_due_date
+                  ? moment(
+                      assetDetails?.cashflow_payment_due ||
+                        assetDetails?.next_due_date
+                    ).format('ddd, Do MMM YYYY')
                   : 'N/A'}
               </Heading>
             </Stack>
