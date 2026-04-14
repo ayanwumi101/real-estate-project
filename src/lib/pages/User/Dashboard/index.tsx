@@ -9,13 +9,15 @@ import DashboardInfo from './components/DashboardInfo';
 import UpcomingPayments from './components/UpcomingPayments';
 
 const index = () => {
+  const [page, setPage] = useState<number>(1);
+  const [dataPerPage, setDataPerPage] = useState<number>(10);
   const [assets, setAssets] = React.useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const GetAssets = async () => {
     setLoading(true);
     try {
-      const res = await GetUserAssets();
+      const res = await GetUserAssets(dataPerPage, page);
       setAssets(res.data);
     } catch (error) {
       console.log(error);
