@@ -17,12 +17,16 @@ const index = () => {
   const [assets, setAssets] = useState<any[]>([]);
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(1);
+  const [dataPerPage, setDataPerPage] = useState<number>(20);
+  const [hasNextPage, setHasNextPage] = useState<boolean>(false);
 
   const GetAssets = async () => {
     setLoading(true);
     try {
-      const res = await GetUserAssets();
-      setAssets(res.data);
+      const res = await GetUserAssets(dataPerPage, page);
+      setAssets(res?.data);
+      setHasNextPage(res?.meta?.last_page > 1);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -33,7 +37,7 @@ const index = () => {
 
   useEffect(() => {
     GetAssets();
-  }, []);
+  }, [page]);
 
   const cashflowAssets = assets?.filter(
     (asset) => asset?.asset_type === 'cashflow'
@@ -96,6 +100,10 @@ const index = () => {
               assets={ownedAssets}
               setAssets={setAssets}
               loading={loading}
+              page={page}
+              setPage={setPage}
+              dataPerPage={dataPerPage}
+              hasNextPage={hasNextPage}
             />
           )}
           {activeTab === 'Cashflow' && (
@@ -103,6 +111,10 @@ const index = () => {
               assets={cashflowAssets}
               setAssets={setAssets}
               loading={loading}
+              page={page}
+              setPage={setPage}
+              hasNextPage={hasNextPage}
+              dataPerPage={dataPerPage}
             />
           )}
           {activeTab === 'Installment' && (
@@ -110,6 +122,10 @@ const index = () => {
               assets={installmentAssets}
               setAssets={setAssets}
               loading={loading}
+              page={page}
+              setPage={setPage}
+              hasNextPage={hasNextPage}
+              dataPerPage={dataPerPage}
             />
           )}
         </Box>

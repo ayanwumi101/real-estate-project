@@ -41,8 +41,8 @@ export const UpdateAssetCashflowDetails = async (
   return response.data;
 };
 
-export const GetUserAssets = async () => {
-  const response = await axiosInstance.get(API_ROUTES.GET_USER_ASSETS);
+export const GetUserAssets = async (perPage: number, page: number) => {
+  const response = await axiosInstance.get(`${API_ROUTES.GET_USER_ASSETS}?page=${page}&per_page=${perPage}`);
   return response.data;
 };
 

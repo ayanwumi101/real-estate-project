@@ -37,15 +37,21 @@ const OwnedAssets = ({
   assets,
   setAssets,
   loading,
+  page,
+  setPage,
+  hasNextPage,
+  dataPerPage
 }: {
   assets: any[];
   setAssets: any;
   loading: boolean;
+  page: number;
+  setPage: (page: number) => void;
+  dataPerPage: number;
+  hasNextPage: boolean;
 }) => {
   const toast = useToast();
   const navigate = useNavigate();
-  const [page, setPage] = React.useState(1);
-  const [limit, setLimit] = React.useState(20);
   const [isOpen, setIsOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [selectedAssetId, setSelectedAssetId] = React.useState<string>('');
@@ -55,7 +61,7 @@ const OwnedAssets = ({
     try {
       const res = await DeleteAsset(selectedAssetId);
       if (res.status) {
-        const res = await GetUserAssets();
+        const res = await GetUserAssets(dataPerPage, page);
         setAssets(res.data);
         setIsLoading(false);
         setIsOpen(false);
@@ -151,72 +157,70 @@ const OwnedAssets = ({
                   </Tr>
                 </Thead>
                 <Tbody color="#222222" maxH="450px" overflow="auto">
-                  {assets
-                    ?.slice((page - 1) * limit, page * limit)
-                    ?.map((asset) => {
-                      return (
-                        <Tr key={asset?.id} border="none" cursor="pointer">
-                          <Td fontSize={15} color="#222222" fontWeight={600}>
-                            <Stack>
-                              <Heading
-                                color="#2E353F"
-                                fontSize={16}
-                                fontWeight={600}
+                  {assets?.map((asset) => {
+                    return (
+                      <Tr key={asset?.id} border="none" cursor="pointer">
+                        <Td fontSize={15} color="#222222" fontWeight={600}>
+                          <Stack>
+                            <Heading
+                              color="#2E353F"
+                              fontSize={16}
+                              fontWeight={600}
+                            >
+                              {asset?.property_name}
+                            </Heading>
+                            <Flex alignItems="center" gap="10px">
+                              <LocationIcon />
+                              <Text fontSize={12} color="#222222">
+                                {asset?.city_name}
+                              </Text>
+                            </Flex>
+                          </Stack>
+                        </Td>
+                        <Td fontWeight={500} fontSize={14} color="#8295AA">
+                          {asset?.property_type}
+                        </Td>
+                        <Td fontWeight={500} fontSize={14} color="#8295AA">
+                          {FormatAmount(Number(asset?.property_cost))}
+                        </Td>
+                        <Td fontWeight={500} fontSize={14} color="#8295AA">
+                          {asset?.allocation_status}
+                        </Td>
+                        <Td>
+                          <Menu>
+                            <MenuButton as={Button} rounded="5px" bg="bg.200">
+                              <VerticalEllipsisIcon />
+                            </MenuButton>
+                            <MenuList py="0px">
+                              <MenuItem
+                                py="12px"
+                                px="16px"
+                                _hover={{ bg: 'border.100' }}
+                                fontSize={14}
+                                color="color.100"
+                                fontWeight={500}
+                                onClick={() =>
+                                  navigate(`/user/my-assets/${asset?.id}`)
+                                }
                               >
-                                {asset?.property_name}
-                              </Heading>
-                              <Flex alignItems="center" gap="10px">
-                                <LocationIcon />
-                                <Text fontSize={12} color="#222222">
-                                  {asset?.city_name}
-                                </Text>
-                              </Flex>
-                            </Stack>
-                          </Td>
-                          <Td fontWeight={500} fontSize={14} color="#8295AA">
-                            {asset?.property_type}
-                          </Td>
-                          <Td fontWeight={500} fontSize={14} color="#8295AA">
-                            {FormatAmount(Number(asset?.property_cost))}
-                          </Td>
-                          <Td fontWeight={500} fontSize={14} color="#8295AA">
-                            {asset?.allocation_status}
-                          </Td>
-                          <Td>
-                            <Menu>
-                              <MenuButton as={Button} rounded="5px" bg="bg.200">
-                                <VerticalEllipsisIcon />
-                              </MenuButton>
-                              <MenuList py="0px">
-                                <MenuItem
-                                  py="12px"
-                                  px="16px"
-                                  _hover={{ bg: 'border.100' }}
-                                  fontSize={14}
-                                  color="color.100"
-                                  fontWeight={500}
-                                  onClick={() =>
-                                    navigate(`/user/my-assets/${asset?.id}`)
-                                  }
-                                >
-                                  View asset
-                                </MenuItem>
-                                <MenuItem
-                                  py="12px"
-                                  px="16px"
-                                  _hover={{ bg: 'border.100' }}
-                                  fontSize={14}
-                                  color="color.100"
-                                  fontWeight={500}
-                                  onClick={() =>
-                                    navigate(
-                                      `/user/my-assets/${asset?.id}/update-details`
-                                    )
-                                  }
-                                >
-                                  Update asset details
-                                </MenuItem>
-                                {/* <MenuItem
+                                View asset
+                              </MenuItem>
+                              <MenuItem
+                                py="12px"
+                                px="16px"
+                                _hover={{ bg: 'border.100' }}
+                                fontSize={14}
+                                color="color.100"
+                                fontWeight={500}
+                                onClick={() =>
+                                  navigate(
+                                    `/user/my-assets/${asset?.id}/update-details`
+                                  )
+                                }
+                              >
+                                Update asset details
+                              </MenuItem>
+                              {/* <MenuItem
                                   py="12px"
                                   px="16px"
                                   _hover={{ bg: 'border.100' }}
@@ -230,33 +234,33 @@ const OwnedAssets = ({
                                 >
                                   Change asset status
                                 </MenuItem> */}
-                                <MenuItem
-                                  py="12px"
-                                  px="16px"
-                                  _hover={{ bg: 'border.100' }}
-                                  fontSize={14}
-                                  color="color.100"
-                                  fontWeight={500}
-                                  onClick={() => {
-                                    setIsOpen(true);
-                                    setSelectedAssetId(asset?.id);
-                                  }}
-                                >
-                                  Delete asset
-                                </MenuItem>
-                              </MenuList>
-                            </Menu>
-                          </Td>
-                        </Tr>
-                      );
-                    })}
+                              <MenuItem
+                                py="12px"
+                                px="16px"
+                                _hover={{ bg: 'border.100' }}
+                                fontSize={14}
+                                color="color.100"
+                                fontWeight={500}
+                                onClick={() => {
+                                  setIsOpen(true);
+                                  setSelectedAssetId(asset?.id);
+                                }}
+                              >
+                                Delete asset
+                              </MenuItem>
+                            </MenuList>
+                          </Menu>
+                        </Td>
+                      </Tr>
+                    );
+                  })}
                 </Tbody>
               </Table>
               {assets?.length > 0 && (
                 <Box w="full" bg="white" py="10px">
                   <Flex alignItems="center" justifyContent="center" gap="13px">
                     <Button
-                      onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                      onClick={() => setPage(page - 1)}
                       isDisabled={page === 1}
                       border="1px solid #E4E4E4"
                       rounded="6px"
@@ -273,14 +277,8 @@ const OwnedAssets = ({
                       rounded="6px"
                       variant="outline"
                       p="8px"
-                      onClick={() =>
-                        setPage((prev) =>
-                          prev < Math.ceil(assets.length / limit)
-                            ? prev + 1
-                            : prev
-                        )
-                      }
-                      isDisabled={page >= Math.ceil(assets.length / limit)}
+                      onClick={() => setPage(page + 1)}
+                      isDisabled={!hasNextPage}
                     >
                       <NextPageIcon />
                     </Button>
