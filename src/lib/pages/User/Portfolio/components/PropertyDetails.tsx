@@ -179,7 +179,7 @@ const PropertyListTable = ({
                           <Flex alignItems="center" gap="10px">
                             <Stack spacing="5px">
                               <Heading
-                                color="#2E353F"
+                                // color="#2E353F"
                                 fontWeight={500}
                                 fontSize={16}
                               >
@@ -188,7 +188,7 @@ const PropertyListTable = ({
                               <Flex alignItems="center" gap="6px">
                                 <GoLocation size={13} />
                                 <Text
-                                  color="#2E353F"
+                                  // color="#2E353F"
                                   fontWeight={400}
                                   fontSize={12}
                                 >
@@ -198,33 +198,28 @@ const PropertyListTable = ({
                             </Stack>
                           </Flex>
                         </Td>
-                        <Td fontWeight={500} fontSize={14} color="#8295AA">
+                        <Td fontWeight={500} fontSize={14}>
                           {asset?.property_cost
                             ? `${FormatAmount(Number(asset?.property_cost))}`
                             : 'N/A'}
                         </Td>
-                        <Td fontWeight={500} fontSize={14} color="#8295AA">
+                        <Td fontWeight={500} fontSize={14}>
                           {asset?.cashflow_amount
                             ? `${FormatAmount(Number(asset?.cashflow_amount))}`
                             : 'N/A'}
                         </Td>
-                        <Td fontWeight={500} fontSize={14} color="#8295AA">
+                        <Td fontWeight={500} fontSize={14}>
                           {asset?.cashflow_duration}
                         </Td>
-                        <Td fontWeight={500} fontSize={14} color="#8295AA">
+                        <Td fontWeight={500} fontSize={14}>
                           {asset?.no_of_payments}
                         </Td>
-                        <Td fontWeight={500} fontSize={14} color="#8295AA">
+                        <Td fontWeight={500} fontSize={14}>
                           {asset?.total_payment_amount
                             ? `${FormatAmount(Number(asset?.total_payment_amount))}`
                             : 'N/A'}
                         </Td>
-                        <Td
-                          fontWeight={500}
-                          fontSize={13}
-                          px="0"
-                          color="#8295AA"
-                        >
+                        <Td fontWeight={500} fontSize={13} px="0">
                           {asset?.is_occupied === true
                             ? 'Occupied'
                             : 'Not Occupied'}
@@ -234,7 +229,6 @@ const PropertyListTable = ({
                           fontSize={13}
                           // px="0"
                           // textAlign="center"
-                          color="#8295AA"
                         >
                           {asset?.cashflow_payment_due
                             ? moment(asset?.cashflow_payment_due).format(
@@ -242,7 +236,7 @@ const PropertyListTable = ({
                               )
                             : 'N/A'}
                         </Td>
-                        {/* <Td fontWeight={500} fontSize={14} color="#8295AA">
+                        {/* <Td fontWeight={500} fontSize={14} >
                           {asset?.cashflow_amount
                             ? `${FormatAmount(Number(asset?.cashflow_amount))}`
                             : 'N/A'}
@@ -254,7 +248,7 @@ const PropertyListTable = ({
                               )
                             : 'N/A'}
                         </Td> */}
-                        <Td fontWeight={400} fontSize={13} color="#8295AA">
+                        <Td fontWeight={400} fontSize={13}>
                           <Menu>
                             <MenuButton as={Button} rounded="5px" bg="bg.200">
                               <VerticalEllipsisIcon />

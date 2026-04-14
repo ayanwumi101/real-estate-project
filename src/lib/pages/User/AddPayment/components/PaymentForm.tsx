@@ -73,7 +73,7 @@ const PaymentForm = ({
           position: 'top-right',
         });
         resetForm();
-        navigate(`/user/my-assets/${assetId}/payments`);
+        navigate(`/user/portfolio/${assetId}/payments`);
       }
     } catch (error) {
       toast({
