@@ -168,7 +168,7 @@ const PaymentsTable = ({
                       >
                         <Td fontWeight={500} fontSize={14} color="#8295AA">
                           {assetDetails?.cashflow_payment_due
-                            ? moment(assetDetails?.cashflow_payment_due).format(
+                            ? moment(asset?.payment_due_date).format(
                                 'ddd, Do MMMM YYYY'
                               )
                             : 'N/A'}
