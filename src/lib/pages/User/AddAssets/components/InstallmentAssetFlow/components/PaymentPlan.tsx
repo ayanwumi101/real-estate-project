@@ -37,6 +37,7 @@ const PaymentPlan = ({
   } = useContext<any>(CreateAssetContext);
   const [amountPaid, setAmountPaid] = useState<string>('');
   const [amountLeft, setAmountLeft] = useState<string>('');
+  const [propertyCost, setPropertyCost] = useState<string>('')
 
   // Validation schema using Yup
   const validationSchema = Yup.object().shape({
@@ -51,7 +52,7 @@ const PaymentPlan = ({
 
   // Initial form values
   const initialValues = {
-    propertyCost: assetData?.property_cost || '',
+    propertyCost: assetData?.propertyCost || '',
     paymentDuration: assetData?.paymentDuration || '',
     amountPaid: assetData?.amountPaid || '',
     amountLeft: assetData?.amountLeft || '',
@@ -64,7 +65,7 @@ const PaymentPlan = ({
   const handleSubmit = async (values: any) => {
     setAssetData({
       ...assetData,
-      property_cost: values.propertyCost,
+      propertyCost: values.propertyCost,
       paymentDuration: values.paymentDuration,
       amountLeft: values.amountLeft,
       paymentPlan: values.paymentPlan,
@@ -124,6 +125,12 @@ const PaymentPlan = ({
                   </FormLabel>
                   <Field
                     as={Input}
+                    value={formatCurrency(propertyCost)}
+                    onChange={(e: any) => {
+                      const rawValue = e.target.value.replace(/[^\d]/g, '');
+                      setPropertyCost(rawValue);
+                      setFieldValue('propertyCost', rawValue);
+                    }}
                     name="propertyCost"
                     border="1px solid #C0C0C0"
                     bg="#FBFBFB"

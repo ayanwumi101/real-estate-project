@@ -82,7 +82,7 @@ const AddNextOfKin = ({
       phone: assetData?.phoneNumber,
       lga_id: assetData?.propertyAddress?.lga,
       asset_type: assetData?.assetType,
-      property_cost: '',
+      property_cost: assetData?.propertyCost,
       bought_date: '',
       cashflow_source: '',
       is_occupied: '',
