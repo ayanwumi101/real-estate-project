@@ -144,8 +144,8 @@ const AccountBalance = ({
               justifyContent="space-between"
               w="full"
               overflow="auto"
-              gap={['20px', '20px']}
-              pb={['4', '0']}
+              gap={['20px', '15px']}
+              pb={['4', '2']}
             >
               {/* <Link href="/user/my-assets/add-assets"> */}
               <InfoCard

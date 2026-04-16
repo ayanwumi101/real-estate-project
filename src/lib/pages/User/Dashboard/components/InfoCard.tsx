@@ -11,7 +11,7 @@ interface InfoCardProps {
 const InfoCard = ({ icon, title, description, onClick }: InfoCardProps) => {
   return (
     <Box
-      w={['257px', '25%']}
+      minW={['260px', '23.5%']}
       h="78px"
       py="16px"
       px="10px"

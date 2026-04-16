@@ -78,6 +78,8 @@ const AssetDetails = ({
     setDocumentationStatus,
     handoverStatus,
     setHandoverStatus,
+    nextRemittanceDate,
+    setNextRemittanceDate,
   } = useContext(AssetDetailsContext);
   return (
     <Box w={['full', '65%']}>
@@ -299,20 +301,20 @@ const AssetDetails = ({
                       onChange={(e) => setLastRemittanceDate(e.target.value)}
                     />
                   </FormControl>
-                  {/* <FormControl>
-                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
-                    Equity Ownership
-                  </FormLabel>
-                  <Input
-                    type="text"
-                    h="50px"
-                    rounded="40px"
-                    border="1px solid"
-                    borderColor="border.200"
-                    value={equityOwnership || 0}
-                    onChange={(e) => setEquityOwnership(e.target.value)}
-                  />
-                </FormControl> */}
+                  <FormControl>
+                    <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                      Next Remittance Due
+                    </FormLabel>
+                    <Input
+                      type="date"
+                      h="50px"
+                      rounded="40px"
+                      border="1px solid"
+                      borderColor="border.200"
+                      value={nextRemittanceDate?.split(' ')[0]}
+                      onChange={(e) => setNextRemittanceDate(e.target.value)}
+                    />
+                  </FormControl>
                 </Flex>
               </Box>
             </Box>

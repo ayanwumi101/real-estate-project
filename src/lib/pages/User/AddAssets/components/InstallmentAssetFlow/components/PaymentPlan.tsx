@@ -40,6 +40,7 @@ const PaymentPlan = ({
 
   // Validation schema using Yup
   const validationSchema = Yup.object().shape({
+    propertyCost: Yup.string().required('Property cost is required'),
     paymentDuration: Yup.string().required('Payment duration is required'),
     amountPaid: Yup.string().required('Amount paid is required'),
     amountLeft: Yup.string().required('Amount left is required'),
@@ -50,6 +51,7 @@ const PaymentPlan = ({
 
   // Initial form values
   const initialValues = {
+    propertyCost: assetData?.property_cost || '',
     paymentDuration: assetData?.paymentDuration || '',
     amountPaid: assetData?.amountPaid || '',
     amountLeft: assetData?.amountLeft || '',
@@ -62,6 +64,7 @@ const PaymentPlan = ({
   const handleSubmit = async (values: any) => {
     setAssetData({
       ...assetData,
+      property_cost: values.propertyCost,
       paymentDuration: values.paymentDuration,
       amountLeft: values.amountLeft,
       paymentPlan: values.paymentPlan,
@@ -113,6 +116,27 @@ const PaymentPlan = ({
           <Form>
             <Box w={['100%', '100%', '600px']}>
               <Stack spacing="24px">
+                <FormControl
+                  isInvalid={!!errors.propertyCost && !!touched.propertyCost}
+                >
+                  <FormLabel fontWeight={600} fontSize={16} color="#222222">
+                    Property Cost?
+                  </FormLabel>
+                  <Field
+                    as={Input}
+                    name="propertyCost"
+                    border="1px solid #C0C0C0"
+                    bg="#FBFBFB"
+                    h="50px"
+                    borderRadius="40px"
+                    placeholder="0 months"
+                    _placeholder={{ color: '#8295AA', fontWeight: 500 }}
+                  />
+                  <FormErrorMessage>
+                    {typeof errors.propertyCost === 'string' &&
+                      errors.propertyCost}
+                  </FormErrorMessage>
+                </FormControl>
                 <FormControl
                   isInvalid={
                     !!errors.paymentDuration && !!touched.paymentDuration

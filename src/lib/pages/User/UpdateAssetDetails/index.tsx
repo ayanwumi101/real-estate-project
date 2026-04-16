@@ -41,6 +41,8 @@ const index = () => {
   const [handoverStatus, setHandoverStatus] = React.useState<string>('');
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [comment, setComment] = React.useState<string>('');
+  const [nextRemittanceDate, setNextRemittanceDate] =
+    React.useState<string>('');
 
   const getAssetDetails = async () => {
     setLoading(true);
@@ -76,6 +78,7 @@ const index = () => {
       setDocumentationStatus(propertyDetails?.documentation_status);
       setHandoverStatus(propertyDetails?.handover_status);
       setComment(propertyDetails?.comment);
+      setNextRemittanceDate(propertyDetails?.cashflow_payment_due);
     }
   }, [propertyDetails]);
 
@@ -97,6 +100,7 @@ const index = () => {
       allocation_status: allocationStatus,
       documentation_status: documentationStatus,
       handover_status: handoverStatus,
+      cashflow_payment_due: nextRemittanceDate,
     };
     const data = {
       size: propertySize,
@@ -183,6 +187,8 @@ const index = () => {
         setHandoverStatus,
         comment,
         setComment,
+        nextRemittanceDate,
+        setNextRemittanceDate
       }}
     >
       <Box>
