@@ -41,6 +41,7 @@ const API_ROUTES = {
   REMOVE_NEXT_OF_KIN_FROM_ASSET: '/user/asset/remove-nok',
   GET_ASSET_DUE_DATES: '/user/asset',
   ADD_PAYMENT_TO_ASSET: '/user/asset/payment/add',
+  ADD_PAYMENT_TO_INSTALMENT_ASSET: '/user/asset/instalment-payment/add',
 
   //location endpoints
   GET_ALL_COUNTRIES: '/countries',

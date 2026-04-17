@@ -1032,7 +1032,7 @@ export const RemittanceSortAndFilter = ({
                   <MenuItemOption value="next_due_remittance" fontSize={13.5} fontWeight={500}>
                     Next Due Remittance
                   </MenuItemOption>
-                  <MenuItemOption value="no_of_payments" fontSize={13.5} fontWeight={500}>
+                  <MenuItemOption value="no_of_payment" fontSize={13.5} fontWeight={500}>
                     No of Payments
                   </MenuItemOption>
                   <MenuItemOption value="remittance_amount" fontSize={13.5} fontWeight={500}>
@@ -1056,7 +1056,7 @@ export const RemittanceSortAndFilter = ({
                     <MenuItemOption value="desc" fontSize={13.5} fontWeight={500}>Highest-Lowest</MenuItemOption>
                     <MenuItemOption value="asc" fontSize={13.5} fontWeight={500}>Lowest-Highest</MenuItemOption>
                   </MenuOptionGroup>
-                ) : sort === 'no_of_payments' ? (
+                ) : sort === 'no_of_payment' ? (
                   <MenuOptionGroup
                     defaultValue="asc"
                     fontSize={13.5}

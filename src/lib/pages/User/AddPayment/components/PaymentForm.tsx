@@ -17,6 +17,7 @@ import * as Yup from 'yup';
 import {
   AddAssetRemittance,
   AddPaymentToAsset,
+  AddPaymentToInstalmentAsset,
 } from '~/lib/api/services/assetsService';
 import { formatCurrency } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
@@ -56,24 +57,47 @@ const PaymentForm = ({
   ) => {
     setLoading(true);
     try {
-      const response = await AddPaymentToAsset({
-        payment_due_date: values.paymentDueDate,
-        property_id: assetId,
-        amount: values.remittanceAmount,
-        status: values.paymentStatus,
-        payment_date: values.paymentDate,
-      });
-      if (response.status === true) {
-        toast({
-          title: 'Success',
-          description: 'Payment details added successfully',
-          status: 'success',
-          duration: 3000,
-          isClosable: true,
-          position: 'top-right',
+      if (assetType === 'instalment') {
+        const response = await AddPaymentToInstalmentAsset({
+          payment_date: values.paymentDate,
+          amount: Number(values.remittanceAmount),
+          status: values.paymentStatus,
+          property_id: assetId as string,
+          payment_due_date: values.paymentDueDate,
         });
-        resetForm();
-        navigate(`/user/portfolio/${assetId}/payments`);
+         if (response.status === true) {
+           toast({
+             title: 'Success',
+             description: 'Payment details added successfully',
+             status: 'success',
+             duration: 3000,
+             isClosable: true,
+             position: 'top-right',
+           });
+           resetForm();
+           navigate(`/user/portfolio/${assetId}/payments`);
+         }
+      } else {
+        const response = await AddPaymentToAsset({
+          payment_due_date: values.paymentDueDate,
+          property_id: assetId,
+          amount: values.remittanceAmount,
+          status: values.paymentStatus,
+          payment_date: values.paymentDate,
+        });
+
+        if (response.status === true) {
+          toast({
+            title: 'Success',
+            description: 'Payment details added successfully',
+            status: 'success',
+            duration: 3000,
+            isClosable: true,
+            position: 'top-right',
+          });
+          resetForm();
+          navigate(`/user/portfolio/${assetId}/payments`);
+        }
       }
     } catch (error) {
       toast({

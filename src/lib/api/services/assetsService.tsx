@@ -159,6 +159,21 @@ export const AddPaymentToAsset = async (data: any) => {
   return response.data;
 };
 
+export const AddPaymentToInstalmentAsset = async (data: {
+  payment_date: string | Date;
+  amount: number;
+  status: string;
+  property_id: string;
+  payment_due_date: string | Date;
+}) => {
+  const response = await axiosInstance.post(
+    `${API_ROUTES.ADD_PAYMENT_TO_INSTALMENT_ASSET}`,
+    data
+  );
+  return response.data;
+};
+
+
 export const ChangeAssetStatus = async (
   propertyId: string,
   data: { is_occupied: boolean }
