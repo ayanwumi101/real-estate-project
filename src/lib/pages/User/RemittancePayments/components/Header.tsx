@@ -7,6 +7,7 @@ import {
   Text,
   Skeleton,
 } from '@chakra-ui/react';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import {
   AddIcon,
@@ -22,12 +23,13 @@ const Header = ({
   assetDetails: any;
   loading: boolean;
 }) => {
+  const router = useRouter();
   const navigate = useNavigate();
   return (
     <Box py="30px" px={['20px', '40px']} borderY="1px solid #E4E4E4">
       <Stack spacing="20px" alignItems="flex-start" w="full">
         <Button
-          onClick={() => navigate('/user/portfolio')}
+          onClick={() => router.back()}
           variant="ghost"
           leftIcon={<ChevronLeftIcon />}
           p="0"

@@ -64,7 +64,7 @@ const index = () => {
   }, []);
 
   const cashflowAssets = filteredAssets?.filter(
-    (asset) => asset?.asset_type !== 'owned'
+    (asset) => asset?.asset_type === 'cashflow'
   );
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
