@@ -28,11 +28,17 @@ const initialValues = {
   paymentDate: '',
   remittanceAmount: '',
 };
+
 const validationSchema = Yup.object().shape({
   paymentStatus: Yup.string().required('Payment status is required'),
   paymentDueDate: Yup.string().required('Payment due date is required'),
-  paymentDate: Yup.string().required('Payment date is required'),
+  paymentDate: Yup.string().when('paymentStatus', {
+    is: (value: string) => value === 'completed',
+    then: () => Yup.string().required('Payment date is required'),
+    otherwise: () => Yup.string().notRequired(),
+  }),
   remittanceAmount: Yup.number()
+    .typeError('Remittance amount must be a number')
     .required('Remittance amount is required')
     .positive('Remittance amount must be a positive number'),
 });
@@ -65,18 +71,18 @@ const PaymentForm = ({
           property_id: assetId as string,
           payment_due_date: values.paymentDueDate,
         });
-         if (response.status === true) {
-           toast({
-             title: 'Success',
-             description: 'Payment details added successfully',
-             status: 'success',
-             duration: 3000,
-             isClosable: true,
-             position: 'top-right',
-           });
-           resetForm();
-           navigate(`/user/portfolio/${assetId}/payments`);
-         }
+        if (response.status === true) {
+          toast({
+            title: 'Success',
+            description: 'Payment details added successfully',
+            status: 'success',
+            duration: 3000,
+            isClosable: true,
+            position: 'top-right',
+          });
+          resetForm();
+          navigate(`/user/portfolio/${assetId}/payments`);
+        }
       } else {
         const response = await AddPaymentToAsset({
           payment_due_date: values.paymentDueDate,
@@ -213,6 +219,7 @@ const PaymentForm = ({
                   name="paymentDate"
                   _placeholder={{ color: 'brand.800' }}
                   placeholder="Select payment date"
+                  isDisabled={values.paymentStatus === 'pending'}
                 />
                 <FormErrorMessage>{errors.paymentDate}</FormErrorMessage>
               </FormControl>

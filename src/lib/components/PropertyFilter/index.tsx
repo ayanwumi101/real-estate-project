@@ -1066,8 +1066,8 @@ export const RemittanceSortAndFilter = ({
                     fontWeight={500}
                     onChange={handleOrderChange}
                   >
-                    <MenuItemOption value="asc" fontSize={13.5} fontWeight={500}>Ascending</MenuItemOption>
-                    <MenuItemOption value="desc" fontSize={13.5} fontWeight={500}>Descending</MenuItemOption>
+                    <MenuItemOption value="asc" fontSize={13.5} fontWeight={500}>Lowest-Highest</MenuItemOption>
+                    <MenuItemOption value="desc" fontSize={13.5} fontWeight={500}>Highest-Lowest</MenuItemOption>
                   </MenuOptionGroup>
                 ) : (
                   <MenuOptionGroup
