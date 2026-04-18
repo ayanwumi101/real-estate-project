@@ -140,7 +140,7 @@ const PaymentsTable = ({
                       fontSize={14}
                       textTransform="capitalize"
                     >
-                      Remittance Amount
+                      {assetDetails?.asset_type === 'cashflow' ? "Remittance Amount" : "Instalment Amount"}
                     </Th>
                     <Th
                       color="#222222"

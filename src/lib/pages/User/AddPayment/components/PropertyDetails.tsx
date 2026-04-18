@@ -58,7 +58,12 @@ const PropertyDetails = ({
               <Skeleton w="150px" h="20px" rounded="3px" />
             </Flex>
           ) : (
-            <Flex alignItems="center" justifyContent="space-between">
+            <Flex
+              alignItems="center"
+              justifyContent="space-between"
+              flexWrap="wrap"
+              gap={[4, 0]}
+            >
               <Stack>
                 <Heading fontWeight={600} fontSize={16} color="brand.600">
                   Current{' '}
@@ -67,7 +72,7 @@ const PropertyDetails = ({
                     : 'Installment'}
                 </Heading>
                 <Text fontWeight={500} fontSize={14} color="brand.300">
-                  Each payment received, for this property
+                  Each payment paid, for this property
                 </Text>
               </Stack>
               <Text fontWeight={500} color="brand.300">
@@ -83,7 +88,12 @@ const PropertyDetails = ({
               <Skeleton w="150px" h="20px" rounded="3px" />
             </Flex>
           ) : (
-            <Flex alignItems="center" justifyContent="space-between">
+            <Flex
+              alignItems="center"
+              justifyContent="space-between"
+              flexWrap="wrap"
+              gap={[4, 0]}
+            >
               <Stack>
                 <Heading fontWeight={600} fontSize={16} color="brand.600">
                   {'Total ' +
@@ -92,7 +102,7 @@ const PropertyDetails = ({
                       : 'installment')}
                 </Heading>
                 <Text fontWeight={500} fontSize={14} color="brand.300">
-                  All payments recieved so far, for this property
+                  All payments paid so far, for this property
                 </Text>
               </Stack>
               <Text fontWeight={500} color="brand.300">
@@ -108,13 +118,22 @@ const PropertyDetails = ({
               <Skeleton w="150px" h="20px" rounded="3px" />
             </Flex>
           ) : (
-            <Flex alignItems="center" justifyContent="space-between">
+            <Flex
+              alignItems="center"
+              justifyContent="space-between"
+              flexWrap="wrap"
+              gap={[4, 0]}
+            >
               <Stack>
                 <Heading fontWeight={600} fontSize={16} color="brand.600">
-                  Number of remittance paid
+                  Number of{' '}
+                  {assetDetails?.asset_type === 'cashflow'
+                    ? 'remittance'
+                    : 'instalment'}{' '}
+                  paid
                 </Heading>
                 <Text fontWeight={500} fontSize={14} color="brand.300">
-                  Number of times a payment was received.
+                  Number of times a payment was paid.
                 </Text>
               </Stack>
               <Text fontWeight={500} color="brand.300">
