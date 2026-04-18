@@ -37,13 +37,16 @@ import { FormatAmount } from '~/lib/utils/formatAmount';
 import SkeletonLoader from '~/lib/components/SkeletonLoader';
 import useNavigate from '~/lib/utils/useNavigate';
 import { GoLocation } from 'react-icons/go';
+import NotFound from '../NotFound';
 
 const PropertyListTable = ({
   assets,
   loading,
+  errorMessages,
 }: {
   assets: any[];
   loading: boolean;
+  errorMessages: { title: string; description: string };
 }) => {
   const navigate = useNavigate();
   const [page, setPage] = React.useState(1);
@@ -55,28 +58,30 @@ const PropertyListTable = ({
       ) : (
         <Box>
           {assets?.length < 1 ? (
-            <Box maxW="465px" mx="auto" my="5">
-              <Stack spacing="15px" alignItems="center" textAlign="center">
-                {' '}
-                <EmptyRemittanceIcon />
-                <Heading fontSize={17}>No Remittances Yet</Heading>
-                <Text color="#2E353F" fontSize={15}>
-                  Cashflow properties will appear here once added, along with
-                  their remittance history. Add a cashflow property or update an
-                  existing asset to start tracking your income.
-                </Text>
-                <Link href={`/user/my-assets/add-assets`}>
-                  <Button
-                    bg="brand.100"
-                    fontWeight={500}
-                    fontSize={14}
-                    color="brand.200"
-                  >
-                    Add New Asset
-                  </Button>
-                </Link>
-              </Stack>
-            </Box>
+            // <Box maxW="465px" mx="auto" my="5">
+            //   <Stack spacing="15px" alignItems="center" textAlign="center">
+            //     {' '}
+            //     <EmptyRemittanceIcon />
+            //     <Heading fontSize={17}>{errorMessages?.title}</Heading>
+            //     <Text color="#2E353F" fontSize={15}>
+            //       {errorMessages?.description}
+            //     </Text>
+            //     <Link href={`/user/my-assets/add-assets`}>
+            //       <Button
+            //         bg="brand.100"
+            //         fontWeight={500}
+            //         fontSize={14}
+            //         color="brand.200"
+            //       >
+            //         Add New Asset
+            //       </Button>
+            //     </Link>
+            //   </Stack>
+            // </Box>
+            <NotFound
+              title={errorMessages?.title}
+              description={errorMessages?.description}
+            />
           ) : (
             <TableContainer
               // border="1px solid #E4E4E4"

@@ -67,7 +67,7 @@ const PropertyDetails = ({
                     : 'Installment'}
                 </Heading>
                 <Text fontWeight={500} fontSize={14} color="brand.300">
-                  Each payment received for this property
+                  Each payment received, for this property
                 </Text>
               </Stack>
               <Text fontWeight={500} color="brand.300">
@@ -92,7 +92,7 @@ const PropertyDetails = ({
                       : 'installment')}
                 </Heading>
                 <Text fontWeight={500} fontSize={14} color="brand.300">
-                  All payments recieved so far for this property
+                  All payments recieved so far, for this property
                 </Text>
               </Stack>
               <Text fontWeight={500} color="brand.300">

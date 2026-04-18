@@ -18,6 +18,10 @@ const index = () => {
   const [status, setStatus] = useState<string>('');
   const [duration, setDuration] = useState<string>('');
   const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [errorMessages, setErrorMessages] = useState<{
+    title: string;
+    description: string;
+  }>({ title: '', description: '' });
 
   const GetAssets = async () => {
     setLoading(true);
@@ -40,6 +44,46 @@ const index = () => {
   useEffect(() => {
     GetAssets();
   }, [order, sort, status, duration, debouncedSearchQuery]);
+
+  useEffect(() => {
+    const errorMessagesMap = {
+      search: {
+        title: 'No property matches your search query',
+        description:
+          'Check your spelling or try a different search term to find your property.',
+      },
+      status: {
+        title: 'No property matches your status filter',
+        description: 'Try adjusting your filters to find your property.',
+      },
+      duration: {
+        title: 'No property matches the selected duration filter',
+        description: 'Try adjusting your filters to find your property.',
+      },
+      none: {
+        title: 'No Remittances Yet',
+        description:
+          'Cashflow properties will appear here once added, along with their remittance history. Add a cashflow property or update an existing asset to start tracking your income.',
+      },
+      default: {
+        title: 'No property matches the filter criteria',
+        description: 'Try adjusting your filters to find your property.',
+      },
+    };
+
+    const errorMessageKey =
+      debouncedSearchQuery && assets?.length < 1
+        ? 'search'
+        : status && assets?.length < 1
+        ? 'status'
+        : duration && assets?.length < 1
+        ? 'duration'
+        : assets?.length < 1
+        ? 'none'
+        : 'default';
+
+    setErrorMessages(errorMessagesMap[errorMessageKey]);
+  }, [order, sort, status, duration, debouncedSearchQuery, assets]);
 
   // Debounce effect for search query
   useEffect(() => {
@@ -113,7 +157,11 @@ const index = () => {
             />
           </Box>
           <Divider />
-          <PropertyListTable assets={cashflowAssets} loading={loading} />
+          <PropertyListTable
+            assets={cashflowAssets}
+            loading={loading}
+            errorMessages={errorMessages}
+          />
         </Stack>
       </Stack>
     </Box>

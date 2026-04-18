@@ -30,6 +30,7 @@ import {
   VerticalEllipsisIcon,
   PreviousPageIcon,
   NextPageIcon,
+  EmptyAssetIcon,
 } from '~/lib/components/Icons/Icons';
 import SkeletonLoader from '~/lib/components/SkeletonLoader';
 import { FormatAmount } from '~/lib/utils/formatAmount';
@@ -101,7 +102,7 @@ const Cashflow = ({
             <Box maxW="465px" mx="auto" my="5">
               <Stack spacing="15px" alignItems="center" textAlign="center">
                 {' '}
-                <Image src="/assets/images/briefcase.png" />
+               <EmptyAssetIcon />
                 <Heading fontSize={18}>No Cash Flow Properties Yet!</Heading>
                 <Text color="#2E353F">
                   You haven’t added any cash-flowing assets. Track rental

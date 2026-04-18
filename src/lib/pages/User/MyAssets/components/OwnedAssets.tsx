@@ -26,7 +26,7 @@ import {
   ProfitIcon,
   VerticalEllipsisIcon,
   NextPageIcon,
-  PreviousPageIcon,
+  PreviousPageIcon, EmptyAssetIcon
 } from '~/lib/components/Icons/Icons';
 import SkeletonLoader from '~/lib/components/SkeletonLoader';
 import { FormatAmount } from '~/lib/utils/formatAmount';
@@ -97,7 +97,7 @@ const OwnedAssets = ({
             <Box maxW="465px" mx="auto" my="5">
               <Stack spacing="15px" alignItems="center" textAlign="center">
                 {' '}
-                <Image src="/assets/images/briefcase.png" />
+                <EmptyAssetIcon />
                 <Heading fontSize={18}>No Owned Properties Listed!</Heading>
                 <Text color="#2E353F">
                   Manage and monitor all your properties all in one place.

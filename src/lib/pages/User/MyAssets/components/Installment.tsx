@@ -26,6 +26,7 @@ import { useRouter } from 'next/navigation';
 import React, { Fragment } from 'react';
 import { DeleteAsset, GetUserAssets } from '~/lib/api/services/assetsService';
 import {
+  EmptyAssetIcon,
   LocationIcon,
   NextPageIcon,
   PreviousPageIcon,
@@ -102,7 +103,7 @@ const Installment = ({
             <Box maxW="465px" mx="auto" my="5">
               <Stack spacing="15px" alignItems="center" textAlign="center">
                 {' '}
-                <Image src="/assets/images/briefcase.png" />
+                <EmptyAssetIcon />
                 <Heading fontSize={18}>No Active Instalment Plans!</Heading>
                 <Text color="#2E353F">
                   Keep track of installment payments and property details in one
