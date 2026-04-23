@@ -144,41 +144,43 @@ const AccountBalance = ({
               justifyContent="space-between"
               w="full"
               overflow="auto"
-              gap={['20px', '15px']}
+              gap={['20px', '5px']}
               pb={['4', '2']}
             >
-              {/* <Link href="/user/my-assets/add-assets"> */}
-              <InfoCard
-                icon={<AddNewAssetIcon />}
-                title="Add new asset"
-                description="Register newly acquired property"
-                onClick={() => navigate('/user/my-assets/add-assets')}
-              />
-              {/* </Link> */}
-              {/* <Link href="/user/my-assets"> */}
-              <InfoCard
-                icon={<RegisterPaymentIcon />}
-                title="Register Payment"
-                description="Add a recent payment made"
-                onClick={() => navigate('/user/my-assets')}
-              />
-              {/* </Link> */}
-              {/* <Link href="/user/nok/add"> */}{' '}
-              <InfoCard
-                icon={<DashboardAddNextOfKinIcon />}
-                title="Add next of kin"
-                description="Register a new next of kin"
-                onClick={() => navigate('/user/nok/add')}
-              />
-              {/* </Link> */}
-              {/* <Link href="/user/my-assets/add-assets"> */}{' '}
-              <InfoCard
-                icon={<AddNewAssetIcon />}
-                title="Add new property"
-                description="Just acquired a new asset?"
-                onClick={() => navigate('/user/my-assets/add-assets')}
-              />
-              {/* </Link> */}
+              <Link href="/user/my-assets/add-assets">
+                <InfoCard
+                  icon={<AddNewAssetIcon />}
+                  title="Add new asset"
+                  description="Register newly acquired property"
+                  onClick={() => navigate('/user/my-assets/add-assets')}
+                />
+              </Link>
+              <Link href="/user/portfolio">
+                <InfoCard
+                  icon={<RegisterPaymentIcon />}
+                  title="View Remittance"
+                  description="Track and update your earnings"
+                  onClick={() => navigate('/user/my-assets')}
+                />
+              </Link>
+              <Link href="/user/nok/add">
+                {' '}
+                <InfoCard
+                  icon={<DashboardAddNextOfKinIcon />}
+                  title="Add next of kin"
+                  description="Register a new next of kin"
+                  onClick={() => navigate('/user/nok/add')}
+                />
+              </Link>
+              <Link href="/user/settings">
+                {' '}
+                <InfoCard
+                  icon={<AddNewAssetIcon />}
+                  title="Go to settings"
+                  description="Update personal data and profile picture"
+                  onClick={() => navigate('/user/my-assets/add-assets')}
+                />
+              </Link>
             </Flex>
           </Box>
         </Stack>

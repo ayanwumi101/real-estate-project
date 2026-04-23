@@ -5,6 +5,8 @@ import Link from 'next/link';
 import React from 'react';
 import { HiPlus } from 'react-icons/hi2';
 import { formatCurrency } from '~/lib/utils/formatAmount';
+import useNavigate from '~/lib/utils/useNavigate';
+
 
 const NavigationTab = ({
   tabs,
@@ -26,7 +28,8 @@ const NavigationTab = ({
   totalOwnedValuation: number;
   totalCashflowValuation: number;
   totalInstallmentValuation: number;
-}) => {
+  }) => {
+  const navigate = useNavigate()
   return (
     <Box py="35px" w="full">
       <Flex
@@ -37,7 +40,11 @@ const NavigationTab = ({
         gap={['24px', '0']}
         pb="2"
       >
-        <Flex alignItems="center" borderBottom={['1px solid #E4E4E4', 'none']}>
+        <Flex
+          w={['full', 'auto']}
+          alignItems="center"
+          justifyContent={['center', 'flex-start']}
+        >
           {' '}
           {tabs.map((tab, index) => (
             <Button
@@ -63,7 +70,10 @@ const NavigationTab = ({
             alignItems={['flex-start', 'center']}
             w="full"
             gap="20px"
-            flexDir={['column', 'row']}
+            flexDir={['column-reverse', 'row']}
+            borderBottom={['1px solid', 'none']}
+            borderColor="#E4E4E4"
+            pb={[2, 0]}
           >
             {ownedAssetsCount > 0 && (
               <Box
@@ -92,20 +102,22 @@ const NavigationTab = ({
                 </Stack>
               </Box>
             )}
-            <Link href="/user/my-assets/add-assets">
+            {/* <Link href="/user/my-assets/add-assets"> */}
               <Button
                 bg="#000080"
                 fontSize={14}
                 color="#ffffff"
                 fontWeight={500}
                 _hover={{ bg: 'brand.100' }}
+                w={['full', 'auto']}
+                onClick={() => navigate('/user/my-assets/add-assets')}
               >
                 <Flex alignItems="center" gap="10px">
                   <Text>Add new asset</Text>
                   <HiPlus color="white" fontSize={20} fontWeight={700} />
                 </Flex>
               </Button>
-            </Link>
+            {/* </Link> */}
           </Flex>
         </Box>
       </Flex>

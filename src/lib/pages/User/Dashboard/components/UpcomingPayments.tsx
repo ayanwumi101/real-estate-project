@@ -24,6 +24,8 @@ import {
   ArrowUpIcon,
   LocationIcon,
   VerticalEllipsisIcon,
+  OutgoingInstalmentIcon,
+  IncomingRemittanceIcon,
 } from '~/lib/components/Icons/Icons';
 import moment from 'moment';
 import Link from 'next/link';
@@ -176,10 +178,29 @@ const UpcomingPayments = ({
                             <Td fontWeight={500} fontSize={14}>
                               {asset?.cashflow_duration}
                             </Td>
-                            <Td fontWeight={500} fontSize={14}>
-                              {asset?.asset_type === 'cashflow'
-                                ? 'Remittance'
-                                : 'Instalment'}
+                            <Td
+                              fontWeight={500}
+                              textTransform="uppercase"
+                              fontSize={13}
+                              color={
+                                asset?.asset_type === 'cashflow'
+                                  ? '#1BD155'
+                                  : '#FE3839'
+                              }
+                            >
+                              <Flex alignItems="center" gap="5px">
+                                <Text>
+                                  {' '}
+                                  {asset?.asset_type === 'cashflow'
+                                    ? 'Remittance'
+                                    : 'Instalment'}
+                                </Text>
+                                {asset?.asset_type === 'cashflow' ? (
+                                  <IncomingRemittanceIcon />
+                                ) : (
+                                  <OutgoingInstalmentIcon />
+                                )}
+                              </Flex>
                             </Td>
                             <Td fontWeight={500} fontSize={14}>
                               <Menu>
@@ -213,11 +234,11 @@ const UpcomingPayments = ({
                                     fontWeight={500}
                                     onClick={() =>
                                       navigate(
-                                        `/user/my-assets/${asset?.id}/update-details`
+                                        `/user/my-assets/${asset?.id}/add-payment`
                                       )
                                     }
                                   >
-                                    Update asset details
+                                    Add payment
                                   </MenuItem>
                                   <MenuItem
                                     py="12px"
@@ -226,26 +247,13 @@ const UpcomingPayments = ({
                                     fontSize={14}
                                     color="color.100"
                                     fontWeight={500}
-                                    // onClick={() => {
-                                    //   setIsOpen(true);
-                                    //   setSelectedAssetId(asset?.id);
-                                    // }}
+                                    onClick={() => {
+                                      navigate(
+                                        `/user/portfolio/${asset?.id}/payments`
+                                      );
+                                    }}
                                   >
-                                    Change asset status
-                                  </MenuItem>
-                                  <MenuItem
-                                    py="12px"
-                                    px="16px"
-                                    _hover={{ bg: 'border.100' }}
-                                    fontSize={14}
-                                    color="color.100"
-                                    fontWeight={500}
-                                    // onClick={() => {
-                                    //   //   setIsOpen(true);
-                                    //   //   setSelectedAssetId(asset?.id);
-                                    // }}
-                                  >
-                                    Delete asset
+                                    View payment history
                                   </MenuItem>
                                 </MenuList>
                               </Menu>

@@ -3120,3 +3120,42 @@ export const EmptyAssetIcon = () => {
     </svg>
   );
 };
+
+
+export const IncomingRemittanceIcon = () => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M10.8571 5.14282L5.14282 10.8571M5.14282 10.8571H10.8571M5.14282 10.8571V5.14282"
+        stroke="#1BD155"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export const OutgoingInstalmentIcon = () => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M5.14282 10.8571L10.8571 5.14282M10.8571 5.14282H5.14282M10.8571 5.14282V10.8571"
+        stroke="#FE3839"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
