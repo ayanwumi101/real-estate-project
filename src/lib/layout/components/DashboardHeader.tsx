@@ -12,16 +12,24 @@ import {
   Stack,
   useMediaQuery,
   Image,
+  Menu,
+  MenuButton,
+  MenuItem,
+  HStack,
+  MenuList,
 } from '@chakra-ui/react';
 import React, { Fragment, useContext, useState } from 'react';
 import {
   DashboardNotificationIcon,
   InputSearchIcon,
+  ChevronDownIcon,
 } from '~/lib/components/Icons/Icons';
 import { HiMiniBars3 } from 'react-icons/hi2';
 import DashboardMobileSidebar from './UserMobileSidebar';
 import { AppContext } from '..';
 import RealtorMobileSidebar from './RealtorMobileSidebar';
+import { currencies } from '~/lib/utils/types/currency';
+import { Currency } from '~/lib/utils/types/currency';
 
 export const MobileDashboardHeader = () => {
   const [openSideNav, setOpenSideNav] = useState<boolean>(false);
@@ -109,6 +117,11 @@ const DashboardHeader = ({
   const [isMobile] = useMediaQuery('(max-width: 768px)');
   const [openSideNav, setOpenSideNav] = useState<boolean>(false);
   const { userDetails } = useContext(AppContext);
+  const [selectedCurrency, setSelectedCurrency] = useState<Currency>({
+    code: 'NGN',
+    name: 'Nigerian Naira',
+    flag: '/assets/images/nigeria-icon.svg',
+  });
   return (
     <Fragment>
       {isMobile ? (
@@ -185,7 +198,7 @@ const DashboardHeader = ({
       ) : (
         <Box w="100%" px="40px" py="20px">
           <Box display="flex" alignItems="center">
-            <Flex alignItems="center" gap="32px" w="100%">
+            <Flex alignItems="center" justifyContent='space-between' gap="32px" w="100%">
               <InputGroup w="80%">
                 <InputLeftElement pointerEvents="none" ml="2" mt="1">
                   <InputSearchIcon />
@@ -205,16 +218,57 @@ const DashboardHeader = ({
                   onFocus={() => setShowSearchBar(true)}
                 />
               </InputGroup>
-              <DashboardNotificationIcon />
-              <Box w="1px" h="40px" bg="#C0C0C0"></Box>
-              <Avatar
-                name={userDetails?.fullname}
-                w="50px"
-                h="50px"
-                bg="#E4E4E4"
-                color="#ffffff"
-                src={userDetails?.profile_image}
-              />
+              <Flex alignItems="center" gap="20px">
+                <DashboardNotificationIcon />
+                <Box w="1px" h="40px" bg="#C0C0C0"></Box>
+                <Menu>
+                  <MenuButton
+                    as={Button}
+                    variant="ghost"
+                    rightIcon={<ChevronDownIcon />}
+                  >
+                    <HStack>
+                      <Image
+                        src={selectedCurrency?.flag}
+                        boxSize="25px"
+                        alt={selectedCurrency?.code}
+                      />
+                      <Text>{selectedCurrency?.code}</Text>
+                    </HStack>
+                  </MenuButton>
+                  <MenuList>
+                    {currencies.map((currency) => (
+                      <MenuItem
+                        key={currency.code}
+                        onClick={() => {
+                          setSelectedCurrency(currency);
+                        }}
+                        py="3"
+                        px="2"
+                      >
+                        <HStack>
+                          <Image
+                            src={currency.flag}
+                            boxSize="25px"
+                            alt={currency.code}
+                          />
+                          <Text color="text.400" fontSize={14} fontWeight={400}>
+                            {currency?.name} ({currency.code})
+                          </Text>
+                        </HStack>
+                      </MenuItem>
+                    ))}
+                  </MenuList>
+                </Menu>
+                <Avatar
+                  name={userDetails?.fullname}
+                  w="40px"
+                  h="40px"
+                  bg="#E4E4E4"
+                  color="#ffffff"
+                  src={userDetails?.profile_image}
+                />
+              </Flex>
             </Flex>
           </Box>
         </Box>

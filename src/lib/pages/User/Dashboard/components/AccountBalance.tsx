@@ -147,14 +147,14 @@ const AccountBalance = ({
               gap={['20px', '5px']}
               pb={['4', '2']}
             >
-              <Link href="/user/my-assets/add-assets">
+              {/* <Link href="/user/my-assets/add-assets"> */}
                 <InfoCard
                   icon={<AddNewAssetIcon />}
                   title="Add new asset"
                   description="Register newly acquired property"
                   onClick={() => navigate('/user/my-assets/add-assets')}
                 />
-              </Link>
+              {/* </Link> */}
               <Link href="/user/portfolio">
                 <InfoCard
                   icon={<RegisterPaymentIcon />}
