@@ -64,3 +64,8 @@ export const UpdateUserProfile = async(data) => {
   const response = await axiosInstance.post(API_ROUTES.UPDATE_USER_PROFILE, data);
   return response.data;
 }
+
+export const GetCurrentExchangeRate = async (code) => {
+  const response = await axiosInstance.get(`${API_ROUTES.CHANGE_APP_CURRENCY}?code=${code}`);
+  return response.data;
+} 

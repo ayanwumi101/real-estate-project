@@ -41,7 +41,10 @@ import {
   InputSearchIcon,
 } from '../components/Icons/Icons';
 import { GetUserProfileDetails } from '../api/services/profileService';
-import { GetNextOfKins } from '../api/services/userService';
+import {
+  GetCurrentExchangeRate,
+  GetNextOfKins,
+} from '../api/services/userService';
 import styles from './styles.module.css';
 import RealtorSidebar from './components/RealtorSidebar';
 import { Currency } from '../utils/types/currency';
@@ -231,8 +234,11 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
 
   const handleChangeCurrency = async (currency: Currency) => {
     try {
-    } catch (error) {}
-    setSelectedCurrency(currency);
+      const response = await GetCurrentExchangeRate(currency.code);
+      console.log(response);
+    } catch (error) {
+      console.log('error', error);
+    }
   };
 
   useEffect(() => {
@@ -250,7 +256,7 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
         isUserDetailsLoading,
         selectedCurrency,
         setSelectedCurrency,
-        handleChangeCurrency
+        handleChangeCurrency,
       }}
     >
       <Box

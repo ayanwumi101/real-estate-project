@@ -24,6 +24,7 @@ const API_ROUTES = {
   UPDATE_USER_PROFILE: '/user/profile/update',
   UPDATE_PROFILE: '/user/profile/update',
   ADD_PROFILE_IMAGE: '/user/update-profile-image',
+  CHANGE_APP_CURRENCY: '/user/change-currency',
 
   //assets endpoints
   ADD_ASSET_DETAILS: '/user/asset/create',
