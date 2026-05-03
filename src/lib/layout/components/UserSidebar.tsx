@@ -80,7 +80,7 @@ const DashboardSidebar = () => {
         <Box
           textAlign="center"
           w="100%"
-          h="96px"
+          h="85px"
           borderBottom="1px solid #E4E4E4"
           display="flex"
           alignItems="center"
@@ -90,7 +90,7 @@ const DashboardSidebar = () => {
             src="/assets/images/logo.png"
             display="block"
             mx="auto"
-            w="80%"
+            w="75%"
             objectFit="cover"
           />
         </Box>

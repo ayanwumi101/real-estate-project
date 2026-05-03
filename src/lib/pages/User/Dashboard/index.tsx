@@ -7,6 +7,7 @@ import { Box } from '@chakra-ui/react';
 import { GetUserAssets } from '~/lib/api/services/assetsService';
 import DashboardInfo from './components/DashboardInfo';
 import UpcomingPayments from './components/UpcomingPayments';
+import DashboardHeader from '~/lib/layout/components/DashboardHeader';
 
 const index = () => {
   const [page, setPage] = useState<number>(1);
@@ -38,17 +39,19 @@ const index = () => {
   );
 
   return (
-    <Box pt={[3, 0]}>
-      <AccountBalance
-        totalAssets={assets?.length}
-        totalInvestment={totalInvestment}
-        assetsLoading={loading}
-      />
-      <UpcomingPayments loading={loading} assets={upcomingPaymentsAssets} />
-      {/* <DashboardInfo /> */}
-      {/* <Investments />
+    <DashboardHeader title="Dashboard">
+      <Box pt={[3, 0]}>
+        <AccountBalance
+          totalAssets={assets?.length}
+          totalInvestment={totalInvestment}
+          assetsLoading={loading}
+        />
+        <UpcomingPayments loading={loading} assets={upcomingPaymentsAssets} />
+        {/* <DashboardInfo /> */}
+        {/* <Investments />
         <MarketUpdates /> */}
-    </Box>
+      </Box>
+    </DashboardHeader>
   );
 };
 

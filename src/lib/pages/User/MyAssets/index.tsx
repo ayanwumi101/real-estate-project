@@ -11,6 +11,7 @@ import Installment from './components/Installment';
 import Link from 'next/link';
 import { GetUserAssets } from '~/lib/api/services/assetsService';
 import { useRouter } from 'next/navigation';
+import DashboardHeader from '~/lib/layout/components/DashboardHeader';
 
 const index = () => {
   const [activeTab, setActiveTab] = useState<string>('Owned');
@@ -68,69 +69,71 @@ const index = () => {
   }, 0);
 
   return (
-    <Box pb="40px" overflow="auto">
-      <Stack w="100%">
-        <AssetsStatistics
-          numberOfAssets={assets?.length}
-          assetInNaira={totalAssetsInNaira}
-          totalRemittance={totalRemittance}
-        />
-        <Box px={['10px', '30px']} mb={[5, 0]}>
-          <Flex
-            justifyContent="space-between"
-            alignItems="center"
-            flexWrap={['wrap', 'nowrap']}
-          >
-            <NavigationTab
-              tabs={['Owned', 'Cashflow', 'Installment']}
-              activeTab={activeTab}
-              setActiveTab={setActiveTab}
-              ownedAssetsCount={ownedAssets?.length}
-              cashflowAssetsCount={cashflowAssets?.length}
-              installmentAssetsCount={installmentAssets?.length}
-              totalOwnedValuation={totalOwnedValuation}
-              totalCashflowValuation={totalCashflowValuation}
-              totalInstallmentValuation={totalInstallmentValuation}
-            />
-          </Flex>
-        </Box>
-        <Box px={['10px', '20px']}>
-          {activeTab === 'Owned' && (
-            <OwnedAssets
-              assets={ownedAssets}
-              setAssets={setAssets}
-              loading={loading}
-              page={page}
-              setPage={setPage}
-              dataPerPage={dataPerPage}
-              hasNextPage={hasNextPage}
-            />
-          )}
-          {activeTab === 'Cashflow' && (
-            <Cashflow
-              assets={cashflowAssets}
-              setAssets={setAssets}
-              loading={loading}
-              page={page}
-              setPage={setPage}
-              hasNextPage={hasNextPage}
-              dataPerPage={dataPerPage}
-            />
-          )}
-          {activeTab === 'Installment' && (
-            <Installment
-              assets={installmentAssets}
-              setAssets={setAssets}
-              loading={loading}
-              page={page}
-              setPage={setPage}
-              hasNextPage={hasNextPage}
-              dataPerPage={dataPerPage}
-            />
-          )}
-        </Box>
-      </Stack>
-    </Box>
+    <DashboardHeader title="My Assets">
+      <Box pb="40px" overflow="auto">
+        <Stack w="100%">
+          <AssetsStatistics
+            numberOfAssets={assets?.length}
+            assetInNaira={totalAssetsInNaira}
+            totalRemittance={totalRemittance}
+          />
+          <Box px={['10px', '30px']} mb={[5, 0]}>
+            <Flex
+              justifyContent="space-between"
+              alignItems="center"
+              flexWrap={['wrap', 'nowrap']}
+            >
+              <NavigationTab
+                tabs={['Owned', 'Cashflow', 'Installment']}
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+                ownedAssetsCount={ownedAssets?.length}
+                cashflowAssetsCount={cashflowAssets?.length}
+                installmentAssetsCount={installmentAssets?.length}
+                totalOwnedValuation={totalOwnedValuation}
+                totalCashflowValuation={totalCashflowValuation}
+                totalInstallmentValuation={totalInstallmentValuation}
+              />
+            </Flex>
+          </Box>
+          <Box px={['10px', '20px']}>
+            {activeTab === 'Owned' && (
+              <OwnedAssets
+                assets={ownedAssets}
+                setAssets={setAssets}
+                loading={loading}
+                page={page}
+                setPage={setPage}
+                dataPerPage={dataPerPage}
+                hasNextPage={hasNextPage}
+              />
+            )}
+            {activeTab === 'Cashflow' && (
+              <Cashflow
+                assets={cashflowAssets}
+                setAssets={setAssets}
+                loading={loading}
+                page={page}
+                setPage={setPage}
+                hasNextPage={hasNextPage}
+                dataPerPage={dataPerPage}
+              />
+            )}
+            {activeTab === 'Installment' && (
+              <Installment
+                assets={installmentAssets}
+                setAssets={setAssets}
+                loading={loading}
+                page={page}
+                setPage={setPage}
+                hasNextPage={hasNextPage}
+                dataPerPage={dataPerPage}
+              />
+            )}
+          </Box>
+        </Stack>
+      </Box>
+    </DashboardHeader>
   );
 };
 

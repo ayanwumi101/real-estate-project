@@ -114,7 +114,7 @@ const Header = ({
     }
   };
   return (
-    <Box py="30px" px={['20px', '40px']} borderY="1px solid #E4E4E4" w="full">
+    <Box py="30px" px={['20px', '40px']} borderBottom="1px solid #E4E4E4" w="full">
       <Stack spacing="30px" alignItems="flex-start" w="full">
         <Button
           onClick={() => navigate('/user/my-assets')}

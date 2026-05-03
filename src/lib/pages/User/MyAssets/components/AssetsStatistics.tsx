@@ -23,7 +23,7 @@ const AssetsStatistics = ({
     <Box
       py={['20px', '40px']}
       px={['20px', '40px']}
-      borderY="1px solid #E4E4E4"
+      borderBottom="1px solid #E4E4E4"
       overflow={['auto', 'hidden']}
     >
       <Flex alignItems="center" gap="16px" w="100%">

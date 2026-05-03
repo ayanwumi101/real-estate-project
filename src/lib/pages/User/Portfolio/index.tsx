@@ -6,6 +6,7 @@ import { Box, Stack, Divider } from '@chakra-ui/react';
 import { GetUserAssetsWithFilter } from '~/lib/api/services/assetsService';
 import PropertyListTable from './components/PropertyDetails';
 import { RemittanceSortAndFilter } from '~/lib/components/PropertyFilter';
+import DashboardHeader from '~/lib/layout/components/DashboardHeader';
 
 const index = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -75,12 +76,12 @@ const index = () => {
       debouncedSearchQuery && assets?.length < 1
         ? 'search'
         : status && assets?.length < 1
-        ? 'status'
-        : duration && assets?.length < 1
-        ? 'duration'
-        : assets?.length < 1
-        ? 'none'
-        : 'default';
+          ? 'status'
+          : duration && assets?.length < 1
+            ? 'duration'
+            : assets?.length < 1
+              ? 'none'
+              : 'default';
 
     setErrorMessages(errorMessagesMap[errorMessageKey]);
   }, [order, sort, status, duration, debouncedSearchQuery, assets]);
@@ -132,39 +133,41 @@ const index = () => {
   };
 
   return (
-    <Box pb="50px">
-      <Stack spacing="40px" w="100%" overflow="auto" px={['16px', 0]}>
-        <Header assets={cashflowAssets} />
-        <Stack
-          // px="10px"
-          py="16px"
-          spacing="13px"
-          border="1px solid #E4E4E4"
-          rounded="10px"
-        >
-          <Box px="10px">
-            <RemittanceSortAndFilter
-              searchQuery={searchQuery}
-              order={order}
-              duration={duration}
-              status={status}
-              sort={sort}
-              handleSearchChange={handleSearchChange}
-              handleStatusChange={handleStatusChange}
-              handleDurationChange={handleDurationChange}
-              handleSortChange={handleSortChange}
-              handleOrderChange={handleOrderChange}
+    <DashboardHeader title="Remittance">
+      <Box pb="50px" px='5'>
+        <Stack spacing="40px" w="100%" overflow="auto" px={['16px', 0]}>
+          <Header assets={cashflowAssets} />
+          <Stack
+            // px="10px"
+            py="16px"
+            spacing="13px"
+            border="1px solid #E4E4E4"
+            rounded="10px"
+          >
+            <Box px="10px">
+              <RemittanceSortAndFilter
+                searchQuery={searchQuery}
+                order={order}
+                duration={duration}
+                status={status}
+                sort={sort}
+                handleSearchChange={handleSearchChange}
+                handleStatusChange={handleStatusChange}
+                handleDurationChange={handleDurationChange}
+                handleSortChange={handleSortChange}
+                handleOrderChange={handleOrderChange}
+              />
+            </Box>
+            <Divider />
+            <PropertyListTable
+              assets={cashflowAssets}
+              loading={loading}
+              errorMessages={errorMessages}
             />
-          </Box>
-          <Divider />
-          <PropertyListTable
-            assets={cashflowAssets}
-            loading={loading}
-            errorMessages={errorMessages}
-          />
+          </Stack>
         </Stack>
-      </Stack>
-    </Box>
+      </Box>
+    </DashboardHeader>
   );
 };
 

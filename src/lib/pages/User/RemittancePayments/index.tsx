@@ -7,6 +7,7 @@ import { Box } from '@chakra-ui/react';
 import Stats from './components/Stats';
 import { GetAssetDetails } from '~/lib/api/services/assetsService';
 import { useParams } from 'next/navigation';
+import DashboardHeader from '~/lib/layout/components/DashboardHeader';
 
 const index = () => {
   const { id } = useParams();
@@ -29,13 +30,15 @@ const index = () => {
     getAssetDetails();
   }, [id]);
   return (
-    <Box>
-      <Header assetDetails={assetDetails} loading={loading} />
-      <Box px={['12px', 0]} w="full">
-        <Stats assetDetails={assetDetails} loading={loading} />
-        <PaymentsTable assetDetails={assetDetails} loading={loading} />
+    <DashboardHeader title='Payment History'>
+      <Box>
+        <Header assetDetails={assetDetails} loading={loading} />
+        <Box px="15px" w="full">
+          <Stats assetDetails={assetDetails} loading={loading} />
+          <PaymentsTable assetDetails={assetDetails} loading={loading} />
+        </Box>
       </Box>
-    </Box>
+    </DashboardHeader>
   );
 };
 

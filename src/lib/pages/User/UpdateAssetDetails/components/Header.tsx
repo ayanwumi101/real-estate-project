@@ -37,7 +37,7 @@ const Header = ({
   const router = useRouter();
   ``;
   return (
-    <Box py="30px" px={['20px', '40px']} borderY="1px solid #E4E4E4">
+    <Box py="30px" px={['20px', '40px']} borderBottom="1px solid #E4E4E4">
       <Stack spacing="30px" alignItems="flex-start" w="full">
         <Button
           onClick={() => router.back()}

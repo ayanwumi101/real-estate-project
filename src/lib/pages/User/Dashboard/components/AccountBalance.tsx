@@ -155,15 +155,15 @@ const AccountBalance = ({
                   onClick={() => navigate('/user/my-assets/add-assets')}
                 />
               {/* </Link> */}
-              <Link href="/user/portfolio">
+              {/* <Link href="/user/portfolio"> */}
                 <InfoCard
                   icon={<RegisterPaymentIcon />}
                   title="View Remittance"
                   description="Track and update your earnings"
                   onClick={() => navigate('/user/my-assets')}
                 />
-              </Link>
-              <Link href="/user/nok/add">
+              {/* </Link> */}
+              {/* <Link href="/user/nok/add"> */}
                 {' '}
                 <InfoCard
                   icon={<DashboardAddNextOfKinIcon />}
@@ -171,8 +171,8 @@ const AccountBalance = ({
                   description="Register a new next of kin"
                   onClick={() => navigate('/user/nok/add')}
                 />
-              </Link>
-              <Link href="/user/settings">
+              {/* </Link> */}
+              {/* <Link href="/user/settings"> */}
                 {' '}
                 <InfoCard
                   icon={<AddNewAssetIcon />}
@@ -180,7 +180,7 @@ const AccountBalance = ({
                   description="Update personal data and profile picture"
                   onClick={() => navigate('/user/my-assets/add-assets')}
                 />
-              </Link>
+              {/* </Link> */}
             </Flex>
           </Box>
         </Stack>

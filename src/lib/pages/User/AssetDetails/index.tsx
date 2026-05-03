@@ -8,6 +8,7 @@ import { Box, Stack, Flex } from '@chakra-ui/react';
 import { GetAssetDetails } from '~/lib/api/services/assetsService';
 import { useParams } from 'next/navigation';
 import useNavigate from '~/lib/utils/useNavigate';
+import DashboardHeader from '~/lib/layout/components/DashboardHeader';
 
 const index = () => {
   const { id } = useParams();
@@ -36,30 +37,35 @@ const index = () => {
   };
 
   return (
-    <Box>
-      <Stack>
-        <Header
-          loading={loading}
-          assetType={propertyDetails?.asset_type}
-          propertyName={propertyDetails?.property_name}
-          location={`${propertyDetails?.house_number || ''}, ${propertyDetails?.street_name || ''}, ${propertyDetails?.state_id || ''} state`}
-        />
-        <Box p={['20px', '40px']}>
-          <Flex
-            alignItems="flex-start"
-            flexWrap={['wrap', 'nowrap']}
-            gap="40px"
-          >
-            <AssetDetails loading={loading} propertyDetails={propertyDetails} />
-            <Notes
-              loading={loading}
-              notes={propertyDetails?.comment}
-              editComment={editComment}
-            />
-          </Flex>
-        </Box>
-      </Stack>
-    </Box>
+    <DashboardHeader title='Asset Details'>
+      <Box>
+        <Stack>
+          <Header
+            loading={loading}
+            assetType={propertyDetails?.asset_type}
+            propertyName={propertyDetails?.property_name}
+            location={`${propertyDetails?.house_number || ''}, ${propertyDetails?.street_name || ''}, ${propertyDetails?.state_id || ''} state`}
+          />
+          <Box p={['20px', '40px']}>
+            <Flex
+              alignItems="flex-start"
+              flexWrap={['wrap', 'nowrap']}
+              gap="40px"
+            >
+              <AssetDetails
+                loading={loading}
+                propertyDetails={propertyDetails}
+              />
+              <Notes
+                loading={loading}
+                notes={propertyDetails?.comment}
+                editComment={editComment}
+              />
+            </Flex>
+          </Box>
+        </Stack>
+      </Box>
+    </DashboardHeader>
   );
 };
 

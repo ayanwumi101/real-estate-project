@@ -11,7 +11,7 @@ import Transactions from './components/Transactions'
 const index = () => {
     const [activeTab, setActiveTab] = useState('All')
   return (
-    <Box pb='40px'>
+    <Box pb='40px' px='3'>
         <Header />
         <NavigationTab tabs={['All', 'Order History', 'Transaction History']} activeTab={activeTab} setActiveTab={setActiveTab} />
         <Transactions />

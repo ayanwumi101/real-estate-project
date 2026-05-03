@@ -10,6 +10,7 @@ import {
   GetAssetDetails,
   GetAssetPaymentDueDates,
 } from '~/lib/api/services/assetsService';
+import DashboardHeader from '~/lib/layout/components/DashboardHeader';
 
 const index = () => {
   const { id } = useParams();
@@ -42,34 +43,36 @@ const index = () => {
   // }, [id]);
 
   return (
-    <Box p={['20px', '40px']} borderTop="1px solid" borderColor="border.100">
-      <Stack spacing="40px" alignItems="flex-start">
-        {' '}
-        <Button
-          onClick={() => router.back()}
-          variant="ghost"
-          leftIcon={<ChevronLeftIcon />}
-          p="0"
-          _hover={{ bg: 'none' }}
-          color="brand.100"
-        >
-          Back
-        </Button>
-        <Flex
-          alignItems="flex-start"
-          gap="45px"
-          w="full"
-          flexWrap={['wrap', 'nowrap']}
-        >
-          <PropertyDetails assetDetails={assetDetails} loading={loading} />
-          <PaymentForm
-            paymentDueDates={paymentDueDates}
-            assetId={assetDetails?.id}
-            assetType={assetDetails?.asset_type}
-          />
-        </Flex>
-      </Stack>
-    </Box>
+    <DashboardHeader title="Add Payment">
+      <Box p={['20px', '40px']}>
+        <Stack spacing="40px" alignItems="flex-start">
+          {' '}
+          <Button
+            onClick={() => router.back()}
+            variant="ghost"
+            leftIcon={<ChevronLeftIcon />}
+            p="0"
+            _hover={{ bg: 'none' }}
+            color="brand.100"
+          >
+            Back
+          </Button>
+          <Flex
+            alignItems="flex-start"
+            gap="45px"
+            w="full"
+            flexWrap={['wrap', 'nowrap']}
+          >
+            <PropertyDetails assetDetails={assetDetails} loading={loading} />
+            <PaymentForm
+              paymentDueDates={paymentDueDates}
+              assetId={assetDetails?.id}
+              assetType={assetDetails?.asset_type}
+            />
+          </Flex>
+        </Stack>
+      </Box>
+    </DashboardHeader>
   );
 };
 

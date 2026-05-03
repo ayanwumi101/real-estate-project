@@ -143,7 +143,7 @@ const Header = ({ assets }: { assets: any[] }) => {
   };
 
   return (
-    <Box borderY="1px solid #E4E4E4" overflow="auto" w="100%">
+    <Box borderBottom="1px solid #E4E4E4" overflow="auto" w="100%">
       <RemitttanceHeading />
       <RemittanceStatCards
         totalCashflowAsset={assets?.length}

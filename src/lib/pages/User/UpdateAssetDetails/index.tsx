@@ -11,6 +11,7 @@ import {
 } from '~/lib/api/services/assetsService';
 import { useParams } from 'next/navigation';
 import useNavigate from '~/lib/utils/useNavigate';
+import DashboardHeader from '~/lib/layout/components/DashboardHeader';
 
 export const AssetDetailsContext = createContext<any>({});
 
@@ -153,69 +154,71 @@ const index = () => {
   // console.log(propertyDetails);
 
   return (
-    <AssetDetailsContext.Provider
-      value={{
-        propertySize,
-        setPropertySize,
-        boughtDate,
-        setBoughtDate,
-        propertyCost,
-        setPropertyCost,
-        paymentStatus,
-        setPaymentStatus,
-        cashflowSource,
-        setCashflowSource,
-        isPropertyOccupied,
-        setIsPropertyOccupied,
-        remittanceAmount,
-        setRemittanceAmount,
-        cashflowDuration,
-        setCashflowDuration,
-        lastRemittanceDate,
-        setLastRemittanceDate,
-        // equityOwnership,
-        // setEquityOwnership,
-        realtorName,
-        setRealtorName,
-        realtorPhone,
-        setRealtorPhone,
-        allocationStatus,
-        setAllocationStatus,
-        documentationStatus,
-        setDocumentationStatus,
-        handoverStatus,
-        setHandoverStatus,
-        comment,
-        setComment,
-        nextRemittanceDate,
-        setNextRemittanceDate
-      }}
-    >
-      <Box>
-        <Stack>
-          <Header
-            fetching={loading}
-            updateAsset={UpdateAsset}
-            loading={isLoading}
-            propertyName={propertyDetails?.property_name}
-            location={`${propertyDetails?.house_number || ''}, ${propertyDetails?.street_name || ''}, ${propertyDetails?.state_id || ''} state`}
-          />
-          <Box p={['20px', '40px']}>
-            <Flex
-              alignItems="flex-start"
-              flexWrap={['wrap', 'nowrap']}
-              gap="40px"
-            >
-              <AssetDetails
-                fetching={loading}
-                propertyDetails={propertyDetails}
-              />
-              {/* <Notes /> */}
-            </Flex>
-          </Box>
-        </Stack>
-      </Box>
-    </AssetDetailsContext.Provider>
+    <DashboardHeader title='Update Asset Details'>
+      <AssetDetailsContext.Provider
+        value={{
+          propertySize,
+          setPropertySize,
+          boughtDate,
+          setBoughtDate,
+          propertyCost,
+          setPropertyCost,
+          paymentStatus,
+          setPaymentStatus,
+          cashflowSource,
+          setCashflowSource,
+          isPropertyOccupied,
+          setIsPropertyOccupied,
+          remittanceAmount,
+          setRemittanceAmount,
+          cashflowDuration,
+          setCashflowDuration,
+          lastRemittanceDate,
+          setLastRemittanceDate,
+          // equityOwnership,
+          // setEquityOwnership,
+          realtorName,
+          setRealtorName,
+          realtorPhone,
+          setRealtorPhone,
+          allocationStatus,
+          setAllocationStatus,
+          documentationStatus,
+          setDocumentationStatus,
+          handoverStatus,
+          setHandoverStatus,
+          comment,
+          setComment,
+          nextRemittanceDate,
+          setNextRemittanceDate,
+        }}
+      >
+        <Box>
+          <Stack>
+            <Header
+              fetching={loading}
+              updateAsset={UpdateAsset}
+              loading={isLoading}
+              propertyName={propertyDetails?.property_name}
+              location={`${propertyDetails?.house_number || ''}, ${propertyDetails?.street_name || ''}, ${propertyDetails?.state_id || ''} state`}
+            />
+            <Box p={['20px', '40px']}>
+              <Flex
+                alignItems="flex-start"
+                flexWrap={['wrap', 'nowrap']}
+                gap="40px"
+              >
+                <AssetDetails
+                  fetching={loading}
+                  propertyDetails={propertyDetails}
+                />
+                {/* <Notes /> */}
+              </Flex>
+            </Box>
+          </Stack>
+        </Box>
+      </AssetDetailsContext.Provider>
+    </DashboardHeader>
   );
 };
 
