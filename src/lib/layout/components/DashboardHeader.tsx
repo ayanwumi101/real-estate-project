@@ -113,6 +113,7 @@ export const InvestorMobileDashboardHeader = () => {
     selectedCurrency,
     setSelectedCurrency,
     handleChangeCurrency,
+    displayCurrencyLoading,
   } = useContext(AppContext);
 
   return (
@@ -180,7 +181,7 @@ export const InvestorMobileDashboardHeader = () => {
                           <Text color="text.400" fontSize={14} fontWeight={400}>
                             {currency?.name} ({currency.code})
                           </Text>
-                          <Spinner />
+                          {displayCurrencyLoading && <Spinner />}
                         </HStack>
                       </MenuItem>
                     ))}
