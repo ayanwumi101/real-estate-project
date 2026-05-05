@@ -9,7 +9,7 @@ import {
   Flex,
   Stack,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   LocationIcon,
   InvestIcon,
@@ -24,6 +24,7 @@ import { FormatAmount } from '~/lib/utils/formatAmount';
 import next from 'next';
 import moment from 'moment';
 import { getAssetWithEarliestPaymentDue } from '~/lib/utils/findClosestDueAsset';
+import { AppContext } from '~/lib/layout';
 
 interface IProps {
   totalCashflowAsset?: number;
@@ -39,6 +40,7 @@ const RemittanceStatCards = ({
   cashflowAssetsInNaira,
   nextDueRemittance,
 }: IProps) => {
+  const { selectedCurrency } = useContext(AppContext);
   return (
     <Box py="40px" overflow="auto">
       <Flex alignItems="center" gap="14px" pb="3" overflow="auto" w="100%">
@@ -49,7 +51,10 @@ const RemittanceStatCards = ({
         />
         <PortfolioStatCard
           label="Total Received Remittance"
-          balance={FormatAmount(Number(cashflowAssetsInNaira) || 0)}
+          balance={FormatAmount(
+            Number(cashflowAssetsInNaira) || 0,
+            selectedCurrency?.code
+          )}
           showHideIcon={true}
         />
         <Box
@@ -104,26 +109,6 @@ const RemitttanceHeading = () => {
             All your cashflow properties with remittance
           </Text>
         </Stack>
-
-        {/* <Box>
-          <Flex alignItems="center" gap="12px">
-            <Link href="/user/my-assets/add-assets">
-              <Button
-                bg="#000080"
-                fontSize={14}
-                color="#ffffff"
-                fontWeight={500}
-                _hover={{ bg: 'brand.100' }}
-                // onClick={() => setShowFundWalletModal(true)}
-              >
-                <Flex alignItems="center" gap="10px">
-                  <Text>Add cashflow asset</Text>
-                  <HiPlus color="white" fontSize={20} fontWeight={700} />
-                </Flex>
-              </Button>
-            </Link>
-          </Flex>
-        </Box> */}
       </Flex>
     </Box>
   );
@@ -132,7 +117,13 @@ const RemitttanceHeading = () => {
 const Header = ({ assets }: { assets: any[] }) => {
   // const [showFundWalletModal, setShowFundWalletModal] = React.useState(false);
   const totalAssetsInNaira = assets?.reduce(
-    (acc, asset) => acc + Number(asset?.total_payment_amount || 0),
+    (acc, asset) =>
+      acc +
+      Number(
+        asset?.total_payment_amount?.display_value
+          ? asset?.total_payment_amount?.display_value
+          : asset?.total_payment_amount || 0
+      ),
     0
   );
   const closestDueAsset = getAssetWithEarliestPaymentDue(assets || []);

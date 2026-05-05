@@ -204,14 +204,20 @@ const PropertyListTable = ({
                           </Flex>
                         </Td>
                         <Td fontWeight={500} fontSize={14}>
-                          {asset?.property_cost
-                            ? `${FormatAmount(Number(asset?.property_cost))}`
-                            : 'N/A'}
+                          {asset?.property_cost?.display_value
+                            ? FormatAmount(
+                                Number(asset?.property_cost?.display_value),
+                                asset?.property_cost?.display_currency
+                              )
+                            : FormatAmount(Number(asset?.property_cost))}
                         </Td>
                         <Td fontWeight={500} fontSize={14}>
-                          {asset?.cashflow_amount
-                            ? `${FormatAmount(Number(asset?.cashflow_amount))}`
-                            : 'N/A'}
+                          {asset?.cashflow_amount?.display_value
+                            ? FormatAmount(
+                                Number(asset?.cashflow_amount?.display_value),
+                                asset?.cashflow_amount?.display_currency
+                              )
+                            : FormatAmount(Number(asset?.cashflow_amount))}
                         </Td>
                         <Td fontWeight={500} fontSize={14}>
                           {asset?.cashflow_duration}
@@ -220,9 +226,12 @@ const PropertyListTable = ({
                           {asset?.no_of_payments}
                         </Td>
                         <Td fontWeight={500} fontSize={14}>
-                          {asset?.total_payment_amount
-                            ? `${FormatAmount(Number(asset?.total_payment_amount))}`
-                            : 'N/A'}
+                          {asset?.total_payment_amount?.display_value
+                            ? FormatAmount(
+                                Number(asset?.total_payment_amount?.display_value),
+                                asset?.total_payment_amount?.display_currency
+                              )
+                            : FormatAmount(Number(asset?.total_payment_amount))}
                         </Td>
                         <Td fontWeight={500} fontSize={13} px="0">
                           {asset?.is_occupied === true
