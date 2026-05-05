@@ -76,7 +76,12 @@ const PropertyDetails = ({
                 </Text>
               </Stack>
               <Text fontWeight={500} color="brand.300">
-                {FormatAmount(assetDetails?.cashflow_amount || 0)}
+                {assetDetails?.cashflow_amount?.display_value
+                  ? FormatAmount(
+                      Number(assetDetails?.cashflow_amount?.display_value),
+                      assetDetails?.cashflow_amount?.display_currency
+                    )
+                  : FormatAmount(Number(assetDetails?.cashflow_amount))}
               </Text>
             </Flex>
           )}
@@ -106,7 +111,12 @@ const PropertyDetails = ({
                 </Text>
               </Stack>
               <Text fontWeight={500} color="brand.300">
-                {FormatAmount(assetDetails?.total_payment_amount || 0)}
+                {assetDetails?.total_payment_amount?.display_value
+                  ? FormatAmount(
+                      Number(assetDetails?.total_payment_amount?.display_value),
+                      assetDetails?.total_payment_amount?.display_currency
+                    )
+                  : FormatAmount(Number(assetDetails?.total_payment_amount))}
               </Text>
             </Flex>
           )}

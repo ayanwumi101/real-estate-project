@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react';
 import moment from 'moment';
 import React from 'react';
+import { AppContext } from '~/lib/layout';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 
 const AssetDetailsItem = ({
@@ -98,9 +99,14 @@ const AssetDetails = ({
                 />
                 <AssetDetailsItem
                   label="Amount Purchased"
-                  labelValue={FormatAmount(
-                    propertyDetails?.property_cost || 0.0
-                  )}
+                  labelValue={
+                    propertyDetails?.property_cost?.display_value
+                      ? FormatAmount(
+                          Number(propertyDetails?.property_cost?.display_value),
+                          propertyDetails?.property_cost?.display_currency
+                        )
+                      : FormatAmount(Number(propertyDetails?.property_cost))
+                  }
                 />
               </Flex>
             </Box>
@@ -138,9 +144,16 @@ const AssetDetails = ({
                   />
                   <AssetDetailsItem
                     label="Remittance Value"
-                    labelValue={FormatAmount(
-                      propertyDetails?.cashflow_amount || 0.0
-                    )}
+                    labelValue={
+                      propertyDetails?.cashflow_amount?.display_value
+                        ? FormatAmount(
+                            Number(
+                              propertyDetails?.cashflow_amount?.display_value
+                            ),
+                            propertyDetails?.cashflow_amount?.display_currency
+                          )
+                        : FormatAmount(Number(propertyDetails?.cashflow_amount))
+                    }
                   />
                   <AssetDetailsItem
                     label="Cashflow Duration of Yield"
@@ -194,15 +207,25 @@ const AssetDetails = ({
                 <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
                   <AssetDetailsItem
                     label="Amount Paid"
-                    labelValue={FormatAmount(
-                      Number(propertyDetails?.amount_paid || 0.0)
-                    )}
+                    labelValue={
+                      propertyDetails?.amount_paid?.display_value
+                        ? FormatAmount(
+                            Number(propertyDetails?.amount_paid?.display_value),
+                            propertyDetails?.amount_paid?.display_currency
+                          )
+                        : FormatAmount(Number(propertyDetails?.amount_paid))
+                    }
                   />
                   <AssetDetailsItem
                     label="Outstanding Balance"
-                    labelValue={FormatAmount(
-                      Number(propertyDetails?.amount_left || 0.0)
-                    )}
+                    labelValue={
+                      propertyDetails?.amount_left?.display_value
+                        ? FormatAmount(
+                            Number(propertyDetails?.amount_left?.display_value),
+                            propertyDetails?.amount_left?.display_currency
+                          )
+                        : FormatAmount(Number(propertyDetails?.amount_left))
+                    }
                   />
                   <AssetDetailsItem
                     label="Payment plan"
@@ -210,9 +233,14 @@ const AssetDetails = ({
                   />
                   <AssetDetailsItem
                     label="Installment payment"
-                    labelValue={FormatAmount(
-                      Number(propertyDetails?.amount_paid) || 0.0
-                    )}
+                    labelValue={
+                      propertyDetails?.amount_paid?.display_value
+                        ? FormatAmount(
+                            Number(propertyDetails?.amount_paid?.display_value),
+                            propertyDetails?.amount_paid?.display_currency
+                          )
+                        : FormatAmount(Number(propertyDetails?.amount_paid))
+                    }
                   />
                   <AssetDetailsItem
                     label="Last Payment Date"

@@ -46,7 +46,12 @@ const Stats = ({
                     Amount Purchased
                   </Text>
                   <Heading fontSize={20} fontWeight={500}>
-                    {FormatAmount(assetDetails?.property_cost || 0)}
+                    {assetDetails?.property_cost?.display_value
+                      ? FormatAmount(
+                          Number(assetDetails?.property_cost?.display_value),
+                          assetDetails?.property_cost?.display_currency
+                        )
+                      : FormatAmount(Number(assetDetails?.property_cost))}
                   </Heading>
                 </Stack>
               </Box>
@@ -61,7 +66,12 @@ const Stats = ({
                     Remittance Amount
                   </Text>
                   <Heading fontSize={20} fontWeight={500}>
-                    {FormatAmount(assetDetails?.cashflow_amount || 0)}
+                    {assetDetails?.cashflow_amount?.display_value
+                      ? FormatAmount(
+                          Number(assetDetails?.cashflow_amount?.display_value),
+                          assetDetails?.cashflow_amount?.display_currency
+                        )
+                      : FormatAmount(Number(assetDetails?.cashflow_amount))}
                   </Heading>
                 </Stack>
               </Box>
@@ -76,7 +86,12 @@ const Stats = ({
                     Total Remittance
                   </Text>
                   <Heading fontSize={20} fontWeight={500}>
-                    {FormatAmount(assetDetails?.total_payment_amount || 0)}
+                    {assetDetails?.total_payment_amount?.display_value
+                      ? FormatAmount(
+                          Number(assetDetails?.total_payment_amount?.display_value),
+                          assetDetails?.total_payment_amount?.display_currency
+                        )
+                      : FormatAmount(Number(assetDetails?.total_payment_amount))}
                   </Heading>
                 </Stack>
               </Box>
@@ -138,7 +153,12 @@ const Stats = ({
                     Sale Price
                   </Text>
                   <Heading fontSize={20} fontWeight={500}>
-                    {FormatAmount(assetDetails?.property_cost || 0)}
+                    {assetDetails?.property_cost?.display_value
+                      ? FormatAmount(
+                          Number(assetDetails?.property_cost?.display_value),
+                          assetDetails?.property_cost?.display_currency
+                        )
+                      : FormatAmount(Number(assetDetails?.property_cost))}
                   </Heading>
                 </Stack>
               </Box>
@@ -153,7 +173,12 @@ const Stats = ({
                     Total Paid
                   </Text>
                   <Heading fontSize={20} fontWeight={500}>
-                    {FormatAmount(assetDetails?.total_payment_amount || 0)}
+                    {assetDetails?.total_payment_amount?.display_value
+                      ? FormatAmount(
+                          Number(assetDetails?.total_payment_amount?.display_value),
+                          assetDetails?.total_payment_amount?.display_currency
+                        )
+                      : FormatAmount(Number(assetDetails?.total_payment_amount))}
                   </Heading>
                 </Stack>
               </Box>
@@ -168,7 +193,12 @@ const Stats = ({
                     Outstanding
                   </Text>
                   <Heading fontSize={20} fontWeight={500}>
-                    {FormatAmount(assetDetails?.amount_left || 0)}
+                    {assetDetails?.amount_left?.display_value
+                      ? FormatAmount(
+                          Number(assetDetails?.amount_left?.display_value),
+                          assetDetails?.amount_left?.display_currency
+                        )
+                      : FormatAmount(Number(assetDetails?.amount_left))}
                   </Heading>
                 </Stack>
               </Box>

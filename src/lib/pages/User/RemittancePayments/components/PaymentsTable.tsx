@@ -140,7 +140,9 @@ const PaymentsTable = ({
                       fontSize={14}
                       textTransform="capitalize"
                     >
-                      {assetDetails?.asset_type === 'cashflow' ? "Remittance Amount" : "Instalment Amount"}
+                      {assetDetails?.asset_type === 'cashflow'
+                        ? 'Remittance Amount'
+                        : 'Instalment Amount'}
                     </Th>
                     <Th
                       color="#222222"
@@ -183,9 +185,15 @@ const PaymentsTable = ({
                           </Td>
                         )}
                         <Td fontWeight={500} fontSize={14} color="#8295AA">
-                          {asset?.amount
+                          {/* {asset?.amount
                             ? `${FormatAmount(Number(asset?.amount))}`
-                            : 'N/A'}
+                            : 'N/A'} */}
+                          {asset?.amount?.display_value
+                            ? FormatAmount(
+                                Number(asset?.amount?.display_value),
+                                asset?.amount?.display_currency
+                              )
+                            : FormatAmount(Number(asset?.amount))}
                         </Td>
                         <Td
                           fontWeight={500}

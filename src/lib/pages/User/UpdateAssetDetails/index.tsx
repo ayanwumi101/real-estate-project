@@ -65,11 +65,19 @@ const index = () => {
     if (propertyDetails?.id) {
       setPropertySize(propertyDetails?.size);
       setBoughtDate(propertyDetails?.bought_date);
-      setPropertyCost(propertyDetails?.property_cost);
+      setPropertyCost(
+        propertyDetails?.property_cost?.display_value
+          ? propertyDetails?.property_cost?.display_value
+          : propertyDetails?.property_cost
+      );
       setPaymentStatus(propertyDetails?.payment_status);
       setCashflowSource(propertyDetails?.cashflow_source);
       setIsPropertyOccupied(propertyDetails?.is_occupied);
-      setRemittanceAmount(propertyDetails?.cashflow_amount);
+      setRemittanceAmount(
+        propertyDetails?.cashflow_amount?.display_value
+          ? propertyDetails?.cashflow_amount?.display_value
+          : propertyDetails?.cashflow_amount
+      );
       setCashflowDuration(propertyDetails?.cashflow_duration);
       setLastRemittanceDate(propertyDetails?.last_cashflow_date);
       // setEquityOwnership(propertyDetails?.equity_ownership);
@@ -154,7 +162,7 @@ const index = () => {
   // console.log(propertyDetails);
 
   return (
-    <DashboardHeader title='Update Asset Details'>
+    <DashboardHeader title="Update Asset Details">
       <AssetDetailsContext.Provider
         value={{
           propertySize,
