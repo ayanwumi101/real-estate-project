@@ -17,7 +17,7 @@ import {
   Badge,
 } from '@chakra-ui/react';
 import moment from 'moment';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import {
   EmptyRemittanceIcon,
   NextPageIcon,
@@ -25,7 +25,10 @@ import {
   AddIcon,
 } from '~/lib/components/Icons/Icons';
 import SkeletonLoader from '~/lib/components/SkeletonLoader';
+import { AppContext } from '~/lib/layout';
 import { FormatAmount } from '~/lib/utils/formatAmount';
+
+
 
 const PaymentsTable = ({
   assetDetails,
@@ -33,7 +36,8 @@ const PaymentsTable = ({
 }: {
   assetDetails: any;
   loading: boolean;
-}) => {
+  }) => {
+  const {selectedCurrency} = useContext(AppContext)
   const [page, setPage] = React.useState(1);
   const [limit, setLimit] = React.useState(8);
   const [activeTab, setActiveTab] = useState<string>('pending');
@@ -47,7 +51,11 @@ const PaymentsTable = ({
   const payments =
     activeTab === 'pending' ? pendingPayments : completedPayments;
   const pendingPaymentsSummation = pendingPayments?.reduce(
-    (acc: number, payment: any) => acc + Number(payment?.amount),
+    (acc: number, payment: any) => {
+      return selectedCurrency?.code === 'NGN' 
+        ? acc + Number(payment?.amount)
+        : acc + Number(payment?.amount?.display_value);
+    },
     0
   );
 
@@ -333,7 +341,7 @@ const PaymentsTable = ({
                           Total Pending
                         </Text>
                         <Heading fontWeight={500} fontSize={14}>
-                          {FormatAmount(Number(pendingPaymentsSummation))}
+                          {FormatAmount(Number(pendingPaymentsSummation), selectedCurrency?.code)}
                         </Heading>
                       </Box>
                     )}

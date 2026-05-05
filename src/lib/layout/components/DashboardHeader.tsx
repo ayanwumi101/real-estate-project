@@ -166,6 +166,7 @@ export const InvestorMobileDashboardHeader = () => {
                         key={currency.code}
                         onClick={() => {
                           setSelectedCurrency(currency);
+                          handleChangeCurrency(currency);
                         }}
                         py="3"
                         px="2"
