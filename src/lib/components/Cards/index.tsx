@@ -250,7 +250,7 @@ export const PortfolioStatCard = ({
 }) => {
   return (
     <Box
-      minW={['300px', '33%']}
+      minW={['300px', '32%']}
       borderRadius="5px"
       py="32px"
       px="20px"
