@@ -37,14 +37,11 @@ import DashboardHeader, {
   InvestorMobileDashboardHeader,
   RealtorMobileDashboardHeader,
 } from './components/DashboardHeader';
-import {
-  DashboardNotificationIcon,
-  InputSearchIcon,
-} from '../components/Icons/Icons';
 import { GetUserProfileDetails } from '../api/services/profileService';
 import {
   GetNextOfKins,
   UpdateDisplayCurrencyPreference,
+  GetCurrencyPreference,
 } from '../api/services/userService';
 import styles from './styles.module.css';
 import RealtorSidebar from './components/RealtorSidebar';
@@ -188,24 +185,10 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
     useState<boolean>(true);
   const [isNextOfKinsLoading, setIsNextOfKinsLoading] = useState<boolean>(true);
   const [userRole, setUserRole] = useState<string | null>(null);
-  const [selectedCurrency, setSelectedCurrency] = useState<Currency>(() => {
-    // Check local storage on page load
-    if (typeof window !== 'undefined') {
-      const storedCurrency = localStorage.getItem('selectedCurrency');
-      if (storedCurrency) {
-        try {
-          return JSON.parse(storedCurrency);
-        } catch (error) {
-          console.error('Error parsing stored currency:', error);
-        }
-      }
-    }
-    // Default to Nigerian Naira if not in local storage
-    return {
-      code: 'NGN',
-      name: 'Nigerian Naira',
-      flag: '/assets/images/nigeria-icon.svg',
-    };
+  const [selectedCurrency, setSelectedCurrency] = useState<Currency>({
+    code: 'NGN',
+    name: 'Nigerian Naira',
+    flag: '/assets/images/nigeria-icon.svg',
   });
   const [displayCurrencyLoading, setDisplayCurrencyLoading] =
     useState<boolean>(false);
@@ -234,9 +217,47 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
     setIsNextOfKinsLoading(false);
   };
 
+  const GetUserCurrencyPreference = async () => {
+    try {
+      const res = await GetCurrencyPreference();
+      const data = await res.data;
+      // Map of supported currencies
+      const supportedCurrencies: { [key: string]: Currency } = {
+        NGN: {
+          code: 'NGN',
+          name: 'Nigerian Naira',
+          flag: '/assets/images/nigeria-icon.svg',
+        },
+        USD: {
+          code: 'USD',
+          name: 'United States Dollar',
+          flag: '/assets/images/us-icon.svg',
+        },
+        EUR: {
+          code: 'EUR',
+          name: 'Euro',
+          flag: '/assets/images/euro-icon.svg',
+        },
+        GBP: {
+          code: 'GBP',
+          name: 'British Pound',
+          flag: '/assets/images/british-icon.svg',
+        },
+      };
+
+      const displayCurrency = data?.display_currency;
+      if (displayCurrency && supportedCurrencies[displayCurrency]) {
+        setSelectedCurrency(supportedCurrencies[displayCurrency]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     GetUserDetails();
     GetUserNextOfKins();
+    GetUserCurrencyPreference();
   }, []);
 
   useEffect(() => {
@@ -270,12 +291,6 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
     }
     setDisplayCurrencyLoading(false);
   };
-
-  // useEffect(() => {
-  //   if (selectedCurrency?.code !== 'NGN') {
-  //     handleChangeCurrency(selectedCurrency);
-  //   }
-  // }, [selectedCurrency]);
 
   // Save selectedCurrency to local storage whenever it changes
   useEffect(() => {
