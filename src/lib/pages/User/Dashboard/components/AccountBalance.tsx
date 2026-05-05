@@ -28,12 +28,15 @@ const AccountBalance = ({
   totalInvestment,
   totalAssets,
   assetsLoading,
+  currency,
 }: {
   totalInvestment: number;
   totalAssets: number;
   assetsLoading: boolean;
+  currency: string;
 }) => {
-  const { userDetails, isUserDetailsLoading } = useContext(AppContext);
+  const { userDetails, isUserDetailsLoading } =
+    useContext(AppContext);
   const [showBalance, setShowBalance] = useState<boolean>(true);
   const walletVisibility = Cookies.get('walletVisibility');
   const navigate = useNavigate();
@@ -148,38 +151,36 @@ const AccountBalance = ({
               pb={['4', '2']}
             >
               {/* <Link href="/user/my-assets/add-assets"> */}
-                <InfoCard
-                  icon={<AddNewAssetIcon />}
-                  title="Add new asset"
-                  description="Register newly acquired property"
-                  onClick={() => navigate('/user/my-assets/add-assets')}
-                />
+              <InfoCard
+                icon={<AddNewAssetIcon />}
+                title="Add new asset"
+                description="Register newly acquired property"
+                onClick={() => navigate('/user/my-assets/add-assets')}
+              />
               {/* </Link> */}
               {/* <Link href="/user/portfolio"> */}
-                <InfoCard
-                  icon={<RegisterPaymentIcon />}
-                  title="View Remittance"
-                  description="Track and update your earnings"
-                  onClick={() => navigate('/user/my-assets')}
-                />
+              <InfoCard
+                icon={<RegisterPaymentIcon />}
+                title="View Remittance"
+                description="Track and update your earnings"
+                onClick={() => navigate('/user/my-assets')}
+              />
               {/* </Link> */}
-              {/* <Link href="/user/nok/add"> */}
-                {' '}
-                <InfoCard
-                  icon={<DashboardAddNextOfKinIcon />}
-                  title="Add next of kin"
-                  description="Register a new next of kin"
-                  onClick={() => navigate('/user/nok/add')}
-                />
+              {/* <Link href="/user/nok/add"> */}{' '}
+              <InfoCard
+                icon={<DashboardAddNextOfKinIcon />}
+                title="Add next of kin"
+                description="Register a new next of kin"
+                onClick={() => navigate('/user/nok/add')}
+              />
               {/* </Link> */}
-              {/* <Link href="/user/settings"> */}
-                {' '}
-                <InfoCard
-                  icon={<AddNewAssetIcon />}
-                  title="Go to settings"
-                  description="Update personal data and profile picture"
-                  onClick={() => navigate('/user/my-assets/add-assets')}
-                />
+              {/* <Link href="/user/settings"> */}{' '}
+              <InfoCard
+                icon={<AddNewAssetIcon />}
+                title="Go to settings"
+                description="Update personal data and profile picture"
+                onClick={() => navigate('/user/my-assets/add-assets')}
+              />
               {/* </Link> */}
             </Flex>
           </Box>
@@ -253,11 +254,11 @@ const AccountBalance = ({
             >
               <Stack spacing="16px" w="100%">
                 <Text color="brand.300" fontWeight={500}>
-                  Total Assets Valuation (Naira)
+                  Total Assets Valuation ({currency})
                 </Text>
                 <Flex alignItems="center" gap="16px" w="100%">
                   <Heading fontSize={24} fontWeight={500} color="#222222">
-                    {FormatAmount(Number(totalInvestment) || 0)}
+                    {FormatAmount(Number(totalInvestment), currency)}
                   </Heading>
                   <FiEye color="#2E353F" fontSize={20} />
                 </Flex>

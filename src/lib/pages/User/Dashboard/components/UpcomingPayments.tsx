@@ -1,5 +1,5 @@
 'use client';
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import {
   Box,
   Stack,
@@ -32,6 +32,7 @@ import Link from 'next/link';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
 import SkeletonLoader from '~/lib/components/SkeletonLoader';
+import { AppContext } from '~/lib/layout';
 
 const UpcomingPayments = ({
   assets,
@@ -41,6 +42,7 @@ const UpcomingPayments = ({
   loading: boolean;
 }) => {
   const navigate = useNavigate();
+  const { selectedCurrency } = useContext(AppContext);
   return (
     <Box py="40px" px={['15px', '40px']}>
       <Stack spacing="30px">
@@ -173,10 +175,35 @@ const UpcomingPayments = ({
                                 : 'N/A'}
                             </Td>
                             <Td fontWeight={500} fontSize={14}>
-                              {FormatAmount(Number(asset?.cashflow_amount))}
+                              {selectedCurrency?.code === 'NGN' ? (
+                                <>
+                                  {' '}
+                                  {FormatAmount(
+                                    Number(
+                                      asset?.cashflow_amount ||
+                                        asset?.amount_left
+                                    ),
+                                    asset?.cashflow_amount?.display_currency ||
+                                      asset?.amount_left?.display_currency
+                                  )}
+                                </>
+                              ) : (
+                                <>
+                                  {' '}
+                                  {FormatAmount(
+                                    Number(
+                                      asset?.cashflow_amount?.display_value ||
+                                        asset?.amount_left?.display_value ||
+                                        0
+                                    ),
+                                    asset?.cashflow_amount?.display_currency ||
+                                      asset?.amount_left?.display_currency
+                                  )}
+                                </>
+                              )}
                             </Td>
                             <Td fontWeight={500} fontSize={14}>
-                              {asset?.cashflow_duration}
+                              {asset?.cashflow_duration || asset?.payment_plan}
                             </Td>
                             <Td
                               fontWeight={500}

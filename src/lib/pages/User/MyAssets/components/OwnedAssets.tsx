@@ -26,7 +26,8 @@ import {
   ProfitIcon,
   VerticalEllipsisIcon,
   NextPageIcon,
-  PreviousPageIcon, EmptyAssetIcon
+  PreviousPageIcon,
+  EmptyAssetIcon,
 } from '~/lib/components/Icons/Icons';
 import SkeletonLoader from '~/lib/components/SkeletonLoader';
 import { FormatAmount } from '~/lib/utils/formatAmount';
@@ -40,7 +41,7 @@ const OwnedAssets = ({
   page,
   setPage,
   hasNextPage,
-  dataPerPage
+  dataPerPage,
 }: {
   assets: any[];
   setAssets: any;
@@ -181,7 +182,12 @@ const OwnedAssets = ({
                           {asset?.property_type}
                         </Td>
                         <Td fontWeight={500} fontSize={14} color="#8295AA">
-                          {FormatAmount(Number(asset?.property_cost))}
+                          {asset?.property_cost?.display_value
+                            ? FormatAmount(
+                                Number(asset?.property_cost?.display_value),
+                                asset?.property_cost?.display_currency
+                              )
+                            : FormatAmount(Number(asset?.property_cost))}
                         </Td>
                         <Td fontWeight={500} fontSize={14} color="#8295AA">
                           {asset?.allocation_status}

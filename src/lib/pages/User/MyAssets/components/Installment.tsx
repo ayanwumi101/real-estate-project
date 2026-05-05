@@ -215,13 +215,28 @@ const Installment = ({
                           {asset?.property_type}
                         </Td>
                         <Td fontWeight={500} fontSize={14} color="#8295AA">
-                          {FormatAmount(Number(asset?.property_cost))}
+                          {asset?.property_cost?.display_value
+                            ? FormatAmount(
+                                Number(asset?.property_cost?.display_value),
+                                asset?.property_cost?.display_currency
+                              )
+                            : FormatAmount(Number(asset?.property_cost))}
                         </Td>
                         <Td fontWeight={500} fontSize={14} color="#8295AA">
-                          {FormatAmount(Number(asset?.amount_paid))}
+                          {asset?.amount_paid?.display_value
+                            ? FormatAmount(
+                                Number(asset?.amount_paid?.display_value),
+                                asset?.amount_paid?.display_currency
+                              )
+                            : FormatAmount(Number(asset?.amount_paid))}
                         </Td>
                         <Td fontWeight={500} fontSize={14} color="#8295AA">
-                          {FormatAmount(Number(asset?.amount_left))}
+                          {asset?.amount_left?.display_value
+                            ? FormatAmount(
+                                Number(asset?.amount_left?.display_value),
+                                asset?.amount_left?.display_currency
+                              )
+                            : FormatAmount(Number(asset?.amount_left))}
                         </Td>
                         <Td fontWeight={500} fontSize={14} color="#8295AA">
                           {asset?.no_of_payments || 0}

@@ -16,6 +16,7 @@ import {
   Td,
   Tbody,
   useMediaQuery,
+  useToast,
 } from '@chakra-ui/react';
 import {
   createContext,
@@ -42,8 +43,8 @@ import {
 } from '../components/Icons/Icons';
 import { GetUserProfileDetails } from '../api/services/profileService';
 import {
-  GetCurrentExchangeRate,
   GetNextOfKins,
+  UpdateDisplayCurrencyPreference,
 } from '../api/services/userService';
 import styles from './styles.module.css';
 import RealtorSidebar from './components/RealtorSidebar';
@@ -179,7 +180,7 @@ type LayoutProps = {
 // };
 
 export const DashboardLayout = ({ children }: LayoutProps) => {
-  const [showSearBar, setShowSearchBar] = useState<boolean>(false);
+  const toast = useToast();
   const [userDetails, setUserDetails] = useState<any>();
   const [nextOfKins, setNextOfKins] = useState<any>([]);
   const [isMobile] = useMediaQuery('(max-width: 768px)');
@@ -187,15 +188,27 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
     useState<boolean>(true);
   const [isNextOfKinsLoading, setIsNextOfKinsLoading] = useState<boolean>(true);
   const [userRole, setUserRole] = useState<string | null>(null);
-  const [selectedCurrency, setSelectedCurrency] = useState<Currency>({
-    code: 'NGN',
-    name: 'Nigerian Naira',
-    flag: '/assets/images/nigeria-icon.svg',
+  const [selectedCurrency, setSelectedCurrency] = useState<Currency>(() => {
+    // Check local storage on page load
+    if (typeof window !== 'undefined') {
+      const storedCurrency = localStorage.getItem('selectedCurrency');
+      if (storedCurrency) {
+        try {
+          return JSON.parse(storedCurrency);
+        } catch (error) {
+          console.error('Error parsing stored currency:', error);
+        }
+      }
+    }
+    // Default to Nigerian Naira if not in local storage
+    return {
+      code: 'NGN',
+      name: 'Nigerian Naira',
+      flag: '/assets/images/nigeria-icon.svg',
+    };
   });
-
-  const handleChange = () => {
-    setShowSearchBar(true);
-  };
+  const [displayCurrencyLoading, setDisplayCurrencyLoading] =
+    useState<boolean>(false);
 
   const GetUserDetails = async () => {
     setIsUserDetailsLoading(true);
@@ -233,16 +246,45 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
   }, []);
 
   const handleChangeCurrency = async (currency: Currency) => {
+    setDisplayCurrencyLoading(true);
     try {
-      const response = await GetCurrentExchangeRate(currency.code);
-      console.log(response);
+      await UpdateDisplayCurrencyPreference(currency.code);
+      toast({
+        title: 'Currency updated',
+        description: `Your display currency has been updated to ${currency.name}`,
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+        position: 'top',
+      });
+      window.location.reload();
     } catch (error) {
-      console.log('error', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to update display currency',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top',
+      });
     }
+    setDisplayCurrencyLoading(false);
   };
 
+  // useEffect(() => {
+  //   if (selectedCurrency?.code !== 'NGN') {
+  //     handleChangeCurrency(selectedCurrency);
+  //   }
+  // }, [selectedCurrency]);
+
+  // Save selectedCurrency to local storage whenever it changes
   useEffect(() => {
-    handleChangeCurrency(selectedCurrency);
+    if (typeof window !== 'undefined' && selectedCurrency) {
+      localStorage.setItem(
+        'selectedCurrency',
+        JSON.stringify(selectedCurrency)
+      );
+    }
   }, [selectedCurrency]);
 
   return (
@@ -257,6 +299,7 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
         selectedCurrency,
         setSelectedCurrency,
         handleChangeCurrency,
+        displayCurrencyLoading,
       }}
     >
       <Box

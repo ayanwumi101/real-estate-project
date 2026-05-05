@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, Stack, Flex, Button, Text } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AssetsStatistics from './components/AssetsStatistics';
 import NavigationTab from './components/NavigationTab';
 import { HiPlus } from 'react-icons/hi2';
@@ -12,6 +12,7 @@ import Link from 'next/link';
 import { GetUserAssets } from '~/lib/api/services/assetsService';
 import { useRouter } from 'next/navigation';
 import DashboardHeader from '~/lib/layout/components/DashboardHeader';
+import { AppContext } from '~/lib/layout';
 
 const index = () => {
   const [activeTab, setActiveTab] = useState<string>('Owned');
@@ -21,6 +22,7 @@ const index = () => {
   const [page, setPage] = useState<number>(1);
   const [dataPerPage, setDataPerPage] = useState<number>(20);
   const [hasNextPage, setHasNextPage] = useState<boolean>(false);
+  const { selectedCurrency } = useContext(AppContext);
 
   const GetAssets = async () => {
     setLoading(true);
@@ -48,24 +50,37 @@ const index = () => {
   );
   const ownedAssets = assets?.filter((asset) => asset?.asset_type === 'owned');
 
-  const totalAssetsInNaira = assets?.reduce((acc, asset) => {
-    return acc + Number(asset?.property_cost);
-  }, 0);
+  const totalAssetsInNaira =
+    selectedCurrency?.code === 'NGN'
+      ? assets?.reduce((acc, asset) => {
+          return acc + Number(asset?.property_cost);
+        }, 0)
+      : assets?.reduce((acc, asset) => {
+          return acc + Number(asset?.property_cost?.display_value);
+        }, 0);
 
-  const totalRemittance = assets?.reduce((acc, asset) => {
-    return acc + Number(asset?.cashflow_amount);
+  const totalRemittance = cashflowAssets?.reduce((acc, asset) => {
+    return selectedCurrency?.code === 'NGN'
+      ? acc + Number(asset?.cashflow_amount)
+      : acc + Number(asset?.cashflow_amount?.display_value);
   }, 0);
 
   const totalOwnedValuation = ownedAssets?.reduce((acc, asset) => {
-    return acc + Number(asset?.property_cost);
+    return selectedCurrency?.code === 'NGN'
+      ? acc + Number(asset?.property_cost)
+      : acc + Number(asset?.property_cost?.display_value);
   }, 0);
 
   const totalCashflowValuation = cashflowAssets?.reduce((acc, asset) => {
-    return acc + Number(asset?.property_cost);
+    return selectedCurrency?.code === 'NGN'
+      ? acc + Number(asset?.property_cost)
+      : acc + Number(asset?.property_cost?.display_value);
   }, 0);
 
   const totalInstallmentValuation = installmentAssets?.reduce((acc, asset) => {
-    return acc + Number(asset?.property_cost);
+    return selectedCurrency?.code === 'NGN'
+      ? acc + Number(asset?.property_cost)
+      : acc + Number(asset?.property_cost?.display_value);
   }, 0);
 
   return (

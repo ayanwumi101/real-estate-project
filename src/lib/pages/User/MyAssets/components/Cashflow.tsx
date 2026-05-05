@@ -102,7 +102,7 @@ const Cashflow = ({
             <Box maxW="465px" mx="auto" my="5">
               <Stack spacing="15px" alignItems="center" textAlign="center">
                 {' '}
-               <EmptyAssetIcon />
+                <EmptyAssetIcon />
                 <Heading fontSize={18}>No Cash Flow Properties Yet!</Heading>
                 <Text color="#2E353F">
                   You haven’t added any cash-flowing assets. Track rental
@@ -215,9 +215,12 @@ const Cashflow = ({
                           {asset?.property_type}
                         </Td>
                         <Td fontWeight={500} fontSize={14} color="#8295AA">
-                          {asset?.property_cost
-                            ? `${FormatAmount(Number(asset?.property_cost))}`
-                            : 'N/A'}
+                          {asset?.property_cost?.display_value
+                            ? FormatAmount(
+                                Number(asset?.property_cost?.display_value),
+                                asset?.property_cost?.display_currency
+                              )
+                            : FormatAmount(Number(asset?.property_cost))}
                         </Td>
                         <Td fontWeight={500} fontSize={14} color="#8295AA">
                           {asset?.cashflow_duration
@@ -225,9 +228,12 @@ const Cashflow = ({
                             : 'N/A'}
                         </Td>
                         <Td fontWeight={500} fontSize={14} color="#8295AA">
-                          {asset?.cashflow_amount
-                            ? `${FormatAmount(Number(asset?.cashflow_amount))}`
-                            : 0}
+                          {asset?.cashflow_amount?.display_value
+                            ? FormatAmount(
+                                Number(asset?.cashflow_amount?.display_value),
+                                asset?.cashflow_amount?.display_currency
+                              )
+                            : FormatAmount(Number(asset?.cashflow_amount))}
                         </Td>
                         <Td fontWeight={500} fontSize={14} color="#8295AA">
                           {asset?.no_of_payments

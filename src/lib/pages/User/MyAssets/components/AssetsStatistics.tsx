@@ -2,11 +2,11 @@
 
 import { Box, Flex, Heading, Button } from '@chakra-ui/react';
 import Cookies from 'js-cookie';
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { FiEye } from 'react-icons/fi';
 import { StatCard, AssetStatCard } from '~/lib/components/Cards';
+import { AppContext } from '~/lib/layout';
 import { FormatAmount } from '~/lib/utils/formatAmount';
-
 
 const AssetsStatistics = ({
   numberOfAssets,
@@ -19,6 +19,7 @@ const AssetsStatistics = ({
 }) => {
   const [showTotalAsset, setShowTotalAsset] = React.useState<boolean>(true);
   const assetVisibility = Cookies.get('assetVisibility');
+  const { selectedCurrency } = useContext(AppContext);
   return (
     <Box
       py={['20px', '40px']}
@@ -32,14 +33,14 @@ const AssetsStatistics = ({
             {numberOfAssets ? numberOfAssets : 0}
           </Heading>
         </AssetStatCard>
-        <AssetStatCard label="Total Asset in Naira">
+        <AssetStatCard label={`Total Asset in ${selectedCurrency?.code}`}>
           <Flex
             alignItems={assetVisibility === 'true' ? 'center' : 'flex-end'}
             gap="10px"
           >
             <Heading fontWeight={500} fontSize={24} color="#222222">
               {assetVisibility === 'true'
-                ? `${assetInNaira ? FormatAmount(Number(assetInNaira)) : 0.0}`
+                ? `${assetInNaira ? FormatAmount(Number(assetInNaira), selectedCurrency?.code) : 0.0}`
                 : '********'}
             </Heading>
             <Button
@@ -58,7 +59,9 @@ const AssetsStatistics = ({
         </AssetStatCard>
         <AssetStatCard label="Total Remittance">
           <Heading fontWeight={500} fontSize={24} color="#222222">
-            {totalRemittance ? FormatAmount(Number(totalRemittance)) : 0.0}
+            {totalRemittance
+              ? FormatAmount(Number(totalRemittance), selectedCurrency?.code)
+              : 0.0}
           </Heading>
         </AssetStatCard>
       </Flex>

@@ -65,7 +65,12 @@ export const UpdateUserProfile = async(data) => {
   return response.data;
 }
 
-export const GetCurrentExchangeRate = async (code) => {
-  const response = await axiosInstance.get(`${API_ROUTES.CHANGE_APP_CURRENCY}?code=${code}`);
+export const GetCurrentExchangeRate = async () => {
+  const response = await axiosInstance.get(`${API_ROUTES.DISPLAY_CURRENCY_PREFERENCE}`);
   return response.data;
 } 
+
+export const UpdateDisplayCurrencyPreference = async (displayCurrency) => {
+  const response = await axiosInstance.put(`${API_ROUTES.DISPLAY_CURRENCY_PREFERENCE}`, { display_currency: displayCurrency });
+  return response.data;
+}

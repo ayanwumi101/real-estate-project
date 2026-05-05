@@ -2,9 +2,10 @@
 
 import { Box, Flex, Text, Button, Stack, Heading } from '@chakra-ui/react';
 import Link from 'next/link';
-import React from 'react';
+import React, { useContext } from 'react';
 import { HiPlus } from 'react-icons/hi2';
-import { formatCurrency } from '~/lib/utils/formatAmount';
+import { AppContext } from '~/lib/layout';
+import { FormatAmount, formatCurrency } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
 
 
@@ -30,6 +31,7 @@ const NavigationTab = ({
   totalInstallmentValuation: number;
   }) => {
   const navigate = useNavigate()
+  const {selectedCurrency} = useContext(AppContext)
   return (
     <Box py="35px" w="full">
       <Flex
@@ -94,10 +96,10 @@ const NavigationTab = ({
                   </Text>
                   <Heading fontWeight={600} fontSize={16} color="brand.300">
                     {activeTab === 'Owned'
-                      ? formatCurrency(totalOwnedValuation.toString())
+                      ? FormatAmount(Number(totalOwnedValuation), selectedCurrency?.code)
                       : activeTab === 'Cashflow'
-                        ? formatCurrency(totalCashflowValuation.toString())
-                        : formatCurrency(totalInstallmentValuation.toString())}
+                        ? FormatAmount(Number(totalCashflowValuation), selectedCurrency?.code)
+                        : FormatAmount(Number(totalInstallmentValuation), selectedCurrency?.code)}
                   </Heading>
                 </Stack>
               </Box>

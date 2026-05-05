@@ -1,11 +1,7 @@
 import {
   Box,
   Avatar,
-  Input,
-  InputGroup,
-  AvatarBadge,
   Flex,
-  InputLeftElement,
   Heading,
   Text,
   Button,
@@ -17,6 +13,7 @@ import {
   MenuItem,
   HStack,
   MenuList,
+  Spinner,
 } from '@chakra-ui/react';
 import React, { Fragment, useContext, useState } from 'react';
 import {
@@ -182,6 +179,7 @@ export const InvestorMobileDashboardHeader = () => {
                           <Text color="text.400" fontSize={14} fontWeight={400}>
                             {currency?.name} ({currency.code})
                           </Text>
+                          <Spinner />
                         </HStack>
                       </MenuItem>
                     ))}
@@ -223,6 +221,7 @@ const DashboardHeader = ({
     selectedCurrency,
     setSelectedCurrency,
     handleChangeCurrency,
+    displayCurrencyLoading,
   } = useContext(AppContext);
   return (
     <Fragment>
@@ -271,6 +270,7 @@ const DashboardHeader = ({
                       key={currency.code}
                       onClick={() => {
                         setSelectedCurrency(currency);
+                        handleChangeCurrency(currency);
                       }}
                       py="3"
                       px="2"
@@ -284,6 +284,7 @@ const DashboardHeader = ({
                         <Text color="text.400" fontSize={14} fontWeight={400}>
                           {currency?.name} ({currency.code})
                         </Text>
+                        {displayCurrencyLoading && <Spinner />}
                       </HStack>
                     </MenuItem>
                   ))}

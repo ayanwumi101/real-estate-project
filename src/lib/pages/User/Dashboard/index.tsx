@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import AccountBalance from './components/AccountBalance';
 import Investments from './components/Investments';
 import MarketUpdates from './components/MarketUpdates';
@@ -8,12 +8,14 @@ import { GetUserAssets } from '~/lib/api/services/assetsService';
 import DashboardInfo from './components/DashboardInfo';
 import UpcomingPayments from './components/UpcomingPayments';
 import DashboardHeader from '~/lib/layout/components/DashboardHeader';
+import { AppContext } from '~/lib/layout';
 
 const index = () => {
   const [page, setPage] = useState<number>(1);
   const [dataPerPage, setDataPerPage] = useState<number>(10);
   const [assets, setAssets] = React.useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const { selectedCurrency } = useContext(AppContext);
 
   const GetAssets = async () => {
     setLoading(true);
@@ -30,9 +32,21 @@ const index = () => {
     GetAssets();
   }, []);
 
-  const totalInvestment = assets?.reduce((acc, asset) => {
-    return acc + Number(asset?.property_cost);
-  }, 0);
+  const totalInvestment =
+    selectedCurrency?.code === 'NGN'
+      ? assets?.reduce(
+          (acc, asset) =>
+            acc + (asset?.property_cost ? Number(asset?.property_cost) : 0),
+          0
+        )
+      : assets?.reduce(
+          (acc, asset) =>
+            acc +
+            (asset?.property_cost?.display_value
+              ? Number(asset?.property_cost?.display_value)
+              : 0),
+          0
+        );
 
   const upcomingPaymentsAssets = assets?.filter(
     (asset) => asset?.asset_type !== 'owned'
@@ -42,6 +56,7 @@ const index = () => {
     <DashboardHeader title="Dashboard">
       <Box pt={[3, 0]}>
         <AccountBalance
+          currency={assets[0]?.currency_meta?.display_currency}
           totalAssets={assets?.length}
           totalInvestment={totalInvestment}
           assetsLoading={loading}
