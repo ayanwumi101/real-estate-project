@@ -341,7 +341,10 @@ const PaymentsTable = ({
                           Total Pending
                         </Text>
                         <Heading fontWeight={500} fontSize={14}>
-                          {FormatAmount(Number(pendingPaymentsSummation), selectedCurrency?.code)}
+                          {FormatAmount(
+                            Number(pendingPaymentsSummation),
+                            selectedCurrency?.code
+                          )}
                         </Heading>
                       </Box>
                     )}
