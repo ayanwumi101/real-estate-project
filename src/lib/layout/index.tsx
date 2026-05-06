@@ -191,7 +191,7 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
     flag: '/assets/images/nigeria-icon.svg',
   });
   const [displayCurrencyLoading, setDisplayCurrencyLoading] =
-    useState<boolean>(false);
+    useState<boolean>(true);
 
   const GetUserDetails = async () => {
     setIsUserDetailsLoading(true);
@@ -218,7 +218,7 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
   };
 
   const GetUserCurrencyPreference = async () => {
-     setDisplayCurrencyLoading(true);
+    setDisplayCurrencyLoading(true);
     try {
       const res = await GetCurrencyPreference();
       const data = await res.data;
@@ -253,7 +253,7 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
     } catch (error) {
       console.log(error);
     }
-     setDisplayCurrencyLoading(false);
+    setDisplayCurrencyLoading(false);
   };
 
   useEffect(() => {
