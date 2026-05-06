@@ -14,6 +14,7 @@ import {
   HStack,
   MenuList,
   Spinner,
+  Skeleton,
 } from '@chakra-ui/react';
 import React, { Fragment, useContext, useState } from 'react';
 import {
@@ -143,6 +144,152 @@ export const InvestorMobileDashboardHeader = () => {
             </Box>
             <Box>
               <Flex alignItems="center" gap="10px">
+                {displayCurrencyLoading ? (
+                  <Box
+                    w="103px"
+                    px="2"
+                    py="2"
+                    // h="45px"
+                    rounded="24px"
+                    border="1px solid"
+                    borderColor="border.100"
+                  >
+                    <HStack
+                      alignItems="center"
+                      gap="10px"
+                      justifyContent="center"
+                    >
+                      <Skeleton w="25px" h="25px" rounded="full" />
+                      <Skeleton w="20px" h="20px" />
+                      <ChevronDownIcon />
+                    </HStack>
+                  </Box>
+                ) : (
+                  <Menu>
+                    <MenuButton
+                      as={Button}
+                      variant="ghost"
+                      px="2"
+                      w="100px"
+                      // rightIcon={<ChevronDownIcon />}
+                    >
+                      <HStack alignItems="center" gap="8px">
+                        <Image
+                          src={selectedCurrency?.flag}
+                          boxSize="25px"
+                          alt={selectedCurrency?.code}
+                        />
+                        <Text fontSize={15}>{selectedCurrency?.code}</Text>
+                        <ChevronDownIcon />
+                      </HStack>
+                    </MenuButton>
+                    <MenuList>
+                      {currencies.map((currency) => (
+                        <MenuItem
+                          key={currency.code}
+                          onClick={() => {
+                            setSelectedCurrency(currency);
+                            handleChangeCurrency(currency);
+                          }}
+                          py="3"
+                          px="2"
+                        >
+                          <HStack>
+                            <Image
+                              src={currency.flag}
+                              boxSize="25px"
+                              alt={currency.code}
+                            />
+                            <Text
+                              color="text.400"
+                              fontSize={14}
+                              fontWeight={400}
+                            >
+                              {currency?.name} ({currency.code})
+                            </Text>
+                            {displayCurrencyLoading && <Spinner />}
+                          </HStack>
+                        </MenuItem>
+                      ))}
+                    </MenuList>
+                  </Menu>
+                )}
+                <Box w="1px" h="40px" bg="#C0C0C0"></Box>
+                <Button
+                  bg="none"
+                  p="0"
+                  m="0"
+                  _hover={{ bg: 'none', p: 0 }}
+                  onClick={() => setOpenSideNav(true)}
+                >
+                  <HiMiniBars3 size={27} color="#2E353F" />
+                </Button>
+              </Flex>
+            </Box>
+          </Flex>
+        </Box>
+      </Stack>
+      {openSideNav && (
+        <DashboardMobileSidebar setOpenSideNav={setOpenSideNav} />
+      )}
+    </Fragment>
+  );
+};
+
+const DashboardHeader = ({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) => {
+  const {
+    userDetails,
+    selectedCurrency,
+    setSelectedCurrency,
+    handleChangeCurrency,
+    displayCurrencyLoading,
+  } = useContext(AppContext);
+  return (
+    <Fragment>
+      <Box
+        w="100%"
+        px={['20px', '40px']}
+        py={['18px', '22px']}
+        borderBottom="1px solid"
+        borderColor="border.100"
+        mt={[14, 0]}
+      >
+        <Box display="flex" alignItems="center">
+          <Flex
+            alignItems="center"
+            justifyContent="space-between"
+            gap="32px"
+            w="100%"
+          >
+            <Heading fontSize={[24, 30]} fontWeight={700} color="brand.100">
+              {title}
+            </Heading>
+            <Flex alignItems="center" gap="30px" display={['none', 'flex']}>
+              <DashboardNotificationIcon />
+              <Box w="1px" h="40px" bg="#C0C0C0"></Box>
+              {displayCurrencyLoading ? (
+                <Box
+                  w="103px"
+                  px="2"
+                  py="2"
+                  // h="45px"
+                  rounded="24px"
+                  border="1px solid"
+                  borderColor="border.100"
+                >
+                  <HStack alignItems="center" gap="10px" justifyContent='center'>
+                    <Skeleton w="25px" h="25px" rounded="full" />
+                    <Skeleton w="20px" h="20px" />
+                    <ChevronDownIcon />
+                  </HStack>
+                </Box>
+              ) : (
                 <Menu>
                   <MenuButton
                     as={Button}
@@ -187,111 +334,7 @@ export const InvestorMobileDashboardHeader = () => {
                     ))}
                   </MenuList>
                 </Menu>
-                <Box w="1px" h="40px" bg="#C0C0C0"></Box>
-                <Button
-                  bg="none"
-                  p="0"
-                  m="0"
-                  _hover={{ bg: 'none', p: 0 }}
-                  onClick={() => setOpenSideNav(true)}
-                >
-                  <HiMiniBars3 size={27} color="#2E353F" />
-                </Button>
-              </Flex>
-            </Box>
-          </Flex>
-        </Box>
-      </Stack>
-      {openSideNav && (
-        <DashboardMobileSidebar setOpenSideNav={setOpenSideNav} />
-      )}
-    </Fragment>
-  );
-};
-
-const DashboardHeader = ({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) => {
-  const [isMobile] = useMediaQuery('(max-width: 768px)');
-  const [openSideNav, setOpenSideNav] = useState<boolean>(false);
-  const {
-    userDetails,
-    selectedCurrency,
-    setSelectedCurrency,
-    handleChangeCurrency,
-    displayCurrencyLoading,
-  } = useContext(AppContext);
-  return (
-    <Fragment>
-      <Box
-        w="100%"
-        px={['20px', '40px']}
-        py={['18px', '22px']}
-        borderBottom="1px solid"
-        borderColor="border.100"
-        mt={[14, 0]}
-      >
-        <Box display="flex" alignItems="center">
-          <Flex
-            alignItems="center"
-            justifyContent="space-between"
-            gap="32px"
-            w="100%"
-          >
-            <Heading fontSize={[24, 30]} fontWeight={700} color="brand.100">
-              {title}
-            </Heading>
-            <Flex alignItems="center" gap="30px" display={['none', 'flex']}>
-              <DashboardNotificationIcon />
-              <Box w="1px" h="40px" bg="#C0C0C0"></Box>
-              <Menu>
-                <MenuButton
-                  as={Button}
-                  variant="ghost"
-                  px="2"
-                  w="100px"
-                  // rightIcon={<ChevronDownIcon />}
-                >
-                  <HStack alignItems="center" gap="8px">
-                    <Image
-                      src={selectedCurrency?.flag}
-                      boxSize="25px"
-                      alt={selectedCurrency?.code}
-                    />
-                    <Text fontSize={15}>{selectedCurrency?.code}</Text>
-                    <ChevronDownIcon />
-                  </HStack>
-                </MenuButton>
-                <MenuList>
-                  {currencies.map((currency) => (
-                    <MenuItem
-                      key={currency.code}
-                      onClick={() => {
-                        setSelectedCurrency(currency);
-                        handleChangeCurrency(currency);
-                      }}
-                      py="3"
-                      px="2"
-                    >
-                      <HStack>
-                        <Image
-                          src={currency.flag}
-                          boxSize="25px"
-                          alt={currency.code}
-                        />
-                        <Text color="text.400" fontSize={14} fontWeight={400}>
-                          {currency?.name} ({currency.code})
-                        </Text>
-                        {displayCurrencyLoading && <Spinner />}
-                      </HStack>
-                    </MenuItem>
-                  ))}
-                </MenuList>
-              </Menu>
+              )}
               <Avatar
                 name={userDetails?.fullname}
                 w="40px"

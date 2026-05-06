@@ -218,6 +218,7 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
   };
 
   const GetUserCurrencyPreference = async () => {
+     setDisplayCurrencyLoading(true);
     try {
       const res = await GetCurrencyPreference();
       const data = await res.data;
@@ -252,6 +253,7 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
     } catch (error) {
       console.log(error);
     }
+     setDisplayCurrencyLoading(false);
   };
 
   useEffect(() => {

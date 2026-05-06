@@ -17,8 +17,9 @@ const AssetsStatistics = ({
   assetInNaira: any;
   totalRemittance: any;
 }) => {
-  const [showTotalAsset, setShowTotalAsset] = React.useState<boolean>(true);
-  const assetVisibility = Cookies.get('assetVisibility');
+  const [showTotalAsset, setShowTotalAsset] = React.useState<boolean>(
+    Cookies.get('assetVisibility') === 'true'
+  );
   const { selectedCurrency } = useContext(AppContext);
   return (
     <Box
@@ -34,12 +35,9 @@ const AssetsStatistics = ({
           </Heading>
         </AssetStatCard>
         <AssetStatCard label={`Total Asset in ${selectedCurrency?.code}`}>
-          <Flex
-            alignItems={assetVisibility === 'true' ? 'center' : 'flex-end'}
-            gap="10px"
-          >
+          <Flex alignItems={showTotalAsset ? 'center' : 'flex-end'} gap="10px">
             <Heading fontWeight={500} fontSize={24} color="#222222">
-              {assetVisibility === 'true'
+              {showTotalAsset
                 ? `${assetInNaira ? FormatAmount(Number(assetInNaira), selectedCurrency?.code) : 0.0}`
                 : '********'}
             </Heading>
