@@ -291,7 +291,7 @@ const Installment = ({
                                 fontWeight={500}
                                 onClick={() =>
                                   navigate(
-                                    `/user/portfolio/${asset?.id}/payments`
+                                    `/user/my-assets/${asset?.id}/payments`
                                   )
                                 }
                               >

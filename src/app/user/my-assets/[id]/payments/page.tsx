@@ -1,8 +1,9 @@
 import React from 'react'
-import PaymentList from '~/lib/pages/User/PaymentList'
+// import PaymentList from '~/lib/pages/User/PaymentList'
+import RemittancePayments from '~/lib/pages/User/RemittancePayments';
 
 const page = () => {
-  return <PaymentList />
+  return <RemittancePayments />
 }
 
 export default page

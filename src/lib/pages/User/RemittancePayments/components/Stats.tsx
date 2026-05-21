@@ -31,12 +31,12 @@ const Stats = ({
             <Flex
               w="full"
               alignItems="center"
-              gap="16px"
+              gap="14px"
               overflow="auto"
               pb="2"
             >
               <Box
-                minW={['270px', '20%']}
+                minW={['270px', '19%']}
                 p="20px 16px"
                 border="1px solid #E4E4E4"
                 rounded="5px"
@@ -56,7 +56,7 @@ const Stats = ({
                 </Stack>
               </Box>
               <Box
-                minW={['270px', '20%']}
+                minW={['270px', '19%']}
                 p="20px 16px"
                 border="1px solid #E4E4E4"
                 rounded="5px"
@@ -76,7 +76,7 @@ const Stats = ({
                 </Stack>
               </Box>
               <Box
-                minW={['270px', '20%']}
+                minW={['270px', '19%']}
                 p="20px 16px"
                 border="1px solid #E4E4E4"
                 rounded="5px"
@@ -96,7 +96,7 @@ const Stats = ({
                 </Stack>
               </Box>
               <Box
-                minW={['270px', '20%']}
+                minW={['270px', '19%']}
                 p="20px 16px"
                 border="1px solid #E4E4E4"
                 rounded="5px"
@@ -113,7 +113,7 @@ const Stats = ({
                 </Stack>
               </Box>
               <Box
-                minW={['270px', '20%']}
+                minW={['270px', '19%']}
                 p="20px 16px"
                 border="1px solid #E4E4E4"
                 rounded="5px"
@@ -143,7 +143,7 @@ const Stats = ({
               pb="2"
             >
               <Box
-                minW={['270px', '20%']}
+                minW={['270px', '24%']}
                 p="20px 16px"
                 border="1px solid #E4E4E4"
                 rounded="5px"
@@ -163,7 +163,7 @@ const Stats = ({
                 </Stack>
               </Box>
               <Box
-                minW={['270px', '20%']}
+                minW={['270px', '24%']}
                 p="20px 16px"
                 border="1px solid #E4E4E4"
                 rounded="5px"
@@ -183,7 +183,7 @@ const Stats = ({
                 </Stack>
               </Box>
               <Box
-                minW={['270px', '20%']}
+                minW={['270px', '24%']}
                 p="20px 16px"
                 border="1px solid #E4E4E4"
                 rounded="5px"
@@ -203,7 +203,7 @@ const Stats = ({
                 </Stack>
               </Box>
               <Box
-                minW={['270px', '20%']}
+                minW={['270px', '24%']}
                 p="20px 16px"
                 border="1px solid #E4E4E4"
                 rounded="5px"

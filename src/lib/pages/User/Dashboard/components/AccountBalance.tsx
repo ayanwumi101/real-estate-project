@@ -163,7 +163,7 @@ const AccountBalance = ({
                 icon={<RegisterPaymentIcon />}
                 title="View Remittance"
                 description="Track and update your earnings"
-                onClick={() => navigate('/user/my-assets')}
+                onClick={() => navigate('/user/portfolio')}
               />
               {/* </Link> */}
               {/* <Link href="/user/nok/add"> */}{' '}
@@ -179,7 +179,7 @@ const AccountBalance = ({
                 icon={<AddNewAssetIcon />}
                 title="Go to settings"
                 description="Update personal data and profile picture"
-                onClick={() => navigate('/user/my-assets/add-assets')}
+                onClick={() => navigate('/user/settings')}
               />
               {/* </Link> */}
             </Flex>
