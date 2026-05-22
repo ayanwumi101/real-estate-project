@@ -54,7 +54,6 @@ const NavigationTab: React.FC<NavigationTabProps> = ({
             <Button
               key={tab}
               onClick={() => {
-                setActiveTab(tab as 'available' | 'sold' | 'instalment');
                 const params = new URLSearchParams(searchParams.toString());
                 params.set('tab', tab);
                 router.replace(`?${params.toString()}`, { scroll: false });

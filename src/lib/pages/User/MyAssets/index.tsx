@@ -10,12 +10,20 @@ import Cashflow from './components/Cashflow';
 import Installment from './components/Installment';
 import Link from 'next/link';
 import { GetUserAssets } from '~/lib/api/services/assetsService';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import DashboardHeader from '~/lib/layout/components/DashboardHeader';
 import { AppContext } from '~/lib/layout';
 
+
+
+
 const index = () => {
-  const [activeTab, setActiveTab] = useState<string>('Owned');
+  const searchParams = useSearchParams();
+  const tab = searchParams.get('tab');
+  const tabs = ['Owned', 'Cashflow', 'Installment'];
+  const [activeTab, setActiveTab] = React.useState<
+    'Owned' | 'Cashflow' | 'Installment'
+  >('Owned');
   const [assets, setAssets] = useState<any[]>([]);
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
@@ -83,6 +91,14 @@ const index = () => {
       : acc + Number(asset?.property_cost?.display_value);
   }, 0);
 
+  useEffect(() => {
+    if (tab && tabs.includes(tab as string)) {
+      setActiveTab(tab as 'Owned' | 'Cashflow' | 'Installment');
+    } else {
+      setActiveTab('Owned');
+    }
+  }, [tab, tabs]);
+
   return (
     <DashboardHeader title="My Assets">
       <Box pb="40px" overflow="auto">
@@ -99,7 +115,7 @@ const index = () => {
               flexWrap={['wrap', 'nowrap']}
             >
               <NavigationTab
-                tabs={['Owned', 'Cashflow', 'Installment']}
+                tabs={tabs}
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
                 ownedAssetsCount={ownedAssets?.length}

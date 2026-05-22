@@ -2,12 +2,12 @@
 
 import { Box, Flex, Text, Button, Stack, Heading } from '@chakra-ui/react';
 import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useContext } from 'react';
 import { HiPlus } from 'react-icons/hi2';
 import { AppContext } from '~/lib/layout';
 import { FormatAmount, formatCurrency } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
-
 
 const NavigationTab = ({
   tabs,
@@ -21,17 +21,19 @@ const NavigationTab = ({
   totalInstallmentValuation,
 }: {
   tabs: string[];
-  activeTab: string;
-  setActiveTab: (value: string) => void;
+  activeTab: 'Owned' | 'Cashflow' | 'Installment';
+  setActiveTab: (value: 'Owned' | 'Cashflow' | 'Installment') => void;
   ownedAssetsCount: number;
   cashflowAssetsCount: number;
   installmentAssetsCount: number;
   totalOwnedValuation: number;
   totalCashflowValuation: number;
   totalInstallmentValuation: number;
-  }) => {
-  const navigate = useNavigate()
-  const {selectedCurrency} = useContext(AppContext)
+}) => {
+  const searchParams = useSearchParams();
+  const navigate = useNavigate();
+  const router = useRouter();
+  const { selectedCurrency } = useContext(AppContext);
   return (
     <Box py="35px" w="full">
       <Flex
@@ -48,7 +50,7 @@ const NavigationTab = ({
           justifyContent={['center', 'flex-start']}
         >
           {' '}
-          {tabs.map((tab, index) => (
+          {tabs?.map((tab, index) => (
             <Button
               bg={tab === activeTab ? '#EDEDFF' : 'none'}
               borderRadius={activeTab === tab ? '50px' : '0px'}
@@ -56,7 +58,12 @@ const NavigationTab = ({
               px="18px"
               py="16px"
               fontWeight={tab === activeTab ? 600 : 500}
-              onClick={() => setActiveTab(tab)}
+              onClick={() => {
+                const params = new URLSearchParams(searchParams.toString());
+                params.set('tab', tab);
+                router.replace(`?${params.toString()}`, { scroll: false });
+                setActiveTab(tab as 'Owned' | 'Cashflow' | 'Installment');
+              }}
               fontSize={14}
               _hover={{ bg: 'none' }}
               key={index}
@@ -96,29 +103,38 @@ const NavigationTab = ({
                   </Text>
                   <Heading fontWeight={600} fontSize={16} color="brand.300">
                     {activeTab === 'Owned'
-                      ? FormatAmount(Number(totalOwnedValuation), selectedCurrency?.code)
+                      ? FormatAmount(
+                          Number(totalOwnedValuation),
+                          selectedCurrency?.code
+                        )
                       : activeTab === 'Cashflow'
-                        ? FormatAmount(Number(totalCashflowValuation), selectedCurrency?.code)
-                        : FormatAmount(Number(totalInstallmentValuation), selectedCurrency?.code)}
+                        ? FormatAmount(
+                            Number(totalCashflowValuation),
+                            selectedCurrency?.code
+                          )
+                        : FormatAmount(
+                            Number(totalInstallmentValuation),
+                            selectedCurrency?.code
+                          )}
                   </Heading>
                 </Stack>
               </Box>
             )}
             {/* <Link href="/user/my-assets/add-assets"> */}
-              <Button
-                bg="#000080"
-                fontSize={14}
-                color="#ffffff"
-                fontWeight={500}
-                _hover={{ bg: 'brand.100' }}
-                w={['full', 'auto']}
-                onClick={() => navigate('/user/my-assets/add-assets')}
-              >
-                <Flex alignItems="center" gap="10px">
-                  <Text>Add new asset</Text>
-                  <HiPlus color="white" fontSize={20} fontWeight={700} />
-                </Flex>
-              </Button>
+            <Button
+              bg="#000080"
+              fontSize={14}
+              color="#ffffff"
+              fontWeight={500}
+              _hover={{ bg: 'brand.100' }}
+              w={['full', 'auto']}
+              onClick={() => navigate('/user/my-assets/add-assets')}
+            >
+              <Flex alignItems="center" gap="10px">
+                <Text>Add new asset</Text>
+                <HiPlus color="white" fontSize={20} fontWeight={700} />
+              </Flex>
+            </Button>
             {/* </Link> */}
           </Flex>
         </Box>
