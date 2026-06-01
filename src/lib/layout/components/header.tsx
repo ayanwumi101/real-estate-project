@@ -30,7 +30,7 @@ export const Header = () => {
       <Box
         as="header"
         maxW={['95%', '1300px']}
-        h={['70px',"80px"]}
+        h={['70px', '80px']}
         mx="auto"
         bg="bg.100"
         borderRadius="50px"
@@ -60,12 +60,11 @@ export const Header = () => {
           </Link>
           <Box display={['none', 'block']}>
             <Flex alignItems="center" gap="32px">
-              <Link href='/contact-us'>
-                <Text
-                  cursor="pointer"
-                >
-                  Help Center
-                </Text>
+              <Link href="/contact-us">
+                <Text cursor="pointer">Help Center</Text>
+              </Link>
+              <Link href="/services">
+                <Text cursor="pointer">Services</Text>
               </Link>
               <Link href="/about-us">
                 <Text>About Us</Text>
@@ -117,7 +116,11 @@ export const Header = () => {
                   Get Started
                 </Button>
               </Link> */}
-              <Button variant='ghost' _hover={{bg: 'none'}} onClick={() => setOpenSideNav(true)}>
+              <Button
+                variant="ghost"
+                _hover={{ bg: 'none' }}
+                onClick={() => setOpenSideNav(true)}
+              >
                 <HiBars3BottomRight size={30} />
               </Button>
             </Flex>

@@ -21,6 +21,10 @@ const MobileSidenav = ({
       link: 'contact-us',
     },
     {
+      name: 'Services',
+      link: 'services',
+    },
+    {
       name: 'About Us',
       link: 'about-us',
     },
