@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, Stack, Flex, Button, Text } from '@chakra-ui/react';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { Suspense, useContext, useEffect, useState } from 'react';
 import AssetsStatistics from './components/AssetsStatistics';
 import NavigationTab from './components/NavigationTab';
 import { HiPlus } from 'react-icons/hi2';
@@ -14,10 +14,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import DashboardHeader from '~/lib/layout/components/DashboardHeader';
 import { AppContext } from '~/lib/layout';
 
-
-
-
-const index = () => {
+const MyAssets = () => {
   const searchParams = useSearchParams();
   const tab = searchParams.get('tab');
   const tabs = ['Owned', 'Cashflow', 'Installment'];
@@ -168,4 +165,12 @@ const index = () => {
   );
 };
 
-export default index;
+const Index = () => {
+  return (
+    <Suspense fallback={<div>Loading.....</div>}>
+      <MyAssets />
+    </Suspense>
+  );
+};
+
+export default Index;
