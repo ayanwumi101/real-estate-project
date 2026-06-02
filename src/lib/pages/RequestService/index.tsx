@@ -61,14 +61,14 @@ const index = () => {
   const handleSubmit = async () => {};
   return (
     <Box
-      maxW="800px"
+      maxW={['95%',"800px"]}
       mx="auto"
       border="1px solid"
       borderColor="border.100"
       rounded="40px"
-      p="40px"
+      p="20px"
       bg="rgba(245, 245, 245, 0.7)"
-      my="100px"
+      my={['60px',"100px"]}
     >
       <Formik
         initialValues={initialValues}
@@ -80,16 +80,16 @@ const index = () => {
             <Form>
               <Stack spacing="40px">
                 <Box>
-                  <Heading mb="10px" fontSize={30}>
+                  <Heading mb="10px" fontSize={[24,30]} lineHeight={10}>
                     Request a Property Verification Service
                   </Heading>
-                  <Text letterSpacing="1px">
+                  <Text letterSpacing="0.5px" fontSize={[15,16]}>
                     Fill in your details below and our team will process your
                     request promptly.
                   </Text>
                 </Box>
                 <Stack spacing="16px">
-                  <Flex gap="16px">
+                  <Flex gap="16px" flexWrap={['wrap', 'nowrap']}>
                     <FormControl
                       isInvalid={!!errors.firstName && !!touched.firstName}
                     >
@@ -137,7 +137,7 @@ const index = () => {
                       <FormErrorMessage>{errors.lastName}</FormErrorMessage>
                     </FormControl>
                   </Flex>
-                  <Flex gap="16px">
+                  <Flex gap="16px" flexWrap={['wrap', 'nowrap']}>
                     <FormControl isInvalid={!!errors.email && !!touched.email}>
                       <FormLabel fontWeight={600} fontSize={15} color="#222222">
                         Email Address
@@ -242,7 +242,7 @@ const index = () => {
                     </Field>
                     <FormErrorMessage>{errors.deliveryMethod}</FormErrorMessage>
                   </FormControl>
-                  <Flex gap="16px">
+                  <Flex gap="16px" flexWrap={['wrap', 'nowrap']}>
                     <FormControl
                       isInvalid={
                         !!errors.contactFirstName && !!touched.contactFirstName
