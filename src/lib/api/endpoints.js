@@ -70,6 +70,10 @@ const API_ROUTES = {
   GET_INSTALMENT_PROPERTIES: '/realtor/properties/instalments',
   GET_INSTALMENT_PROPERTY_DETAILS: '/realtor/property-payments/instalments/payment',
 
+  //contact us and reques service endpoints
+  CONTACT_US: 'contact-us',
+  PROPERTY_VERIFICATION: '/property-verifications'
+
 };
 
 export default API_ROUTES;

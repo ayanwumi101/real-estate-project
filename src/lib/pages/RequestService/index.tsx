@@ -13,13 +13,19 @@ import {
   Button,
   FormLabel,
   Textarea,
+  useToast,
+  Spinner,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from 'react';
 import SuccessModal from './Modals/SuccessModal';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
+import { RequestPropertyVerification } from '~/lib/api/services/contactService';
 
 const index = () => {
+  const toast = useToast();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const initialValues = {
     firstName: '',
     lastName: '',
@@ -58,32 +64,78 @@ const index = () => {
     additionalNotes: Yup.string(),
   });
 
-  const handleSubmit = async () => {};
+  const handleSubmit = async (
+    values: typeof initialValues,
+    resetForm: () => void
+  ) => {
+    setLoading(true);
+    try {
+      await RequestPropertyVerification({
+        firstname: values.firstName,
+        lastname: values.lastName,
+        email: values.email,
+        phone: values.phoneNumber,
+        service_type: values.serviceType,
+        delivery_method: values.deliveryMethod,
+        contact_firstname: values.contactFirstName,
+        contact_lastname: values.contactLastName,
+        contact_phone: values.contactNumber,
+        property_address: values.propertyAddress,
+        property_description: values.propertyDescription,
+        notes: values.additionalNotes,
+      });
+      toast({
+        title: 'Verification Request Sent Successfully',
+        description: 'Property verification request sent successfully',
+        duration: 3000,
+        status: 'success',
+        position: 'top',
+        isClosable: true,
+      });
+      resetForm();
+      setOpenModal(true);
+    } catch (error: any) {
+      toast({
+        title:
+          error?.response?.data?.error?.message ||
+          'An error occurred while sending the verification request',
+        description: 'An error occurred while sending the verification request',
+        duration: 3000,
+        status: 'error',
+        position: 'top',
+        isClosable: true,
+      });
+      console.log(error);
+    }
+    setLoading(false);
+  };
   return (
     <Box
-      maxW={['95%',"800px"]}
+      maxW={['92%', '800px']}
       mx="auto"
       border="1px solid"
       borderColor="border.100"
       rounded="40px"
       p="20px"
       bg="rgba(245, 245, 245, 0.7)"
-      my={['60px',"100px"]}
+      my={['60px', '100px']}
     >
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={handleSubmit}
+        onSubmit={async (values, { resetForm }) => {
+          handleSubmit(values, resetForm);
+        }}
       >
         {({ errors, touched, setFieldValue, values, setFieldTouched }) => {
           return (
             <Form>
               <Stack spacing="40px">
                 <Box>
-                  <Heading mb="10px" fontSize={[24,30]} lineHeight={10}>
+                  <Heading mb="10px" fontSize={[24, 30]} lineHeight={10}>
                     Request a Property Verification Service
                   </Heading>
-                  <Text letterSpacing="0.5px" fontSize={[15,16]}>
+                  <Text letterSpacing="0.5px" fontSize={[15, 16]}>
                     Fill in your details below and our team will process your
                     request promptly.
                   </Text>
@@ -416,7 +468,7 @@ const index = () => {
                     color="brand.200"
                     _hover={{ bg: 'brand.100' }}
                   >
-                    Request Service
+                    {loading ? <Spinner /> : 'Request Service'}
                   </Button>
                 </Stack>
               </Stack>
@@ -424,6 +476,7 @@ const index = () => {
           );
         }}
       </Formik>
+      <SuccessModal isOpen={openModal} onClose={() => setOpenModal(false)} />
     </Box>
   );
 };
