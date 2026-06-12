@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {
   Box,
@@ -330,7 +330,13 @@ const ContactDetails = () => {
 
 const index = () => {
   return (
-    <Box bg="bg.200" py="40px" mt="-116px" pt={['185px', '200px']} position="relative">
+    <Box
+      bg="bg.200"
+      py="40px"
+      mt="-116px"
+      pt={['185px', '200px']}
+      position="relative"
+    >
       <Box maxW="1300px" mx="auto">
         <Flex
           alignItems="flex-start"
@@ -338,7 +344,12 @@ const index = () => {
           flexWrap="wrap"
           rowGap={['35px', '0']}
         >
-          <Box w={['100%', '50%']} px="24px" position="sticky" top="130px">
+          <Box
+            w={['100%', '50%']}
+            px="24px"
+            position={['static', 'sticky']}
+            top="130px"
+          >
             <ContactDetails />
           </Box>
           <Box w={['100%', '50%']} px="24px">
