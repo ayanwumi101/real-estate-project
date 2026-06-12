@@ -8,7 +8,7 @@ import { Box, Stack, Flex } from '@chakra-ui/react';
 
 const index = () => {
   const [activeService, setActiveService] = useState<string>('risk-assessment');
-
+  
   return (
     <Box py="80px" position="relative">
       <Stack spacing="60px">

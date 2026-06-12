@@ -16,14 +16,14 @@ import {
   useToast,
   Spinner,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import SuccessModal from './Modals/SuccessModal';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { RequestPropertyVerification } from '~/lib/api/services/contactService';
 
-const index = () => {
+const RequestService = () => {
   const toast = useToast();
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState<boolean>(false);
@@ -493,6 +493,14 @@ const index = () => {
       </Formik>
       <SuccessModal isOpen={openModal} onClose={() => setOpenModal(false)} />
     </Box>
+  );
+};
+
+const index = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RequestService />
+    </Suspense>
   );
 };
 
