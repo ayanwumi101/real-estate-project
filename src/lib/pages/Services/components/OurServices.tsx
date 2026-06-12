@@ -1,15 +1,24 @@
-import { Box, Stack, Heading, Text, Divider } from '@chakra-ui/react';
+import { Box, Stack, Heading, Text } from '@chakra-ui/react';
 import React from 'react';
 
-const OurServices = () => {
+interface OurServicesProps {
+  activeService: string;
+}
+
+const OurServices = ({ activeService }: OurServicesProps) => {
   const servicesList = [
-    'risk assessment',
-    'due dilligence',
-    'Title Search & Verification',
-    'Documents Review',
+    { label: 'risk assessment', type: 'risk-assessment' },
+    { label: 'due dilligence', type: 'due-dilligence' },
+    { label: 'Title Search & Verification', type: 'title-verification' },
+    { label: 'Documents Review', type: 'documents-review' },
   ];
   return (
-    <Box w={['full', '40%']} px={['16px', 0]}>
+    <Box
+      w={['full', '40%']}
+      px={['16px', 0]}
+      position={['static', 'sticky']}
+      top="150px"
+    >
       <Stack spacing="16px">
         <Heading fontWeight={500} fontSize={30}>
           Our Services
@@ -20,19 +29,27 @@ const OurServices = () => {
           confidence.
         </Text>
         <Stack display={['none', 'block']}>
-          {servicesList?.map((service) => (
-            <Box py="16px" borderBottom="1px solid" borderColor="brand.300">
-              <Text
-                textTransform="capitalize"
-                color="brand.300"
-                fontWeight={500}
-                p="0"
-                m="0"
+          {servicesList?.map((service) => {
+            const isActive = activeService === service.type;
+            return (
+              <Box
+                key={service.type}
+                py="16px"
+                borderBottom="1px solid"
+                borderColor={isActive ? 'brand.300' : 'border.200'}
               >
-                {service}
-              </Text>
-            </Box>
-          ))}
+                <Text
+                  textTransform="capitalize"
+                  color={isActive ? 'brand.400' : 'color.500'}
+                  fontWeight={500}
+                  p="0"
+                  m="0"
+                >
+                  {service.label}
+                </Text>
+              </Box>
+            );
+          })}
         </Stack>
       </Stack>
     </Box>

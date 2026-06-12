@@ -8,10 +8,14 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ServiceFeatureIcon } from '~/lib/components/Icons/Icons';
 
-const Services = () => {
+const Services = ({
+  onActiveChange,
+}: {
+  onActiveChange: (type: string) => void;
+}) => {
   const servicesData = [
     {
       title: 'risk assessment',
@@ -67,35 +71,60 @@ const Services = () => {
       image: '/assets/images/service4.jpg',
     },
   ];
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            onActiveChange(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: '-20% 0px -75% 0px',
+        threshold: 0,
+      }
+    );
+
+    servicesData.forEach((service) => {
+      const el = document.getElementById(service.type);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [onActiveChange]);
+
   return (
-    <Box w={['full',"56%"]} px={['16px', 0]}>
+    <Box w={['full', '56%']} px={['16px', 0]}>
       <Stack spacing="40px">
         {servicesData?.map((service) => (
-          <Box>
+          <Box key={service.type} id={service.type}>
             <Stack spacing="16px">
               <Image
                 src={service.image}
                 alt={`${service.title} image`}
                 w="full"
-                h={['400px',"420px"]}
+                h={['400px', '420px']}
                 rounded="20px"
                 objectFit="cover"
               />
               <Heading
                 textTransform="capitalize"
                 fontWeight={500}
-                fontSize={[25,30]}
+                fontSize={[25, 30]}
                 color="brand.400"
               >
                 {service?.title}
               </Heading>
-              <Text fontWeight={500} fontSize={[15,16]}>{service?.description}</Text>
+              <Text fontWeight={500} fontSize={[15, 16]}>
+                {service?.description}
+              </Text>
               <Heading fontSize={16}>What’s included:</Heading>
               <Stack spacing="8px">
                 {service?.features?.map((feature) => (
                   <Flex alignItems="center" gap="12px">
                     <ServiceFeatureIcon />{' '}
-                    <Text fontWeight={500} fontSize={[14,15]}>
+                    <Text fontWeight={500} fontSize={[14, 15]}>
                       {feature}
                     </Text>
                   </Flex>
