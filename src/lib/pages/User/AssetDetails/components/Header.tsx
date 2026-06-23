@@ -29,6 +29,7 @@ import {
   DeleteAsset,
 } from '~/lib/api/services/assetsService';
 import ChangeAssetStatusModal from '../Modals/ChangeAssetStatusModal';
+import UpdateAssetValueModal from '../../MyAssets/Modals/UpdateAssetValueModal';
 
 interface Headerprops {
   propertyName: string;
@@ -51,6 +52,7 @@ const Header = ({
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [isChanging, setIsChanging] = useState<boolean>(false);
   const [assetStatus, setAssetStatus] = useState<string>('');
+  const [openValuationModal, setOpenValuationModal] = useState(false);
 
   const ChangeAssetStatus = async () => {
     setIsChanging(true);
@@ -225,9 +227,7 @@ const Header = ({
                       fontSize={14}
                       color="color.100"
                       fontWeight={500}
-                      onClick={() =>
-                        navigate(`/user/my-assets/${id}/add-payment`)
-                      }
+                      onClick={() => setOpenValuationModal(true)}
                     >
                       Update asset value
                     </MenuItem>
@@ -264,6 +264,11 @@ const Header = ({
         changeAssetStatus={ChangeAssetStatus}
         assetStatus={assetStatus}
         setAssetStatus={setAssetStatus}
+      />
+      <UpdateAssetValueModal
+        propertyId={id as string}
+        isOpen={openValuationModal}
+        onClose={() => setOpenValuationModal(false)}
       />
     </Box>
   );
