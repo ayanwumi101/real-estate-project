@@ -38,6 +38,7 @@ import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
 import DeleteAssetConfirmationModal from '../Modals/DeleteAssetConfirmationModal';
 import { AppContext } from '~/lib/layout';
+import UpdateAssetValueModal from '../Modals/UpdateAssetValueModal';
 
 const Installment = ({
   assets,
@@ -62,6 +63,7 @@ const Installment = ({
   const [isOpen, setIsOpen] = React.useState(false);
   const [selectedAssetId, setSelectedAssetId] = React.useState<string>('');
   const { selectedCurrency } = useContext(AppContext);
+  const [openValuationModal, setOpenValuationModal] = React.useState(false);
 
   const deleteAsset = async () => {
     setIsLoading(true);
@@ -359,7 +361,7 @@ const Installment = ({
                                 color="color.100"
                                 fontWeight={500}
                                 onClick={() => {
-                                  setIsOpen(true);
+                                  setOpenValuationModal(true);
                                   setSelectedAssetId(asset?.id);
                                 }}
                               >
@@ -426,6 +428,11 @@ const Installment = ({
         onClose={() => setIsOpen(false)}
         deleteAsset={deleteAsset}
         loading={isLoading}
+      />
+      <UpdateAssetValueModal
+        propertyId={selectedAssetId}
+        isOpen={openValuationModal}
+        onClose={() => setOpenValuationModal(false)}
       />
     </Box>
   );

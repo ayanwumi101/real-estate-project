@@ -22,7 +22,7 @@ import {
 import moment from 'moment';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import { DeleteAsset, GetUserAssets } from '~/lib/api/services/assetsService';
 import {
   LocationIcon,
@@ -37,6 +37,7 @@ import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
 import DeleteAssetConfirmationModal from '../Modals/DeleteAssetConfirmationModal';
 import { AppContext } from '~/lib/layout';
+import UpdateAssetValueModal from '../Modals/UpdateAssetValueModal';
 
 const Cashflow = ({
   assets,
@@ -61,6 +62,7 @@ const Cashflow = ({
   const [isOpen, setIsOpen] = React.useState(false);
   const [selectedAssetId, setSelectedAssetId] = React.useState<string>('');
   const { selectedCurrency } = useContext(AppContext);
+   const [openValuationModal, setOpenValuationModal] = useState(false);
 
   const deleteAsset = async () => {
     setIsLoading(true);
@@ -328,7 +330,7 @@ const Cashflow = ({
                                 color="color.100"
                                 fontWeight={500}
                                 onClick={() => {
-                                  setIsOpen(true);
+                                  setOpenValuationModal(true);
                                   setSelectedAssetId(asset?.id);
                                 }}
                               >
@@ -409,6 +411,11 @@ const Cashflow = ({
         onClose={() => setIsOpen(false)}
         loading={isLoading}
         deleteAsset={deleteAsset}
+      />
+      <UpdateAssetValueModal
+        propertyId={selectedAssetId}
+        isOpen={openValuationModal}
+        onClose={() => setOpenValuationModal(false)}
       />
     </Box>
   );
