@@ -35,7 +35,7 @@ const NavigationTab = ({
   const router = useRouter();
   const { selectedCurrency } = useContext(AppContext);
   return (
-    <Box py="35px" w="full">
+    <Box w="full" mb='5'>
       <Flex
         borderBottom={['none', '1px solid #E4E4E4']}
         alignItems="center"
@@ -68,9 +68,9 @@ const NavigationTab = ({
               _hover={{ bg: 'none' }}
               key={index}
             >
-              {tab} {tab === 'Owned' ? `(${ownedAssetsCount})` : ''}{' '}
-              {tab === 'Cashflow' ? `(${cashflowAssetsCount})` : ''}{' '}
-              {tab === 'Installment' ? `(${installmentAssetsCount})` : ''}
+              {tab} {tab === 'Owned' ? `(${ownedAssetsCount || 0})` : ''}{' '}
+              {tab === 'Cashflow' ? `(${cashflowAssetsCount || 0})` : ''}{' '}
+              {tab === 'Installment' ? `(${installmentAssetsCount || 0})` : ''}
             </Button>
           ))}
         </Flex>

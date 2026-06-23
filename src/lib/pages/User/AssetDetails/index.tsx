@@ -9,6 +9,7 @@ import { GetAssetDetails } from '~/lib/api/services/assetsService';
 import { useParams } from 'next/navigation';
 import useNavigate from '~/lib/utils/useNavigate';
 import DashboardHeader from '~/lib/layout/components/DashboardHeader';
+import ValuationHistory from './components/ValuationHistory';
 
 const index = () => {
   const { id } = useParams();
@@ -37,7 +38,7 @@ const index = () => {
   };
 
   return (
-    <DashboardHeader title='Asset Details'>
+    <DashboardHeader title="Asset Details">
       <Box>
         <Stack>
           <Header
@@ -56,11 +57,21 @@ const index = () => {
                 loading={loading}
                 propertyDetails={propertyDetails}
               />
-              <Notes
-                loading={loading}
-                notes={propertyDetails?.comment}
-                editComment={editComment}
-              />
+              <Stack spacing="24px" w={['100%', '35%']}>
+                <ValuationHistory
+                  propertyCost={
+                    propertyDetails?.property_cost?.display_value
+                      ? Number(propertyDetails?.property_cost?.display_value) 
+                      : Number(propertyDetails?.property_cost)
+                  }
+                  valuationHistory={propertyDetails?.valuation_history}
+                />
+                <Notes
+                  loading={loading}
+                  notes={propertyDetails?.comment}
+                  editComment={editComment}
+                />
+              </Stack>
             </Flex>
           </Box>
         </Stack>

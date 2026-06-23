@@ -20,9 +20,6 @@ import { CreateAssetContext } from '../../..';
 import { formatCurrency } from '~/lib/utils/formatAmount';
 import { ChevronLeftIcon } from '~/lib/components/Icons/Icons';
 
-
-
-
 const DeliveryStatusForm = ({
   step,
   setStep,
@@ -36,6 +33,9 @@ const DeliveryStatusForm = ({
   const { step: parentStep, setStep: setParentStep } =
     useContext<any>(CreateAssetContext);
   const [propertyCost, setPropertyCost] = React.useState<string>('');
+  const [currentAssetValue, setCurrentAssetValue] = React.useState<string>('');
+
+
   const validationSchema = Yup.object().shape({
     propertyCost: Yup.string().required('Property cost is required'),
     dateOfPurchase: Yup.string().required('Date of purchase is required'),
@@ -44,6 +44,7 @@ const DeliveryStatusForm = ({
       'Documentation status is required'
     ),
     handoverStatus: Yup.string().required('Handover status is required'),
+    
   });
 
   const initialValues = {
@@ -52,6 +53,7 @@ const DeliveryStatusForm = ({
     allocationStatus: '',
     documentationStatus: '',
     handoverStatus: '',
+    currentAssetValue: '',
   };
 
   const handleSubmit = async (values: any) => {
@@ -211,7 +213,8 @@ const DeliveryStatusForm = ({
                   </Field>
                   <FormErrorMessage>{errors.handoverStatus}</FormErrorMessage>
                 </FormControl>
-                <Flex alignItems='center' justifyContent="space-between">
+               
+                <Flex alignItems="center" justifyContent="space-between">
                   <Button
                     leftIcon={<ChevronLeftIcon />}
                     color="brand.100"

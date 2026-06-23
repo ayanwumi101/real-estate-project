@@ -98,6 +98,8 @@ const AddNextOfKin = ({
       // equity_ownership: '',
       payment_date: assetData?.firstPaymentDate,
       nok_ids: [selectedNextOfKin],
+      asset_value: assetData?.currentAssetValue,
+      asset_value_date: new Date().toISOString().split('T')[0],
     };
     try {
       if (selectedNextOfKin) {

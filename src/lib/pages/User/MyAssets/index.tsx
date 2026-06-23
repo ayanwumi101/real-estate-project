@@ -21,7 +21,7 @@ const MyAssets = () => {
   const [activeTab, setActiveTab] = React.useState<
     'Owned' | 'Cashflow' | 'Installment'
   >('Owned');
-  const [assets, setAssets] = useState<any[]>([]);
+  const [assets, setAssets] = useState<any>(null);
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
@@ -33,7 +33,7 @@ const MyAssets = () => {
     setLoading(true);
     try {
       const res = await GetUserAssets(dataPerPage, page);
-      setAssets(res?.data);
+      setAssets(res);
       setHasNextPage(res?.meta?.last_page > 1);
       setLoading(false);
     } catch (error) {
@@ -47,46 +47,45 @@ const MyAssets = () => {
     GetAssets();
   }, [page]);
 
-  const cashflowAssets = assets?.filter(
-    (asset) => asset?.asset_type === 'cashflow'
+  const cashflowAssets = assets?.data?.filter(
+    (asset: any) => asset?.asset_type === 'cashflow'
   );
-  const installmentAssets = assets?.filter(
-    (asset) => asset?.asset_type === 'instalment'
+  const installmentAssets = assets?.data?.filter(
+    (asset: any) => asset?.asset_type === 'instalment'
   );
-  const ownedAssets = assets?.filter((asset) => asset?.asset_type === 'owned');
+  const ownedAssets = assets?.data?.filter(
+    (asset: any) => asset?.asset_type === 'owned'
+  );
 
-  const totalAssetsInNaira =
-    selectedCurrency?.code === 'NGN'
-      ? assets?.reduce((acc, asset) => {
-          return acc + Number(asset?.property_cost);
-        }, 0)
-      : assets?.reduce((acc, asset) => {
-          return acc + Number(asset?.property_cost?.display_value);
-        }, 0);
-
-  const totalRemittance = cashflowAssets?.reduce((acc, asset) => {
+  const totalRemittance = cashflowAssets?.reduce((acc: any, asset: any) => {
     return selectedCurrency?.code === 'NGN'
       ? acc + Number(asset?.cashflow_amount)
       : acc + Number(asset?.cashflow_amount?.display_value);
   }, 0);
 
-  const totalOwnedValuation = ownedAssets?.reduce((acc, asset) => {
+  const totalOwnedValuation = ownedAssets?.reduce((acc: any, asset: any) => {
     return selectedCurrency?.code === 'NGN'
       ? acc + Number(asset?.property_cost)
       : acc + Number(asset?.property_cost?.display_value);
   }, 0);
 
-  const totalCashflowValuation = cashflowAssets?.reduce((acc, asset) => {
-    return selectedCurrency?.code === 'NGN'
-      ? acc + Number(asset?.property_cost)
-      : acc + Number(asset?.property_cost?.display_value);
-  }, 0);
+  const totalCashflowValuation = cashflowAssets?.reduce(
+    (acc: any, asset: any) => {
+      return selectedCurrency?.code === 'NGN'
+        ? acc + Number(asset?.property_cost)
+        : acc + Number(asset?.property_cost?.display_value);
+    },
+    0
+  );
 
-  const totalInstallmentValuation = installmentAssets?.reduce((acc, asset) => {
-    return selectedCurrency?.code === 'NGN'
-      ? acc + Number(asset?.property_cost)
-      : acc + Number(asset?.property_cost?.display_value);
-  }, 0);
+  const totalInstallmentValuation = installmentAssets?.reduce(
+    (acc: any, asset: any) => {
+      return selectedCurrency?.code === 'NGN'
+        ? acc + Number(asset?.property_cost)
+        : acc + Number(asset?.property_cost?.display_value);
+    },
+    0
+  );
 
   useEffect(() => {
     if (tab && tabs.includes(tab as string)) {
@@ -101,9 +100,23 @@ const MyAssets = () => {
       <Box pb="40px" overflow="auto">
         <Stack w="100%">
           <AssetsStatistics
-            numberOfAssets={assets?.length}
-            assetInNaira={totalAssetsInNaira}
+            numberOfAssets={assets?.summary?.total_assets}
+            assetInNaira={
+              selectedCurrency?.code === 'NGN'
+                ? assets?.summary?.total_investment
+                : assets?.summary?.total_investment?.display_value
+            }
             totalRemittance={totalRemittance}
+            totalAssetValuation={
+              selectedCurrency?.code === 'NGN'
+                ? assets?.summary?.total_current_valuation
+                : assets?.summary?.total_current_valuation?.display_value
+            }
+            appreciationMargin={
+              selectedCurrency?.code === 'NGN'
+                ? assets?.summary?.appreciation_margin
+                : assets?.summary?.appreciation_margin?.display_value
+            }
           />
           <Box px={['10px', '30px']} mb={[5, 0]}>
             <Flex

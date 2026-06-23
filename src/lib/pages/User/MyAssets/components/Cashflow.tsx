@@ -22,7 +22,7 @@ import {
 import moment from 'moment';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { DeleteAsset, GetUserAssets } from '~/lib/api/services/assetsService';
 import {
   LocationIcon,
@@ -36,6 +36,7 @@ import SkeletonLoader from '~/lib/components/SkeletonLoader';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
 import DeleteAssetConfirmationModal from '../Modals/DeleteAssetConfirmationModal';
+import { AppContext } from '~/lib/layout';
 
 const Cashflow = ({
   assets,
@@ -59,6 +60,7 @@ const Cashflow = ({
   const [isLoading, setIsLoading] = React.useState(false);
   const [isOpen, setIsOpen] = React.useState(false);
   const [selectedAssetId, setSelectedAssetId] = React.useState<string>('');
+  const { selectedCurrency } = useContext(AppContext);
 
   const deleteAsset = async () => {
     setIsLoading(true);
@@ -151,6 +153,14 @@ const Cashflow = ({
                       fontSize={14}
                       textTransform="capitalize"
                     >
+                      Current asset value
+                    </Th>
+                    <Th
+                      color="#222222"
+                      fontWeight={500}
+                      fontSize={14}
+                      textTransform="capitalize"
+                    >
                       Duration
                     </Th>
                     <Th
@@ -223,6 +233,35 @@ const Cashflow = ({
                             : FormatAmount(Number(asset?.property_cost))}
                         </Td>
                         <Td fontWeight={500} fontSize={14} color="#8295AA">
+                          {selectedCurrency?.code !== 'NGN' ? (
+                            <>
+                              {asset?.current_valuation?.value?.display_value
+                                ? FormatAmount(
+                                    Number(
+                                      asset?.current_valuation?.value
+                                        ?.display_value
+                                    ),
+                                    asset?.current_valuation?.value
+                                      ?.display_currency
+                                  )
+                                : FormatAmount(
+                                    Number(asset?.current_valuation)
+                                  )}
+                            </>
+                          ) : (
+                            <>
+                              {asset?.current_valuation?.value
+                                ? FormatAmount(
+                                    Number(asset?.current_valuation?.value),
+                                    selectedCurrency?.code
+                                  )
+                                : FormatAmount(
+                                    Number(asset?.current_valuation)
+                                  )}
+                            </>
+                          )}
+                        </Td>
+                        <Td fontWeight={500} fontSize={14} color="#8295AA">
                           {asset?.cashflow_duration
                             ? `${asset?.cashflow_duration}`
                             : 'N/A'}
@@ -280,6 +319,20 @@ const Cashflow = ({
                                 }
                               >
                                 Update asset details
+                              </MenuItem>
+                              <MenuItem
+                                py="12px"
+                                px="16px"
+                                _hover={{ bg: 'border.100' }}
+                                fontSize={14}
+                                color="color.100"
+                                fontWeight={500}
+                                onClick={() => {
+                                  setIsOpen(true);
+                                  setSelectedAssetId(asset?.id);
+                                }}
+                              >
+                                Update asset value
                               </MenuItem>
                               <MenuItem
                                 py="12px"

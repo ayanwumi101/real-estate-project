@@ -147,6 +147,14 @@ const OwnedAssets = ({
                       fontSize={14}
                       textTransform="capitalize"
                     >
+                      Current Asset Value
+                    </Th>
+                    <Th
+                      color="#222222"
+                      fontWeight={500}
+                      fontSize={14}
+                      textTransform="capitalize"
+                    >
                       Delivery Status
                     </Th>
                     <Th
@@ -190,6 +198,14 @@ const OwnedAssets = ({
                             : FormatAmount(Number(asset?.property_cost))}
                         </Td>
                         <Td fontWeight={500} fontSize={14} color="#8295AA">
+                          {asset?.current_valuation
+                            ? FormatAmount(
+                                Number(asset?.current_valuation),
+                                asset?.current_valuation
+                              )
+                            : FormatAmount(Number(asset?.current_valuation))}
+                        </Td>
+                        <Td fontWeight={500} fontSize={14} color="#8295AA">
                           {asset?.allocation_status}
                         </Td>
                         <Td>
@@ -226,20 +242,20 @@ const OwnedAssets = ({
                               >
                                 Update asset details
                               </MenuItem>
-                              {/* <MenuItem
-                                  py="12px"
-                                  px="16px"
-                                  _hover={{ bg: 'border.100' }}
-                                  fontSize={14}
-                                  color="color.100"
-                                  fontWeight={500}
-                                  onClick={() => {
-                                    setIsOpen(true);
-                                    setSelectedAssetId(asset?.id);
-                                  }}
-                                >
-                                  Change asset status
-                                </MenuItem> */}
+                              <MenuItem
+                                py="12px"
+                                px="16px"
+                                _hover={{ bg: 'border.100' }}
+                                fontSize={14}
+                                color="color.100"
+                                fontWeight={500}
+                                onClick={() => {
+                                  setIsOpen(true);
+                                  setSelectedAssetId(asset?.id);
+                                }}
+                              >
+                                Update asset value
+                              </MenuItem>
                               <MenuItem
                                 py="12px"
                                 px="16px"

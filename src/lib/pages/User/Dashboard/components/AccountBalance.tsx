@@ -29,17 +29,21 @@ const AccountBalance = ({
   totalAssets,
   assetsLoading,
   currency,
+  currentValuation,
 }: {
   totalInvestment: number;
   totalAssets: number;
   assetsLoading: boolean;
   currency: string;
+  currentValuation: number;
 }) => {
-  const { userDetails, isUserDetailsLoading } =
-    useContext(AppContext);
+  const { userDetails, isUserDetailsLoading } = useContext(AppContext);
   const [showBalance, setShowBalance] = useState<boolean>(true);
   const walletVisibility = Cookies.get('walletVisibility');
   const navigate = useNavigate();
+
+  console.log(currentValuation, totalInvestment);
+  
 
   return (
     <Box>
@@ -226,7 +230,7 @@ const AccountBalance = ({
         ) : (
           <Flex alignItems="ceter" gap="16px" w="100%" pb="3" overflow="auto">
             <Box
-              minW={['300px', '49%']}
+              minW={['300px', '32%']}
               borderRadius="5px"
               py="32px"
               px="20px"
@@ -245,7 +249,7 @@ const AccountBalance = ({
               </Stack>
             </Box>
             <Box
-              minW={['300px', '49%']}
+              minW={['300px', '32%']}
               borderRadius="5px"
               py="32px"
               px="20px"
@@ -254,11 +258,31 @@ const AccountBalance = ({
             >
               <Stack spacing="16px" w="100%">
                 <Text color="brand.300" fontWeight={500}>
-                  Total Assets Valuation ({currency})
+                  Total Investments ({currency})
                 </Text>
                 <Flex alignItems="center" gap="16px" w="100%">
                   <Heading fontSize={24} fontWeight={500} color="#222222">
-                    {FormatAmount(Number(totalInvestment), currency)}
+                    {FormatAmount(Number(totalInvestment || 0), currency)}
+                  </Heading>
+                  <FiEye color="#2E353F" fontSize={20} />
+                </Flex>
+              </Stack>
+            </Box>
+            <Box
+              minW={['300px', '32%']}
+              borderRadius="5px"
+              py="32px"
+              px="20px"
+              border="1px solid #E4E4E4"
+              h="135px"
+            >
+              <Stack spacing="16px" w="100%">
+                <Text color="brand.300" fontWeight={500}>
+                  Current Assets Valuation ({currency})
+                </Text>
+                <Flex alignItems="center" gap="16px" w="100%">
+                  <Heading fontSize={24} fontWeight={500} color="#222222">
+                    {FormatAmount(Number(currentValuation || 0), currency)}
                   </Heading>
                   <FiEye color="#2E353F" fontSize={20} />
                 </Flex>

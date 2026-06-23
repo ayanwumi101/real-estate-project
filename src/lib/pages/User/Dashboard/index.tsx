@@ -9,19 +9,23 @@ import DashboardInfo from './components/DashboardInfo';
 import UpcomingPayments from './components/UpcomingPayments';
 import DashboardHeader from '~/lib/layout/components/DashboardHeader';
 import { AppContext } from '~/lib/layout';
+import {
+  PropertiesResponse,
+  NGNPropertiesResponse,
+} from '~/lib/api/services/assetsService';
 
 const index = () => {
+  const { selectedCurrency } = useContext(AppContext);
   const [page, setPage] = useState<number>(1);
   const [dataPerPage, setDataPerPage] = useState<number>(10);
-  const [assets, setAssets] = React.useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const { selectedCurrency } = useContext(AppContext);
+  const [assets, setAssets] = React.useState<any>(null);
 
   const GetAssets = async () => {
     setLoading(true);
     try {
       const res = await GetUserAssets(dataPerPage, page);
-      setAssets(res.data);
+      setAssets(res);
     } catch (error) {
       console.log(error);
     }
@@ -32,33 +36,30 @@ const index = () => {
     GetAssets();
   }, []);
 
-  const totalInvestment =
-    selectedCurrency?.code === 'NGN'
-      ? assets?.reduce(
-          (acc, asset) =>
-            acc + (asset?.property_cost ? Number(asset?.property_cost) : 0),
-          0
-        )
-      : assets?.reduce(
-          (acc, asset) =>
-            acc +
-            (asset?.property_cost?.display_value
-              ? Number(asset?.property_cost?.display_value)
-              : 0),
-          0
-        );
-
-  const upcomingPaymentsAssets = assets?.filter(
-    (asset) => asset?.asset_type !== 'owned'
+  const upcomingPaymentsAssets = assets?.data?.filter(
+    (asset: any) => asset?.asset_type !== 'owned'
   );
 
   return (
     <DashboardHeader title="Dashboard">
       <Box pt={[3, 0]}>
         <AccountBalance
-          currency={assets[0]?.currency_meta?.display_currency}
-          totalAssets={assets?.length}
-          totalInvestment={totalInvestment}
+          currency={
+            selectedCurrency?.code === 'NGN'
+              ? selectedCurrency?.code
+              : assets?.summary?.total_investment?.display_currency
+          }
+          totalAssets={assets?.summary?.total_assets}
+          totalInvestment={
+            selectedCurrency?.code === 'NGN'
+              ? assets?.summary?.total_investment
+              : assets?.summary?.total_investment?.display_value
+          }
+          currentValuation={
+            selectedCurrency?.code === 'NGN'
+              ? assets?.summary?.total_current_valuation
+              : assets?.summary?.total_current_valuation?.display_value
+          }
           assetsLoading={loading}
         />
         <UpcomingPayments loading={loading} assets={upcomingPaymentsAssets} />

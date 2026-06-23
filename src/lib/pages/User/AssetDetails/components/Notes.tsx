@@ -25,7 +25,7 @@ const Notes = ({
         <Skeleton rounded="8px" w={['100%', '35%']} minH="350px"></Skeleton>
       ) : (
         <Box
-          w={['100%', '35%']}
+          w="full"
           bg="brand.200"
           minH="350px"
           p="30px"

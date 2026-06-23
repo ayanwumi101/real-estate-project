@@ -1,6 +1,159 @@
 import axiosInstance from '../axiosConfig';
 import API_ROUTES from '../endpoints';
 
+
+export interface Money {
+  ngn: number;
+  usd: number;
+  display_value: number;
+  display_currency: string;
+}
+
+export interface CurrencyMeta {
+  rate: number;
+  base_currency: string;
+  display_currency: string;
+  rate_source: string;
+  is_fallback: boolean;
+  rate_cached_at: string;
+  rate_expires_at: string;
+}
+
+
+export interface Payment {
+  id: number;
+  payment_date: string | null;
+  amount: Money;
+  status: 'pending' | 'completed';
+  property_id: string;
+  payment_due_date_id: number;
+  payment_due_date: string;
+  created_at: string;
+  updated_at: string;
+  currency_meta: CurrencyMeta;
+}
+
+export interface NextOfKin {
+  id: number;
+  fullname: string;
+  phone: string;
+  email: string;
+  relationship: string;
+}
+
+export interface Valuation {
+  id: string;
+  value: Money;
+  value_date: string;
+  source: string;
+  notes?: string;
+  created_at?: string;
+}
+
+export interface Property {
+  id: string;
+  property_name: string;
+  property_type: string;
+  size: string;
+  house_number: string;
+  street_name: string;
+  city_name: string;
+  state_id: string;
+  lga_id: string;
+
+  comment: string | null;
+  payment_status: string | null;
+  allocation_status: string | null;
+  documentation_status: string | null;
+  handover_status: string | null;
+
+  cashflow_source: string | null;
+  is_occupied: boolean;
+  last_cashflow_date: string | null;
+  cashflow_amount: Money | null;
+  cashflow_duration: string | null;
+  cashflow_payment_due: string | null;
+
+  asset_type: 'cashflow' | 'instalment' | 'owned';
+
+  equity_ownership: number | null;
+  price_per_share: number | null;
+  total_shares: number | null;
+  available_shares: number | null;
+
+  property_cost: Money;
+  property_value: Money | null;
+
+  duration: string | null;
+  amount_paid: Money | null;
+  amount_left: Money | null;
+
+  payment_plan: string | null;
+  payment_date: string | null;
+  due_date: string | null;
+  bought_date: string | null;
+
+  yield_cashflow: boolean;
+  total_payment_amount: Money;
+
+  payments: Payment[];
+
+  realtor_phone: string;
+  realtor_name: string;
+
+  no_of_payments: number;
+  images: string[];
+
+  nextOfKins: NextOfKin[];
+
+  next_due_date: string | null;
+
+  current_valuation: Valuation | null;
+  valuation_history: Valuation[];
+
+  currency_meta: CurrencyMeta;
+}
+
+
+export interface Summary {
+  total_assets: number;
+  total_current_valuation: Money;
+  total_investment: Money;
+  appreciation_margin: Money;
+  appreciation_percent: number;
+}
+
+export interface NGNSummary {
+  total_assets: number;
+  total_current_valuation: number;
+  total_investment: number;
+  appreciation_margin: number;
+  appreciation_percent: number;
+}
+
+export interface Meta {
+  current_page: number;
+  last_page: number;
+  per_page: number;
+  total: number;
+}
+
+export interface PropertiesResponse {
+  data: Property[];
+  message: string;
+  status: boolean;
+  summary: Summary;
+  meta: Meta;
+}
+
+export interface NGNPropertiesResponse {
+  data: Property[];
+  message: string;
+  status: boolean;
+  summary: NGNSummary;
+  meta: Meta;
+}
+
 export const AddAssetDetails = async (data: any) => {
   const response = await axiosInstance.post(API_ROUTES.ADD_ASSET_DETAILS, data);
   return response.data;

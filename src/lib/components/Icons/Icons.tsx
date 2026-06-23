@@ -3192,3 +3192,67 @@ export const AiGeneratedIcon = () => {
     </svg>
   );
 }
+
+
+export const ValuationHistoryIcon = () => {
+  return (
+    <svg
+      width="26"
+      height="26"
+      viewBox="0 0 26 26"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect x="0.5" y="0.5" width="25" height="25" rx="3.5" fill="#FBFBFB" />
+      <rect x="0.5" y="0.5" width="25" height="25" rx="3.5" stroke="#E4E4E4" />
+      <path
+        d="M10.4285 9.14307H18.7856M10.4285 13.0002H18.7856M10.4285 16.8574H18.7856"
+        stroke="#222222"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M7.21411 16.7139C7.29301 16.7139 7.35767 16.7785 7.35767 16.8574C7.35752 16.9362 7.29292 17 7.21411 17C7.13544 16.9998 7.07168 16.9361 7.07153 16.8574C7.07153 16.7786 7.13534 16.714 7.21411 16.7139ZM7.21411 12.8574C7.29301 12.8574 7.35767 12.9211 7.35767 13C7.35767 13.0789 7.29301 13.1426 7.21411 13.1426C7.13534 13.1424 7.07153 13.0788 7.07153 13C7.07153 12.9212 7.13534 12.8576 7.21411 12.8574ZM7.21411 9C7.29292 9 7.35752 9.06381 7.35767 9.14258C7.35767 9.22148 7.29301 9.28613 7.21411 9.28613C7.13534 9.28598 7.07153 9.22138 7.07153 9.14258C7.07168 9.0639 7.13543 9.00015 7.21411 9Z"
+        stroke="#222222"
+      />
+    </svg>
+  );
+}
+
+export const ValuationIncrementIcon = () => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M14.2858 4.57129L8.85721 9.99986L6.00007 7.14272L1.71436 11.4284M14.2858 7.99986V4.57129H10.8572"
+        stroke="#4A865F"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export const ValuationDecrementIcon = () => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M14.2858 11.4284L8.85721 5.99986L6.00007 8.857L1.71436 4.57129M14.2858 7.99986V11.4284H10.8572"
+        stroke="#FE3839"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}

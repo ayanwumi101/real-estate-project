@@ -33,6 +33,9 @@ const DeliveryStatusForm = ({
     setAssetData,
   } = useContext<any>(CreateAssetContext);
   const [propertyCost, setPropertyCost] = React.useState<string>('');
+  const [currentAssetValue, setCurrentAssetValue] = React.useState<string>('');
+
+
   const validationSchema = Yup.object().shape({
     propertyCost: Yup.string().required('Propety cost is required'),
     dateOfPurchase: Yup.string().required('Date of purchase is required'),
@@ -41,6 +44,7 @@ const DeliveryStatusForm = ({
       'Documentation status is required'
     ),
     handoverStatus: Yup.string().required('Handover status is required'),
+    currentAssetValue: Yup.string().required('Current asset value is required'),
   });
 
   const initialValues = {
@@ -49,6 +53,7 @@ const DeliveryStatusForm = ({
     allocationStatus: assetData.allocationStatus || '',
     documentationStatus: assetData.documentationStatus || '',
     handoverStatus: assetData.handoverStatus || '',
+    currentAssetValue: assetData.currentAssetValue || '',
   };
 
   const handleSubmit = async (values: any) => {
@@ -59,6 +64,7 @@ const DeliveryStatusForm = ({
       allocationStatus: values.allocationStatus,
       documentationStatus: values.documentationStatus,
       handoverStatus: values.handoverStatus,
+      currentAssetValue: values.currentAssetValue,
     });
     setStep(step + 1);
   };
@@ -98,6 +104,37 @@ const DeliveryStatusForm = ({
                   <FormErrorMessage>
                     {typeof errors.propertyCost === 'string'
                       ? errors.propertyCost
+                      : ''}
+                  </FormErrorMessage>
+                </FormControl>
+                <FormControl
+                  isInvalid={
+                    !!errors.currentAssetValue && !!touched.currentAssetValue
+                  }
+                >
+                  <FormLabel fontWeight={600} fontSize={16} color="#222222">
+                    Current Asset Value
+                  </FormLabel>
+                  <Input
+                    type="text"
+                    value={formatCurrency(currentAssetValue)}
+                    onChange={(e) => {
+                      const rawValue = e.target.value.replace(/[^\d]/g, '');
+                      setCurrentAssetValue(rawValue);
+                      setFieldValue('currentAssetValue', rawValue);
+                    }}
+                    name="currentAssetValue"
+                    bg="#FBFBFB"
+                    border="1px solid #C0C0C0"
+                    borderRadius="50px"
+                    h="50px"
+                    placeholder="₦ 0, 00"
+                    _placeholder={{ color: '#8295AA', fontWeight: 500 }}
+                    w="100%"
+                  />
+                  <FormErrorMessage>
+                    {typeof errors.currentAssetValue === 'string'
+                      ? errors.currentAssetValue
                       : ''}
                   </FormErrorMessage>
                 </FormControl>

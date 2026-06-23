@@ -114,7 +114,12 @@ const Header = ({
     }
   };
   return (
-    <Box py="30px" px={['20px', '40px']} borderBottom="1px solid #E4E4E4" w="full">
+    <Box
+      py="30px"
+      px={['20px', '40px']}
+      borderBottom="1px solid #E4E4E4"
+      w="full"
+    >
       <Stack spacing="30px" alignItems="flex-start" w="full">
         <Button
           onClick={() => navigate('/user/my-assets')}
@@ -171,9 +176,9 @@ const Header = ({
                   _hover={{ bg: '#000080' }}
                   color="#ffffff"
                   fontWeight={500}
-                  fontSize={14.5}
+                  fontSize={14}
                   leftIcon={<UpdateAssetDetailsIcon />}
-                  h="45px"
+                  h="42px"
                   onClick={() =>
                     navigate(`/user/my-assets/${id}/update-details`)
                   }
@@ -213,6 +218,19 @@ const Header = ({
                         Add payment
                       </MenuItem>
                     )}
+                    <MenuItem
+                      py="12px"
+                      px="16px"
+                      _hover={{ bg: 'border.100' }}
+                      fontSize={14}
+                      color="color.100"
+                      fontWeight={500}
+                      onClick={() =>
+                        navigate(`/user/my-assets/${id}/add-payment`)
+                      }
+                    >
+                      Update asset value
+                    </MenuItem>
                     <MenuItem
                       py="12px"
                       px="16px"

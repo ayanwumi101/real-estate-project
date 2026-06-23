@@ -304,7 +304,7 @@ export const AssetStatCard = ({
 }) => {
   return (
     <Box
-      minW={['300px', '33%']}
+      minW={['300px', '32%']}
       borderRadius="5px"
       py="25px"
       border="1px solid #E4E4E4"

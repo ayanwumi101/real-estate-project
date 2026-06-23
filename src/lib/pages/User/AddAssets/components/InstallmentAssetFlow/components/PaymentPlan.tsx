@@ -37,7 +37,9 @@ const PaymentPlan = ({
   } = useContext<any>(CreateAssetContext);
   const [amountPaid, setAmountPaid] = useState<string>('');
   const [amountLeft, setAmountLeft] = useState<string>('');
-  const [propertyCost, setPropertyCost] = useState<string>('')
+  const [propertyCost, setPropertyCost] = useState<string>('');
+  const [currentAssetValue, setCurrentAssetValue] = useState<string>('');
+
 
   // Validation schema using Yup
   const validationSchema = Yup.object().shape({
@@ -48,6 +50,7 @@ const PaymentPlan = ({
     paymentPlan: Yup.string().required('Payment plan is required'),
     firstPaymentDate: Yup.string().required('First payment date is required'),
     nextDueDate: Yup.string().required('Next due date is required'),
+    currentAssetValue: Yup.string().required('Current asset value is required'),
   });
 
   // Initial form values
@@ -59,6 +62,7 @@ const PaymentPlan = ({
     paymentPlan: assetData?.paymentPlan || '',
     firstPaymentDate: assetData?.firstPaymentDate || '',
     nextDueDate: assetData?.nextDueDate || '',
+    currentAssetValue: assetData?.currentAssetValue || '',
   };
 
   // Handle form submission
@@ -72,6 +76,7 @@ const PaymentPlan = ({
       firstPaymentDate: values.firstPaymentDate,
       nextDueDate: values.nextDueDate,
       amountPaid: values.amountPaid,
+      currentAssetValue: values.currentAssetValue,
     });
     setStep(step + 1);
   };
@@ -144,6 +149,7 @@ const PaymentPlan = ({
                       errors.propertyCost}
                   </FormErrorMessage>
                 </FormControl>
+               
                 <FormControl
                   isInvalid={
                     !!errors.paymentDuration && !!touched.paymentDuration
