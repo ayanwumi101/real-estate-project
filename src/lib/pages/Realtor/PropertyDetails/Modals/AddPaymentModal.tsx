@@ -196,7 +196,7 @@ const AddPaymentModal = ({
       payment_status: values.payment_status,
     };
 
-    console.log(formData);
+    // console.log(formData);
     setLoading(true);
 
     try {

@@ -1,7 +1,6 @@
 import axiosInstance from '../axiosConfig';
 import API_ROUTES from '../endpoints';
 
-
 export interface Money {
   ngn: number;
   usd: number;
@@ -18,7 +17,6 @@ export interface CurrencyMeta {
   rate_cached_at: string;
   rate_expires_at: string;
 }
-
 
 export interface Payment {
   id: number;
@@ -114,7 +112,6 @@ export interface Property {
   currency_meta: CurrencyMeta;
 }
 
-
 export interface Summary {
   total_assets: number;
   total_current_valuation: Money;
@@ -195,7 +192,9 @@ export const UpdateAssetCashflowDetails = async (
 };
 
 export const GetUserAssets = async (perPage: number, page: number) => {
-  const response = await axiosInstance.get(`${API_ROUTES.GET_USER_ASSETS}?page=${page}&per_page=${perPage}`);
+  const response = await axiosInstance.get(
+    `${API_ROUTES.GET_USER_ASSETS}?page=${page}&per_page=${perPage}`
+  );
   return response.data;
 };
 
@@ -326,7 +325,6 @@ export const AddPaymentToInstalmentAsset = async (data: {
   return response.data;
 };
 
-
 export const ChangeAssetStatus = async (
   propertyId: string,
   data: { is_occupied: boolean }
@@ -334,6 +332,22 @@ export const ChangeAssetStatus = async (
   const response = await axiosInstance.put(
     `/user/asset/status/${propertyId}`,
     data
+  );
+  return response.data;
+};
+
+export const AddNewValuationToProperty = async (
+  propertyId: string,
+  payload: {
+    value: number;
+    value_date: string;
+    source: string;
+    notes: string;
+  }
+) => {
+  const response = await axiosInstance.post(
+    `/user/asset/${propertyId}/valuations`,
+    payload
   );
   return response.data;
 };

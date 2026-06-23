@@ -19,7 +19,7 @@ import {
   MenuItem,
   useToast,
 } from '@chakra-ui/react';
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import { DeleteAsset, GetUserAssets } from '~/lib/api/services/assetsService';
 import {
   LocationIcon,
@@ -33,6 +33,8 @@ import SkeletonLoader from '~/lib/components/SkeletonLoader';
 import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
 import DeleteAssetConfirmationModal from '../Modals/DeleteAssetConfirmationModal';
+import UpdateAssetValueModal from '../Modals/UpdateAssetValueModal';
+import { AppContext } from '~/lib/layout';
 
 const OwnedAssets = ({
   assets,
@@ -53,8 +55,10 @@ const OwnedAssets = ({
 }) => {
   const toast = useToast();
   const navigate = useNavigate();
+  const { selectedCurrency } = useContext(AppContext);
   const [isOpen, setIsOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [openValuationModal, setOpenValuationModal] = useState(false);
   const [selectedAssetId, setSelectedAssetId] = React.useState<string>('');
 
   const deleteAsset = async () => {
@@ -195,15 +199,39 @@ const OwnedAssets = ({
                                 Number(asset?.property_cost?.display_value),
                                 asset?.property_cost?.display_currency
                               )
-                            : FormatAmount(Number(asset?.property_cost))}
+                            : FormatAmount(
+                                Number(asset?.property_cost),
+                                selectedCurrency?.code
+                              )}
                         </Td>
                         <Td fontWeight={500} fontSize={14} color="#8295AA">
-                          {asset?.current_valuation
-                            ? FormatAmount(
-                                Number(asset?.current_valuation),
-                                asset?.current_valuation
-                              )
-                            : FormatAmount(Number(asset?.current_valuation))}
+                          {selectedCurrency?.code !== 'NGN' ? (
+                            <>
+                              {asset?.current_valuation?.value?.display_value
+                                ? FormatAmount(
+                                    Number(
+                                      asset?.current_valuation?.value
+                                        ?.display_value
+                                    ),
+                                    asset?.current_valuation?.value
+                                      ?.display_currency
+                                  )
+                                : FormatAmount(
+                                    Number(asset?.current_valuation)
+                                  )}
+                            </>
+                          ) : (
+                            <>
+                              {asset?.current_valuation?.value
+                                ? FormatAmount(
+                                    Number(asset?.current_valuation?.value),
+                                    selectedCurrency?.code
+                                  )
+                                : FormatAmount(
+                                    Number(asset?.current_valuation)
+                                  )}
+                            </>
+                          )}
                         </Td>
                         <Td fontWeight={500} fontSize={14} color="#8295AA">
                           {asset?.allocation_status}
@@ -250,7 +278,7 @@ const OwnedAssets = ({
                                 color="color.100"
                                 fontWeight={500}
                                 onClick={() => {
-                                  setIsOpen(true);
+                                  setOpenValuationModal(true);
                                   setSelectedAssetId(asset?.id);
                                 }}
                               >
@@ -316,6 +344,11 @@ const OwnedAssets = ({
         onClose={() => setIsOpen(false)}
         loading={isLoading}
         deleteAsset={deleteAsset}
+      />
+      <UpdateAssetValueModal
+        propertyId={selectedAssetId}
+        isOpen={openValuationModal}
+        onClose={() => setOpenValuationModal(false)}
       />
     </Box>
   );
