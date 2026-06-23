@@ -41,10 +41,6 @@ const AccountBalance = ({
   const [showBalance, setShowBalance] = useState<boolean>(true);
   const walletVisibility = Cookies.get('walletVisibility');
   const navigate = useNavigate();
-
-  console.log(currentValuation, totalInvestment);
-  
-
   return (
     <Box>
       {/* banner that shows user name and profile setup */}
