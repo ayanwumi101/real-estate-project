@@ -40,7 +40,8 @@ const extendedColors: DeepPartial<
     400: '#1BD155',
     500: '#8295AA',
     600: '#FE3839',
-    700: '#4A865F'
+    700: '#4A865F',
+    800: '#4A865F'
   }
 };
 

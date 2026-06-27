@@ -124,6 +124,8 @@ const AssetsStatistics = ({
               }
               p="4px 10px 0px 10px"
               rounded="20px"
+              fontWeight={500}
+              fontSize={12}
             >
               <Flex alignItems="center" justifyContent="center" gap="3px">
                 {appreciationDirection === 'increase' ? (
