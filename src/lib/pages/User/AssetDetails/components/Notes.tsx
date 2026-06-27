@@ -22,7 +22,7 @@ const Notes = ({
   return (
     <Fragment>
       {loading ? (
-        <Skeleton rounded="8px" w={['100%', '35%']} minH="350px"></Skeleton>
+        <Skeleton rounded="8px" w="full" minH="350px"></Skeleton>
       ) : (
         <Box
           w="full"

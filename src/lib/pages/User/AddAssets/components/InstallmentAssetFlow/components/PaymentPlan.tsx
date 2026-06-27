@@ -50,7 +50,7 @@ const PaymentPlan = ({
     paymentPlan: Yup.string().required('Payment plan is required'),
     firstPaymentDate: Yup.string().required('First payment date is required'),
     nextDueDate: Yup.string().required('Next due date is required'),
-    currentAssetValue: Yup.string().required('Current asset value is required'),
+    currentAssetValue: Yup.string().notRequired(),
   });
 
   // Initial form values

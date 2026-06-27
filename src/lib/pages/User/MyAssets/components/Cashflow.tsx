@@ -62,7 +62,7 @@ const Cashflow = ({
   const [isOpen, setIsOpen] = React.useState(false);
   const [selectedAssetId, setSelectedAssetId] = React.useState<string>('');
   const { selectedCurrency } = useContext(AppContext);
-   const [openValuationModal, setOpenValuationModal] = useState(false);
+  const [openValuationModal, setOpenValuationModal] = useState(false);
 
   const deleteAsset = async () => {
     setIsLoading(true);
@@ -205,6 +205,10 @@ const Cashflow = ({
                         border="none"
                         _hover={{ bg: '#f5f5f5' }}
                         cursor="pointer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/user/my-assets/${asset?.id}`);
+                        }}
                       >
                         <Td fontSize={15} color="#222222" fontWeight={600}>
                           <Stack>
@@ -290,7 +294,12 @@ const Cashflow = ({
                         </Td>
                         <Td>
                           <Menu>
-                            <MenuButton as={Button} rounded="5px" bg="bg.200">
+                            <MenuButton
+                              as={Button}
+                              rounded="5px"
+                              bg="bg.200"
+                              onClick={(e) => e.stopPropagation()}
+                            >
                               <VerticalEllipsisIcon />
                             </MenuButton>
                             <MenuList py="0px">

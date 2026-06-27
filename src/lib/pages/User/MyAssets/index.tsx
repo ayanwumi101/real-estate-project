@@ -117,6 +117,8 @@ const MyAssets = () => {
                 ? assets?.summary?.appreciation_margin
                 : assets?.summary?.appreciation_margin?.display_value
             }
+            appreciationPercent={assets?.summary?.appreciation_percent}
+            appreciationDirection={assets?.summary?.appreciation_direction}
           />
           <Box px={['10px', '30px']} mb={[5, 0]}>
             <Flex

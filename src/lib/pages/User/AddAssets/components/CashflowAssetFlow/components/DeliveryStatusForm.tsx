@@ -42,7 +42,7 @@ const DeliveryStatusForm = ({
   const validationSchema = Yup.object().shape({
     boughtDate: Yup.string().required('Bought date is required'),
     propertyCost: Yup.string().required('Property cost is required'),
-    currentAssetValue: Yup.string().required('Current asset value is required'),
+    currentAssetValue: Yup.string().notRequired(),
   });
 
   const initialValues = {

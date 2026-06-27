@@ -18,6 +18,7 @@ import {
   MenuList,
   MenuItem,
   useToast,
+  Portal,
 } from '@chakra-ui/react';
 import React, { Fragment, useContext, useState } from 'react';
 import { DeleteAsset, GetUserAssets } from '~/lib/api/services/assetsService';
@@ -172,7 +173,15 @@ const OwnedAssets = ({
                 <Tbody color="#222222" maxH="450px" overflow="auto">
                   {assets?.map((asset) => {
                     return (
-                      <Tr key={asset?.id} border="none" cursor="pointer">
+                      <Tr
+                        key={asset?.id}
+                        border="none"
+                        cursor="pointer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/user/my-assets/${asset?.id}`);
+                        }}
+                      >
                         <Td fontSize={15} color="#222222" fontWeight={600}>
                           <Stack>
                             <Heading
@@ -238,67 +247,74 @@ const OwnedAssets = ({
                         </Td>
                         <Td>
                           <Menu>
-                            <MenuButton as={Button} rounded="5px" bg="bg.200">
+                            <MenuButton
+                              as={Button}
+                              rounded="5px"
+                              bg="bg.200"
+                              onClick={(e) => e.stopPropagation()}
+                            >
                               <VerticalEllipsisIcon />
                             </MenuButton>
-                            <MenuList py="0px">
-                              <MenuItem
-                                py="12px"
-                                px="16px"
-                                _hover={{ bg: 'border.100' }}
-                                fontSize={14}
-                                color="color.100"
-                                fontWeight={500}
-                                onClick={() =>
-                                  navigate(`/user/my-assets/${asset?.id}`)
-                                }
-                              >
-                                View asset
-                              </MenuItem>
-                              <MenuItem
-                                py="12px"
-                                px="16px"
-                                _hover={{ bg: 'border.100' }}
-                                fontSize={14}
-                                color="color.100"
-                                fontWeight={500}
-                                onClick={() =>
-                                  navigate(
-                                    `/user/my-assets/${asset?.id}/update-details`
-                                  )
-                                }
-                              >
-                                Update asset details
-                              </MenuItem>
-                              <MenuItem
-                                py="12px"
-                                px="16px"
-                                _hover={{ bg: 'border.100' }}
-                                fontSize={14}
-                                color="color.100"
-                                fontWeight={500}
-                                onClick={() => {
-                                  setOpenValuationModal(true);
-                                  setSelectedAssetId(asset?.id);
-                                }}
-                              >
-                                Update asset value
-                              </MenuItem>
-                              <MenuItem
-                                py="12px"
-                                px="16px"
-                                _hover={{ bg: 'border.100' }}
-                                fontSize={14}
-                                color="color.100"
-                                fontWeight={500}
-                                onClick={() => {
-                                  setIsOpen(true);
-                                  setSelectedAssetId(asset?.id);
-                                }}
-                              >
-                                Delete asset
-                              </MenuItem>
-                            </MenuList>
+                            <Portal>
+                              <MenuList py="0px">
+                                <MenuItem
+                                  py="12px"
+                                  px="16px"
+                                  _hover={{ bg: 'border.100' }}
+                                  fontSize={14}
+                                  color="color.100"
+                                  fontWeight={500}
+                                  onClick={() =>
+                                    navigate(`/user/my-assets/${asset?.id}`)
+                                  }
+                                >
+                                  View asset
+                                </MenuItem>
+                                <MenuItem
+                                  py="12px"
+                                  px="16px"
+                                  _hover={{ bg: 'border.100' }}
+                                  fontSize={14}
+                                  color="color.100"
+                                  fontWeight={500}
+                                  onClick={() =>
+                                    navigate(
+                                      `/user/my-assets/${asset?.id}/update-details`
+                                    )
+                                  }
+                                >
+                                  Update asset details
+                                </MenuItem>
+                                <MenuItem
+                                  py="12px"
+                                  px="16px"
+                                  _hover={{ bg: 'border.100' }}
+                                  fontSize={14}
+                                  color="color.100"
+                                  fontWeight={500}
+                                  onClick={() => {
+                                    setOpenValuationModal(true);
+                                    setSelectedAssetId(asset?.id);
+                                  }}
+                                >
+                                  Update asset value
+                                </MenuItem>
+                                <MenuItem
+                                  py="12px"
+                                  px="16px"
+                                  _hover={{ bg: 'border.100' }}
+                                  fontSize={14}
+                                  color="color.100"
+                                  fontWeight={500}
+                                  onClick={() => {
+                                    setIsOpen(true);
+                                    setSelectedAssetId(asset?.id);
+                                  }}
+                                >
+                                  Delete asset
+                                </MenuItem>
+                              </MenuList>
+                            </Portal>
                           </Menu>
                         </Td>
                       </Tr>

@@ -44,7 +44,7 @@ const DeliveryStatusForm = ({
       'Documentation status is required'
     ),
     handoverStatus: Yup.string().required('Handover status is required'),
-    currentAssetValue: Yup.string().required('Current asset value is required'),
+    currentAssetValue: Yup.string().notRequired(),
   });
 
   const initialValues = {

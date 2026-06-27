@@ -37,10 +37,11 @@ const AccountBalance = ({
   currency: string;
   currentValuation: number;
 }) => {
+  const navigate = useNavigate();
   const { userDetails, isUserDetailsLoading } = useContext(AppContext);
   const [showBalance, setShowBalance] = useState<boolean>(true);
   const walletVisibility = Cookies.get('walletVisibility');
-  const navigate = useNavigate();
+
   return (
     <Box>
       {/* banner that shows user name and profile setup */}

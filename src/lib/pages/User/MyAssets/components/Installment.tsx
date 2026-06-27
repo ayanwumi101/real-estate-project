@@ -205,6 +205,10 @@ const Installment = ({
                         border="none"
                         _hover={{ bg: '#f5f5f5' }}
                         cursor="pointer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/user/my-assets/${asset?.id}`);
+                        }}
                       >
                         <Td fontSize={15} color="#222222" fontWeight={600}>
                           <Stack>
@@ -291,7 +295,12 @@ const Installment = ({
                         </Td>
                         <Td>
                           <Menu>
-                            <MenuButton as={Button} rounded="5px" bg="bg.200">
+                            <MenuButton
+                              as={Button}
+                              rounded="5px"
+                              bg="bg.200"
+                              onClick={(e) => e.stopPropagation()}
+                            >
                               <VerticalEllipsisIcon />
                             </MenuButton>
                             <MenuList py="0px">

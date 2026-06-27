@@ -43,6 +43,7 @@ const NavigationTab = ({
         flexWrap={['wrap', 'nowrap']}
         gap={['24px', '0']}
         pb="2"
+        pt={[3,0]}
       >
         <Flex
           w={['full', 'auto']}

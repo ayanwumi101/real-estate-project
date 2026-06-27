@@ -61,10 +61,16 @@ const index = () => {
                 <ValuationHistory
                   propertyCost={
                     propertyDetails?.property_cost?.display_value
-                      ? Number(propertyDetails?.property_cost?.display_value) 
+                      ? Number(propertyDetails?.property_cost?.display_value)
                       : Number(propertyDetails?.property_cost)
                   }
                   valuationHistory={propertyDetails?.valuation_history}
+                  currentAssetValue={Number(
+                    propertyDetails?.current_valuation?.value?.display_value
+                      ? propertyDetails?.current_valuation?.value?.display_value
+                      : propertyDetails?.current_valuation?.value
+                  )}
+                  boughtDate={propertyDetails?.bought_date}
                 />
                 <Notes
                   loading={loading}
