@@ -72,7 +72,18 @@ const API_ROUTES = {
 
   //contact us and reques service endpoints
   CONTACT_US: 'contact-us',
-  PROPERTY_VERIFICATION: '/property-verifications'
+  PROPERTY_VERIFICATION: '/property-verifications',
+
+  //Notifications
+  GET_USER_NOTIFICATIONS: '/notifications',
+  GET_UNREAD_USER_NOTIFICATIONS: '/notifications/unread-count',
+  MARK_NOTIFICATION_AS_READ: '/notifications',
+  MARK_ALL_NOTIFICATIONS_AS_READ: '/notifications/mark-all-read',
+  DELETE_NOTIFICATION: '/notifications',
+
+  //Notification preferences
+  GET_USER_NOTIFICATION_PREFERENCES: 'notification-preferences',
+  UPDATE_USER_NOTIFICATION_PREFERENCE: 'notification-preferences'
 
 };
 

@@ -1,0 +1,49 @@
+import axiosInstance from '../axiosConfig';
+import API_ROUTES from '../endpoints';
+
+export const GetUserNotifications = async () => {
+  const response = await axiosInstance.get(API_ROUTES.GET_USER_NOTIFICATIONS);
+  return response.data;
+};
+
+export const GetUnreadUserNotifications = async () => {
+  const response = await axiosInstance.get(
+    API_ROUTES.GET_UNREAD_USER_NOTIFICATIONS
+  );
+  return response.data;
+};
+
+export const MarkNotificationAsRead = async (id: string) => {
+  const response = await axiosInstance.post(
+    `${API_ROUTES.MARK_NOTIFICATION_AS_READ}/${id}/read`
+  );
+  return response.data;
+};
+
+export const MarkAllNotificationAsRead = async () => {
+  const response = await axiosInstance.post(
+    `${API_ROUTES.MARK_ALL_NOTIFICATIONS_AS_READ}`
+  );
+  return response.data;
+};
+export const DeleteNotification = async (id: string) => {
+  const response = await axiosInstance.delete(
+    `${API_ROUTES.DELETE_NOTIFICATION}/${id}`
+  );
+  return response.data;
+};
+
+export const GetUserNotificationPreferences = async () => {
+  const response = await axiosInstance.get(
+    `${API_ROUTES.GET_USER_NOTIFICATION_PREFERENCES}`
+  );
+  return response.data;
+};
+
+export const UpdateUserNotificationPreference = async (payload: string) => {
+  const response = await axiosInstance.put(
+    `${API_ROUTES.UPDATE_USER_NOTIFICATION_PREFERENCE}`,
+    payload
+  );
+  return response.data;
+};
