@@ -1,6 +1,28 @@
 import axiosInstance from '../axiosConfig';
 import API_ROUTES from '../endpoints';
 
+export interface NotificationPreference {
+  category: string;
+  label: string;
+  events: {
+    event_key: string;
+    label: string;
+    description: string;
+    in_app: boolean;
+    email: boolean;
+    whatsapp: boolean;
+  }[];
+}
+
+export interface UpdateNotificationPreference {
+  preferences: {
+    event_key: string;
+    in_app: boolean;
+    email: boolean;
+    whatsapp: boolean;
+  }[];
+}
+
 export const GetUserNotifications = async () => {
   const response = await axiosInstance.get(API_ROUTES.GET_USER_NOTIFICATIONS);
   return response.data;
@@ -40,7 +62,7 @@ export const GetUserNotificationPreferences = async () => {
   return response.data;
 };
 
-export const UpdateUserNotificationPreference = async (payload: string) => {
+export const UpdateUserNotificationPreference = async (payload: UpdateNotificationPreference) => {
   const response = await axiosInstance.put(
     `${API_ROUTES.UPDATE_USER_NOTIFICATION_PREFERENCE}`,
     payload

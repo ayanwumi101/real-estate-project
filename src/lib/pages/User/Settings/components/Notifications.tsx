@@ -6,136 +6,117 @@ import {
   Text,
   Flex,
   Checkbox,
+  useToast,
 } from '@chakra-ui/react';
 import React from 'react';
+import {
+  NotificationPreference,
+  UpdateUserNotificationPreference,
+} from '~/lib/api/services/notificationService';
 
-const Notifications = () => {
-  const notificationsTypes = [
-    {
-      groupLabel: 'payments',
-      id: 'payments',
-      notificationItems: [
-        {
-          label: 'Instalment payment received',
-          description:
-            'Receive a notification whenever an instalment is registered as paid',
-          notificationChannels: ['email', 'whatsapp'],
-        },
-        {
-          label: 'Instalment payment due',
-          description:
-            'Get alerted when an instalment payment is getting close to due date',
-          notificationChannels: ['email', 'whatsapp'],
-        },
-        {
-          label: 'Instalment payment completed',
-          description: 'Receive a notification when an instalment is finalised',
-          notificationChannels: ['email', 'whatsapp'],
-        },
-        {
-          label: 'Overdue instalment',
-          description:
-            'Receive notifications whenever your instalment payment becomes overdue',
-          notificationChannels: ['email', 'whatsapp'],
-        },
-        {
-          label: 'Remittance payment due',
-          description: 'Stay informed about upcoming remittance deadlines',
-          notificationChannels: ['email', 'whatsapp'],
-        },
-        {
-          label: 'Remittance payment received',
-          description:
-            'Receive notifications whenever a remittance payment is recorded',
-          notificationChannels: ['email', 'whatsapp'],
-        },
-        {
-          label: 'Payment deleted',
-          description: 'Receive notifications when a payment is deleted',
-          notificationChannels: ['email', 'whatsapp'],
-        },
-      ],
-    },
-    {
-      groupLabel: 'properties',
-      id: 'properties',
-      notificationItems: [
-        {
-          label: 'New property is added',
-          description:
-            'Receive a notification when a new asset is added to your portfolio',
-          notificationChannels: ['email', 'whatsapp'],
-        },
-        {
-          label: 'Property updated',
-          description:
-            'Receive alerts when any changes are made to your property details',
-          notificationChannels: ['email', 'whatsapp'],
-        },
-        {
-          label: 'Property sold',
-          description:
-            'Get notified when your property has been successfully sold',
-          notificationChannels: ['email', 'whatsapp'],
-        },
-        {
-          label: 'Property valuation updated',
-          description:
-            "Stay informed with the latest changes to your property's market value",
-          notificationChannels: ['email', 'whatsapp'],
-        },
-        {
-          label: 'Property status changed',
-          description:
-            'Get notified when the status of your property is updated',
-          notificationChannels: ['email', 'whatsapp'],
-        },
-        {
-          label: 'Property deleted',
-          description: 'Get notified when a property is deleted',
-          notificationChannels: ['email', 'whatsapp'],
-        },
-      ],
-    },
-    {
-      groupLabel: 'security & account',
-      id: 'security-and-account',
-      notificationItems: [
-        {
-          label: 'Password changed',
-          description: 'Your password has been successfully updated.',
-          notificationChannels: ['email', 'whatsapp'],
-        },
-        {
-          label: 'Profile updated',
-          description: 'Your profile information has been successfully saved.',
-          notificationChannels: ['email', 'whatsapp'],
-        },
-      ],
-    },
-  ];
+const Notifications = ({
+  preferences,
+}: {
+  preferences: NotificationPreference[];
+}) => {
+  const toast = useToast();
+  const [localPreferences, setLocalPreferences] = React.useState<
+    NotificationPreference[]
+  >([]);
+
+  React.useEffect(() => {
+    setLocalPreferences(preferences);
+  }, [preferences]);
+
+  const handleToggleChange = async (
+    category: string,
+    eventKey: string,
+    channel: 'email' | 'whatsapp',
+    newValue: boolean
+  ) => {
+    // Update local state immediately for responsive UI
+    const updatedPreferences = localPreferences.map((pref) => {
+      if (pref.category === category) {
+        return {
+          ...pref,
+          events: pref.events.map((event) => {
+            if (event.event_key === eventKey) {
+              return {
+                ...event,
+                [channel]: newValue,
+              };
+            }
+            return event;
+          }),
+        };
+      }
+      return pref;
+    });
+    setLocalPreferences(updatedPreferences);
+
+    // Find the updated event to send to API
+    const updatedEvent = updatedPreferences
+      .find((pref) => pref.category === category)
+      ?.events.find((event) => event.event_key === eventKey);
+
+    if (updatedEvent) {
+      try {
+        await UpdateUserNotificationPreference({
+          preferences: [
+            {
+              event_key: eventKey,
+              in_app: updatedEvent.in_app,
+              email: updatedEvent.email,
+              whatsapp: updatedEvent.whatsapp,
+            },
+          ],
+        });
+        toast({
+          title: 'Notification preference updated successfully',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        });
+      } catch (error: any) {
+        toast({
+          title:
+            error?.response?.data?.error?.message ||
+            'Failed to update notification preference',
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        });
+        // Revert local state on error
+        setLocalPreferences(preferences);
+      }
+    }
+  };
   return (
     <Box px={['20px', '40px']} pb="50px">
       <Stack spacing="26px">
-        {notificationsTypes?.map((notification) => (
+        {localPreferences?.map((notification) => (
           <Box
             border="1px solid #E4E4E4"
             borderRadius="5px"
             p="15px"
-            key={notification.id}
+            key={notification?.category}
           >
             <Stack spacing="20px">
               <Checkbox
-                defaultChecked
+                isChecked={notification?.events?.every(
+                  (event) => event?.email && event?.whatsapp
+                )}
                 color="#2E353F"
                 fontSize={14}
                 fontWeight={700}
                 size="lg"
                 textTransform="capitalize"
               >
-                {notification.groupLabel}
+                {notification?.label}
               </Checkbox>
-              {notification.notificationItems?.map((item) => (
+              {notification.events?.map((item) => (
                 <Box
                   border="1px solid #E4E4E4"
                   borderRadius="5px"
@@ -143,12 +124,20 @@ const Notifications = () => {
                   py="15px"
                   key={item.label}
                 >
-                  <Flex justifyContent="space-between" alignItems="center">
-                    <Box w="50%">
-                      <Flex alignItems="center" gap="15px">
-                        <Checkbox defaultChecked={true} size="lg" />
+                  <Flex
+                    justifyContent={['flex-start',"space-between"]}
+                    alignItems="center"
+                    flexWrap={['wrap', 'nowrap']}
+                    gap={[5,0]}
+                  >
+                    <Box w={['full', '50%']}>
+                      <Flex alignItems={['flex-start',"center"]} gap="15px">
+                        <Checkbox
+                          isChecked={item?.email && item?.whatsapp}
+                          size="lg"
+                        />
                         <Stack spacing="3px">
-                          <Text color="#2E353F" fontWeight={600} fontSize={14}>
+                          <Text color="#2E353F" fontWeight={600} fontSize={14.5}>
                             {item.label}
                           </Text>
                           <Text fontWeight={500} color="#8295AA" fontSize={14}>
@@ -157,11 +146,32 @@ const Notifications = () => {
                         </Stack>
                       </Flex>
                     </Box>
-                    {item.notificationChannels?.map((channel) => (
-                      <Box w="25%" key={channel}>
-                        <Switch />
-                      </Box>
-                    ))}
+                    <Box w={['15%', '15%']}>
+                      <Switch
+                        isChecked={item?.email}
+                        onChange={(e) =>
+                          handleToggleChange(
+                            notification?.category,
+                            item?.event_key,
+                            'email',
+                            e.target.checked
+                          )
+                        }
+                      />
+                    </Box>
+                    <Box w={['15%', '15%']}>
+                      <Switch
+                        isChecked={item?.whatsapp}
+                        onChange={(e) =>
+                          handleToggleChange(
+                            notification?.category,
+                            item?.event_key,
+                            'whatsapp',
+                            e.target.checked
+                          )
+                        }
+                      />
+                    </Box>
                   </Flex>
                 </Box>
               ))}

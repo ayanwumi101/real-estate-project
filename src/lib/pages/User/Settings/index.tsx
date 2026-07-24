@@ -10,6 +10,8 @@ import Security from './components/Security';
 import NextOfKins from './components/NextOfKins';
 import DashboardHeader from '~/lib/layout/components/DashboardHeader';
 import { useSearchParams } from 'next/navigation';
+import { GetUserNotificationPreferences } from '~/lib/api/services/notificationService';
+import { NotificationPreference } from '~/lib/api/services/notificationService';
 
 const NotificationsContainer = () => {
   const searchParams = useSearchParams();
@@ -24,6 +26,22 @@ const NotificationsContainer = () => {
   const [activeTab, setActiveTab] = useState<
     'Profile' | 'Next of Kins' | 'Notifications' | 'Privacy' | 'Security'
   >('Profile');
+  const [notificationPreferences, setNotificationPreferences] = useState<
+    NotificationPreference[]
+  >([]);
+
+  const FetchNotificationPreferences = async () => {
+    try {
+      const response = await GetUserNotificationPreferences();
+      setNotificationPreferences(response?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    FetchNotificationPreferences();
+  }, []);
 
   useEffect(() => {
     if (tab && tabs.includes(tab as string)) {
@@ -49,7 +67,7 @@ const NotificationsContainer = () => {
         />
         {activeTab === 'Profile' && <Profile />}
         {activeTab === 'Next of Kins' && <NextOfKins />}
-        {activeTab === 'Notifications' && <Notifications />}
+        {activeTab === 'Notifications' && <Notifications preferences={notificationPreferences} />}
         {activeTab === 'Privacy' && <Privacy />}
         {activeTab === 'Security' && <Security />}
       </Box>
