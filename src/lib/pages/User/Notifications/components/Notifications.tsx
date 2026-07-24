@@ -4,8 +4,8 @@ import { PendingRemittanceNotificationIcon } from '~/lib/components/Icons/Icons'
 const NotificationGroup = () => {
   return (
     <Box>
-      <Box bg="bg.500" p='20px' mb='2'>
-        <Heading fontSize={15} fontWeight={600} color="brand.400">
+      <Box bg="bg.500" p='20px' mb='2' borderTopRightRadius='8px' borderTopLeftRadius='8px'>
+        <Heading fontSize={16} fontWeight={600} color="brand.400">
           Thursday
         </Heading>
       </Box>
@@ -21,7 +21,7 @@ const NotificationGroup = () => {
                 <Flex alignItems="center" gap="16px">
                   <PendingRemittanceNotificationIcon />
                   <Stack spacing='6px'>
-                    <Heading fontSize={16} fontWeight={600} color="brand.300">
+                    <Heading fontSize={15} fontWeight={600} color="brand.300">
                       Pending Remittance Payment
                     </Heading>
                     <Text fontSize={14} fontWeight={500} color="brand.400">
@@ -45,7 +45,7 @@ const NotificationGroup = () => {
 const Notifications = () => {
   return (
     <Box>
-      <Stack spacing="15px">
+      <Stack spacing="25px">
         <NotificationGroup />
         <NotificationGroup />
       </Stack>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import NavigationTab from './components/NavigationTab';
 import { Box } from '@chakra-ui/react';
 import Profile from './components/Profile';
@@ -9,9 +9,11 @@ import Privacy from './components/Privacy';
 import Security from './components/Security';
 import NextOfKins from './components/NextOfKins';
 import DashboardHeader from '~/lib/layout/components/DashboardHeader';
+import { useSearchParams } from 'next/navigation';
 
-const index = () => {
-  const [activeTab, setActiveTab] = useState('Profile');
+const NotificationsContainer = () => {
+  const searchParams = useSearchParams();
+  const tab = searchParams.get('tab');
   const tabs = [
     'Profile',
     'Next of Kins',
@@ -19,6 +21,24 @@ const index = () => {
     'Privacy',
     'Security',
   ];
+  const [activeTab, setActiveTab] = useState<
+    'Profile' | 'Next of Kins' | 'Notifications' | 'Privacy' | 'Security'
+  >('Profile');
+
+  useEffect(() => {
+    if (tab && tabs.includes(tab as string)) {
+      setActiveTab(
+        tab as
+          | 'Profile'
+          | 'Next of Kins'
+          | 'Notifications'
+          | 'Privacy'
+          | 'Security'
+      );
+    } else {
+      setActiveTab('Profile');
+    }
+  }, [tab, tabs]);
   return (
     <DashboardHeader title="Settings">
       <Box>
@@ -27,16 +47,22 @@ const index = () => {
           activeTab={activeTab}
           setActiveTab={setActiveTab}
         />
-        <Box>
-          {activeTab === 'Profile' && <Profile />}
-          {activeTab === 'Next of Kins' && <NextOfKins />}
-          {activeTab === 'Notifications' && <Notifications />}
-          {activeTab === 'Privacy' && <Privacy />}
-          {activeTab === 'Security' && <Security />}
-        </Box>
+        {activeTab === 'Profile' && <Profile />}
+        {activeTab === 'Next of Kins' && <NextOfKins />}
+        {activeTab === 'Notifications' && <Notifications />}
+        {activeTab === 'Privacy' && <Privacy />}
+        {activeTab === 'Security' && <Security />}
       </Box>
     </DashboardHeader>
   );
 };
 
-export default index;
+const Index = () => {
+  return (
+    <Suspense fallback={<div>Loading.....</div>}>
+      <NotificationsContainer />
+    </Suspense>
+  );
+};
+
+export default Index;
