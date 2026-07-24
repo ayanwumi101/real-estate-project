@@ -28,6 +28,7 @@ import { AppContext } from '..';
 import RealtorMobileSidebar from './RealtorMobileSidebar';
 import { currencies } from '~/lib/utils/types/currency';
 import { Currency } from '~/lib/utils/types/currency';
+import Link from 'next/link';
 
 export const RealtorMobileDashboardHeader = () => {
   const [openSideNav, setOpenSideNav] = useState<boolean>(false);
@@ -271,7 +272,28 @@ const DashboardHeader = ({
               {title}
             </Heading>
             <Flex alignItems="center" gap="30px" display={['none', 'flex']}>
-              <DashboardNotificationIcon />
+              <Link href="/user/notifications">
+                <Box position="relative">
+                  <Box
+                    pos="absolute"
+                    top="-3px"
+                    right="-3px"
+                    rounded="full"
+                    w="22px"
+                    h="22px"
+                    bg="color.200"
+                    color="brand.200"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    fontSize={13}
+                    fontWeight={500}
+                  >
+                    23
+                  </Box>
+                  <DashboardNotificationIcon />
+                </Box>
+              </Link>
               <Box w="1px" h="40px" bg="#C0C0C0"></Box>
               {displayCurrencyLoading ? (
                 <Box
@@ -283,7 +305,11 @@ const DashboardHeader = ({
                   border="1px solid"
                   borderColor="border.100"
                 >
-                  <HStack alignItems="center" gap="10px" justifyContent='center'>
+                  <HStack
+                    alignItems="center"
+                    gap="10px"
+                    justifyContent="center"
+                  >
                     <Skeleton w="25px" h="25px" rounded="full" />
                     <Skeleton w="20px" h="20px" />
                     <ChevronDownIcon />
