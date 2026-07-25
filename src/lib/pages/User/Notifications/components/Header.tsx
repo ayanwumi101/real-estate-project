@@ -44,10 +44,16 @@ const Header = ({
   };
   return (
     <Box>
-      <Flex alignItems="center" justifyContent="space-between">
+      <Flex
+        alignItems="center"
+        justifyContent="space-between"
+        gap={[4, 0]}
+        flexWrap={['wrap-reverse', 'nowrap']}
+      >
         <Box>
-          <Flex alignItems="center" gap="8px">
+          <Flex alignItems="center" gap="8px" overflow="auto">
             {tabs?.map((tab) => (
+              //   <Box>
               <Button
                 key={tab}
                 textTransform="capitalize"
@@ -66,6 +72,7 @@ const Header = ({
               >
                 {tab}
               </Button>
+              //</Box>
             ))}
             <NotificationFilterIcon />
           </Flex>
