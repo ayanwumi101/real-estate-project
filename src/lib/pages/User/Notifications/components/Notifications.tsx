@@ -98,24 +98,28 @@ const Notifications = ({
                             borderBottom="1px solid"
                             borderColor="border.100"
                             key={notification?.id}
-                            bg={notification?.read === false ? 'bg.500' : 'none'}
+                            bg={
+                              notification?.read === false ? 'bg.500' : 'none'
+                            }
                           >
                             <Flex
                               alignItems="flex-start"
                               justifyContent="space-between"
                             >
                               <Flex alignItems="center" gap="16px">
-                                <PendingRemittanceNotificationIcon />
+                                <Box>
+                                  <PendingRemittanceNotificationIcon />
+                                </Box>
                                 <Stack spacing="6px">
                                   <Heading
-                                    fontSize={15}
+                                    fontSize={[14,15]}
                                     fontWeight={600}
                                     color="brand.300"
                                   >
                                     {notification?.title}
                                   </Heading>
                                   <Text
-                                    fontSize={14}
+                                    fontSize={[13,14]}
                                     fontWeight={500}
                                     color="brand.400"
                                   >
@@ -123,7 +127,7 @@ const Notifications = ({
                                   </Text>
                                 </Stack>
                               </Flex>
-                              <Text fontSize={14} fontWeight={500}>
+                              <Text fontSize={[12,13]} fontWeight={500}>
                                 {moment(notification.created_at).fromNow()}
                               </Text>
                             </Flex>
