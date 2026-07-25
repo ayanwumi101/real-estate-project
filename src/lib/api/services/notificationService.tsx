@@ -23,6 +23,22 @@ export interface UpdateNotificationPreference {
   }[];
 }
 
+export interface Notification {
+  id: string;
+  event_key: string;
+  category: string;
+  title: string;
+  body: string;
+  data: {
+    amount: string;
+    payment_id: number;
+    property_id: string;
+  };
+  read: boolean;
+  read_at: null | Date;
+  created_at: Date;
+}
+
 export const GetUserNotifications = async () => {
   const response = await axiosInstance.get(API_ROUTES.GET_USER_NOTIFICATIONS);
   return response.data;
@@ -62,7 +78,9 @@ export const GetUserNotificationPreferences = async () => {
   return response.data;
 };
 
-export const UpdateUserNotificationPreference = async (payload: UpdateNotificationPreference) => {
+export const UpdateUserNotificationPreference = async (
+  payload: UpdateNotificationPreference
+) => {
   const response = await axiosInstance.put(
     `${API_ROUTES.UPDATE_USER_NOTIFICATION_PREFERENCE}`,
     payload

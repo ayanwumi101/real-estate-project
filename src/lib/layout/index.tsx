@@ -46,6 +46,8 @@ import {
 import styles from './styles.module.css';
 import RealtorSidebar from './components/RealtorSidebar';
 import { Currency } from '../utils/types/currency';
+import { GetUserNotifications } from '../api/services/notificationService';
+import { Notification } from '../api/services/notificationService';
 
 export const AppContext = createContext<any>({});
 
@@ -192,6 +194,9 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
   });
   const [displayCurrencyLoading, setDisplayCurrencyLoading] =
     useState<boolean>(true);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [notificationsLoading, setNotificationsLoading] =
+    useState<boolean>(false);
 
   const GetUserDetails = async () => {
     setIsUserDetailsLoading(true);
@@ -256,10 +261,23 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
     setDisplayCurrencyLoading(false);
   };
 
+  const GetNotifications = async () => {
+    setNotificationsLoading(true);
+    try {
+      const response = await GetUserNotifications();
+      const data = await response.data;
+      setNotifications(data);
+    } catch (error) {
+      console.log(error);
+    }
+    setNotificationsLoading(false);
+  };
+
   useEffect(() => {
     GetUserDetails();
     GetUserNextOfKins();
     GetUserCurrencyPreference();
+    GetNotifications();
   }, []);
 
   useEffect(() => {
@@ -317,6 +335,10 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
         setSelectedCurrency,
         handleChangeCurrency,
         displayCurrencyLoading,
+        notifications,
+        setNotifications,
+        GetNotifications,
+        notificationsLoading,
       }}
     >
       <Box

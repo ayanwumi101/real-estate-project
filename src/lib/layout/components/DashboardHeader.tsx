@@ -251,6 +251,7 @@ const DashboardHeader = ({
     handleChangeCurrency,
     displayCurrencyLoading,
   } = useContext(AppContext);
+  const { notifications } = useContext(AppContext);
   return (
     <Fragment>
       <Box
@@ -279,17 +280,21 @@ const DashboardHeader = ({
                     top="-3px"
                     right="-3px"
                     rounded="full"
-                    w="22px"
-                    h="22px"
+                    w="20px"
+                    h="20px"
                     bg="color.200"
                     color="brand.200"
                     display="flex"
                     alignItems="center"
                     justifyContent="center"
-                    fontSize={13}
-                    fontWeight={500}
+                    fontSize={12}
+                    fontWeight={600}
                   >
-                    23
+                    {
+                      notifications?.filter(
+                        (notification: any) => !notification.read
+                      )?.length
+                    }
                   </Box>
                   <DashboardNotificationIcon />
                 </Box>

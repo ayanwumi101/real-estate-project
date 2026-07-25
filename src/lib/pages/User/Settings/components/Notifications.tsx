@@ -14,6 +14,7 @@ import {
   UpdateUserNotificationPreference,
 } from '~/lib/api/services/notificationService';
 
+
 const Notifications = ({
   preferences,
 }: {
@@ -58,7 +59,6 @@ const Notifications = ({
     const updatedEvent = updatedPreferences
       .find((pref) => pref.category === category)
       ?.events.find((event) => event.event_key === eventKey);
-
     if (updatedEvent) {
       try {
         await UpdateUserNotificationPreference({
