@@ -169,7 +169,10 @@ export const InvestorMobileDashboardHeader = () => {
                   <Menu>
                     <MenuButton
                       as={Button}
-                      variant="ghost"
+                      variant="outline"
+                      rounded="24px"
+                      border="1px solid"
+                      borderColor="border.100"
                       px="2"
                       w="100px"
                       // rightIcon={<ChevronDownIcon />}
@@ -324,7 +327,10 @@ const DashboardHeader = ({
                 <Menu>
                   <MenuButton
                     as={Button}
-                    variant="ghost"
+                    variant="outline"
+                    rounded="24px"
+                    border="1px solid"
+                    borderColor="border.100"
                     px="2"
                     w="100px"
                     // rightIcon={<ChevronDownIcon />}

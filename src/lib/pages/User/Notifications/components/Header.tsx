@@ -46,44 +46,53 @@ const Header = ({
     <Box>
       <Flex
         alignItems="center"
-        justifyContent="space-between"
+        justifyContent={['center', 'space-between']}
         gap={[4, 0]}
-        flexWrap={['wrap-reverse', 'nowrap']}
+        flexWrap={['wrap', 'nowrap']}
+        overflow="auto"
       >
-        <Box>
-          <Flex alignItems="center" gap="8px" overflow="auto">
+        <Box overflow="auto">
+          <Flex
+            alignItems="center"
+            gap={['4px', '8px']}
+            overflow="auto"
+            w={['full', 'auto']}
+            pb="2"
+          >
             {tabs?.map((tab) => (
-              //   <Box>
-              <Button
-                key={tab}
-                textTransform="capitalize"
-                fontSize={14}
-                fontWeight={600}
-                px="16px"
-                h="35px"
-                bg={tab === activeTab ? '#EDEDFF' : 'none'}
-                borderRadius="50px"
-                color={tab === activeTab ? 'brand.100' : '#8295AA'}
-                onClick={() =>
-                  setActiveTab(
-                    tab as 'all' | 'payments' | 'properties' | 'remittance'
-                  )
-                }
-              >
-                {tab}
-              </Button>
-              //</Box>
+              <Box>
+                <Button
+                  key={tab}
+                  textTransform="capitalize"
+                  fontSize={14}
+                  fontWeight={600}
+                  px="16px"
+                  h="35px"
+                  bg={tab === activeTab ? 'bg.200' : 'none'}
+                  borderRadius="50px"
+                  color={tab === activeTab ? 'brand.100' : '#8295AA'}
+                  onClick={() =>
+                    setActiveTab(
+                      tab as 'all' | 'payments' | 'properties' | 'remittance'
+                    )
+                  }
+                >
+                  {tab}
+                </Button>
+              </Box>
             ))}
-            <NotificationFilterIcon />
+            <Button p="0" variant="ghost">
+              <NotificationFilterIcon />
+            </Button>
           </Flex>
         </Box>
         <Box>
-          <Flex>
+          <Flex alignItems="center" gap="10px">
             <Button
               variant="ghost"
               fontSize={14}
               fontWeight={600}
-              px="16px"
+              px="0"
               textDecor="underline"
               color="brand.100"
               _hover={{ bg: 'none' }}
