@@ -1001,95 +1001,120 @@ export const RemittanceSortAndFilter = ({
         <Flex
           alignItems="center"
           justifyContent={['flex-start', 'flex-end']}
-          gap={['0px', '20px']}
+          gap={['10px', '20px']}
           w="full"
         >
-          <Flex alignItems="center" w={['85%', 'auto']}>
-            <Menu closeOnSelect={false}>
-              <MenuButton
-                variant="outline"
-                w={['75%', '200px']}
-                fontWeight={500}
-                as={Button}
+          <Menu closeOnSelect={false}>
+            <MenuButton
+              variant="outline"
+              w={['75%', '200px']}
+              fontWeight={500}
+              as={Button}
+              fontSize={14}
+            >
+              <Flex alignItems="center" justifyContent="space-between">
+                <Text>Sort By</Text>
+                <ChevronDownIcon />
+              </Flex>
+            </MenuButton>
+            <MenuList minWidth="240px">
+              <MenuOptionGroup
+                defaultValue=""
+                title="Sort by"
+                type="radio"
                 fontSize={14}
+                fontWeight={500}
+                value={sort}
+                onChange={handleSortChange}
               >
-                <Flex alignItems="center" justifyContent="space-between">
-                  <Text>Sort By</Text>
-                  <ChevronDownIcon />
-                </Flex>
-              </MenuButton>
-              <MenuList minWidth="240px">
-                <MenuOptionGroup
-                  defaultValue=""
-                  title="Sort by"
-                  type="radio"
-                  fontSize={14}
+                <MenuItemOption value="" fontSize={13.5} fontWeight={500}>
+                  All
+                </MenuItemOption>
+                <MenuItemOption
+                  value="next_due_remittance"
+                  fontSize={13.5}
                   fontWeight={500}
-                  value={sort}
-                  onChange={handleSortChange}
                 >
-                  <MenuItemOption value="" fontSize={13.5} fontWeight={500}>All</MenuItemOption>
-                  <MenuItemOption value="next_due_remittance" fontSize={13.5} fontWeight={500}>
-                    Next Due Remittance
+                  Next Due Remittance
+                </MenuItemOption>
+                <MenuItemOption
+                  value="no_of_payment"
+                  fontSize={13.5}
+                  fontWeight={500}
+                >
+                  No of Payments
+                </MenuItemOption>
+                <MenuItemOption
+                  value="remittance_amount"
+                  fontSize={13.5}
+                  fontWeight={500}
+                >
+                  Remittance Amount
+                </MenuItemOption>
+                <MenuItemOption
+                  value="total_remittance"
+                  fontSize={13.5}
+                  fontWeight={500}
+                >
+                  Total Remittance
+                </MenuItemOption>
+              </MenuOptionGroup>
+              <MenuDivider />
+              {sort === 'remittance_amount' || sort === 'total_remittance' ? (
+                <MenuOptionGroup
+                  defaultValue="asc"
+                  fontSize={13.5}
+                  title="Order"
+                  type="radio"
+                  value={order}
+                  fontWeight={500}
+                  onChange={handleOrderChange}
+                >
+                  <MenuItemOption value="desc" fontSize={13.5} fontWeight={500}>
+                    Highest-Lowest
                   </MenuItemOption>
-                  <MenuItemOption value="no_of_payment" fontSize={13.5} fontWeight={500}>
-                    No of Payments
-                  </MenuItemOption>
-                  <MenuItemOption value="remittance_amount" fontSize={13.5} fontWeight={500}>
-                    Remittance Amount
-                  </MenuItemOption>
-                  <MenuItemOption value="total_remittance" fontSize={13.5} fontWeight={500}>
-                    Total Remittance
+                  <MenuItemOption value="asc" fontSize={13.5} fontWeight={500}>
+                    Lowest-Highest
                   </MenuItemOption>
                 </MenuOptionGroup>
-                <MenuDivider />
-                {sort === 'remittance_amount' || sort === 'total_remittance' ? (
-                  <MenuOptionGroup
-                    defaultValue="asc"
-                    fontSize={13.5}
-                    title="Order"
-                    type="radio"
-                    value={order}
-                    fontWeight={500}
-                    onChange={handleOrderChange}
-                  >
-                    <MenuItemOption value="desc" fontSize={13.5} fontWeight={500}>Highest-Lowest</MenuItemOption>
-                    <MenuItemOption value="asc" fontSize={13.5} fontWeight={500}>Lowest-Highest</MenuItemOption>
-                  </MenuOptionGroup>
-                ) : sort === 'no_of_payment' ? (
-                  <MenuOptionGroup
-                    defaultValue="asc"
-                    fontSize={13.5}
-                    title="Order"
-                    type="radio"
-                    value={order}
-                    fontWeight={500}
-                    onChange={handleOrderChange}
-                  >
-                    <MenuItemOption value="asc" fontSize={13.5} fontWeight={500}>Lowest-Highest</MenuItemOption>
-                    <MenuItemOption value="desc" fontSize={13.5} fontWeight={500}>Highest-Lowest</MenuItemOption>
-                  </MenuOptionGroup>
-                ) : (
-                  <MenuOptionGroup
-                    defaultValue="asc"
-                    fontSize={13.5}
-                    title="Order"
-                    type="radio"
-                    value={order}
-                    fontWeight={500}
-                    onChange={handleOrderChange}
-                  >
-                    <MenuItemOption value="asc" fontSize={13.5} fontWeight={500}>
-                      Farthest-closest
-                    </MenuItemOption>
-                    <MenuItemOption value="desc" fontSize={13.5} fontWeight={500}>
-                      Closest-farthest
-                    </MenuItemOption>
-                  </MenuOptionGroup>
-                )}
-              </MenuList>
-            </Menu>
-          </Flex>
+              ) : sort === 'no_of_payment' ? (
+                <MenuOptionGroup
+                  defaultValue="asc"
+                  fontSize={13.5}
+                  title="Order"
+                  type="radio"
+                  value={order}
+                  fontWeight={500}
+                  onChange={handleOrderChange}
+                >
+                  <MenuItemOption value="asc" fontSize={13.5} fontWeight={500}>
+                    Lowest-Highest
+                  </MenuItemOption>
+                  <MenuItemOption value="desc" fontSize={13.5} fontWeight={500}>
+                    Highest-Lowest
+                  </MenuItemOption>
+                </MenuOptionGroup>
+              ) : (
+                <MenuOptionGroup
+                  defaultValue="asc"
+                  fontSize={13.5}
+                  title="Order"
+                  type="radio"
+                  value={order}
+                  fontWeight={500}
+                  onChange={handleOrderChange}
+                >
+                  <MenuItemOption value="asc" fontSize={13.5} fontWeight={500}>
+                    Farthest-closest
+                  </MenuItemOption>
+                  <MenuItemOption value="desc" fontSize={13.5} fontWeight={500}>
+                    Closest-farthest
+                  </MenuItemOption>
+                </MenuOptionGroup>
+              )}
+            </MenuList>
+          </Menu>
+
           <Button
             leftIcon={
               showFilterDropdowns ? (

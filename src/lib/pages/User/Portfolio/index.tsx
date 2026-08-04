@@ -134,8 +134,8 @@ const index = () => {
 
   return (
     <DashboardHeader title="Remittance">
-      <Box pb="50px" px='5'>
-        <Stack spacing="40px" w="100%" overflow="auto" px={['16px', 0]}>
+      <Box pb="50px" px={[2,'5']}>
+        <Stack spacing="40px" w="100%" overflow="auto">
           <Header assets={cashflowAssets} />
           <Stack
             // px="10px"
@@ -144,7 +144,7 @@ const index = () => {
             border="1px solid #E4E4E4"
             rounded="10px"
           >
-            <Box px="10px">
+            <Box px='10px'>
               <RemittanceSortAndFilter
                 searchQuery={searchQuery}
                 order={order}
