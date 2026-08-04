@@ -134,7 +134,7 @@ const index = () => {
 
   return (
     <DashboardHeader title="Remittance">
-      <Box pb="50px" px={[2,'5']}>
+      <Box pb="50px" px={[3,'5']}>
         <Stack spacing="40px" w="100%" overflow="auto">
           <Header assets={cashflowAssets} />
           <Stack
