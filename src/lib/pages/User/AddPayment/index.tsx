@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PaymentForm from './components/PaymentForm';
 import PropertyDetails from './components/PropertyDetails';
 import { Box, Button, Flex, Stack } from '@chakra-ui/react';
@@ -11,9 +11,11 @@ import {
   GetAssetPaymentDueDates,
 } from '~/lib/api/services/assetsService';
 import DashboardHeader from '~/lib/layout/components/DashboardHeader';
+import { AppContext } from '~/lib/layout';
 
 const index = () => {
   const { id } = useParams();
+  const { GetNotifications } = useContext(AppContext);
 
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
@@ -68,6 +70,7 @@ const index = () => {
               paymentDueDates={paymentDueDates}
               assetId={assetDetails?.id}
               assetType={assetDetails?.asset_type}
+              GetNotifications={GetNotifications}
             />
           </Flex>
         </Stack>

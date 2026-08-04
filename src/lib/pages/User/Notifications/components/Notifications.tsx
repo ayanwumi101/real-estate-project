@@ -64,35 +64,46 @@ const Notifications = ({
 }) => {
   const toast = useToast();
   const navigate = useNavigate();
+  const { GetNotifications } = useContext(AppContext);
   const groups = groupNotificationsByDate(notifications);
 
   const markAsRead = async (
     notificationId: string,
     propertyId: string,
-    category: 'payments' | 'properties'
+    category: 'payments' | 'properties',
+    isRead: boolean
   ) => {
-    try {
-      toast({
-        title: 'Notification marked as read, redirecting....',
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-        position: 'top-right',
-      });
-      await MarkNotificationAsRead(notificationId);
+    if (isRead === true) {
       if (category === 'payments') {
         navigate(`/user/portfolio/${propertyId}/payments`);
       } else {
         navigate(`/user/my-assets/${propertyId}`);
       }
-    } catch (error: any) {
-      toast({
-        title: error?.response?.data?.error?.message,
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-        position: 'top-right',
-      });
+    } else {
+      try {
+        toast({
+          title: 'Notification marked as read, redirecting....',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        });
+        await MarkNotificationAsRead(notificationId);
+        await GetNotifications();
+        if (category === 'payments') {
+          navigate(`/user/portfolio/${propertyId}/payments`);
+        } else {
+          navigate(`/user/my-assets/${propertyId}`);
+        }
+      } catch (error: any) {
+        toast({
+          title: error?.response?.data?.error?.message,
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        });
+      }
     }
   };
   return (
@@ -135,7 +146,8 @@ const Notifications = ({
                               markAsRead(
                                 notification?.id,
                                 notification?.data?.property_id,
-                                notification?.category
+                                notification?.category,
+                                notification?.read
                               )
                             }
                           >

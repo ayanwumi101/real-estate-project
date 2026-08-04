@@ -23,7 +23,7 @@ import {
 } from '~/lib/components/Icons/Icons';
 import CompletedPayments from './components/CompletedPayments';
 import PendingPayments from './components/PendingPayments';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import {
   GetAssetDetails,
   GetAssetPaymentDueDates,
@@ -32,6 +32,7 @@ import useNavigate from '~/lib/utils/useNavigate';
 
 const index = () => {
   const { id } = useParams();
+  const router = useRouter();
   const navigate = useNavigate();
   const tabs = ['pending payments', 'completed payments'];
   const [isLoading, setIsLoading] = React.useState(false);
@@ -81,7 +82,7 @@ const index = () => {
     >
       <Stack spacing="30px" alignItems="flex-start" w="full">
         <Button
-          onClick={() => navigate('/user/my-assets')}
+          onClick={() => router.back()}
           variant="ghost"
           leftIcon={<ChevronLeftIcon />}
           p="0"

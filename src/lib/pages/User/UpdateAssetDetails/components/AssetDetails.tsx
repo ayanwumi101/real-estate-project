@@ -164,7 +164,7 @@ const AssetDetails = ({
                     onChange={(e) => setPropertyCost(e.target.value)}
                   />
                 </FormControl>
-                {propertyDetails?.asset_type === 'owned' && (
+                {/* {propertyDetails?.asset_type === 'owned' && (
                   <FormControl>
                     <FormLabel fontWeight={600} fontSize={15} color="brand.300">
                       Payment Status
@@ -183,7 +183,7 @@ const AssetDetails = ({
                       <option value="ongoing">Ongoing</option>
                     </Select>
                   </FormControl>
-                )}
+                )} */}
               </Flex>
             </Box>
           </Box>
@@ -509,9 +509,9 @@ const AssetDetails = ({
                     onChange={(e) => setPaymentStatus(e.target.value)}
                     placeholder="Select payment status"
                   >
-                    <option value="Completed">Completed</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Ongoing">Ongoing</option>
+                    <option value="completed">Completed</option>
+                    <option value="pending">Pending</option>
+                    <option value="ongoing">Ongoing</option>
                   </Select>
                 </FormControl>
                 <FormControl>

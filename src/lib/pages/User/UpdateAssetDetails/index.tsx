@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, createContext, useState } from 'react';
+import React, { useEffect, createContext, useState, useContext } from 'react';
 import Notes from './components/Notes';
 import AssetDetails from './components/AssetDetails';
 import Header from './components/Header';
@@ -12,6 +12,7 @@ import {
 import { useParams } from 'next/navigation';
 import useNavigate from '~/lib/utils/useNavigate';
 import DashboardHeader from '~/lib/layout/components/DashboardHeader';
+import { AppContext } from '~/lib/layout';
 
 export const AssetDetailsContext = createContext<any>({});
 
@@ -19,6 +20,7 @@ const index = () => {
   const toast = useToast();
   const { id } = useParams();
   const navigate = useNavigate();
+  const { GetNotifications } = useContext(AppContext);
   const [loading, setLoading] = useState<boolean>(false);
   const [propertyDetails, setPropertyDetails] = React.useState<any>([]);
   const [propertySize, setPropertySize] = React.useState<string>('');
@@ -134,6 +136,7 @@ const index = () => {
     try {
       const res = await UpdateAssetDetails(id as string, formData);
       if (res.status) {
+        await GetNotifications();
         getAssetDetails();
         toast({
           title: 'Asset Updated',

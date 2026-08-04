@@ -47,6 +47,7 @@ const Header = ({
   const navigate = useNavigate();
   const toast = useToast();
   const { id } = useParams();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -124,7 +125,7 @@ const Header = ({
     >
       <Stack spacing="30px" alignItems="flex-start" w="full">
         <Button
-          onClick={() => navigate('/user/my-assets')}
+          onClick={() => router.back()}
           variant="ghost"
           leftIcon={<ChevronLeftIcon />}
           p="0"

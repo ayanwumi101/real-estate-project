@@ -256,7 +256,10 @@ const OwnedAssets = ({
                               <VerticalEllipsisIcon />
                             </MenuButton>
                             <Portal>
-                              <MenuList py="0px">
+                              <MenuList
+                                py="0px"
+                                onClick={(e) => e.stopPropagation()}
+                              >
                                 <MenuItem
                                   py="12px"
                                   px="16px"

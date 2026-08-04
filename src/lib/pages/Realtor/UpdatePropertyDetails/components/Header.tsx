@@ -44,7 +44,7 @@ const Header = ({ propertyName, location, propertyType }: Headerprops) => {
     >
       <Stack spacing="10px" alignItems="flex-start" w="full">
         <Button
-          onClick={() => navigate('/realtor/properties')}
+          onClick={() => router.back()}
           variant="ghost"
           leftIcon={<ChevronLeftIcon />}
           p="0"

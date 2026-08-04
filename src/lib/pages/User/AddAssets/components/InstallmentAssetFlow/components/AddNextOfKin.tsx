@@ -10,7 +10,8 @@ import {
   Flex,
   Spinner,
   useToast,
-  Heading, RadioGroup
+  Heading,
+  RadioGroup,
 } from '@chakra-ui/react';
 import React, { useContext, useEffect } from 'react';
 import {
@@ -41,7 +42,8 @@ const AddNextOfKin = ({
 }) => {
   const toast = useToast();
   const router = useRouter();
-  const { nextOfKins, setNextOfKins } = useContext<any>(AppContext);
+  const { nextOfKins, setNextOfKins, GetNotifications } =
+    useContext<any>(AppContext);
   const [selectedNextOfKin, setSelectedNextOfKin] = React.useState<any>('');
   const [openModal, setOpenModal] = React.useState<boolean>(false);
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -106,6 +108,7 @@ const AddNextOfKin = ({
         setLoading(true);
         const res = await AddAsset(formData);
         if (res.status === true) {
+          await GetNotifications();
           toast({
             title: 'Asset created successfully',
             status: 'success',

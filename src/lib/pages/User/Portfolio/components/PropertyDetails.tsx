@@ -179,6 +179,10 @@ const PropertyListTable = ({
                         border="none"
                         _hover={{ bg: '#f5f5f5' }}
                         cursor="pointer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/user/portfolio/${asset?.id}/payments`);
+                        }}
                       >
                         <Td fontSize={18} fontWeight={700}>
                           <Flex alignItems="center" gap="10px">
@@ -228,7 +232,9 @@ const PropertyListTable = ({
                         <Td fontWeight={500} fontSize={14}>
                           {asset?.total_payment_amount?.display_value
                             ? FormatAmount(
-                                Number(asset?.total_payment_amount?.display_value),
+                                Number(
+                                  asset?.total_payment_amount?.display_value
+                                ),
                                 asset?.total_payment_amount?.display_currency
                               )
                             : FormatAmount(Number(asset?.total_payment_amount))}
@@ -264,11 +270,19 @@ const PropertyListTable = ({
                         </Td> */}
                         <Td fontWeight={400} fontSize={13}>
                           <Menu>
-                            <MenuButton as={Button} rounded="5px" bg="bg.200">
+                            <MenuButton
+                              as={Button}
+                              rounded="5px"
+                              bg="bg.200"
+                              onClick={(e) => e.stopPropagation()}
+                            >
                               <VerticalEllipsisIcon />
                             </MenuButton>
                             <Portal>
-                              <MenuList py="0px">
+                              <MenuList
+                                py="0px"
+                                onClick={(e) => e.stopPropagation()}
+                              >
                                 <MenuItem
                                   py="12px"
                                   px="16px"

@@ -7,13 +7,13 @@ import {
   Flex,
   Checkbox,
   useToast,
+  FormLabel,
 } from '@chakra-ui/react';
 import React from 'react';
 import {
   NotificationPreference,
   UpdateUserNotificationPreference,
 } from '~/lib/api/services/notificationService';
-
 
 const Notifications = ({
   preferences,
@@ -104,18 +104,32 @@ const Notifications = ({
             key={notification?.category}
           >
             <Stack spacing="20px">
-              <Checkbox
-                isChecked={notification?.events?.every(
-                  (event) => event?.email && event?.whatsapp
-                )}
-                color="#2E353F"
-                fontSize={14}
-                fontWeight={700}
-                size="lg"
-                textTransform="capitalize"
-              >
-                {notification?.label}
-              </Checkbox>
+              <Flex alignItems="center">
+                <Checkbox
+                  w={['full', '70%']}
+                  isChecked={notification?.events?.every(
+                    (event) => event?.email && event?.whatsapp
+                  )}
+                  color="#2E353F"
+                  fontSize={14}
+                  fontWeight={700}
+                  size="lg"
+                  textTransform="capitalize"
+                >
+                  {notification?.label}
+                </Checkbox>
+                <Box w="28%" display={['none', 'block']}>
+                  <Text fontSize={16} fontWeight={700} color="brand.300">
+                    Email
+                  </Text>
+                </Box>
+                <Box w="22%" display={['none', 'block']}>
+                  <Text fontSize={16} fontWeight={700} color="brand.300">
+                    WhatsApp
+                  </Text>
+                </Box>
+              </Flex>
+
               {notification.events?.map((item) => (
                 <Box
                   border="1px solid #E4E4E4"
@@ -125,19 +139,23 @@ const Notifications = ({
                   key={item.label}
                 >
                   <Flex
-                    justifyContent={['flex-start',"space-between"]}
+                    justifyContent={['flex-start', 'space-between']}
                     alignItems="center"
                     flexWrap={['wrap', 'nowrap']}
-                    gap={[5,0]}
+                    gap={[5, 0]}
                   >
                     <Box w={['full', '50%']}>
-                      <Flex alignItems={['flex-start',"center"]} gap="15px">
+                      <Flex alignItems={['flex-start', 'center']} gap="15px">
                         <Checkbox
                           isChecked={item?.email && item?.whatsapp}
                           size="lg"
                         />
                         <Stack spacing="3px">
-                          <Text color="#2E353F" fontWeight={600} fontSize={14.5}>
+                          <Text
+                            color="#2E353F"
+                            fontWeight={600}
+                            fontSize={14.5}
+                          >
                             {item.label}
                           </Text>
                           <Text fontWeight={500} color="#8295AA" fontSize={14}>
@@ -146,7 +164,15 @@ const Notifications = ({
                         </Stack>
                       </Flex>
                     </Box>
-                    <Box w={['15%', '15%']}>
+                    <Box w={['auto', '15%']}>
+                      <FormLabel
+                        fontSize={14}
+                        fontWeight={700}
+                        color="brand.300"
+                        display={['block', 'none']}
+                      >
+                        Email
+                      </FormLabel>
                       <Switch
                         isChecked={item?.email}
                         onChange={(e) =>
@@ -159,7 +185,15 @@ const Notifications = ({
                         }
                       />
                     </Box>
-                    <Box w={['15%', '15%']}>
+                    <Box w={['auto', '15%']}>
+                      <FormLabel
+                        fontSize={14}
+                        fontWeight={700}
+                        color="brand.300"
+                        display={['block', 'none']}
+                      >
+                        WhatsApp
+                      </FormLabel>
                       <Switch
                         isChecked={item?.whatsapp}
                         onChange={(e) =>

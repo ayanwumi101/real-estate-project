@@ -47,10 +47,12 @@ const PaymentForm = ({
   assetId,
   assetType,
   paymentDueDates,
+  GetNotifications,
 }: {
   assetId: string | number;
   assetType: string;
   paymentDueDates: any[];
+  GetNotifications?: () => Promise<void>;
 }) => {
   const toast = useToast();
   const navigate = useNavigate();
@@ -72,6 +74,7 @@ const PaymentForm = ({
           payment_due_date: values.paymentDueDate,
         });
         if (response.status === true) {
+          await GetNotifications?.();
           toast({
             title: 'Success',
             description: 'Payment details added successfully',
@@ -93,6 +96,7 @@ const PaymentForm = ({
         });
 
         if (response.status === true) {
+          await GetNotifications?.();
           toast({
             title: 'Success',
             description: 'Payment details added successfully',

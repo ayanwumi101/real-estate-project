@@ -30,6 +30,7 @@ import { FormatAmount } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
 import moment from 'moment';
 import PaymentReceiptModal from '../Modals/PaymentReceiptModal';
+import { useRouter } from 'next/navigation';
 
 const InstalmentPropertyDetails = ({
   payments,
@@ -44,6 +45,7 @@ const InstalmentPropertyDetails = ({
   totalPayment: number;
   propertyId: string;
 }) => {
+  const router = useRouter();
   const navigate = useNavigate();
   const [page, setPage] = React.useState(1);
   const [limit, setLimit] = React.useState(8);
@@ -62,7 +64,7 @@ const InstalmentPropertyDetails = ({
       px={['20px', '0px']}
     >
       <Button
-        onClick={() => navigate('/realtor/properties')}
+        onClick={() => router.back()}
         variant="ghost"
         leftIcon={<ChevronLeftIcon />}
         p="0"
