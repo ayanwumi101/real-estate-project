@@ -81,6 +81,9 @@ const Notifications = ({
       }
     } else {
       try {
+        await MarkNotificationAsRead(notificationId);
+        await GetNotifications();
+        console.log('GetNotifications completed');
         toast({
           title: 'Notification marked as read, redirecting....',
           status: 'success',
@@ -88,8 +91,6 @@ const Notifications = ({
           isClosable: true,
           position: 'top-right',
         });
-        await MarkNotificationAsRead(notificationId);
-        await GetNotifications();
         if (category === 'payments') {
           navigate(`/user/portfolio/${propertyId}/payments`);
         } else {
