@@ -15,6 +15,10 @@ import {
   Tbody,
   Button,
   Badge,
+  Menu,
+  MenuList,
+  MenuButton,
+  MenuItem,
 } from '@chakra-ui/react';
 import moment from 'moment';
 import React, { Fragment, useContext, useState } from 'react';
@@ -23,12 +27,15 @@ import {
   NextPageIcon,
   PreviousPageIcon,
   AddIcon,
+  VerticalEllipsisIcon,
+  AddPaymentIcon,
+  ViewRemittanceHistoryIcon,
 } from '~/lib/components/Icons/Icons';
 import SkeletonLoader from '~/lib/components/SkeletonLoader';
 import { AppContext } from '~/lib/layout';
+import PaymentReceiptModal from '../Modal/PaymentReceiptModal';
 import { FormatAmount } from '~/lib/utils/formatAmount';
-
-
+import useNavigate from '~/lib/utils/useNavigate';
 
 const PaymentsTable = ({
   assetDetails,
@@ -36,11 +43,15 @@ const PaymentsTable = ({
 }: {
   assetDetails: any;
   loading: boolean;
-  }) => {
-  const {selectedCurrency} = useContext(AppContext)
+}) => {
+  const navigate = useNavigate();
+  const { selectedCurrency } = useContext(AppContext);
   const [page, setPage] = React.useState(1);
   const [limit, setLimit] = React.useState(8);
   const [activeTab, setActiveTab] = useState<string>('pending');
+  const [openReceiptModal, setOpenReceiptModal] = useState<boolean>(false);
+  const [selectedPayment, setSelectedPayment] = useState(null);
+
   const pendingPayments = assetDetails?.payments?.filter(
     (payment: any) => payment.status === 'pending'
   );
@@ -52,7 +63,7 @@ const PaymentsTable = ({
     activeTab === 'pending' ? pendingPayments : completedPayments;
   const pendingPaymentsSummation = pendingPayments?.reduce(
     (acc: number, payment: any) => {
-      return selectedCurrency?.code === 'NGN' 
+      return selectedCurrency?.code === 'NGN'
         ? acc + Number(payment?.amount)
         : acc + Number(payment?.amount?.display_value);
     },
@@ -160,12 +171,12 @@ const PaymentsTable = ({
                     >
                       Status
                     </Th>
-                    {/* <Th
+                    <Th
                       color="#222222"
                       fontWeight={500}
                       fontSize={14}
                       textTransform="capitalize"
-                    ></Th> */}
+                    ></Th>
                   </Tr>
                 </Thead>
                 <Tbody color="#222222">
@@ -228,19 +239,7 @@ const PaymentsTable = ({
                             {asset?.status}
                           </Badge>
                         </Td>
-                        {/* <Td fontWeight={500} fontSize={14} color="#8295AA">
-                          {asset?.cashflow_amount
-                            ? `${FormatAmount(Number(asset?.cashflow_amount))}`
-                            : 'N/A'}
-                        </Td>
-                        <Td fontWeight={500} fontSize={14} color="#8295AA">
-                          {asset?.cashflow_payment_due
-                            ? moment(asset?.cashflow_payment_due).format(
-                                'ddd, Do MMMM YYYY'
-                              )
-                            : 'N/A'}
-                        </Td> */}
-                        {/* <Td fontWeight={400} fontSize={13} color="#8295AA">
+                        <Td fontWeight={400} fontSize={13} color="#8295AA">
                           <Menu>
                             <MenuButton as={Button} rounded="5px" bg="bg.200">
                               <VerticalEllipsisIcon />
@@ -253,14 +252,13 @@ const PaymentsTable = ({
                                 fontSize={14}
                                 color="color.100"
                                 fontWeight={500}
-                                onClick={() =>
-                                  navigate(
-                                    `/user/portfolio/${asset?.id}/payments`
-                                  )
-                                }
+                                onClick={() => {
+                                  setOpenReceiptModal(true);
+                                  setSelectedPayment(asset);
+                                }}
                                 icon={<ViewRemittanceHistoryIcon />}
                               >
-                                View remittance history
+                                View payment receipt
                               </MenuItem>
                               <MenuItem
                                 py="12px"
@@ -280,7 +278,7 @@ const PaymentsTable = ({
                               </MenuItem>
                             </MenuList>
                           </Menu>
-                        </Td> */}
+                        </Td>
                       </Tr>
                     );
                   })}
@@ -355,6 +353,12 @@ const PaymentsTable = ({
           )}
         </Box>
       )}
+      <PaymentReceiptModal
+        isOpen={openReceiptModal}
+        onClose={() => setOpenReceiptModal(false)}
+        selectedPayment={selectedPayment}
+        propertyName={assetDetails?.property_name}
+      />
     </Fragment>
   );
 };
