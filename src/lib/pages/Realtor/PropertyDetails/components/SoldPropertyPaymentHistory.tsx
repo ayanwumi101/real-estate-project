@@ -41,9 +41,11 @@ import PropertyFilter from '~/lib/components/PropertyFilter';
 const PaymentListTable = ({
   payments,
   assetId,
+  clientId,
 }: {
   payments: any[];
   assetId: string;
+  clientId: string;
 }) => {
   const navigate = useNavigate();
   const [page, setPage] = React.useState(1);
@@ -149,9 +151,7 @@ const PaymentListTable = ({
                         fontSize={14}
                         color="color.100"
                         fontWeight={500}
-                        onClick={() =>
-                          navigate(`/realtor/clients/${payment?.client_id}`)
-                        }
+                        onClick={() => navigate(`/realtor/clients/${clientId}`)}
                         icon={<RealtorClientsIcon />}
                       >
                         View client profile
@@ -285,10 +285,12 @@ const PaymentStats = ({
 const SoldPropertyPaymentHistory = ({
   payments,
   assetId,
+  clientId,
   salesPrice,
   commissionReceived,
 }: {
   payments: any;
+  clientId: string;
   assetId: string;
   salesPrice: string | number;
   commissionReceived: string | number;
@@ -406,7 +408,11 @@ const SoldPropertyPaymentHistory = ({
           documentationStatus={documentationStatus}
           handleDocumentationStatusChange={handleDocumentationStatusChange}
         />
-        <PaymentListTable assetId={assetId} payments={filteredPayments} />
+        <PaymentListTable
+          assetId={assetId}
+          payments={filteredPayments}
+          clientId={clientId}
+        />
       </Stack>
     </Box>
   );

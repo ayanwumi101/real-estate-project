@@ -67,7 +67,9 @@ const NotificationsContainer = () => {
         />
         {activeTab === 'Profile' && <Profile />}
         {activeTab === 'Next of Kins' && <NextOfKins />}
-        {activeTab === 'Notifications' && <Notifications preferences={notificationPreferences} />}
+        {activeTab === 'Notifications' && (
+          <Notifications preferences={notificationPreferences} />
+        )}
         {activeTab === 'Privacy' && <Privacy />}
         {activeTab === 'Security' && <Security />}
       </Box>

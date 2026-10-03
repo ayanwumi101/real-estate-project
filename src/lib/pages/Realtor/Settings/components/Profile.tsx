@@ -29,6 +29,7 @@ import {
 } from '~/lib/components/Icons/Icons';
 import { AppContext } from '~/lib/layout';
 import PhoneInput from 'react-phone-input-2';
+// @ts-expect-error The package stylesheet has no TypeScript module declaration.
 import 'react-phone-input-2/lib/style.css';
 import Link from 'next/link';
 import {
@@ -319,11 +320,11 @@ const Profile = () => {
   return (
     <Box pb="50px">
       <Stack spacing="30px">
-        <Box px={['20px', '40px']}>
+        <Box px={['20px', '15px']}>
           <ProfileHeader />
         </Box>
         {updateProfile ? (
-          <Box px={['20px', '40px']}>
+          <Box px={['20px', '15px']}>
             <Stack spacing="26px">
               <Box border="1px solid #E4E4E4" rounded="5px" p="15px">
                 <Stack spacing="15px">
@@ -584,7 +585,7 @@ const Profile = () => {
             </Stack>
           </Box>
         ) : (
-          <Box px={['20px', '40px']}>
+          <Box px={['20px', '15px']}>
             <Stack spacing="26px">
               <PersonalInformation
                 updateProfile={updateProfile}

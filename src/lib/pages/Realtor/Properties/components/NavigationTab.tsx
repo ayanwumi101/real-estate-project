@@ -49,7 +49,7 @@ const NavigationTab: React.FC<NavigationTabProps> = ({
         flexWrap={['wrap', 'nowrap']}
         gap={[5, 0]}
       >
-        <Flex alignItems="center" gap="10px">
+        <Flex alignItems="center" gap={['0px',"10px"]}>
           {tabs.map((tab) => (
             <Button
               key={tab}
@@ -80,25 +80,6 @@ const NavigationTab: React.FC<NavigationTabProps> = ({
           gap={['15px', '10px']}
           flexWrap={['wrap', 'nowrap']}
         >
-          {/* <InputGroup w={['100%', '325px']}>
-            <InputLeftElement pointerEvents="none">
-              <InputSearchIcon />
-            </InputLeftElement>
-            <Input
-              type="text"
-              placeholder="Search properties..."
-              rounded="50px"
-              fontSize={14}
-              w="full"
-              _placeholder={{ color: 'gray.500' }}
-              value={searchQuery}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-                searchProperties();
-              }}
-            />
-          </InputGroup> */}
-
           <Button
             leftIcon={<AddIcon />}
             bg="brand.100"

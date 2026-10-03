@@ -32,7 +32,7 @@ export const SideBarItem = ({
     <Box
       py="10px"
       w="100%"
-      px="34"
+      px="25px"
       bg={isActive ? '#EDEDFF' : 'none'}
       onClick={onClick}
     >

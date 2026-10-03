@@ -28,6 +28,8 @@ import Link from 'next/link';
 import { formatCurrency } from '~/lib/utils/formatAmount';
 import { ChevronLeftIcon } from '~/lib/components/Icons/Icons';
 import { SoldPropertyDetails } from '~/lib/utils/types';
+import { useContext } from 'react';
+import { AppContext } from '~/lib/layout';
 
 const UpdateSoldPropertyForm = ({
   id,
@@ -44,6 +46,7 @@ const UpdateSoldPropertyForm = ({
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [amountSold, setAmountSold] = React.useState<string>('');
   const [commission, setCommission] = React.useState<string>('');
+    const { GetNotifications } = useContext(AppContext);
 
   const initialValues = {
     amountSold: propertyDetails?.sale_info?.amount_sold || '',
@@ -85,6 +88,7 @@ const UpdateSoldPropertyForm = ({
     try {
       const res = await UpdateSoldPropertyDetails(id as string, formData);
       if (res.status === true) {
+        await GetNotifications();
         toast({
           title: 'Property updated successfully',
           status: 'success',

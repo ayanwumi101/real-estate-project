@@ -30,6 +30,7 @@ import Cookies from 'js-cookie';
 
 import { Footer } from './components/footer';
 import { Header } from './components/header';
+// @ts-expect-error The package stylesheet has no TypeScript module declaration.
 import '../styles/globals.css';
 import DashboardSidebar from './components/UserSidebar';
 import { usePathname, useRouter } from 'next/navigation';
@@ -55,128 +56,6 @@ type LayoutProps = {
   children: ReactNode;
 };
 
-// const DashboardSearchBar = ({
-//   setShowSearchBar,
-// }: {
-//   setShowSearchBar: (value: boolean) => void;
-// }) => {
-//   const handleClick = (e: any) => {
-//     e.stopPropagation();
-//     setShowSearchBar(false);
-//   };
-//   return (
-//     <Box
-//       position="fixed"
-//       zIndex="10"
-//       top="0"
-//       w="100vw"
-//       bg="rgba(0,0,0,0.5)"
-//       backdropFilter="blur(8px)"
-//       h="100%"
-//       onClick={handleClick}
-//     >
-//       <Box
-//         onClick={(e) => e.stopPropagation()}
-//         display="flex"
-//         alignItems="center"
-//         justifyContent="center"
-//         pt="25px"
-//         bg="white"
-//         h="75px"
-//       >
-//         <Flex alignItems="center" gap="32px" w="100%" mb="30px">
-//           <Box
-//             w="240px"
-//             display="flex"
-//             alignItems="center"
-//             justifyContent="center"
-//           >
-//             <Image src="/assets/images/investor-logo.png" w="125px" />
-//           </Box>
-//           <InputGroup w="60%">
-//             <InputLeftElement pointerEvents="none" ml="2" mt="1">
-//               <InputSearchIcon />
-//             </InputLeftElement>
-//             <Input
-//               pl="12"
-//               py="12px"
-//               border="1px solid #8295AA"
-//               type="text"
-//               placeholder="Browse Projects"
-//               borderRadius="50px"
-//               bg="#FBFBFB"
-//               color="#8295AA"
-//               _placeholder={{ color: '#8295AA' }}
-//               h="50px"
-//               w="100%"
-//             />
-//           </InputGroup>
-//           <DashboardNotificationIcon />
-//           <Box w="1px" h="40px" bg="#C0C0C0"></Box>
-//           <Avatar
-//             name="Ayanwumi Babatunde"
-//             w="50px"
-//             h="50px"
-//             bg="#E4E4E4"
-//             color="#ffffff"
-//           />
-//         </Flex>
-//       </Box>
-//       <Box
-//         borderRadius="5px"
-//         border="1px solid #C0C0C0"
-//         minH="400px"
-//         w="60%"
-//         mx="auto"
-//         bg="#ffffff"
-//         mt="2"
-//         onClick={(e) => e.stopPropagation()}
-//         py="32px"
-//         px="40px"
-//       >
-//         <Stack spacing="30px">
-//           <Heading fontSize={15} fontWeight={700} color="#222222">
-//             Trending
-//           </Heading>
-//           <TableContainer>
-//             <Table border="none" variant="unstyled">
-//               <Tbody color="#222222">
-//                 {[1, 2, 3, 4, 5, 6, 7].map(() => {
-//                   return (
-//                     <Tr px="0" border="none" _hover={{ bg: '#f5f5f5' }}>
-//                       <Td px="0" fontSize={18} fontWeight={600}>
-//                         Skyline Residences
-//                       </Td>
-//                       <Td fontWeight={500} fontSize={18}>
-//                         ₦375,000
-//                       </Td>
-//                       <Td fontWeight={500} fontSize={18}>
-//                         ₦3
-//                       </Td>
-//                       <Td fontWeight={500} fontSize={18}>
-//                         0.1
-//                       </Td>
-//                       <Td w="120px">
-//                         <Sparklines
-//                           data={[5, 10, 5, 20, 8, 15, 10, 25, 9, 5]}
-//                           width={120}
-//                           height={30}
-//                           margin={5}
-//                         >
-//                           <SparklinesLine color="#1BD155" />
-//                         </Sparklines>
-//                       </Td>
-//                     </Tr>
-//                   );
-//                 })}
-//               </Tbody>
-//             </Table>
-//           </TableContainer>
-//         </Stack>
-//       </Box>
-//     </Box>
-//   );
-// };
 
 export const DashboardLayout = ({ children }: LayoutProps) => {
   const toast = useToast();
@@ -392,7 +271,7 @@ export const DashboardLayout = ({ children }: LayoutProps) => {
               position={isMobile ? 'static' : 'absolute'}
               left={isMobile ? '0%' : '250px'}
               w={isMobile ? '100%' : 'calc(100% - 250px)'}
-              px={isMobile ? 0 : 5}
+              //px={isMobile ? 0 : 5}
             >
               <RealtorMobileDashboardHeader />
               <Box as="main" w="100%" mt={['70px', '0']}>

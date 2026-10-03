@@ -30,12 +30,14 @@ import { currencies } from '~/lib/utils/types/currency';
 import { Currency } from '~/lib/utils/types/currency';
 import Link from 'next/link';
 
+
+//Realtor Mobile Dashboard Header
 export const RealtorMobileDashboardHeader = () => {
   const [openSideNav, setOpenSideNav] = useState<boolean>(false);
   const { userDetails } = useContext(AppContext);
   return (
     <Fragment>
-      <Stack spacing="20px" position="relative" display={['block', 'none']}>
+      <Box position="relative" display={['block', 'none']}>
         <Box
           py="12px"
           h="70px"
@@ -82,32 +84,16 @@ export const RealtorMobileDashboardHeader = () => {
               </Flex>
             </Box>
           </Flex>
-        </Box>
-        {/* <InputGroup w="90%" mx="auto">
-            <InputLeftElement pointerEvents="none" ml="2" mt="1">
-              <InputSearchIcon />
-            </InputLeftElement>
-            <Input
-              pl="12"
-              py="12px"
-              border="1px solid #8295AA"
-              type="text"
-              placeholder="Browse Projects"
-              borderRadius="50px"
-              bg="#FBFBFB"
-              color="#8295AA"
-              _placeholder={{ color: '#8295AA' }}
-              h="50px"
-              w="100%"
-              onFocus={() => setShowSearchBar(true)}
-            />
-          </InputGroup> */}
-      </Stack>
+        </Box> 
+      </Box>
       {openSideNav && <RealtorMobileSidebar setOpenSideNav={setOpenSideNav} />}
     </Fragment>
   );
 };
 
+
+
+//Investor Mobile Dashboard Header
 export const InvestorMobileDashboardHeader = () => {
   const [openSideNav, setOpenSideNav] = useState<boolean>(false);
   const {
@@ -239,6 +225,8 @@ export const InvestorMobileDashboardHeader = () => {
     </Fragment>
   );
 };
+
+
 
 const DashboardHeader = ({
   title,

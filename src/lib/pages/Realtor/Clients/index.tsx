@@ -51,7 +51,7 @@ const index = () => {
   }, [searchQuery]);
   return (
     <RealtorDashboardLayout title="Clients">
-      <Stack spacing="30px" px={['10px', 0]}>
+      <Stack spacing="30px" px={['10px', '15px']}>
         <NavigationTab
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}

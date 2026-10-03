@@ -21,6 +21,8 @@ import { formatCurrency } from '~/lib/utils/formatAmount';
 import { CreateSoldPropertyPayment } from '~/lib/api/services/propertiesService';
 import { useRouter } from 'next/navigation';
 import AddClientModal from './Modals/AddClientModal';
+import { AppContext } from '~/lib/layout';
+import { useContext } from 'react';
 
 interface FormValues {
   clientName: string;
@@ -75,6 +77,7 @@ const FullySoldProperty = ({
   propertyId: string;
   fetchClients: () => void;
 }) => {
+  const { GetNotifications } = useContext(AppContext);
   const toast = useToast();
   const router = useRouter();
   const [loading, setLoading] = React.useState(false);
@@ -100,6 +103,7 @@ const FullySoldProperty = ({
         payment_plan: 'full_payment',
       });
       if (response.status === true) {
+        await GetNotifications();
         toast({
           title: 'Success',
           description: 'Property sale registered successfully',

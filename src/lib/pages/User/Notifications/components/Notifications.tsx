@@ -70,22 +70,26 @@ const Notifications = ({
   const markAsRead = async (
     notificationId: string,
     propertyId: string,
-    category: 'payments' | 'properties',
+    category: 'payments' | 'properties' | 'security',
     isRead: boolean
   ) => {
     if (isRead === true) {
       if (category === 'payments') {
         navigate(`/user/portfolio/${propertyId}/payments`);
-      } else {
+      } else if (category === 'properties') {
         navigate(`/user/my-assets/${propertyId}`);
+      } else {
+        return;
       }
     } else {
       try {
         await MarkNotificationAsRead(notificationId);
         await GetNotifications();
-        console.log('GetNotifications completed');
         toast({
-          title: 'Notification marked as read, redirecting....',
+          title:
+            category === 'security'
+              ? 'Notification marked as read.'
+              : 'Notification marked as read, redirecting....',
           status: 'success',
           duration: 3000,
           isClosable: true,
@@ -93,8 +97,10 @@ const Notifications = ({
         });
         if (category === 'payments') {
           navigate(`/user/portfolio/${propertyId}/payments`);
-        } else {
+        } else if (category === 'properties') {
           navigate(`/user/my-assets/${propertyId}`);
+        } else {
+          return;
         }
       } catch (error: any) {
         toast({

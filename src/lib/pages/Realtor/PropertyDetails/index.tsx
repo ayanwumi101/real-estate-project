@@ -259,17 +259,18 @@ const index = () => {
           </Box>
         )}
         {activeTab === 'Payment History' && propertyType === 'sold' && (
-          <Box>
+          <Box px="15px">
             <SoldPropertyPaymentHistory
               payments={soldPropertyDetails?.payments}
               assetId={id as string}
               salesPrice={soldPropertyDetails?.sale_info?.amount_sold}
               commissionReceived={soldPropertyDetails?.totals?.total_commission}
+              clientId={soldPropertyDetails?.client?.id}
             />
           </Box>
         )}
         {activeTab === 'Payment History' && propertyType === 'instalment' && (
-          <Box>
+          <Box px="15px">
             <InstalmentPropertyPaymentHistory
               salesPrice={Number(
                 instalmentPropertyDetails?.sale_information?.sale_price
@@ -295,6 +296,7 @@ const index = () => {
               clientEmail={instalmentPropertyDetails?.client?.email}
               clientPhone={instalmentPropertyDetails?.client?.phone ?? ''}
               assetId={id as string}
+              clientId={instalmentPropertyDetails?.client?.id}
             />
           </Box>
         )}

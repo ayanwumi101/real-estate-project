@@ -10,7 +10,7 @@ import {
   useDisclosure,
   Collapse,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useContext } from 'react';
 import { SideBarItem } from './UserSidebar';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
@@ -31,9 +31,12 @@ import {
   RealtorSecuritiesIcon,
   RealtorTeamsIcon,
   RealtorTransactionsIcon,
+  MobileNotificationsIcon,
+  CloseIcon,
 } from '~/lib/components/Icons/Icons';
 import { motion } from 'framer-motion';
-import { VscClose } from 'react-icons/vsc';
+import useNavigate from '~/lib/utils/useNavigate';
+import { AppContext } from '~/lib/layout';
 
 const CollapsibleSidebarItem = ({
   label,
@@ -68,9 +71,11 @@ const RealtorMobileSidebar = ({
 }: {
   setOpenSideNav: (value: boolean) => void;
 }) => {
+  const navigate = useNavigate();
   const pathname = usePathname();
   const router = useRouter();
   const toast = useToast();
+  const { notifications } = useContext(AppContext);
   const { isOpen, onToggle } = useDisclosure();
 
   const LogoutUser = () => {
@@ -116,30 +121,67 @@ const RealtorMobileSidebar = ({
           zIndex: '3',
           width: '80%',
           left: '0',
-          padding: '30px 30px',
+          padding: '20px 0px',
         }}
         initial={{ x: '-100%' }}
         animate={{ x: 0 }}
         exit={{ x: '100%' }}
         transition={{ type: 'tween', duration: 0.4 }}
       >
-        <Box mb="10">
+        <Box pb="5" mb='5' borderBottom="1px solid" borderColor="border.100" px='15px'>
           <Flex alignItems="center" justifyContent="space-between">
             <Box onClick={() => router.push('/')} w="130px">
               <Image src="/assets/images/logo3.png" />
             </Box>
-            <Button
-              bg="none"
-              p="0"
-              w="30px"
-              h="38px"
-              _hover={{ bg: 'none', p: 0 }}
-              onClick={() => setOpenSideNav(false)}
-              border="1px solid gray"
-              borderRadius="50%"
-            >
-              <Icon as={VscClose} color="gray.500" fontSize={24} />
-            </Button>
+            <Flex alignItems="center" gap="12px">
+              <Box
+                position="relative"
+                onClick={() => {
+                  setOpenSideNav(false);
+                  navigate('/user/notifications');
+                }}
+              >
+                <Box
+                  pos="absolute"
+                  top="-5px"
+                  right="-3px"
+                  rounded="full"
+                  w="18px"
+                  h="18px"
+                  bg="color.200"
+                  color="brand.200"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  fontSize={12}
+                  fontWeight={600}
+                >
+                  {
+                    notifications?.filter(
+                      (notification: any) => !notification.read
+                    )?.length
+                  }
+                </Box>
+                <MobileNotificationsIcon />
+              </Box>
+
+              <Box w="1px" h="25px" bg="#C0C0C0"></Box>
+              <Box
+                onClick={() => setOpenSideNav(false)}
+                // border="1px solid gray"
+                // borderRadius="50%"
+                style={{
+                  width: 28,
+                  height: 28,
+                  padding: 0,
+                }}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <CloseIcon />
+              </Box>
+            </Flex>
           </Flex>
         </Box>
         <Stack spacing="16px">
@@ -155,7 +197,7 @@ const RealtorMobileSidebar = ({
             rounded="0px"
             py="10px"
             w="100%"
-            px="34"
+            px="25px"
             justifyContent="flex-start"
             leftIcon={
               <ManagedAssetsIcon
@@ -232,7 +274,7 @@ const RealtorMobileSidebar = ({
             href="/realtor/settings"
             onClick={() => setOpenSideNav(false)}
           />
-          <Box py="10px" w="100%" px="34" onClick={LogoutUser} cursor="pointer">
+          <Box py="10px" w="100%" px="25px" onClick={LogoutUser} cursor="pointer">
             <Flex alignItems="center" gap="15px">
               <LogoutIcon isActive={false} />
               <Text color="#2E353F" fontWeight={500}>

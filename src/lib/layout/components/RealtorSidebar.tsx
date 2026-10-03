@@ -127,17 +127,17 @@ const RealtorSidebar = () => {
         <Box
           textAlign="center"
           w="100%"
-          h="96px"
+          h="80px"
           borderBottom="1px solid #E4E4E4"
           display="flex"
           alignItems="center"
-          justifyContent="center"
+          justifyContent="flex-start"
         >
           <Image
             src="/assets/images/logo.png"
             display="block"
-            mx="auto"
-            w="80%"
+            //mx="auto"
+            w="75%"
             objectFit="cover"
           />
         </Box>

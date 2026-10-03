@@ -35,6 +35,8 @@ import {
 import Link from 'next/link';
 import { formatCurrency } from '~/lib/utils/formatAmount';
 import { ChevronLeftIcon } from '~/lib/components/Icons/Icons';
+import { AppContext } from '~/lib/layout';
+import { useContext } from 'react';
 
 const UpdateAvailablePropertyForm = ({
   id,
@@ -44,7 +46,8 @@ const UpdateAvailablePropertyForm = ({
   id: string;
     propertyType: 'available' | 'sold' | 'instalment';
     propertyDetails: any;
-}) => {
+  }) => {
+    const { GetNotifications } = useContext(AppContext);
   const router = useRouter();
   const toast = useToast();
   const searchParams = useSearchParams();
@@ -137,6 +140,7 @@ const UpdateAvailablePropertyForm = ({
     try {
       const res = await UpdateProperty(id as string, formData);
       if (res.status === true) {
+        await GetNotifications();
         toast({
           title: 'Property updated successfully',
           status: 'success',

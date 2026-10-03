@@ -27,6 +27,8 @@ import Link from 'next/link';
 import { formatCurrency } from '~/lib/utils/formatAmount';
 import { ChevronLeftIcon } from '~/lib/components/Icons/Icons';
 import { InstalmentPropertyDetails } from '~/lib/utils/types';
+import { AppContext } from '~/lib/layout';
+import { useContext } from 'react';
 
 const UpdateInstalmentPropertyForm = ({
   id,
@@ -37,6 +39,7 @@ const UpdateInstalmentPropertyForm = ({
   propertyType: 'available' | 'sold' | 'instalment';
   propertyDetails: InstalmentPropertyDetails;
 }) => {
+  const { GetNotifications } = useContext(AppContext);
   const router = useRouter();
   const toast = useToast();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
@@ -65,7 +68,8 @@ const UpdateInstalmentPropertyForm = ({
       propertyDetails?.sale_information?.first_payment_date?.split(' ')[0] ||
       '',
     allocation_status: propertyDetails?.delivery_details?.allocation_status,
-    documentation_status: propertyDetails?.delivery_details?.documentation_status,
+    documentation_status:
+      propertyDetails?.delivery_details?.documentation_status,
     handover_status: propertyDetails?.delivery_details?.handover_status,
     comment: propertyDetails?.sale_information?.comment || '',
   };
@@ -116,6 +120,7 @@ const UpdateInstalmentPropertyForm = ({
     try {
       const res = await UpdateInstalmentPropertyDetails(id as string, formData);
       if (res.status === true) {
+        await GetNotifications();
         toast({
           title: 'Property updated successfully',
           status: 'success',

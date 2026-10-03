@@ -167,7 +167,7 @@ const index = () => {
         </Link>
       }
     >
-      <Stack spacing="20px" px={['16px', '0']}>
+      <Stack spacing="20px" px={['16px', '15px']}>
         <ClientDetailsHeader loading={loading} client={clientDetails?.client} />
         <NavigationTab
           tabs={tabs}

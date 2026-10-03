@@ -22,6 +22,9 @@ import { CreateInstalmentPropertyPayment } from '~/lib/api/services/propertiesSe
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import AddClientModal from './Modals/AddClientModal';
+import { AppContext } from '~/lib/layout';
+import { useContext } from 'react';
+
 
 const PropertySaleContext = React.createContext<any>(null);
 
@@ -554,6 +557,7 @@ const InstalmentPaymentProperty = ({
   const toast = useToast();
   const [step, setStep] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
+  const { GetNotifications } = useContext(AppContext);
 
   interface FormValues {
     clientName: string;
@@ -633,6 +637,7 @@ const InstalmentPaymentProperty = ({
         handover_status: values.handoverStatus,
       });
       if (response.status === true) {
+        await GetNotifications();
         toast({
           title: 'Success',
           description: 'Instalment payment registered successfully',

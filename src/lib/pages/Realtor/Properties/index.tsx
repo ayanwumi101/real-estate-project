@@ -123,7 +123,9 @@ const PropertiesContent = () => {
           documentation_status: instalmentPropertiesDocumentationStatus,
         });
         setInstalmentProperties(instalmentPropertiesData?.data || []);
-        setFilteredInstalmentProperties(instalmentPropertiesData?.data?.items || []);
+        setFilteredInstalmentProperties(
+          instalmentPropertiesData?.data?.items || []
+        );
       } catch (error) {
         console.error('Error fetching properties:', error);
       } finally {
@@ -182,7 +184,7 @@ const PropertiesContent = () => {
 
   return (
     <RealtorDashboardLayout title="Properties">
-      <Stack spacing="30px" px={['10px', 0]}>
+      <Stack spacing="30px" px={['10px', '15px']}>
         <NavigationTab
           tabs={tabs}
           searchQuery={searchQuery}
@@ -196,10 +198,7 @@ const PropertiesContent = () => {
         />
         <Box>
           {activeTab === 'available' && (
-            <AvailableProperties
-              loading={loading}
-              properties={properties}
-            />
+            <AvailableProperties loading={loading} properties={properties} />
           )}
           {activeTab === 'sold' && (
             <SoldProperties

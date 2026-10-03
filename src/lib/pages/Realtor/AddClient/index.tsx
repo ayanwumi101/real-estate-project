@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import RealtorDashboardLayout from '~/lib/layout/components/RealtorDashboardHeader';
+import { AppContext } from '~/lib/layout';
 import SuccessScreen from './components/SuccessScreen';
 import AddClientForm from './components/AddClientForm';
 import { GetRealtorProperties } from '~/lib/api/services/propertiesService';
@@ -9,9 +10,12 @@ import { AddRealtorClient } from '~/lib/api/services/clientsService';
 import { useToast } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 
+
+
 const index = () => {
   const toast = useToast();
   const router = useRouter();
+    const { GetNotifications } = useContext(AppContext);
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [properties, setProperties] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
@@ -43,6 +47,7 @@ const index = () => {
     try {
       const response = await AddRealtorClient(formData);
       if (response?.data?.id) {
+        await GetNotifications();
         setIsSuccess(true);
         toast({
           title: 'Client Added.',

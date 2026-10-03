@@ -27,6 +27,7 @@ import {
 } from '~/lib/api/services/locationService';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
+// @ts-expect-error The package stylesheet has no TypeScript module declaration.
 import 'react-phone-input-2/lib/style.css';
 import { ChevronLeftIcon } from '~/lib/components/Icons/Icons';
 import { formatCurrency } from '~/lib/utils/formatAmount';
@@ -34,10 +35,13 @@ import { AddRealtorProperty } from '~/lib/api/services/propertiesService';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { CreateAssetContext } from '../../..';
+import { AppContext } from '~/lib/layout';
+
 
 const PropertyDetailsForm = () => {
   const router = useRouter();
   const toast = useToast();
+  const {GetNotifications} = useContext(AppContext)
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [states, setStates] = useState<[]>([]);
   const [lgas, setLgas] = useState<[]>([]);
@@ -122,6 +126,7 @@ const PropertyDetailsForm = () => {
     try {
       const res = await AddRealtorProperty(formData);
       if (res.status === true) {
+        await GetNotifications()
         toast({
           title: 'Property Added successfully',
           status: 'success',

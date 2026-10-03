@@ -27,7 +27,9 @@ import {
   VerticalEllipsisIcon,
   PreviousPageIcon,
   NextPageIcon,
+  RealtorClientsIcon,
 } from '~/lib/components/Icons/Icons';
+import useNavigate from '~/lib/utils/useNavigate';
 
 interface InstalmentpropertyPaymentHistoryProps {
   paymentHistory: any[];
@@ -37,9 +39,11 @@ interface InstalmentpropertyPaymentHistoryProps {
   clientName: string;
   clientPhone: string;
   clientEmail: string;
+  clientId: string;
 }
 
 const InstalmentPropertyPaymentHistoryTable = ({
+  clientId,
   paymentHistory,
   activeTab,
   outstandingBalance,
@@ -48,6 +52,7 @@ const InstalmentPropertyPaymentHistoryTable = ({
   clientPhone,
   clientEmail,
 }: InstalmentpropertyPaymentHistoryProps) => {
+  const navigate = useNavigate();
   const newPayments =
     activeTab === 'completed'
       ? paymentHistory?.filter((payment) => payment?.status === 'completed')
@@ -181,6 +186,20 @@ const InstalmentPropertyPaymentHistoryTable = ({
                           <VerticalEllipsisIcon />
                         </MenuButton>
                         <MenuList py="10px" rounded="16px">
+                          <MenuItem
+                            py="12px"
+                            px="16px"
+                            _hover={{ bg: 'border.100' }}
+                            fontSize={14}
+                            color="color.100"
+                            fontWeight={500}
+                            onClick={() =>
+                              navigate(`/realtor/clients/${clientId}`)
+                            }
+                            icon={<RealtorClientsIcon />}
+                          >
+                            View client profile
+                          </MenuItem>
                           <MenuItem
                             py="12px"
                             px="16px"
@@ -480,6 +499,7 @@ const InstalmentPropertyPaymentHistory = ({
   clientEmail,
   clientName,
   clientPhone,
+  clientId,
 }: {
   salesPrice: number;
   totalAmountPaid: number;
@@ -500,6 +520,7 @@ const InstalmentPropertyPaymentHistory = ({
   propertyName: string;
   clientEmail: string;
   clientPhone: string;
+  clientId: string;
 }) => {
   const [activeTab, setActiveTab] = React.useState<'completed' | 'pending'>(
     'completed'
@@ -576,6 +597,7 @@ const InstalmentPropertyPaymentHistory = ({
               clientName={clientName}
               clientPhone={clientPhone}
               clientEmail={clientEmail}
+              clientId={clientId}
             />
           </Stack>
         </Box>
