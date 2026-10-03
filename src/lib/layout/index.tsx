@@ -31,7 +31,6 @@ import Cookies from 'js-cookie';
 import { Footer } from './components/footer';
 import { Header } from './components/header';
 
-// @ts-expect-error The package stylesheet has no TypeScript module declaration.
 import '../styles/globals.css';
 import DashboardSidebar from './components/UserSidebar';
 import { usePathname, useRouter } from 'next/navigation';

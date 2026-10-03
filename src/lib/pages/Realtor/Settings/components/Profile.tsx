@@ -29,7 +29,6 @@ import {
 } from '~/lib/components/Icons/Icons';
 import { AppContext } from '~/lib/layout';
 import PhoneInput from 'react-phone-input-2';
-// @ts-expect-error The package stylesheet has no TypeScript module declaration.
 import 'react-phone-input-2/lib/style.css';
 import Link from 'next/link';
 import {

@@ -27,7 +27,6 @@ import {
 } from '~/lib/api/services/locationService';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
-// @ts-expect-error The package stylesheet has no TypeScript module declaration.
 import 'react-phone-input-2/lib/style.css';
 import { ChevronLeftIcon } from '~/lib/components/Icons/Icons';
 import { formatCurrency } from '~/lib/utils/formatAmount';
