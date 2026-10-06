@@ -269,7 +269,7 @@ const PaymentsTable = ({
                                 fontWeight={500}
                                 onClick={() =>
                                   navigate(
-                                    `/user/my-assets/${asset?.id}/add-payment`
+                                    `/user/my-assets/${assetDetails?.id}/add-payment`
                                   )
                                 }
                                 icon={<AddPaymentIcon />}
