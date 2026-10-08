@@ -48,7 +48,7 @@ const index = () => {
   return (
     <RealtorDashboardLayout
       title={
-        <Flex alignItems="center" gap={['5px', '8px']}>
+        <Flex alignItems="center" gap={['5px', '8px']} px='16px'>
           <Text fontSize={[15, 16]} fontWeight={600} color="brand.400">
             Clients
           </Text>
