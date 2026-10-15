@@ -93,6 +93,125 @@ const Notifications = ({
       }
     }
   };
+
+  const handleBothChannelsToggle = async (
+    category: string,
+    eventKey: string,
+    newValue: boolean
+  ) => {
+    // Update local state immediately for responsive UI
+    const updatedPreferences = localPreferences.map((pref) => {
+      if (pref.category === category) {
+        return {
+          ...pref,
+          events: pref.events.map((event) => {
+            if (event.event_key === eventKey) {
+              return {
+                ...event,
+                email: newValue,
+                whatsapp: newValue,
+              };
+            }
+            return event;
+          }),
+        };
+      }
+      return pref;
+    });
+    setLocalPreferences(updatedPreferences);
+
+    // Find the updated event to send to API
+    const updatedEvent = updatedPreferences
+      .find((pref) => pref.category === category)
+      ?.events.find((event) => event.event_key === eventKey);
+    if (updatedEvent) {
+      try {
+        await UpdateUserNotificationPreference({
+          preferences: [
+            {
+              event_key: eventKey,
+              in_app: updatedEvent.in_app,
+              email: updatedEvent.email,
+              whatsapp: updatedEvent.whatsapp,
+            },
+          ],
+        });
+        toast({
+          title: 'Notification preference updated successfully',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        });
+      } catch (error: any) {
+        toast({
+          title:
+            error?.response?.data?.error?.message ||
+            'Failed to update notification preference',
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        });
+        // Revert local state on error
+        setLocalPreferences(preferences);
+      }
+    }
+  };
+
+  const handleCategoryToggle = async (category: string, newValue: boolean) => {
+    // Update local state immediately for responsive UI
+    const updatedPreferences = localPreferences.map((pref) => {
+      if (pref.category === category) {
+        return {
+          ...pref,
+          events: pref.events.map((event) => ({
+            ...event,
+            email: newValue,
+            whatsapp: newValue,
+          })),
+        };
+      }
+      return pref;
+    });
+    setLocalPreferences(updatedPreferences);
+
+    // Update all events in the category via API
+    const categoryEvents = updatedPreferences.find(
+      (pref) => pref.category === category
+    )?.events;
+    if (categoryEvents) {
+      try {
+        await UpdateUserNotificationPreference({
+          preferences: categoryEvents.map((event) => ({
+            event_key: event.event_key,
+            in_app: event.in_app,
+            email: event.email,
+            whatsapp: event.whatsapp,
+          })),
+        });
+        toast({
+          title: 'Notification preferences updated successfully',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        });
+      } catch (error: any) {
+        toast({
+          title:
+            error?.response?.data?.error?.message ||
+            'Failed to update notification preferences',
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+        });
+        // Revert local state on error
+        setLocalPreferences(preferences);
+      }
+    }
+  };
   return (
     <Box px={['20px', '40px']} pb="50px">
       <Stack spacing="26px">
@@ -115,6 +234,12 @@ const Notifications = ({
                   fontWeight={700}
                   size="lg"
                   textTransform="capitalize"
+                  onChange={(e) =>
+                    handleCategoryToggle(
+                      notification?.category,
+                      e.target.checked
+                    )
+                  }
                 >
                   {notification?.label}
                 </Checkbox>
@@ -149,6 +274,13 @@ const Notifications = ({
                         <Checkbox
                           isChecked={item?.email && item?.whatsapp}
                           size="lg"
+                          onChange={(e) =>
+                            handleBothChannelsToggle(
+                              notification?.category,
+                              item?.event_key,
+                              e.target.checked
+                            )
+                          }
                         />
                         <Stack spacing="3px">
                           <Text
