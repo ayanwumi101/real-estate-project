@@ -80,6 +80,8 @@ const AssetDetails = ({
     setHandoverStatus,
     nextRemittanceDate,
     setNextRemittanceDate,
+    assetType,
+    setAssetType,
   } = useContext(AssetDetailsContext);
   return (
     <Box w={['full', '65%']}>
@@ -150,6 +152,23 @@ const AssetDetails = ({
                 gap="16px"
                 flexWrap={['wrap', 'nowrap']}
               >
+                <FormControl>
+                  <FormLabel fontWeight={600} fontSize={15} color="brand.300">
+                    Asset Type
+                  </FormLabel>
+                  <Select
+                    h="50px"
+                    rounded="40px"
+                    border="1px solid"
+                    borderColor="border.200"
+                    value={assetType}
+                    onChange={(e) => setAssetType(e.target.value)}
+                  >
+                    <option value="owned">Owned</option>
+                    <option value="cashflow">Cashflow</option>
+                    <option value="instalment">Instalment</option>
+                  </Select>
+                </FormControl>
                 <FormControl>
                   <FormLabel fontWeight={600} fontSize={15} color="brand.300">
                     Amount Purchased

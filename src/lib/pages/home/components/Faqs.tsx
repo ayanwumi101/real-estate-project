@@ -90,20 +90,21 @@ const Faqs = () => {
                         textAlign="left"
                         color="#2E353F"
                         fontWeight={600}
+                        letterSpacing="0.5px"
                       >
                         {question}
                       </Box>
                       <AccordionIcon color="#2E353F" />
                     </AccordionButton>
                   </h2>
-                  <AccordionPanel pb={4} color="#2E353F" fontWeight={500}>
+                  <AccordionPanel pb={4} fontSize={15}  letterSpacing="0.5px" color="#2E353F" fontWeight={500}>
                     {answer}
                   </AccordionPanel>
                 </AccordionItem>
               );
             })}
           </Accordion>
-          <Button
+          {/* <Button
             w="185px"
             bg="#EDEDFF"
             py="6"
@@ -117,7 +118,7 @@ const Faqs = () => {
               <Text>View All FAQs</Text>
               <IoArrowForward />
             </Flex>
-          </Button>
+          </Button> */}
         </Box>
       </Flex>
     </Box>

@@ -24,6 +24,9 @@ const index = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [propertyDetails, setPropertyDetails] = React.useState<any>([]);
   const [propertySize, setPropertySize] = React.useState<string>('');
+  const [assetType, setAssetType] = React.useState<
+    'owned' | 'cashflow' | 'instalment'
+  >('owned');
   const [boughtDate, setBoughtDate] = React.useState<string>('');
   const [propertyCost, setPropertyCost] = React.useState<string>('');
   const [paymentStatus, setPaymentStatus] = React.useState<string>('');
@@ -65,6 +68,7 @@ const index = () => {
 
   useEffect(() => {
     if (propertyDetails?.id) {
+      setAssetType(propertyDetails?.asset_type);
       setPropertySize(propertyDetails?.size);
       setBoughtDate(propertyDetails?.bought_date);
       setPropertyCost(
@@ -97,6 +101,7 @@ const index = () => {
     setIsLoading(true);
     const cashflowData = {
       size: propertySize,
+      asset_type: assetType,
       bought_date: boughtDate,
       property_cost: propertyCost,
       payment_status: paymentStatus,
@@ -112,9 +117,11 @@ const index = () => {
       documentation_status: documentationStatus,
       handover_status: handoverStatus,
       cashflow_payment_due: nextRemittanceDate,
+      comment: comment ?? 'No Comment',
     };
     const data = {
       size: propertySize,
+      asset_type: assetType,
       bought_date: boughtDate,
       property_cost: propertyCost,
       payment_status: paymentStatus,
@@ -129,7 +136,7 @@ const index = () => {
       allocation_status: allocationStatus,
       documentation_status: documentationStatus,
       handover_status: handoverStatus,
-      // comment: comment,
+      comment: comment ?? 'No Comment',
     };
     const formData =
       propertyDetails?.asset_type === 'instalment' ? data : cashflowData;
@@ -202,6 +209,8 @@ const index = () => {
           setComment,
           nextRemittanceDate,
           setNextRemittanceDate,
+          assetType,
+          setAssetType,
         }}
       >
         <Box>
@@ -223,7 +232,7 @@ const index = () => {
                   fetching={loading}
                   propertyDetails={propertyDetails}
                 />
-                {/* <Notes /> */}
+                <Notes />
               </Flex>
             </Box>
           </Stack>

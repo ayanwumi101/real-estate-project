@@ -43,8 +43,6 @@ const index = () => {
     paymentHistory?.payment_history
   );
 
-  // console.log(paymentHistory);
-
   return (
     <RealtorDashboardLayout
       title={
