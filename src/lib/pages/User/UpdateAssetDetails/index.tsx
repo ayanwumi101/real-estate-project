@@ -38,7 +38,6 @@ const index = () => {
   const [cashflowDuration, setCashflowDuration] = React.useState<string>('');
   const [lastRemittanceDate, setLastRemittanceDate] =
     React.useState<string>('');
-  // const [equityOwnership, setEquityOwnership] = React.useState<string>('');
   const [realtorName, setRealtorName] = React.useState<string>('');
   const [realtorPhone, setRealtorPhone] = React.useState<string>('');
   const [allocationStatus, setAllocationStatus] = React.useState<string>('');
@@ -49,6 +48,14 @@ const index = () => {
   const [comment, setComment] = React.useState<string>('');
   const [nextRemittanceDate, setNextRemittanceDate] =
     React.useState<string>('');
+  const [amountPaid, setAmountPaid] = React.useState<string>('');
+  const [outstandingBalance, setOutstandingBalance] =
+    React.useState<string>('');
+  const [paymentPlan, setPaymentPlan] = React.useState<string>('');
+  const [instalmentPayment, setInstalmentPayment] = React.useState<string>('');
+  const [lastPaymentDate, setLastPaymentDate] = React.useState<string>('');
+  const [nextPaymentDate, setNextPaymentDate] = React.useState<string>('');
+  const [durationOfPayment, setDurationOfPayment] = React.useState<string>('');
 
   const getAssetDetails = async () => {
     setLoading(true);
@@ -94,6 +101,25 @@ const index = () => {
       setHandoverStatus(propertyDetails?.handover_status);
       setComment(propertyDetails?.comment);
       setNextRemittanceDate(propertyDetails?.cashflow_payment_due);
+      setAmountPaid(
+        propertyDetails?.amount_paid?.display_value
+          ? propertyDetails?.amount_paid?.display_value
+          : propertyDetails?.amount_paid
+      );
+      setOutstandingBalance(
+        propertyDetails?.amount_left?.display_value
+          ? propertyDetails?.amount_left?.display_value
+          : propertyDetails?.amount_left
+      );
+      setPaymentPlan(propertyDetails?.payment_plan?.toLowerCase());
+      setInstalmentPayment(
+        propertyDetails?.instalment_payment ||
+          propertyDetails?.cashflow_amount ||
+          0
+      );
+      setLastPaymentDate(propertyDetails?.payment_date);
+      setNextPaymentDate(propertyDetails?.due_date);
+      setDurationOfPayment(propertyDetails?.duration);
     }
   }, [propertyDetails]);
 
@@ -110,14 +136,13 @@ const index = () => {
       cashflow_amount: remittanceAmount,
       cashflow_duration: cashflowDuration,
       last_cashflow_date: lastRemittanceDate,
-      // equity_ownership: equityOwnership,
       realtor_name: realtorName,
       phone: realtorPhone,
       allocation_status: allocationStatus,
       documentation_status: documentationStatus,
       handover_status: handoverStatus,
       cashflow_payment_due: nextRemittanceDate,
-      comment: comment ?? 'No Comment',
+      comment: comment ?? '',
     };
     const data = {
       size: propertySize,
@@ -130,13 +155,19 @@ const index = () => {
       cashflow_amount: remittanceAmount,
       cashflow_duration: cashflowDuration,
       last_cashflow_date: lastRemittanceDate,
-      // equity_ownership: equityOwnership,
       realtor_name: realtorName,
       phone: realtorPhone,
       allocation_status: allocationStatus,
       documentation_status: documentationStatus,
       handover_status: handoverStatus,
-      comment: comment ?? 'No Comment',
+      comment: comment ?? '',
+      amount_paid: amountPaid,
+      amount_left: outstandingBalance,
+      payment_plan: paymentPlan,
+      instalment_payment: instalmentPayment,
+      last_payment_date: lastPaymentDate,
+      next_payment_date: nextPaymentDate,
+      duration: durationOfPayment,
     };
     const formData =
       propertyDetails?.asset_type === 'instalment' ? data : cashflowData;
@@ -193,8 +224,6 @@ const index = () => {
           setCashflowDuration,
           lastRemittanceDate,
           setLastRemittanceDate,
-          // equityOwnership,
-          // setEquityOwnership,
           realtorName,
           setRealtorName,
           realtorPhone,
@@ -211,6 +240,20 @@ const index = () => {
           setNextRemittanceDate,
           assetType,
           setAssetType,
+          amountPaid,
+          setAmountPaid,
+          outstandingBalance,
+          setOutstandingBalance,
+          paymentPlan,
+          setPaymentPlan,
+          instalmentPayment,
+          setInstalmentPayment,
+          lastPaymentDate,
+          setLastPaymentDate,
+          nextPaymentDate,
+          setNextPaymentDate,
+          durationOfPayment,
+          setDurationOfPayment,
         }}
       >
         <Box>

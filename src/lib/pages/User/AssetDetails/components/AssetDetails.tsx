@@ -31,7 +31,7 @@ const AssetDetailsItem = ({
         <Text fontWeight={600} color="brand.600" fontSize={15}>
           {label}
         </Text>
-        <Text fontWeight={500} color="brand.400" fontSize={15}>
+        <Text fontWeight={500} textTransform="capitalize" color="brand.400" fontSize={15}>
           {labelValue}
         </Text>
       </Stack>
@@ -87,16 +87,18 @@ const AssetDetails = ({
                   label="Property Type"
                   labelValue={propertyDetails?.asset_type || 'N/A'}
                 />
-                <AssetDetailsItem
-                  label="When was property bought?"
-                  labelValue={
-                    propertyDetails?.bought_date
-                      ? moment(propertyDetails?.bought_date).format(
-                          'ddd, Do MMMM YYYY'
-                        )
-                      : 'N/A'
-                  }
-                />
+                {propertyDetails?.asset_type === 'owned' && (
+                  <AssetDetailsItem
+                    label="When was property bought?"
+                    labelValue={
+                      propertyDetails?.bought_date
+                        ? moment(propertyDetails?.bought_date).format(
+                            'ddd, Do MMMM YYYY'
+                          )
+                        : 'N/A'
+                    }
+                  />
+                )}
                 <AssetDetailsItem
                   label="Amount Purchased"
                   labelValue={
@@ -335,13 +337,7 @@ const AssetDetails = ({
               <Flex alignItems="center" flexWrap="wrap" rowGap="16px">
                 <AssetDetailsItem
                   label="Payment Status"
-                  labelValue={
-                    propertyDetails?.asset_type === 'instalment'
-                      ? 'Ongoing'
-                      : propertyDetails?.asset_type === 'owned'
-                        ? 'Completed'
-                        : 'Ongoing'
-                  }
+                  labelValue={propertyDetails?.payment_status || 'N/A'}
                 />
                 <AssetDetailsItem
                   label="Allocation Status"

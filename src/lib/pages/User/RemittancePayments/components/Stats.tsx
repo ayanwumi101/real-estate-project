@@ -88,10 +88,14 @@ const Stats = ({
                   <Heading fontSize={20} fontWeight={500}>
                     {assetDetails?.total_payment_amount?.display_value
                       ? FormatAmount(
-                          Number(assetDetails?.total_payment_amount?.display_value),
+                          Number(
+                            assetDetails?.total_payment_amount?.display_value
+                          ),
                           assetDetails?.total_payment_amount?.display_currency
                         )
-                      : FormatAmount(Number(assetDetails?.total_payment_amount))}
+                      : FormatAmount(
+                          Number(assetDetails?.total_payment_amount)
+                        )}
                   </Heading>
                 </Stack>
               </Box>
@@ -126,8 +130,8 @@ const Stats = ({
                     {assetDetails?.cashflow_payment_due ||
                     assetDetails?.next_due_date
                       ? moment(
-                          assetDetails?.cashflow_payment_due ||
-                            assetDetails?.next_due_date
+                          assetDetails?.next_due_date ||
+                            assetDetails?.cashflow_payment_due
                         ).format('ddd, Do MMM YYYY')
                       : 'N/A'}
                   </Heading>
@@ -175,10 +179,14 @@ const Stats = ({
                   <Heading fontSize={20} fontWeight={500}>
                     {assetDetails?.total_payment_amount?.display_value
                       ? FormatAmount(
-                          Number(assetDetails?.total_payment_amount?.display_value),
+                          Number(
+                            assetDetails?.total_payment_amount?.display_value
+                          ),
                           assetDetails?.total_payment_amount?.display_currency
                         )
-                      : FormatAmount(Number(assetDetails?.total_payment_amount))}
+                      : FormatAmount(
+                          Number(assetDetails?.total_payment_amount)
+                        )}
                   </Heading>
                 </Stack>
               </Box>
@@ -213,7 +221,7 @@ const Stats = ({
                     Next Due Payment
                   </Text>
                   <Heading fontSize={20} fontWeight={500}>
-                    {assetDetails?.next_due_date || assetDetails?.due_date
+                    {assetDetails?.next_due_date
                       ? moment(
                           assetDetails?.next_due_date || assetDetails?.due_date
                         ).format('ddd, Do MMM YYYY')
