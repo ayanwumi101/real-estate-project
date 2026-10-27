@@ -27,7 +27,8 @@ import {
 import {
   VerticalEllipsisIcon,
   OutgoingInstalmentIcon,
-  IncomingRemittanceIcon, LocationIcon
+  IncomingRemittanceIcon,
+  LocationIcon,
 } from '~/lib/components/Icons/Icons';
 import moment from 'moment';
 import Link from 'next/link';
@@ -43,7 +44,7 @@ import {
 const UpcomingPayments = ({
   payments,
   loading,
-  summary,
+
   assetType,
   setAssetType,
   paymentType,
@@ -51,7 +52,7 @@ const UpcomingPayments = ({
 }: {
   payments: UpcomingPayment[];
   loading: boolean;
-  summary: UpcomingPaymentSummary;
+
   assetType: 'all' | 'remittance' | 'instalment';
   setAssetType: (asset: 'all' | 'remittance' | 'instalment') => void;
   paymentType: 'all' | 'due' | 'upcoming';
@@ -62,11 +63,16 @@ const UpcomingPayments = ({
   return (
     <Box py="40px" px={['15px', '40px']}>
       <Stack spacing="20px">
-        <Flex alignItems="center" justifyContent="space-between">
+        <Flex
+          alignItems="center"
+          justifyContent="space-between"
+          flexWrap={['wrap', 'nowrap']}
+          gap={['8',0]}
+        >
           <Heading fontSize={20} color="brand.300">
             Upcoming Payments ({payments?.length || 0})
           </Heading>
-          <Box w="40%">
+          <Box w={['full', '40%']}>
             <Flex alignItems="center" gap="12px">
               <FormControl>
                 <FormLabel fontSize={14} fontWeight={600}>
@@ -297,7 +303,9 @@ const UpcomingPayments = ({
                                     color="color.100"
                                     fontWeight={500}
                                     onClick={() =>
-                                      navigate(`/user/my-assets/${asset?.id}`)
+                                      navigate(
+                                        `/user/my-assets/${asset?.property_id}`
+                                      )
                                     }
                                   >
                                     View asset
@@ -311,7 +319,7 @@ const UpcomingPayments = ({
                                     fontWeight={500}
                                     onClick={() =>
                                       navigate(
-                                        `/user/my-assets/${asset?.id}/add-payment`
+                                        `/user/my-assets/${asset?.property_id}/add-payment`
                                       )
                                     }
                                   >
@@ -326,7 +334,7 @@ const UpcomingPayments = ({
                                     fontWeight={500}
                                     onClick={() => {
                                       navigate(
-                                        `/user/portfolio/${asset?.id}/payments`
+                                        `/user/portfolio/${asset?.property_id}/payments`
                                       );
                                     }}
                                   >

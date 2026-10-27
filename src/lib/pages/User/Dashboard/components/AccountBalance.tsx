@@ -23,6 +23,7 @@ import {
   AddNewAssetIcon,
 } from '~/lib/components/Icons/Icons';
 import useNavigate from '~/lib/utils/useNavigate';
+import { UpcomingPaymentSummary } from '~/lib/api/services/dashboardService';
 
 const AccountBalance = ({
   totalInvestment,
@@ -30,12 +31,14 @@ const AccountBalance = ({
   assetsLoading,
   currency,
   currentValuation,
+  summary,
 }: {
   totalInvestment: number;
   totalAssets: number;
   assetsLoading: boolean;
   currency: string;
   currentValuation: number;
+  summary: UpcomingPaymentSummary;
 }) => {
   const navigate = useNavigate();
   const { userDetails, isUserDetailsLoading } = useContext(AppContext);
@@ -197,32 +200,21 @@ const AccountBalance = ({
       >
         {assetsLoading ? (
           <Flex alignItems="ceter" gap="16px" w="100%" pb="3" overflow="auto">
-            <Box
-              minW={['300px', '49%']}
-              borderRadius="5px"
-              py="32px"
-              px="30px"
-              border="1px solid #E4E4E4"
-              h="135px"
-            >
-              <Stack spacing="16px" w="100%">
-                <Skeleton rounded="4px" h="20px" w="50%" />
-                <Skeleton rounded="4px" h="35px" w="70%" />
-              </Stack>
-            </Box>
-            <Box
-              minW={['300px', '49%']}
-              borderRadius="5px"
-              py="32px"
-              px="30px"
-              border="1px solid #E4E4E4"
-              h="135px"
-            >
-              <Stack spacing="16px" w="100%">
-                <Skeleton rounded="4px" h="20px" w="50%" />
-                <Skeleton rounded="4px" h="35px" w="70%" />
-              </Stack>
-            </Box>
+            {[1, 2, 3]?.map((item) => (
+              <Box
+                minW={['300px', '49%']}
+                borderRadius="5px"
+                py="32px"
+                px="30px"
+                border="1px solid #E4E4E4"
+                h="135px"
+              >
+                <Stack spacing="16px" w="100%">
+                  <Skeleton rounded="4px" h="20px" w="50%" />
+                  <Skeleton rounded="4px" h="35px" w="70%" />
+                </Stack>
+              </Box>
+            ))}
           </Flex>
         ) : (
           <Flex alignItems="ceter" gap="16px" w="100%" pb="3" overflow="auto">
@@ -277,6 +269,114 @@ const AccountBalance = ({
                 <Flex alignItems="center" gap="16px" w="100%">
                   <Heading fontSize={24} fontWeight={500} color="#222222">
                     {FormatAmount(Number(currentValuation || 0), currency)}
+                  </Heading>
+                  <FiEye color="#2E353F" fontSize={20} />
+                </Flex>
+              </Stack>
+            </Box>
+          </Flex>
+        )}
+      </Box>
+      {/* upcoming payment summary section goes here */}
+      <Box
+        w="100%"
+        px={['20px', '40px']}
+        py="30px"
+        borderBottom="1px solid #E4E4E4"
+        overflow="auto"
+      >
+        {assetsLoading ? (
+          <Flex alignItems="ceter" gap="16px" w="100%" pb="3" overflow="auto">
+            {[1, 2, 3]?.map((item) => (
+              <Box
+                minW={['300px', '49%']}
+                borderRadius="5px"
+                py="32px"
+                px="30px"
+                border="1px solid #E4E4E4"
+                h="135px"
+              >
+                <Stack spacing="16px" w="100%">
+                  <Skeleton rounded="4px" h="20px" w="50%" />
+                  <Skeleton rounded="4px" h="35px" w="70%" />
+                </Stack>
+              </Box>
+            ))}
+          </Flex>
+        ) : (
+          <Flex alignItems="ceter" gap="16px" w="100%" pb="3" overflow="auto">
+            <Box
+              minW={['300px', '32%']}
+              borderRadius="5px"
+              py="25px"
+              px="20px"
+              border="1px solid #E4E4E4"
+            >
+              <Stack spacing="20px" w="100%">
+                <Text color="brand.300" fontWeight={500}>
+                  Total Payments ({summary?.all?.count})
+                </Text>
+                <Flex alignItems="center" gap="16px" w="100%">
+                  <Heading fontSize={24} fontWeight={500} color="#222222">
+                    {FormatAmount(
+                      Number(
+                        typeof summary?.all?.total_amount === 'object'
+                          ? summary?.all?.total_amount?.display_value
+                          : summary?.all?.total_amount
+                      ),
+                      currency
+                    )}
+                  </Heading>
+                  <FiEye color="#2E353F" fontSize={20} />
+                </Flex>
+              </Stack>
+            </Box>
+            <Box
+              minW={['300px', '32%']}
+              borderRadius="5px"
+              py="25px"
+              px="20px"
+              border="1px solid #E4E4E4"
+            >
+              <Stack spacing="20px" w="100%">
+                <Text color="brand.300" fontWeight={500}>
+                  Total Due Payments ({summary?.due?.count})
+                </Text>
+                <Flex alignItems="center" gap="16px" w="100%">
+                  <Heading fontSize={24} fontWeight={500} color="#222222">
+                    {FormatAmount(
+                      Number(
+                        typeof summary?.due?.total_amount === 'object'
+                          ? summary?.due?.total_amount?.display_value
+                          : summary?.due?.total_amount
+                      ),
+                      currency
+                    )}
+                  </Heading>
+                </Flex>
+              </Stack>
+            </Box>
+            <Box
+              minW={['300px', '32%']}
+              borderRadius="5px"
+              py="25px"
+              px="20px"
+              border="1px solid #E4E4E4"
+            >
+              <Stack spacing="20px" w="100%">
+                <Text color="brand.300" fontWeight={500}>
+                  Total Upcoming Payments ({summary?.upcoming?.count})
+                </Text>
+                <Flex alignItems="center" gap="16px" w="100%">
+                  <Heading fontSize={24} fontWeight={500} color="#222222">
+                    {FormatAmount(
+                      Number(
+                        typeof summary?.upcoming?.total_amount === 'object'
+                          ? summary?.upcoming?.total_amount?.display_value
+                          : summary?.upcoming?.total_amount
+                      ),
+                      currency
+                    )}
                   </Heading>
                   <FiEye color="#2E353F" fontSize={20} />
                 </Flex>

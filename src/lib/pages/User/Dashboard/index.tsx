@@ -81,11 +81,11 @@ const index = () => {
               : assets?.summary?.total_current_valuation?.display_value
           }
           assetsLoading={loading}
+          summary={dashboardUpcomingPaymentsSummary}
         />
         <UpcomingPayments
           loading={loading}
           payments={dashboardUpcomingPayments}
-          summary={dashboardUpcomingPaymentsSummary}
           assetType={assetType}
           setAssetType={setAssetType}
           paymentType={paymentType}
