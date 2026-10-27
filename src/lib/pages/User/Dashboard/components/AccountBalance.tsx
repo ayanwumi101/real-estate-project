@@ -229,12 +229,11 @@ const AccountBalance = ({
             <Box
               minW={['300px', '32%']}
               borderRadius="5px"
-              py="32px"
+              py="25px"
               px="20px"
               border="1px solid #E4E4E4"
-              h="135px"
             >
-              <Stack spacing="16px" w="100%">
+              <Stack spacing="20px" w="100%">
                 <Text color="brand.300" fontWeight={500}>
                   Total Asset Registered
                 </Text>
@@ -248,12 +247,11 @@ const AccountBalance = ({
             <Box
               minW={['300px', '32%']}
               borderRadius="5px"
-              py="32px"
+              py="25px"
               px="20px"
               border="1px solid #E4E4E4"
-              h="135px"
             >
-              <Stack spacing="16px" w="100%">
+              <Stack spacing="20px" w="100%">
                 <Text color="brand.300" fontWeight={500}>
                   Total Investments ({currency})
                 </Text>
@@ -268,12 +266,11 @@ const AccountBalance = ({
             <Box
               minW={['300px', '32%']}
               borderRadius="5px"
-              py="32px"
+              py="25px"
               px="20px"
               border="1px solid #E4E4E4"
-              h="135px"
             >
-              <Stack spacing="16px" w="100%">
+              <Stack spacing="20px" w="100%">
                 <Text color="brand.300" fontWeight={500}>
                   Current Assets Valuation ({currency})
                 </Text>

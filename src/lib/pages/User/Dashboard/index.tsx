@@ -9,10 +9,11 @@ import DashboardInfo from './components/DashboardInfo';
 import UpcomingPayments from './components/UpcomingPayments';
 import DashboardHeader from '~/lib/layout/components/DashboardHeader';
 import { AppContext } from '~/lib/layout';
+import { GetDashboardUpcomingPayments } from '~/lib/api/services/dashboardService';
 import {
-  PropertiesResponse,
-  NGNPropertiesResponse,
-} from '~/lib/api/services/assetsService';
+  UpcomingPayment,
+  UpcomingPaymentSummary,
+} from '~/lib/api/services/dashboardService';
 
 const index = () => {
   const { selectedCurrency } = useContext(AppContext);
@@ -20,12 +21,35 @@ const index = () => {
   const [dataPerPage, setDataPerPage] = useState<number>(10);
   const [loading, setLoading] = useState<boolean>(false);
   const [assets, setAssets] = React.useState<any>(null);
+  const [dashboardUpcomingPayments, setDashboardUpcomingPayments] =
+    React.useState<UpcomingPayment[]>([]);
+  const [
+    dashboardUpcomingPaymentsSummary,
+    setDashboardUpcomingPaymentsSummary,
+  ] = React.useState<UpcomingPaymentSummary>({} as UpcomingPaymentSummary);
+  const [assetType, setAssetType] = useState<
+    'all' | 'remittance' | 'instalment'
+  >('all');
+  const [paymentType, setPaymentType] = useState<'all' | 'due' | 'upcoming'>(
+    'all'
+  );
 
-  const GetAssets = async () => {
+
+  const GetDashboardData = async () => {
     setLoading(true);
     try {
-      const res = await GetUserAssets(dataPerPage, page);
+      const [res, paymentResponse] = await Promise.all([
+        GetUserAssets(dataPerPage, page),
+        GetDashboardUpcomingPayments({
+          filter: paymentType,
+          type: assetType === 'all' ? undefined : assetType,
+          page: page,
+          per_page: dataPerPage,
+        }),
+      ]);
       setAssets(res);
+      setDashboardUpcomingPayments(paymentResponse.data);
+      setDashboardUpcomingPaymentsSummary(paymentResponse.summary);
     } catch (error) {
       console.log(error);
     }
@@ -33,12 +57,8 @@ const index = () => {
   };
 
   React.useEffect(() => {
-    GetAssets();
-  }, []);
-
-  const upcomingPaymentsAssets = assets?.data?.filter(
-    (asset: any) => asset?.asset_type !== 'owned'
-  );
+    GetDashboardData();
+  }, [assetType, paymentType, page, dataPerPage]);
 
   return (
     <DashboardHeader title="Dashboard">
@@ -62,10 +82,15 @@ const index = () => {
           }
           assetsLoading={loading}
         />
-        <UpcomingPayments loading={loading} assets={upcomingPaymentsAssets} />
-        {/* <DashboardInfo /> */}
-        {/* <Investments />
-        <MarketUpdates /> */}
+        <UpcomingPayments
+          loading={loading}
+          payments={dashboardUpcomingPayments}
+          summary={dashboardUpcomingPaymentsSummary}
+          assetType={assetType}
+          setAssetType={setAssetType}
+          paymentType={paymentType}
+          setPaymentType={setPaymentType}
+        />
       </Box>
     </DashboardHeader>
   );

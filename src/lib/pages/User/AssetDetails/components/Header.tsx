@@ -221,6 +221,21 @@ const Header = ({
                         Add payment
                       </MenuItem>
                     )}
+                    {assetType !== 'owned' && (
+                      <MenuItem
+                        py="12px"
+                        px="16px"
+                        _hover={{ bg: 'border.100' }}
+                        fontSize={14}
+                        color="color.100"
+                        fontWeight={500}
+                        onClick={() =>
+                          navigate(`/user/portfolio/${id}/payments`)
+                        }
+                      >
+                        View payment history
+                      </MenuItem>
+                    )}
                     <MenuItem
                       py="12px"
                       px="16px"
