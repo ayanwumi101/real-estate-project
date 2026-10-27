@@ -199,7 +199,7 @@ const AccountBalance = ({
         overflow="auto"
       >
         {assetsLoading ? (
-          <Flex alignItems="ceter" gap="16px" w="100%" pb="3" overflow="auto">
+          <Flex alignItems="ceter" gap="16px" w="100%" overflow="auto">
             {[1, 2, 3]?.map((item) => (
               <Box
                 minW={['300px', '49%']}
@@ -217,7 +217,7 @@ const AccountBalance = ({
             ))}
           </Flex>
         ) : (
-          <Flex alignItems="ceter" gap="16px" w="100%" pb="3" overflow="auto">
+          <Flex alignItems="ceter" gap="16px" w="100%" overflow="auto">
             <Box
               minW={['300px', '32%']}
               borderRadius="5px"
@@ -304,7 +304,7 @@ const AccountBalance = ({
             ))}
           </Flex>
         ) : (
-          <Flex alignItems="ceter" gap="16px" w="100%" pb="3" overflow="auto">
+          <Flex alignItems="ceter" gap="16px" w="100%" overflow="auto">
             <Box
               minW={['300px', '32%']}
               borderRadius="5px"

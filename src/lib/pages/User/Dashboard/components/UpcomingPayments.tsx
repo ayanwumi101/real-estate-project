@@ -49,14 +49,15 @@ const UpcomingPayments = ({
   setAssetType,
   paymentType,
   setPaymentType,
+  upcomingPayments
 }: {
   payments: UpcomingPayment[];
   loading: boolean;
-
   assetType: 'all' | 'remittance' | 'instalment';
   setAssetType: (asset: 'all' | 'remittance' | 'instalment') => void;
   paymentType: 'all' | 'due' | 'upcoming';
-  setPaymentType: (payment: 'all' | 'due' | 'upcoming') => void;
+    setPaymentType: (payment: 'all' | 'due' | 'upcoming') => void;
+  upcomingPayments: number
 }) => {
   const navigate = useNavigate();
   const { selectedCurrency } = useContext(AppContext);
@@ -70,7 +71,7 @@ const UpcomingPayments = ({
           gap={['8',0]}
         >
           <Heading fontSize={20} color="brand.300">
-            Upcoming Payments ({payments?.length || 0})
+            Upcoming Payments ({upcomingPayments || 0})
           </Heading>
           <Box w={['full', '40%']}>
             <Flex alignItems="center" gap="12px">
@@ -262,7 +263,7 @@ const UpcomingPayments = ({
                               }
                             >
                               {asset?.is_due === true
-                                ? 'Due Payment'
+                                ? 'Payment Due'
                                 : 'Upcoming Payment'}
                             </Td>
                             <Td>

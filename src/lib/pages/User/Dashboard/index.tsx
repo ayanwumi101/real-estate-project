@@ -90,6 +90,7 @@ const index = () => {
           setAssetType={setAssetType}
           paymentType={paymentType}
           setPaymentType={setPaymentType}
+          upcomingPayments={dashboardUpcomingPaymentsSummary?.upcoming?.count}
         />
       </Box>
     </DashboardHeader>
