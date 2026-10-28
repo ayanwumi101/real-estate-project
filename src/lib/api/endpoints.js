@@ -86,7 +86,11 @@ const API_ROUTES = {
   UPDATE_USER_NOTIFICATION_PREFERENCE: 'notification-preferences',
 
   //Dashboard apis
-  GET_DASHBOARD_UPCOMING_PAYMENTS: '/user/payments/dashboard'
+  GET_DASHBOARD_UPCOMING_PAYMENTS: '/user/payments/dashboard',
+  GET_NEXT_DUE_PAYMENT_DATE: '/user/payments/next-due-date',
+  GET_PAYMENT_DETAILS: '/user/payments',
+  UPDATE_PAYMENT_DETAILS: '/user/payments'
+
 
 };
 

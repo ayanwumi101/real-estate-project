@@ -30,6 +30,9 @@ import {
   VerticalEllipsisIcon,
   AddPaymentIcon,
   ViewRemittanceHistoryIcon,
+  UpdateAssetDetailsIcon,
+  EditPropertyIcon,
+  EditCommentIcon,
 } from '~/lib/components/Icons/Icons';
 import SkeletonLoader from '~/lib/components/SkeletonLoader';
 import { AppContext } from '~/lib/layout';
@@ -260,7 +263,7 @@ const PaymentsTable = ({
                               >
                                 View payment receipt
                               </MenuItem>
-                              <MenuItem
+                              {/* <MenuItem
                                 py="12px"
                                 px="16px"
                                 _hover={{ bg: 'border.100' }}
@@ -275,7 +278,25 @@ const PaymentsTable = ({
                                 icon={<AddPaymentIcon />}
                               >
                                 Add new payment
-                              </MenuItem>
+                              </MenuItem> */}
+                              {asset?.status === 'pending' && (
+                                <MenuItem
+                                  py="12px"
+                                  px="16px"
+                                  _hover={{ bg: 'border.100' }}
+                                  fontSize={14}
+                                  color="color.100"
+                                  fontWeight={500}
+                                  onClick={() =>
+                                    navigate(
+                                      `/user/my-assets/${assetDetails?.id}/update-payment?pid=${asset?.id}`
+                                    )
+                                  }
+                                  icon={<EditCommentIcon />}
+                                >
+                                  Update payment
+                                </MenuItem>
+                              )}
                             </MenuList>
                           </Menu>
                         </Td>
