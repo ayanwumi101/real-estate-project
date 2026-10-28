@@ -51,7 +51,7 @@ const index = () => {
   // }, [id]);
 
   return (
-    <DashboardHeader title="Add Payment">
+    <DashboardHeader title="Update Payment">
       <Box p={['20px', '40px']}>
         <Stack spacing="40px" alignItems="flex-start">
           {' '}
