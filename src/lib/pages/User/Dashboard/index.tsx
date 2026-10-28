@@ -33,7 +33,8 @@ const index = () => {
   const [paymentType, setPaymentType] = useState<'all' | 'due' | 'upcoming'>(
     'all'
   );
-
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
   const GetDashboardData = async () => {
     setLoading(true);
@@ -45,6 +46,8 @@ const index = () => {
           type: assetType === 'all' ? undefined : assetType,
           page: page,
           per_page: dataPerPage,
+          start_date: startDate,
+          end_date: endDate,
         }),
       ]);
       setAssets(res);
@@ -58,7 +61,7 @@ const index = () => {
 
   React.useEffect(() => {
     GetDashboardData();
-  }, [assetType, paymentType, page, dataPerPage]);
+  }, [assetType, paymentType, page, dataPerPage, startDate, endDate]);
 
   return (
     <DashboardHeader title="Dashboard">
@@ -90,7 +93,11 @@ const index = () => {
           setAssetType={setAssetType}
           paymentType={paymentType}
           setPaymentType={setPaymentType}
-          upcomingPayments={dashboardUpcomingPaymentsSummary?.upcoming?.count}
+          paymentsLength={dashboardUpcomingPaymentsSummary?.all?.count}
+          startDate={startDate}
+          setStartDate={setStartDate}
+          endDate={endDate}
+          setEndDate={setEndDate}
         />
       </Box>
     </DashboardHeader>

@@ -23,6 +23,7 @@ import {
   Select,
   FormLabel,
   FormControl,
+  Input,
 } from '@chakra-ui/react';
 import {
   VerticalEllipsisIcon,
@@ -44,20 +45,27 @@ import {
 const UpcomingPayments = ({
   payments,
   loading,
-
   assetType,
   setAssetType,
   paymentType,
   setPaymentType,
-  upcomingPayments
+  paymentsLength,
+  startDate,
+  setStartDate,
+  endDate,
+  setEndDate,
 }: {
   payments: UpcomingPayment[];
   loading: boolean;
   assetType: 'all' | 'remittance' | 'instalment';
   setAssetType: (asset: 'all' | 'remittance' | 'instalment') => void;
   paymentType: 'all' | 'due' | 'upcoming';
-    setPaymentType: (payment: 'all' | 'due' | 'upcoming') => void;
-  upcomingPayments: number
+  setPaymentType: (payment: 'all' | 'due' | 'upcoming') => void;
+  paymentsLength: number;
+  startDate: string;
+  setStartDate: (date: string) => void;
+  endDate: string;
+  setEndDate: (date: string) => void;
 }) => {
   const navigate = useNavigate();
   const { selectedCurrency } = useContext(AppContext);
@@ -68,13 +76,17 @@ const UpcomingPayments = ({
           alignItems="center"
           justifyContent="space-between"
           flexWrap={['wrap', 'nowrap']}
-          gap={['8',0]}
+          gap={['8', 0]}
         >
           <Heading fontSize={20} color="brand.300">
-            Upcoming Payments ({upcomingPayments || 0})
+            Due & Upcoming Payments ({paymentsLength || 0})
           </Heading>
-          <Box w={['full', '40%']}>
-            <Flex alignItems="center" gap="12px">
+          <Box w={['full', '50%']}>
+            <Flex
+              alignItems="center"
+              gap={['18px', '12px']}
+              flexWrap={['wrap', 'nowrap']}
+            >
               <FormControl>
                 <FormLabel fontSize={14} fontWeight={600}>
                   Asset Type
@@ -110,6 +122,30 @@ const UpcomingPayments = ({
                   <option value="due">Due payment</option>
                   <option value="upcoming">Upcoming Payment</option>
                 </Select>
+              </FormControl>
+              <FormControl>
+                <FormLabel fontSize={14} fontWeight={600}>
+                  Due Date (Start date)
+                </FormLabel>
+                <Input
+                  type="date"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  rounded="24px"
+                  placeholder="select payment type"
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel fontSize={14} fontWeight={600}>
+                  Due Date (End date)
+                </FormLabel>
+                <Input
+                  type="date"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                  rounded="24px"
+                  placeholder="select payment type"
+                />
               </FormControl>
             </Flex>
           </Box>
@@ -159,7 +195,7 @@ const UpcomingPayments = ({
                           'property',
                           'due date',
                           'amount',
-                          'payment plan',
+                          'payment interval',
                           'source',
                           'payment type',
                           'status',
@@ -263,7 +299,7 @@ const UpcomingPayments = ({
                               }
                             >
                               {asset?.is_due === true
-                                ? 'Payment Due'
+                                ? 'Due Payment'
                                 : 'Upcoming Payment'}
                             </Td>
                             <Td>

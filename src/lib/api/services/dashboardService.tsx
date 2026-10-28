@@ -104,6 +104,8 @@ export const GetDashboardUpcomingPayments = async (params?: {
   type?: string;
   page?: number;
   per_page?: number;
+  start_date?: string;
+  end_date?: string;
 }) => {
   const response = await axiosInstance.get(
     API_ROUTES.GET_DASHBOARD_UPCOMING_PAYMENTS,
