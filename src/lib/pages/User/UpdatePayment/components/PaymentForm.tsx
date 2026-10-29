@@ -76,13 +76,12 @@ const PaymentForm = ({
       dueDate.setMonth(dueDate.getMonth() + 3);
     } else if (paymentInterval === 'yearly') {
       dueDate.setFullYear(dueDate.getFullYear() + 1);
-      // Add other intervals as needed (monthly, quarterly, etc.)
     }
-    return dueDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+    return dueDate.toISOString().split('T')[0];
   };
 
   const initialValues = {
-    paymentStatus: paymentDetails?.form_defaults?.status || '',
+    paymentStatus: paymentDetails?.payment?.status || '',
     paymentDueDate: paymentDetails?.form_defaults?.payment_due_date
       ? new Date(paymentDetails?.form_defaults?.payment_due_date)
           .toISOString()
