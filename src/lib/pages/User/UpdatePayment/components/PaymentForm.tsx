@@ -15,11 +15,6 @@ import { Field, Formik, Form } from 'formik';
 import moment from 'moment';
 import React, { useState, useEffect } from 'react';
 import * as Yup from 'yup';
-import {
-  AddAssetRemittance,
-  AddPaymentToAsset,
-  AddPaymentToInstalmentAsset,
-} from '~/lib/api/services/assetsService';
 import { formatCurrency } from '~/lib/utils/formatAmount';
 import useNavigate from '~/lib/utils/useNavigate';
 import {
@@ -46,7 +41,6 @@ const validationSchema = Yup.object().shape({
   }),
   setNextDueDate: Yup.boolean(),
 });
-
 
 const PaymentForm = ({
   paymentDetails,
@@ -82,8 +76,8 @@ const PaymentForm = ({
       dueDate.setMonth(dueDate.getMonth() + 3);
     } else if (paymentInterval === 'yearly') {
       dueDate.setFullYear(dueDate.getFullYear() + 1);
-    // Add other intervals as needed (monthly, quarterly, etc.)
-
+      // Add other intervals as needed (monthly, quarterly, etc.)
+    }
     return dueDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
   };
 
