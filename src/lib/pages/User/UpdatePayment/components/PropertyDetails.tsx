@@ -161,7 +161,7 @@ const PropertyDetails = ({
                   Payment Due Date
                 </Heading>
                 <Text fontWeight={500} fontSize={14} color="brand.300">
-                  Number of days overdue for this payment.
+                  Date when this payment is due.
                 </Text>
               </Stack>
               <Text fontWeight={500} color="brand.300">

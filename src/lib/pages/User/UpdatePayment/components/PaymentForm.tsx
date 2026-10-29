@@ -47,6 +47,7 @@ const validationSchema = Yup.object().shape({
   setNextDueDate: Yup.boolean(),
 });
 
+
 const PaymentForm = ({
   paymentDetails,
   GetNotifications,
@@ -75,7 +76,12 @@ const PaymentForm = ({
     const dueDate = new Date(paymentDueDate);
     if (paymentInterval === 'weekly') {
       dueDate.setDate(dueDate.getDate() + 7);
-    }
+    } else if (paymentInterval === 'monthly') {
+      dueDate.setMonth(dueDate.getMonth() + 1);
+    } else if (paymentInterval === 'quarterly') {
+      dueDate.setMonth(dueDate.getMonth() + 3);
+    } else if (paymentInterval === 'yearly') {
+      dueDate.setFullYear(dueDate.getFullYear() + 1);
     // Add other intervals as needed (monthly, quarterly, etc.)
 
     return dueDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
