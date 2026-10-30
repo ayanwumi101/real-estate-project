@@ -1,11 +1,8 @@
 'use client';
 import React, { useContext, useState } from 'react';
 import AccountBalance from './components/AccountBalance';
-import Investments from './components/Investments';
-import MarketUpdates from './components/MarketUpdates';
 import { Box } from '@chakra-ui/react';
 import { GetUserAssets } from '~/lib/api/services/assetsService';
-import DashboardInfo from './components/DashboardInfo';
 import UpcomingPayments from './components/UpcomingPayments';
 import DashboardHeader from '~/lib/layout/components/DashboardHeader';
 import { AppContext } from '~/lib/layout';

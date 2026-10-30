@@ -75,19 +75,19 @@ const UpcomingPayments = ({
         <Flex
           alignItems="center"
           justifyContent="space-between"
-          flexWrap={['wrap', 'nowrap']}
-          gap={['8', 0]}
+          flexWrap={['wrap', 'wrap', 'nowrap']}
+          gap={['8', '8', 0]}
         >
           <Heading fontSize={20} color="brand.300">
             Due & Upcoming Payments ({paymentsLength || 0})
           </Heading>
-          <Box w={['full', '50%']}>
+          <Box w={['full', 'full', '60%']}>
             <Flex
               alignItems="center"
-              gap={['18px', '12px']}
-              flexWrap={['wrap', 'nowrap']}
+              gap={['18px', '14px', '12px']}
+              flexWrap={['wrap', 'wrap', 'nowrap']}
             >
-              <FormControl>
+              <FormControl w={['full', '48.5%', '25%']}>
                 <FormLabel fontSize={14} fontWeight={600}>
                   Asset Type
                 </FormLabel>
@@ -106,7 +106,7 @@ const UpcomingPayments = ({
                   <option value="instalment">Instalment</option>
                 </Select>
               </FormControl>
-              <FormControl>
+              <FormControl w={['full', '48.5%', '25%']}>
                 <FormLabel fontSize={14} fontWeight={600}>
                   Payment Type
                 </FormLabel>
@@ -123,7 +123,7 @@ const UpcomingPayments = ({
                   <option value="upcoming">Upcoming Payment</option>
                 </Select>
               </FormControl>
-              <FormControl>
+              <FormControl w={['full', '48.5%', '25%']}>
                 <FormLabel fontSize={14} fontWeight={600}>
                   Due Date (Start date)
                 </FormLabel>
@@ -135,7 +135,7 @@ const UpcomingPayments = ({
                   placeholder="select payment type"
                 />
               </FormControl>
-              <FormControl>
+              <FormControl w={['full', '48.5%', '25%']}>
                 <FormLabel fontSize={14} fontWeight={600}>
                   Due Date (End date)
                 </FormLabel>
@@ -145,6 +145,7 @@ const UpcomingPayments = ({
                   onChange={(e) => setEndDate(e.target.value)}
                   rounded="24px"
                   placeholder="select payment type"
+                  w="full"
                 />
               </FormControl>
             </Flex>

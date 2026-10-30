@@ -11,7 +11,6 @@ import {
   Skeleton,
 } from '@chakra-ui/react';
 import Cookies from 'js-cookie';
-import Link from 'next/link';
 import React, { Fragment, use, useContext, useState } from 'react';
 import { FiEye } from 'react-icons/fi';
 import { AppContext } from '~/lib/layout';
@@ -202,7 +201,7 @@ const AccountBalance = ({
           <Flex alignItems="ceter" gap="16px" w="100%" overflow="auto">
             {[1, 2, 3]?.map((item) => (
               <Box
-                minW={['300px', '49%']}
+                minW={['300px', '32%']}
                 borderRadius="5px"
                 py="32px"
                 px="30px"
@@ -289,7 +288,7 @@ const AccountBalance = ({
           <Flex alignItems="ceter" gap="16px" w="100%" pb="3" overflow="auto">
             {[1, 2, 3]?.map((item) => (
               <Box
-                minW={['300px', '49%']}
+                minW={['300px', '32%']}
                 borderRadius="5px"
                 py="32px"
                 px="30px"
@@ -390,3 +389,5 @@ const AccountBalance = ({
 };
 
 export default AccountBalance;
+
+
