@@ -321,7 +321,7 @@ const AccountBalance = ({
                       Number(
                         typeof summary?.all?.total_amount === 'object'
                           ? summary?.all?.total_amount?.display_value
-                          : summary?.all?.total_amount
+                          : summary?.all?.total_amount || 0
                       ),
                       currency
                     )}
@@ -347,7 +347,7 @@ const AccountBalance = ({
                       Number(
                         typeof summary?.due?.total_amount === 'object'
                           ? summary?.due?.total_amount?.display_value
-                          : summary?.due?.total_amount
+                          : summary?.due?.total_amount || 0
                       ),
                       currency
                     )}
@@ -372,7 +372,7 @@ const AccountBalance = ({
                       Number(
                         typeof summary?.upcoming?.total_amount === 'object'
                           ? summary?.upcoming?.total_amount?.display_value
-                          : summary?.upcoming?.total_amount
+                          : summary?.upcoming?.total_amount || 0
                       ),
                       currency
                     )}

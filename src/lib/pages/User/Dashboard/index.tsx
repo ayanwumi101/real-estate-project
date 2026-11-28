@@ -56,9 +56,9 @@ const index = () => {
     setLoading(false);
   };
 
-  React.useEffect(() => {
-    GetDashboardData();
-  }, [assetType, paymentType, page, dataPerPage, startDate, endDate]);
+  // React.useEffect(() => {
+  //   GetDashboardData();
+  // }, [assetType, paymentType, page, dataPerPage, startDate, endDate]);
 
   return (
     <DashboardHeader title="Dashboard">
